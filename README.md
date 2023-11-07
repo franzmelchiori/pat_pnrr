@@ -1,2 +1,2 @@
 # pat_pnrr
-PAT-PNRR monitoring system
+PAT-PNRR MPE monitoring system
