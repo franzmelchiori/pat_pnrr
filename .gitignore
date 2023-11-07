@@ -1,3 +1,35 @@
+# local files
+/.idea
+/.vscode
+/archive
+/backup
+/data
+/documents
+/pat_pnrr_bdap_mop
+/pat_pnrr_report_monitoraggio
+/pat_pnrr_suape_mpe
+/pat_pnrr_survey_reports
+/pictures
+/pat_pnrr_clustering/.idea
+/pat_pnrr_clustering/doc
+/pat_pnrr_clustering/clustering_*
+/pat_pnrr_mpe/doc
+/pat_pnrr_mpe/relazione_tecnica
+/pat_pnrr_mpe/*_tabelle_comunali
+/pat_pnrr_mpe/*_excel_mapping.py
+/pat_pnrr_questionario_edilizia/.idea
+/pat_pnrr_questionario_edilizia/doc
+/pat_pnrr_questionario_edilizia/idsurvey_data
+/pat_pnrr_questionario_edilizia/raccolta_puntuale_*
+/pat_pnrr_questionario_edilizia_02/doc
+/pat_pnrr_questionario_edilizia_02/idsurvey_data
+/pat_pnrr_questionario_edilizia_02/images
+*.bak
+*.dat
+*.dir
+*.csv
+*.png
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
