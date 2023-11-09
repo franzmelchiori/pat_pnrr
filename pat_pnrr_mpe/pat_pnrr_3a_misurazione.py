@@ -267,13 +267,68 @@ def get_comuni_measure(comuni_excel_map, sheet_name, type_name=False, type_pdc_o
     return comuni_measure
 
 
-def get_comuni_measures(comuni_excel_map):
+def get_comuni_measures(comuni_excel_map, save_tex=False):
 
-    get_comuni_measure(comuni_excel_map, 'Permessi di Costruire')
-    get_comuni_measure(comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False)
-    get_comuni_measure(comuni_excel_map, 'Prov di sanatoria')
-    get_comuni_measure(comuni_excel_map, 'Controllo CILA')
+    comuni_pdc_measure = get_comuni_measure(
+        comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False)
+    comuni_pdc_ov_measure = get_comuni_measure(
+        comuni_excel_map, 'Permessi di Costruire')
+    comuni_pds_measure = get_comuni_measure(
+        comuni_excel_map, 'Prov di sanatoria')
+    comuni_cila_measure = get_comuni_measure(
+        comuni_excel_map, 'Controllo CILA')
 
+    if save_tex:
+        measurement_03_pratiche_header = [
+            'Concluse con SA',
+            'Concluse',
+            'con sospensioni',
+            'con CdS',
+            'Durata [gg]',
+            'Termine [gg]',
+            'Avviate',
+            'Arretrate']
+        tex_file_header = measurement_03_pratiche_header
+
+        comuni_pdc_measure.index = measurement_03_pratiche_header
+        comuni_pdc_ov_measure.index = measurement_03_pratiche_header
+        comuni_pds_measure.index = measurement_03_pratiche_header
+        comuni_cila_measure.index = measurement_03_pratiche_header
+
+        measurement_03_series = {
+            'Permesso di Costruire OV': comuni_pdc_ov_measure.apply(np.rint).astype(int),
+            'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int)}
+        measurement_03 = pd.DataFrame(measurement_03_series).T
+
+        measurement_03b_series = {
+            'Permesso di Costruire': comuni_pdc_measure.apply(np.rint).astype(int),
+            'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int),
+            'Controllo della CILA': comuni_cila_measure.apply(np.rint).astype(int)}
+        measurement_03b = pd.DataFrame(measurement_03b_series).T
+
+        tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
+                         'pat-pnrr_mpe_2022q3-4.tex')
+        with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
+            measurement_03.columns = tex_file_header
+            baseline_styler = measurement_03.style
+            baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
+            table_tex_content = baseline_styler.to_latex(
+                caption='PAT-PNRR | Procedimenti Edilizi | Misurazione 2022Q3-4',
+                label='pat-pnrr_mpe_2022q3-4', position='!htbp', position_float="centering",
+                hrules=True)
+            table_tex_file.write(table_tex_content)
+
+        tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
+                         'pat-pnrr_mpe_2022q3-4b.tex')
+        with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
+            measurement_03b.columns = tex_file_header
+            baseline_styler = measurement_03b.style
+            baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
+            table_tex_content = baseline_styler.to_latex(
+                caption='PAT-PNRR | Procedimenti Edilizi | Misurazione 2022Q3-4b',
+                label='pat-pnrr_mpe_2022q3-4b', position='!htbp', position_float="centering",
+                hrules=True)
+            table_tex_file.write(table_tex_content)
     return True
 
 
@@ -943,7 +998,7 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', None)
 
 
-    list_excel = get_list_excel(missing=True)
+    # list_excel = get_list_excel(missing=True)
     # check_comuni_excel()
 
     # comune = ComuneExcel('02.2_Terza rilevazione PNRR_Trento_Edilizia.xlsx', 'Trento')

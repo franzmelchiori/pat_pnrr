@@ -260,12 +260,68 @@ def get_comuni_measure(comuni_excel_map, sheet_name, type_name=False, type_pdc_o
     return comuni_measure
 
 
-def get_comuni_measures(comuni_excel_map):
+def get_comuni_measures(comuni_excel_map, save_tex=False):
 
-    get_comuni_measure(comuni_excel_map, 'Permessi di Costruire')
-    get_comuni_measure(comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False)
-    get_comuni_measure(comuni_excel_map, 'Prov di sanatoria')
-    get_comuni_measure(comuni_excel_map, 'Controllo CILA')
+    comuni_pdc_measure = get_comuni_measure(
+        comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False)
+    comuni_pdc_ov_measure = get_comuni_measure(
+        comuni_excel_map, 'Permessi di Costruire')
+    comuni_pds_measure = get_comuni_measure(
+        comuni_excel_map, 'Prov di sanatoria')
+    comuni_cila_measure = get_comuni_measure(
+        comuni_excel_map, 'Controllo CILA')
+
+    if save_tex:
+        measurement_04_pratiche_header = [
+            'Concluse con SA',
+            'Concluse',
+            'con sospensioni',
+            'con CdS',
+            'Durata [gg]',
+            'Termine [gg]',
+            'Avviate',
+            'Arretrate']
+        tex_file_header = measurement_04_pratiche_header
+
+        comuni_pdc_measure.index = measurement_04_pratiche_header
+        comuni_pdc_ov_measure.index = measurement_04_pratiche_header
+        comuni_pds_measure.index = measurement_04_pratiche_header
+        comuni_cila_measure.index = measurement_04_pratiche_header
+
+        measurement_04_series = {
+            'Permesso di Costruire OV': comuni_pdc_ov_measure.apply(np.rint).astype(int),
+            'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int)}
+        measurement_04 = pd.DataFrame(measurement_04_series).T
+
+        measurement_04b_series = {
+            'Permesso di Costruire': comuni_pdc_measure.apply(np.rint).astype(int),
+            'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int),
+            'Controllo della CILA': comuni_cila_measure.apply(np.rint).astype(int)}
+        measurement_04b = pd.DataFrame(measurement_04b_series).T
+
+        tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
+                         'pat-pnrr_mpe_2023q1-2.tex')
+        with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
+            measurement_04.columns = tex_file_header
+            baseline_styler = measurement_04.style
+            baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
+            table_tex_content = baseline_styler.to_latex(
+                caption='PAT-PNRR | Procedimenti Edilizi | Misurazione 2023Q1-2',
+                label='pat-pnrr_mpe_2023q1-2', position='!htbp', position_float="centering",
+                hrules=True)
+            table_tex_file.write(table_tex_content)
+
+        tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
+                         'pat-pnrr_mpe_2023q1-2b.tex')
+        with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
+            measurement_04b.columns = tex_file_header
+            baseline_styler = measurement_04b.style
+            baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
+            table_tex_content = baseline_styler.to_latex(
+                caption='PAT-PNRR | Procedimenti Edilizi | Misurazione 2023Q1-2b',
+                label='pat-pnrr_mpe_2023q1-2b', position='!htbp', position_float="centering",
+                hrules=True)
+            table_tex_file.write(table_tex_content)
 
     return True
 
@@ -593,6 +649,10 @@ class ComuneExcel:
             comune_dataframe.loc[:, 'tipologia_massima_sospensione'].fillna('', inplace=True)
             comune_dataframe.loc[:, 'giorni_sospensioni'].fillna(0, inplace=True)
 
+            if comune_dataframe.loc[:, 'data_inizio_pratica'].dtype.str[1] in ['O', 'M']:
+                change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
+                    'string').str.contains('26/05/23', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '26/05/2023'
             try:
                 comune_dataframe['data_inizio_pratica'] = pd.to_datetime(
                     comune_dataframe['data_inizio_pratica'],
@@ -1020,5 +1080,5 @@ if __name__ == '__main__':
     # get_comuni_measure(comuni_excel_map, 'Controllo CILA', 'CILA con sanzione', load=False)
 
 
-    get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    get_comuni_measures(comuni_excel_map)
+    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    # get_comuni_measures(comuni_excel_map)

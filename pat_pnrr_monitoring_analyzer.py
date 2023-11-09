@@ -591,14 +591,14 @@ def print_measurement_02(pat_comuni_dataframe, mean=False, measurement_5_rows=Fa
         'numero_sanatorie_non_concluse_scaduti_termini_2022q1-2']
 
     measurement_02_pratiche_header = [
-        'Concluse con silenzio-assenso',
-        'Concluse con provvedimento espresso',
-        'di cui: con sospensioni',
-        'di cui: con conferenza servizi',
-        'Durata media',
-        'Termine massimo',
+        'Concluse con SA',
+        'Concluse',
+        'con sospensioni',
+        'con CdS',
+        'Durata [gg]',
+        'Termine [gg]',
         'Avviate',
-        'Arretrato']
+        'Arretrate']
     tex_file_header = measurement_02_pratiche_header
 
     if exclude_clusters_3_4_5:
@@ -2138,8 +2138,9 @@ if __name__ == '__main__':
     pd.set_option('display.width', None)
     pd.set_option('display.max_colwidth', None)
 
+
     # LOAD DATAFRAME COMUNI
-    pat_comuni_dataframe = get_pat_comuni_dataframe()  # load=False)
+    pat_comuni_dataframe = get_pat_comuni_dataframe(load=False)
 
 
     # PRINT BASELINES
@@ -2160,13 +2161,13 @@ if __name__ == '__main__':
 
     # PRINT MEASUREMENT 03
     # pat_pnrr_3a.get_comuni_measures_dataframe(comuni_excel_map, load=True)
-    # pat_pnrr_3a.get_comuni_measures(comuni_excel_map)
+    # pat_pnrr_3a.get_comuni_measures(comuni_excel_map, save_tex=True)
     # SHOW MEASUREMENT 03 CHARTS (no more valid, after new baseline 202306)
     # show_measurement_03(pat_comuni_dataframe)
 
     # PRINT MEASUREMENT 04
-    # pat_pnrr_4a.get_comuni_measures_dataframe(comuni_excel_map)  # , load=False)
-    pat_pnrr_4a.get_comuni_measures(comuni_excel_map)
+    # pat_pnrr_4a.get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    pat_pnrr_4a.get_comuni_measures(comuni_excel_map, save_tex=True)
     # TODO: simulazione scenari di raggiungimento degli obiettivi ministeriali PNRR
     # TODO: analizzare ed individuare quanti e quali comuni sono sotto pressione
 
