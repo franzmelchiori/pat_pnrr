@@ -1014,11 +1014,11 @@ if __name__ == '__main__':
 
 
     # load=True
-    # comuni_dataframe_pdc = get_comuni_dataframe(
+    # comuni_dataframe_pdc_03 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', load=load)
-    # comuni_dataframe_pds = get_comuni_dataframe(
+    # comuni_dataframe_pds_03 = get_comuni_dataframe(
     #     comuni_excel_map, 'Prov di sanatoria', load=load)
-    # comuni_dataframe_cila = get_comuni_dataframe(
+    # comuni_dataframe_cila_03 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', load=load)
 
     # load=True

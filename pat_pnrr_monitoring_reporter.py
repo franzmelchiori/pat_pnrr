@@ -499,3 +499,5 @@ if __name__ == '__main__':
 
     # TODO: mappa 166 comuni
     #   a. localizzazione pressione
+
+    # TODO: analizzare ed individuare quanti e quali comuni sono sotto pressione

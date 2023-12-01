@@ -2166,10 +2166,11 @@ if __name__ == '__main__':
     # show_measurement_03(pat_comuni_dataframe)
 
     # PRINT MEASUREMENT 04
-    # pat_pnrr_4a.get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    pat_pnrr_4a.get_comuni_measures(comuni_excel_map, save_tex=True)
-    # TODO: simulazione scenari di raggiungimento degli obiettivi ministeriali PNRR
-    # TODO: analizzare ed individuare quanti e quali comuni sono sotto pressione
+    pat_pnrr_4a.get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    pat_pnrr_4a.get_comuni_measures(comuni_excel_map, save_tex=True, temp_tex=True)
+
+
+    # TODO: simulazione scenari di raggiungimento degli obiettivi ministeriali PNRR (PSO?)
 
 
     # CLUSTER BASELINE
