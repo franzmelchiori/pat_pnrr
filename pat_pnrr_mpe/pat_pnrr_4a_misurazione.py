@@ -683,6 +683,12 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('02/02/223', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '02/02/2023'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('20/07/203', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '20/07/2023'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('09/10(2023', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '09/10/2023'
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
                     comune_dataframe['data_fine_pratica'],
@@ -780,6 +786,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
                     'string').str.contains('30/03/203', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '30/03/2023'
+                change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
+                    'string').str.contains('18/5//2023', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '18/05/2023'
             try:
                 comune_dataframe['data_inizio_pratica'] = pd.to_datetime(
                     comune_dataframe['data_inizio_pratica'],
@@ -1033,6 +1042,99 @@ class ComuneExcel:
         return comune_measure_series
 
 
+def check_transit_03_04(still_to_check=True):
+    ''' controllo se, nella 4a misurazione, sono state riportate le pratiche non concluse
+        della 3a misurazione (controllare id pratica e data presentazione)
+    '''
+    list_excel, list_xls = get_list_excel()
+
+    load = True
+    comuni_dataframe_pdc_03 = pat_pnrr_3a.get_comuni_dataframe(
+        comuni_excel_map, 'Permessi di Costruire', load=load)
+    comuni_dataframe_pds_03 = pat_pnrr_3a.get_comuni_dataframe(
+        comuni_excel_map, 'Prov di sanatoria', load=load)
+
+    comuni_dataframe_pdc_04 = get_comuni_dataframe(
+        comuni_excel_map, 'Permessi di Costruire', load=load)
+    comuni_dataframe_pds_04 = get_comuni_dataframe(
+        comuni_excel_map, 'Prov di sanatoria', load=load)
+
+    comuni_received_04 = [comune_excel[1] for comune_excel in list_excel]
+    comuni_checked_04 = [comune[0] for comune in comuni_4a_misurazione_excel_check
+                         if comune[1] is True]
+    comuni_dataframe_couples = [['pdc', comuni_dataframe_pdc_03, comuni_dataframe_pdc_04],
+                                ['pds', comuni_dataframe_pds_03, comuni_dataframe_pds_04]]
+    comuni_to_revise = []
+
+    for comune in comuni_received_04:
+        # nuovo controllo considerando i comuni gia' revisionati a vista
+        # (secondo la tabella Verifica transito da 3a a 4a rilevazione) da non ricomunicare
+        if still_to_check:
+            if comune in comuni_checked_04:
+                continue
+        issues = 0
+        for comuni_dataframe_couple in comuni_dataframe_couples:
+            comuni_tipo_pratica = comuni_dataframe_couple[0]
+            comuni_dataframe_03 = comuni_dataframe_couple[1]
+            comuni_dataframe_04 = comuni_dataframe_couple[2]
+
+            filter_mask_03 = comuni_dataframe_03.loc[:, 'comune'] == comune
+            filter_nonconclusa_03 = comuni_dataframe_03.loc[:, 'data_fine_pratica'].isna()
+            filter_mask_03 = filter_mask_03 & filter_nonconclusa_03
+            if 'data_fine_pratica_silenzio-assenso' in comuni_dataframe_03.columns:
+                filter_silenzioassenso_03 = (
+                    comuni_dataframe_03.loc[:, 'data_fine_pratica_silenzio-assenso'].isna())
+                filter_mask_03 = filter_mask_03 & filter_silenzioassenso_03
+            filter_mask_04 = comuni_dataframe_04.loc[:, 'comune'] == comune
+
+            issue = False
+            if filter_mask_03.sum() > 0:
+                id_pratiche_04 = []
+                for id_pratica_04 in comuni_dataframe_04[filter_mask_04].id_pratica.values:
+                    id_pratiche_04.append(id_pratica_04.__str__().lower().rstrip('.0').split(' ')[-1])
+                date_inizio_pratiche_04 = []
+                for data_inizio_pratica_04 in comuni_dataframe_04[filter_mask_04].data_inizio_pratica.values:
+                    date_inizio_pratiche_04.append(data_inizio_pratica_04)
+
+                for index_pratica_03 in comuni_dataframe_03[filter_mask_03].index:
+                    pratica_03 = comuni_dataframe_03.iloc[index_pratica_03]
+                    id_pratica_03 = pratica_03.id_pratica.__str__().lower().rstrip('.0').split(' ')[-1]
+                    data_inizio_pratica_03 = pratica_03.data_inizio_pratica
+                    if id_pratica_03 not in id_pratiche_04:
+                        if data_inizio_pratica_03 not in date_inizio_pratiche_04:
+                            print('comune di {0}: pratica {1} {2} non transitata '
+                                  'dalla 3a alla 4a misurazione'.format(
+                                comune, comuni_tipo_pratica, pratica_03.id_pratica))
+                            issues += 1
+                            issue = True
+
+                # for id_pratica_03_orig in comuni_dataframe_03[filter_mask_03].id_pratica.values:
+                #     id_pratica_03 = id_pratica_03_orig.__str__().lower().rstrip('.0').split(' ')[-1]
+                #     if id_pratica_03 not in id_pratiche_04:
+                #         print('comune di {0}: pratica {1} {2} non transitata '
+                #               'dalla 3a alla 4a misurazione'.format(
+                #             comune, comuni_tipo_pratica, id_pratica_03_orig))
+                #         issues += 1
+                #         issue = True
+
+                if issue:
+                    # print(comuni_dataframe_03[filter_mask_03])
+                    # print(comuni_dataframe_04[filter_mask_04])
+                    print('')
+
+        if issues > 0:
+            comuni_to_revise.append([issues, comune])
+            print('')
+
+    print('{0} pdc e/o pds in {1} comuni probabilmente da revisionare:'.format(
+        sum([issues for [issues, comune] in comuni_to_revise]), comuni_to_revise.__len__()))
+    comuni_to_revise.sort(reverse=True)
+    for [issues, comune] in comuni_to_revise:
+        print('{0} pdc e/o pds del comune di {1} probabilmente da revisionare'.format(
+            issues, comune))
+    print('')
+
+
 if __name__ == '__main__':
 
     pd.set_option('display.max_rows', None)
@@ -1041,17 +1143,17 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', None)
 
 
-    list_excel, list_xls = get_list_excel()
-    check_comuni_excel()
+    # list_excel, list_xls = get_list_excel()
+    # check_comuni_excel()
+    # check_transit_03_04(still_to_check=True)
 
-    # comune_name = 'Terragnolo'
-    # file = '193_terragnolo_Edilizia.xls'
+
+    # comune_name = 'Cinte Tesino'
+    # file = '059_CinteTesino_Edilizia.xls'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
-    # comune_excel = ComuneExcel(file, comune_name)
-    # comune_excel.check_headers_excel()
-    # comune_excel.check_dataframes_excel()
-
-    # comune = ComuneExcel('104_Levico_Edilizia.xls', 'Levico Terme')
+    # comune = ComuneExcel(file, comune_name)
+    # comune.check_headers_excel()
+    # comune.check_dataframes_excel()
     #
     # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
     # comune_dataframe_pds = comune.get_comune_dataframe('Prov di sanatoria')
@@ -1062,126 +1164,48 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    load = False
-    comuni_dataframe_pdc_04 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', load=load)
-    comuni_dataframe_pds_04 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', load=load)
-    comuni_dataframe_cila_04 = get_comuni_dataframe(
-        comuni_excel_map, 'Controllo CILA', load=load)
-
-    comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=True, load=load)
-    comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False, load=load)
-    comuni_measure_dataframe_pds = get_comuni_measure_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', load=load)
-    comuni_measure_dataframe_cila = get_comuni_measure_dataframe(
-        comuni_excel_map, 'Controllo CILA', load=load)
-
-    # comuni_dataframes = get_comuni_dataframes(comuni_excel_map, load=load)
-
-
-    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire')
-    # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria')
-    # get_comuni_measure(comuni_excel_map, 'Controllo CILA')
-
-    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire', 'PdC ordinario', load=False)
-    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire', 'PdC in variante', load=False)
-    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire', 'PdC in deroga', load=False)
-    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire', 'PdC convenzionato', load=False)
-    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire', 'PdC asseverato', load=False)
-    #
-    # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria', 'PdC in Sanatoria', load=False)
-    # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria', 'Provvedimenti in Sanatoria', load=False)
-    # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria', 'Regolarizzazione', load=False)
-    #
-    # get_comuni_measure(comuni_excel_map, 'Controllo CILA', 'CILA ordinaria', load=False)
-    # get_comuni_measure(comuni_excel_map, 'Controllo CILA', 'CILA con sanzione', load=False)
-
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    # get_comuni_measures(comuni_excel_map)
-
-
-    # controllo se, nella 4a misurazione, sono state riportate le pratiche non concluse della 3a misurazione (controllare id pratica e data presentazione)
-    # TODO: nuovo controllo considerando i comuni gia' revisionati a vista (secondo la tabella Verifica transito da 3a a 4a rilevazione) da non ricomunicare
-    # load = True
-    # comuni_dataframe_pdc_03 = pat_pnrr_3a.get_comuni_dataframe(
+    # load = False
+    # comuni_dataframe_pdc_04 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', load=load)
-    # comuni_dataframe_pds_03 = pat_pnrr_3a.get_comuni_dataframe(
+    # comuni_dataframe_pds_04 = get_comuni_dataframe(
     #     comuni_excel_map, 'Prov di sanatoria', load=load)
-    # # comuni_dataframe_cila_03 = pat_pnrr_3a.get_comuni_dataframe(
-    # #     comuni_excel_map, 'Controllo CILA', load=load)
+    # comuni_dataframe_cila_04 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Controllo CILA', load=load)
     #
-    # # ESEMPIO PROBLEMATICA (pratiche non concluse e non transitate):
-    # # comuni_dataframe_pds_03[comuni_dataframe_pds_03.comune == 'Altavalle']
-    # # comuni_dataframe_pds_04[comuni_dataframe_pds_04.comune == 'Altavalle']
+    # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=True, load=load)
+    # comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False, load=load)
+    # comuni_measure_dataframe_pds = get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', load=load)
+    # comuni_measure_dataframe_cila = get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Controllo CILA', load=load)
+
+
+    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    type_name='PdC ordinario', type_pdc_ov=False, load=False)
+    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    type_name='PdC in variante', type_pdc_ov=False, load=False)
+    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    type_name='PdC in deroga', type_pdc_ov=False, load=False)
+    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    type_name='PdC convenzionato', type_pdc_ov=False, load=False)
+    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    type_name='PdC asseverato', type_pdc_ov=False, load=False)
     #
-    # comuni_received_04 = [comune_excel[1] for comune_excel in list_excel]
-    # comuni_dataframe_couples = [['pdc', comuni_dataframe_pdc_03, comuni_dataframe_pdc_04],
-    #                             ['pds', comuni_dataframe_pds_03, comuni_dataframe_pds_04]]
-    # comuni_to_revise = []
-    # for comune in comuni_received_04:
-    #     issues = 0
-    #     for comuni_dataframe_couple in comuni_dataframe_couples:
-    #         comuni_tipo_pratica = comuni_dataframe_couple[0]
-    #         comuni_dataframe_03 = comuni_dataframe_couple[1]
-    #         comuni_dataframe_04 = comuni_dataframe_couple[2]
-    #
-    #         filter_mask_03 = comuni_dataframe_03.loc[:, 'comune'] == comune
-    #         filter_nonconclusa_03 = comuni_dataframe_03.loc[:, 'data_fine_pratica'].isna()
-    #         filter_mask_03 = filter_mask_03 & filter_nonconclusa_03
-    #         if 'data_fine_pratica_silenzio-assenso' in comuni_dataframe_03.columns:
-    #             filter_silenzioassenso_03 = (
-    #                 comuni_dataframe_03.loc[:, 'data_fine_pratica_silenzio-assenso'].isna())
-    #             filter_mask_03 = filter_mask_03 & filter_silenzioassenso_03
-    #         filter_mask_04 = comuni_dataframe_04.loc[:, 'comune'] == comune
-    #
-    #         issue = False
-    #         if filter_mask_03.sum() > 0:
-    #             id_pratiche_04 = []
-    #             for id_pratica_04 in comuni_dataframe_04[filter_mask_04].id_pratica.values:
-    #                 id_pratiche_04.append(id_pratica_04.__str__().lower().rstrip('.0').split(' ')[-1])
-    #             date_inizio_pratiche_04 = []
-    #             for data_inizio_pratica_04 in comuni_dataframe_04[filter_mask_04].data_inizio_pratica.values:
-    #                 date_inizio_pratiche_04.append(data_inizio_pratica_04)
-    #
-    #             for index_pratica_03 in comuni_dataframe_03[filter_mask_03].index:
-    #                 pratica_03 = comuni_dataframe_03.iloc[index_pratica_03]
-    #                 id_pratica_03 = pratica_03.id_pratica.__str__().lower().rstrip('.0').split(' ')[-1]
-    #                 data_inizio_pratica_03 = pratica_03.data_inizio_pratica
-    #                 if id_pratica_03 not in id_pratiche_04:
-    #                     if data_inizio_pratica_03 not in date_inizio_pratiche_04:
-    #                         print('comune di {0}: pratica {1} {2} non transitata '
-    #                               'dalla 3a alla 4a misurazione'.format(
-    #                             comune, comuni_tipo_pratica, pratica_03.id_pratica))
-    #                         issues += 1
-    #                         issue = True
-    #
-    #             # for id_pratica_03_orig in comuni_dataframe_03[filter_mask_03].id_pratica.values:
-    #             #     id_pratica_03 = id_pratica_03_orig.__str__().lower().rstrip('.0').split(' ')[-1]
-    #             #     if id_pratica_03 not in id_pratiche_04:
-    #             #         print('comune di {0}: pratica {1} {2} non transitata '
-    #             #               'dalla 3a alla 4a misurazione'.format(
-    #             #             comune, comuni_tipo_pratica, id_pratica_03_orig))
-    #             #         issues += 1
-    #             #         issue = True
-    #
-    #             if issue:
-    #                 # print(comuni_dataframe_03[filter_mask_03])
-    #                 # print(comuni_dataframe_04[filter_mask_04])
-    #                 print('')
-    #
-    #     if issues > 0:
-    #         comuni_to_revise.append([issues, comune])
-    #         print('')
-    #
-    # print('{0} pdc e/o pds in {1} comuni probabilmente da revisionare:'.format(
-    #     sum([issues for [issues, comune] in comuni_to_revise]), comuni_to_revise.__len__()))
-    # comuni_to_revise.sort(reverse=True)
-    # for [issues, comune] in comuni_to_revise:
-    #     print('{0} pdc e/o pds del comune di {1} probabilmente da revisionare'.format(
-    #         issues, comune))
-    # print('')
+    # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
+    #                    type_name='PdC in Sanatoria', load=False)
+    # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
+    #                    type_name='Provvedimenti in Sanatoria', load=False)
+    # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
+    #                    type_name='Regolarizzazione', load=False)
+
+
+    get_comuni_dataframes(comuni_excel_map, load=False)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures(comuni_excel_map)
+
 
     # TODO: controllo se, nella 4a misurazione, e' presente il dato sull'organico dell'ufficio tecnico per l'edilizia
+    # TODO: per PdC e PdS fornire le tabello con le tipologie scorporate
+    # TODO: per PdC fornire l'estratto dei comuni che hanno interrotto le pratiche
