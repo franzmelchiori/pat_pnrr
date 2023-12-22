@@ -98,6 +98,56 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=Fals
     return comuni_dataframe
 
 
+def get_comuni_organico(comuni_excel_map, load=True, path_base=False):
+    if not path_base:
+        path_base = 'C:\\projects\\franzmelchiori\\projects\\provincia_trento_pnrr\\'
+    path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_4a_misurazione_tabelle_comunali\\'
+
+    sheet_name = 'ISTRUZIONI'
+    sheet_suffix = '_ist'
+
+    if load:
+        comuni_organico_shelve = shelve.open(path_shelve + 'comuni_organico' + sheet_suffix)
+        comuni_organico = comuni_organico_shelve['comuni_organico']
+        comuni_organico_shelve.close()
+    else:
+        comuni_excel_map = [(comune[0], comune[2])
+                            for comune in comuni_excel_map if comune[2] is not None]
+        comuni_organico = []
+        comuni_name = []
+        for comune_name, path_file in comuni_excel_map:
+            print(comune_name + ' | ' + sheet_name)
+            comune = ComuneExcel(path_file, comune_name)
+
+            names = comune.excel_structure[sheet_name]['column_labels']
+            usecols = comune.excel_structure[sheet_name]['column_indexes']
+            skiprows = comune.excel_structure[sheet_name]['row_skips']
+            droprows = comune.excel_structure[sheet_name]['column_mandatory']
+            nrows = 4
+
+            comune_organico = get_dataframe_excel(
+                comune.excel_path, sheet_name, names, usecols, skiprows, droprows, nrows)
+
+            comuni_organico.append(comune_organico.T)
+            comuni_name.append(comune_name)
+        comuni_organico = pd.concat(comuni_organico, axis=0, join='outer')
+        comuni_organico.reset_index(drop=True, inplace=True)
+
+        comuni_organico.columns = [
+            'nome_responsabile',
+            'numero_tecnici',
+            'numero_amministrativi',
+            'gestione_associata'
+        ]
+        comuni_organico.index = comuni_name
+
+        comuni_organico_shelve = shelve.open(path_shelve + 'comuni_organico' + sheet_suffix)
+        comuni_organico_shelve['comuni_organico'] = comuni_organico
+        comuni_organico_shelve.close()
+
+    return comuni_organico
+
+
 def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, type_name=False, type_pdc_ov=True,
                                  load=True, path_base=False):
     if not path_base:
@@ -345,6 +395,21 @@ class ComuneExcel:
         self.excel_path = self.path_base + self.path_file
         self.comune_name = comune_name
         self.excel_structure = {
+            'ISTRUZIONI': {
+                'column_labels': [
+                    'organico'  # string | object
+                ],
+                'column_indexes': [
+                    2
+                ],
+                'row_skips': 4,
+                'column_mandatory': [
+                ],
+                'health_header_checks': [
+                ],
+                'health_na_content_checks': [
+                ]
+            },
             'Permessi di Costruire': {
                 'column_labels': [
                     'tipologia_pratica',  # string | object
@@ -1042,7 +1107,7 @@ class ComuneExcel:
         return comune_measure_series
 
 
-def check_transit_03_04(still_to_check=True):
+def check_transit_03_04(still_to_check=True, already_fine=False):
     ''' controllo se, nella 4a misurazione, sono state riportate le pratiche non concluse
         della 3a misurazione (controllare id pratica e data presentazione)
     '''
@@ -1065,6 +1130,7 @@ def check_transit_03_04(still_to_check=True):
     comuni_dataframe_couples = [['pdc', comuni_dataframe_pdc_03, comuni_dataframe_pdc_04],
                                 ['pds', comuni_dataframe_pds_03, comuni_dataframe_pds_04]]
     comuni_to_revise = []
+    comuni_just_fine = []
 
     for comune in comuni_received_04:
         # nuovo controllo considerando i comuni gia' revisionati a vista
@@ -1125,6 +1191,9 @@ def check_transit_03_04(still_to_check=True):
         if issues > 0:
             comuni_to_revise.append([issues, comune])
             print('')
+        else:
+            comuni_just_fine.append([issues, comune])
+            print('')
 
     print('{0} pdc e/o pds in {1} comuni probabilmente da revisionare:'.format(
         sum([issues for [issues, comune] in comuni_to_revise]), comuni_to_revise.__len__()))
@@ -1133,6 +1202,14 @@ def check_transit_03_04(still_to_check=True):
         print('{0} pdc e/o pds del comune di {1} probabilmente da revisionare'.format(
             issues, comune))
     print('')
+
+    if already_fine:
+        print('{0} comuni probabilmente già a posto '
+              '(eventuali pratiche non concluse nella 3a misurazione '
+              'risultano transitate nella 4a):'.format(comuni_just_fine.__len__()))
+        for issues, comune in comuni_just_fine:
+            print('{0}'.format(comune))
+        print('')
 
 
 if __name__ == '__main__':
@@ -1145,7 +1222,7 @@ if __name__ == '__main__':
 
     # list_excel, list_xls = get_list_excel()
     # check_comuni_excel()
-    # check_transit_03_04(still_to_check=True)
+    # check_transit_03_04(still_to_check=True, already_fine=False)
 
 
     # comune_name = 'Cinte Tesino'
@@ -1164,14 +1241,14 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    # load = False
+    # load = True
     # comuni_dataframe_pdc_04 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', load=load)
     # comuni_dataframe_pds_04 = get_comuni_dataframe(
     #     comuni_excel_map, 'Prov di sanatoria', load=load)
     # comuni_dataframe_cila_04 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', load=load)
-    #
+
     # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=True, load=load)
     # comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
@@ -1201,9 +1278,11 @@ if __name__ == '__main__':
     #                    type_name='Regolarizzazione', load=False)
 
 
-    get_comuni_dataframes(comuni_excel_map, load=False)
-    get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    get_comuni_measures(comuni_excel_map)
+    # get_comuni_dataframes(comuni_excel_map, load=False)
+    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    # get_comuni_measures(comuni_excel_map)
+    #
+    # get_comuni_organico(comuni_excel_map, load=True)
 
 
     # TODO: controllo se, nella 4a misurazione, e' presente il dato sull'organico dell'ufficio tecnico per l'edilizia

@@ -178,6 +178,8 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                                     comuni_durata_trends, comuni_arretrato_trends,
                                     comuni_performance_trends,
                                     just_one=False, save_charts=True):
+    # pdc_measure_labels = ['pdc_2022q1_2', 'pdc_2022q3_4']
+    # pds_measure_labels = ['pds_2022q1_2', 'pds_2022q3_4']
     pdc_measure_labels = ['pdc_2022q3_4', 'pdc_2023q1_2']
     pds_measure_labels = ['pds_2022q3_4', 'pds_2023q1_2']
     comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
@@ -201,14 +203,28 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         'Cluster 3: comuni medi (3)': 2,
         'Cluster 4: Rovereto': 3,
         'Cluster 5: Trento': 4}
+    classificazione_comunale_color = {
+        'Cluster 1: comuni piccoli (130)': 'lime',
+        'Cluster 2: comuni medio-piccoli (31)': 'green',
+        'Cluster 3: comuni medi (3)': 'orange',
+        'Cluster 4: Rovereto': 'orangered',
+        'Cluster 5: Trento': 'darkred'}
+    # classificazione_comunale_color = classificazione_comunale.map(classificazione_comunale_color)
     classificazione_comunale = classificazione_comunale.map(classificazione_comunale_map)
     grandezza_comunale = classificazione_comunale+10+pow(classificazione_comunale+1, 3)
 
+    # pdc_durata_labels = ['pdc_durata_2022q1_2', 'pdc_durata_2022q3_4']
+    # pdc_arretrato_labels = ['pdc_arretrato_2022q1_2', 'pdc_arretrato_2022q3_4']
+    # comuni_pdc_durata = comuni_durata_trends.loc[:, pdc_durata_labels].mean(axis=1)
+    # comuni_pdc_arretrato = comuni_arretrato_trends.loc[:, pdc_arretrato_labels].mean(axis=1)
+    # pds_durata_labels = ['pds_durata_2022q1_2', 'pds_durata_2022q3_4']
+    # pds_arretrato_labels = ['pds_arretrato_2022q1_2', 'pds_arretrato_2022q3_4']
+    # comuni_pds_durata = comuni_durata_trends.loc[:, pds_durata_labels].mean(axis=1)
+    # comuni_pds_arretrato = comuni_arretrato_trends.loc[:, pds_arretrato_labels].mean(axis=1)
     pdc_durata_labels = ['pdc_durata_2022q3_4', 'pdc_durata_2023q1_2']
     pdc_arretrato_labels = ['pdc_arretrato_2022q3_4', 'pdc_arretrato_2023q1_2']
     comuni_pdc_durata = comuni_durata_trends.loc[:, pdc_durata_labels].mean(axis=1)
     comuni_pdc_arretrato = comuni_arretrato_trends.loc[:, pdc_arretrato_labels].mean(axis=1)
-    
     pds_durata_labels = ['pds_durata_2022q3_4', 'pds_durata_2023q1_2']
     pds_arretrato_labels = ['pds_arretrato_2022q3_4', 'pds_arretrato_2023q1_2']
     comuni_pds_durata = comuni_durata_trends.loc[:, pds_durata_labels].mean(axis=1)
@@ -218,7 +234,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                            layout='constrained')
     fig.set_size_inches(15, 5)
 
-    ax[0].set_title('Ultimi 12 mesi', fontsize=12)
+    ax[0].set_title('2022Q3-4 2023Q1-2', fontsize=12)
     plot1 = ax[0].scatter(comuni_pdc_arretrato, comuni_pdc_durata,
                           c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
     ax[0].set_xlabel('Arretrato/avviato PdC')
@@ -228,7 +244,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     ax[0].spines['bottom'].set_visible(False)
     ax[0].spines['left'].set_visible(False)
 
-    ax[1].set_title('Ultimi 12 mesi', fontsize=12)
+    ax[1].set_title('2022Q3-4 2023Q1-2', fontsize=12)
     plot2 = ax[1].scatter(comuni_pds_arretrato, comuni_pds_durata,
                           c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
     ax[1].set_xlabel('Arretrato/avviato PdS')
@@ -238,7 +254,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     ax[1].spines['bottom'].set_visible(False)
     ax[1].spines['left'].set_visible(False)
 
-    ax[2].set_title('Ultimi 12 mesi', fontsize=12)
+    ax[2].set_title('2022Q3-4 2023Q1-2', fontsize=12)
     plot3 = ax[2].scatter(comuni_pds_scores, comuni_pdc_scores,
                           c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
     ax[2].set_xlabel('Pressione PdS')
@@ -249,8 +265,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     ax[2].spines['left'].set_visible(False)
 
     ax[3].set_title('Pressione', fontsize=12)
-    plot4 = ax[3].violinplot(comuni_scores, showmeans=True, showextrema=False,
-                             showmedians=False)
+    plot4 = ax[3].violinplot(comuni_scores, showmeans=True, showextrema=False, showmedians=False)
     Nx, Ny = 1, 1000
     imgArr = np.tile(np.linspace(0, 1, Ny), (Nx, 1)).T
     ymin, ymax = ax[3].get_ylim()
@@ -271,7 +286,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
                fancybox=True, shadow=True, ncol=5)
     fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
-                'pat_pnrr_performance_chart_provincia',
+                'pat_pnrr_performance_chart_provincia_04',
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
 
@@ -528,13 +543,13 @@ if __name__ == '__main__':
     print_comuni_performance_charts(pat_comuni_dataframe,
                                     comuni_durata_trends, comuni_arretrato_trends,
                                     comuni_performance_trends,
-                                    just_one=False, save_charts=True)
-    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    print_comuni_performance_list(just_one=False, save_tables=True)
-    print_comuni_pressure_list(comuni_performance_trends)
+                                    just_one=True, save_charts=True)
+    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    # print_comuni_performance_list(just_one=False, save_tables=True)
+    # print_comuni_pressure_list(comuni_performance_trends)
 
-    # TODO: scatter Pressione dei PdC/PdS: sfondo con criticita' legata al colore
     # TODO: mappa 166 comuni: localizzazione pressione
+    # TODO: andamento posizione nella lista di comuni per pressione complessiva
 
     # TODO: scatter durata/arretrato PdC/PdS, Pressione dei PdC/PdS: commento ai grafici (es. comuni senza arretrato)
     # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
