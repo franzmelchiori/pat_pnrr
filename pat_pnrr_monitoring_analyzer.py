@@ -2185,4 +2185,3 @@ if __name__ == '__main__':
     # print_baselines(pat_comuni_dataframe, model_baselines=True)
     # SHOW SURVEY TIMES
     # show_survey_times()
-v
