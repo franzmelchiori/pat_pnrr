@@ -13,8 +13,8 @@ import difflib
 import numpy as np
 import pandas as pd
 
-from pat_pnrr_mpe.pat_pnrr_comuni_excel_mapping import *
-from pat_pnrr_mpe import pat_pnrr_3a_misurazione as pat_pnrr_3a
+from .pat_pnrr_comuni_excel_mapping import *
+from . import pat_pnrr_3a_misurazione as pat_pnrr_3a
 
 
 def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, droprows,
