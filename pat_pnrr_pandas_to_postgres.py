@@ -150,26 +150,28 @@ if drop_tables:
     PDC.__table__.drop(engine)
     PDS.__table__.drop(engine)
     CDC.__table__.drop(engine)
+    Comune.__table__.drop(engine)
+    Monitoraggio.__table__.drop(engine)
 
 mapper_registry.metadata.create_all(engine)
 Base.metadata.create_all(engine)
 
 
 pat_comuni_dataframe = get_pat_comuni_dataframe()
-# with Session(engine) as session:
-#     for nome_comune in pat_comuni_dataframe.index:
-#         comune = Comune(nome_comune=nome_comune)
-#         session.add(comune)
-#         session.commit()
-#     session.close()
+with Session(engine) as session:
+    for nome_comune in pat_comuni_dataframe.index:
+        comune = Comune(nome_comune=nome_comune)
+        session.add(comune)
+        session.commit()
+    session.close()
 
 periodo_monitoraggi = ['2021q3-4', '2022q1-2', '2022q3-4', '2023q1-2']
-# with Session(engine) as session:
-#     for periodo_monitoraggio in periodo_monitoraggi:
-#         monitoraggio = Monitoraggio(periodo_monitoraggio=periodo_monitoraggio)
-#         session.add(monitoraggio)
-#         session.commit()
-#     session.close()
+with Session(engine) as session:
+    for periodo_monitoraggio in periodo_monitoraggi:
+        monitoraggio = Monitoraggio(periodo_monitoraggio=periodo_monitoraggio)
+        session.add(monitoraggio)
+        session.commit()
+    session.close()
 
 
 with Session(engine) as session:
