@@ -1,3 +1,18 @@
+"""
+    PAT-PNRR
+    Monitoraggio Procedimenti Edilizi
+    From Pandas to PostgreSQL
+    Francesco Melchiori, 2024
+"""
+"""
+    [cli] to dump the postgres db:
+        pg_dump -U postgres -d pat-pnrr > pat-pnrr.sql
+    [cli] to restore the postgres db:
+        createdb -U postgres -T template0 pat-pnrr
+        psql -U postgres -d pat-pnrr < pat-pnrr.sql
+"""
+
+
 import numpy as np
 from sqlalchemy import create_engine
 # from sqlalchemy import text
