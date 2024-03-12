@@ -14,7 +14,6 @@ import numpy as np
 import pandas as pd
 
 from .pat_pnrr_comuni_excel_mapping import *
-from . import pat_pnrr_4a_misurazione as pat_pnrr_4a
 
 
 def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, droprows,
