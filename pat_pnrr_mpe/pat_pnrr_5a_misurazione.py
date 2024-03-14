@@ -19,7 +19,7 @@ from .pat_pnrr_strumenti_misurazione import get_list_excel
 
 class ComuneExcel:
 
-    def __init__(self, name_excel_file, path_to_excel_files, path_to_mpe=None, comune_name='Test'):
+    def __init__(self, name_excel_file, path_to_excel_files, comune_name='Test', path_to_mpe=None):
         if not path_to_mpe:
             path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'    
         self.path_base = path_to_mpe + path_to_excel_files
@@ -746,7 +746,7 @@ def check_comuni_excel(path_to_excel_files, path_to_mpe=None):
     list_excel, list_xls = get_list_excel(path_to_excel_files, path_to_mpe)
     for name_excel_file, name_comune in list_excel:
         print('controllo il file excel del comune di {0}'.format(name_comune))
-        comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, path_to_mpe, name_comune)
+        comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, name_comune, path_to_mpe)
         comune_excel.check_headers_excel()
         comune_excel.check_dataframes_excel()
 
@@ -772,13 +772,13 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
         comuni_dataframe = comuni_dataframe_shelve['comuni_dataframe']
         comuni_dataframe_shelve.close()
     else:
-        comuni_excel_map = [(comune[0], comune[2])
-                            for comune in comuni_excel_map if comune[2] is not None]
+        comuni_excel_map = [(comune[0], comune[3])
+                            for comune in comuni_excel_map if comune[3] is not None]
         comuni_dataframe = []
         for name_comune, name_excel_file in comuni_excel_map:
             print(name_comune + ' | ' + sheet_name)
-            comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, path_to_mpe,
-                                       name_comune)
+            comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, name_comune,
+                                       path_to_mpe)
             comune_dataframe = comune_excel.get_comune_dataframe(sheet_name)
             comuni_dataframe.append(comune_dataframe)
         comuni_dataframe = pd.concat(comuni_dataframe, axis='rows', join='outer')
@@ -814,8 +814,8 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
         comuni_measure_dataframe = comuni_measure_dataframe_shelve['comuni_measure_dataframe']
         comuni_measure_dataframe_shelve.close()
     else:
-        comuni_excel_map = [(comune[0], comune[2])
-                            for comune in comuni_excel_map if comune[2] is not None]
+        comuni_excel_map = [(comune[0], comune[3])
+                            for comune in comuni_excel_map if comune[3] is not None]
         comuni_names = [comune[0] for comune in comuni_excel_map]
         comuni_measure_dataframe = []
         for name_comune, name_excel_file in comuni_excel_map:
@@ -826,8 +826,8 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
                 if type_pdc_ov:
                     message += ' | ' + 'Ordinari e in Variante'
             print(message)
-            comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, path_to_mpe,
-                                       name_comune)
+            comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, name_comune,
+                                       path_to_mpe)
             comune_measure_series = comune_excel.get_comune_measure_series(sheet_name, type_name,
                                                                            type_pdc_ov)
             comuni_measure_dataframe.append(comune_measure_series)
@@ -1049,15 +1049,15 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', None)
 
 
-    list_excel, list_xls = get_list_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
-    check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    # list_excel, list_xls = get_list_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
 
 
-    # comune_name = 'Cinte Tesino'
-    # name_excel_file = '059_CinteTesino_Edilizia.xls'
-    # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
-    # print('controllo il file excel del comune di {0}'.format(comune_name))
-    # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
+    comune_name = 'Aldeno'
+    name_excel_file = '003_Aldeno_PNRR Edilzia_Quinta_Rilevazione.xlsx'
+    path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
+    print('controllo il file excel del comune di {0}'.format(comune_name))
+    comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)  # TODO: fix ComuneExcel
     # comune.check_headers_excel()
     # comune.check_dataframes_excel()
     #
@@ -1070,16 +1070,16 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    load = True
-    comuni_dataframe_pdc_05 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-        load=load)
-    comuni_dataframe_pds_05 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-        load=load)
-    comuni_dataframe_cila_05 = get_comuni_dataframe(
-        comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-        load=load)
+    # load = False
+    # comuni_dataframe_pdc_05 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load)
+    # comuni_dataframe_pds_05 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load)
+    # comuni_dataframe_cila_05 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load)
 
     # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
