@@ -7,340 +7,23 @@
 
 import os
 import shelve
-# import datetime
 import difflib
 
 import numpy as np
 import pandas as pd
 
 from .pat_pnrr_comuni_excel_mapping import *
-
-
-def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, droprows,
-                        nrows=None, dtype=None, parse_dates=False):
-
-    dataframe_excel = pd.read_excel(path_file_excel, sheet_name=sheet_name, names=names,
-                                    usecols=usecols, skiprows=skiprows, nrows=nrows, dtype=dtype,
-                                    parse_dates=parse_dates, header=None)
-
-    for row in droprows:
-        dataframe_excel.drop(dataframe_excel.index[dataframe_excel[row].isna()], inplace=True)
-    dataframe_excel.drop_duplicates(inplace=True)
-    dataframe_excel.reset_index(drop=True, inplace=True)
-
-    return dataframe_excel
-
-
-def get_list_excel(path_base=None, missing=False):
-    if not path_base:
-        path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\'
-
-    list_xls = []
-    for file in os.listdir(path_base + 'pat_pnrr_mpe\\pat_pnrr_5a_misurazione_tabelle_comunali\\'):
-        if file.find('xls') != -1:
-            list_xls.append(file)
-
-    if missing:
-        list_excel = [comune[0] for comune in comuni_excel_map
-                      if comune[2] is None]
-    else:
-        list_excel = [(comune[2], comune[0]) for comune in comuni_excel_map
-                      if comune[2] is not None]
-
-    return list_excel, list_xls
-
-
-def check_comuni_excel():
-    list_excel, list_xls = get_list_excel()
-    for file, comune_name in list_excel:
-        print('controllo il file excel del comune di {0}'.format(comune_name))
-        comune_excel = ComuneExcel(file, comune_name)
-        comune_excel.check_headers_excel()
-        comune_excel.check_dataframes_excel()
-
-    return True
-
-
-def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=False):
-    if not path_base:
-        path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\'
-    path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_5a_misurazione_tabelle_comunali\\'
-
-    sheet_suffix = ''
-    if sheet_name == 'Permessi di Costruire':
-        sheet_suffix += '_pdc'
-    if sheet_name == 'Prov di sanatoria':
-        sheet_suffix += '_pds'
-    if sheet_name == 'Controllo CILA':
-        sheet_suffix += '_cila'
-
-    if load:
-        comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + sheet_suffix)
-        comuni_dataframe = comuni_dataframe_shelve['comuni_dataframe']
-        comuni_dataframe_shelve.close()
-    else:
-        comuni_excel_map = [(comune[0], comune[2])
-                            for comune in comuni_excel_map if comune[2] is not None]
-        comuni_dataframe = []
-        for comune_name, path_file in comuni_excel_map:
-            print(comune_name + ' | ' + sheet_name)
-            comune = ComuneExcel(path_file, comune_name)
-            comune_dataframe = comune.get_comune_dataframe(sheet_name)
-            comuni_dataframe.append(comune_dataframe)
-        comuni_dataframe = pd.concat(comuni_dataframe, axis='rows', join='outer')
-        comuni_dataframe.reset_index(drop=True, inplace=True)
-
-        comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + sheet_suffix)
-        comuni_dataframe_shelve['comuni_dataframe'] = comuni_dataframe
-        comuni_dataframe_shelve.close()
-
-    return comuni_dataframe
-
-
-def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, type_name=False, type_pdc_ov=True,
-                                 load=True, path_base=False):
-    if not path_base:
-        path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\'
-    path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_5a_misurazione_tabelle_comunali\\'
-
-    sheet_suffix = ''
-    if sheet_name == 'Permessi di Costruire':
-        if type_pdc_ov:
-            sheet_suffix += '_pdc_ov'
-        else:
-            sheet_suffix += '_pdc'
-    if sheet_name == 'Prov di sanatoria':
-        sheet_suffix += '_pds'
-    if sheet_name == 'Controllo CILA':
-        sheet_suffix += '_cila'
-
-    if load:
-        comuni_measure_dataframe_shelve = shelve.open(
-            path_shelve + 'comuni_measure_dataframe' + sheet_suffix)
-        comuni_measure_dataframe = comuni_measure_dataframe_shelve['comuni_measure_dataframe']
-        comuni_measure_dataframe_shelve.close()
-    else:
-        comuni_excel_map = [(comune[0], comune[2])
-                            for comune in comuni_excel_map if comune[2] is not None]
-        comuni_names = [comune[0] for comune in comuni_excel_map]
-        comuni_measure_dataframe = []
-        for comune_name, path_file in comuni_excel_map:
-            message = comune_name + ' | ' + sheet_name
-            if type_name:
-                message += ' | ' + type_name
-            if sheet_name == 'Permessi di Costruire':
-                if type_pdc_ov:
-                    message += ' | ' + 'Ordinari e in Variante'
-            print(message)
-            comune = ComuneExcel(path_file, comune_name)
-            comune_measure_series = comune.get_comune_measure_series(sheet_name, type_name,
-                                                                     type_pdc_ov)
-            comuni_measure_dataframe.append(comune_measure_series)
-        comuni_measure_dataframe = pd.DataFrame(comuni_measure_dataframe, index=comuni_names)
-
-        comuni_measure_dataframe_shelve = shelve.open(
-            path_shelve + 'comuni_measure_dataframe' + sheet_suffix)
-        comuni_measure_dataframe_shelve['comuni_measure_dataframe'] = comuni_measure_dataframe
-        comuni_measure_dataframe_shelve.close()
-
-    return comuni_measure_dataframe
-
-
-def get_comuni_dataframes(comuni_excel_map, load=True):
-
-    get_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire', load=load)
-    get_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria', load=load)
-    get_comuni_dataframe(comuni_excel_map, 'Controllo CILA', load=load)
-
-    return True
-
-
-def get_comuni_measures_dataframe(comuni_excel_map, load=True):
-
-    comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=True, load=load)
-    comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False, load=load)
-    comuni_measure_dataframe_pds = get_comuni_measure_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', load=load)
-    comuni_measure_dataframe_cila = get_comuni_measure_dataframe(
-        comuni_excel_map, 'Controllo CILA', load=load)
-
-    comuni_measures_dataframe = pd.concat(
-        [comuni_measure_dataframe_pdc_ov,
-         comuni_measure_dataframe_pdc,
-         comuni_measure_dataframe_pds,
-         comuni_measure_dataframe_cila],
-        axis='columns', join='outer')
-
-    return comuni_measures_dataframe
-
-
-def get_comuni_measure(comuni_excel_map, sheet_name, type_name=False, type_pdc_ov=True,
-                       measure_period='2023q3-4', load=True):
-
-    comuni_measure_dataframe = get_comuni_measure_dataframe(
-        comuni_excel_map=comuni_excel_map, sheet_name=sheet_name, type_name=type_name,
-        type_pdc_ov=type_pdc_ov, load=load)
-
-    if sheet_name == 'Permessi di Costruire':
-        if type_pdc_ov:
-            measure_labels = [
-                'numero_permessi_costruire_ov_conclusi_con_silenzio-assenso',
-                'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso',
-                'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_con_sospensioni',
-                'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
-                'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso',
-                'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati',
-                'numero_permessi_costruire_ov_avviati',
-                'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo']
-        else:
-            measure_labels = [
-                'numero_permessi_costruire_conclusi_con_silenzio-assenso',
-                'numero_permessi_costruire_conclusi_con_provvedimento_espresso',
-                'numero_permessi_costruire_conclusi_con_provvedimento_espresso_con_sospensioni',
-                'numero_permessi_costruire_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
-                'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso',
-                'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati',
-                'numero_permessi_costruire_avviati',
-                'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo']
-    elif sheet_name == 'Prov di sanatoria':
-        measure_labels = [
-            'numero_sanatorie_concluse_con_silenzio-assenso',
-            'numero_sanatorie_concluse_con_provvedimento_espresso',
-            'numero_sanatorie_concluse_con_provvedimento_espresso_con_sospensioni',
-            'numero_sanatorie_concluse_con_provvedimento_espresso_con_conferenza_servizi',
-            'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso',
-            'giornate_durata_mediana_termine_massimo_sanatorie_avviate',
-            'numero_sanatorie_avviate',
-            'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo']
-    elif sheet_name == 'Controllo CILA':
-        measure_labels = [
-            'numero_controlli_cila_conclusi_con_silenzio-assenso',
-            'numero_controlli_cila_conclusi_con_provvedimento_espresso',
-            'numero_controlli_cila_conclusi_con_provvedimento_espresso_con_sospensioni',
-            'numero_controlli_cila_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
-            'giornate_durata_media_controlli_cila_conclusi_con_provvedimento_espresso',
-            'giornate_durata_mediana_termine_massimo_controlli_cila_avviati',
-            'numero_controlli_cila_avviati',
-            'numero_controlli_cila_arretrati_non_conclusi_scaduto_termine_massimo']
-    else:
-        measure_labels = [
-            'numero_pratiche_concluse_con_silenzio-assenso',
-            'numero_pratiche_concluse_con_provvedimento_espresso',
-            'numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni',
-            'numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi',
-            'giornate_durata_media_pratiche_concluse_con_provvedimento_espresso',
-            'giornate_durata_mediana_termine_massimo_pratiche_avviate',
-            'numero_pratiche_avviate',
-            'numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo']
-    measure_labels = [label + '_' + measure_period for label in measure_labels]
-
-    comuni_measure = []
-    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[0]].sum())
-    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[1]].sum())
-    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[2]].sum())
-    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[3]].sum())
-    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[4]].mean())
-    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[5]].median())
-    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[6]].sum())
-    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[7]].sum())
-
-    comuni_measure = pd.Series(comuni_measure, index=measure_labels)
-    message = 'Misurazione | ' + sheet_name
-    if type_name:
-        message += ' | ' + type_name
-    if sheet_name == 'Permessi di Costruire':
-        if type_pdc_ov:
-            message += ' | ' + 'Ordinari e in Variante'
-    print()
-    print(message)
-    print(comuni_measure)
-    print('{0}/166 comuni'.format(comuni_measure_dataframe.__len__()))
-    print()
-
-    return comuni_measure
-
-
-def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
-
-    comuni_pdc_measure = get_comuni_measure(
-        comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False)
-    comuni_pdc_ov_measure = get_comuni_measure(
-        comuni_excel_map, 'Permessi di Costruire')
-    comuni_pds_measure = get_comuni_measure(
-        comuni_excel_map, 'Prov di sanatoria')
-    comuni_cila_measure = get_comuni_measure(
-        comuni_excel_map, 'Controllo CILA')
-
-    if save_tex:
-        measurement_04_pratiche_header = [
-            'Concluse con SA',
-            'Concluse',
-            'con sospensioni',
-            'con CdS',
-            'Durata [gg]',
-            'Termine [gg]',
-            'Avviate',
-            'Arretrate']
-        tex_file_header = measurement_04_pratiche_header
-
-        comuni_pdc_measure.index = measurement_04_pratiche_header
-        comuni_pdc_ov_measure.index = measurement_04_pratiche_header
-        comuni_pds_measure.index = measurement_04_pratiche_header
-        comuni_cila_measure.index = measurement_04_pratiche_header
-
-        measurement_04_series = {
-            'Permesso di Costruire OV': comuni_pdc_ov_measure.apply(np.rint).astype(int),
-            'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int)}
-        measurement_04 = pd.DataFrame(measurement_04_series).T
-
-        measurement_04b_series = {
-            'Permesso di Costruire': comuni_pdc_measure.apply(np.rint).astype(int),
-            'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int),
-            'Controllo della CILA': comuni_cila_measure.apply(np.rint).astype(int)}
-        measurement_04b = pd.DataFrame(measurement_04b_series).T
-
-        tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
-                         'pat-pnrr_mpe_2023q3-4.tex')
-        with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
-            measurement_04.columns = tex_file_header
-            baseline_styler = measurement_04.style
-            baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
-            caption = 'PAT-PNRR | Procedimenti Edilizi | Misurazione 2023q3-4'
-            if temp_tex:
-                caption += ' | PARZIALE'
-            table_tex_content = baseline_styler.to_latex(
-                caption=caption, label='pat-pnrr_mpe_2023q3-4', position='!htbp',
-                position_float="centering", hrules=True)
-            table_tex_file.write(table_tex_content)
-
-        tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
-                         'pat-pnrr_mpe_2023q3-4b.tex')
-        with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
-            measurement_04b.columns = tex_file_header
-            baseline_styler = measurement_04b.style
-            baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
-            caption='PAT-PNRR | Procedimenti Edilizi | Misurazione 2023q3-4b'
-            if temp_tex:
-                caption += ' | PARZIALE'
-            table_tex_content = baseline_styler.to_latex(
-                caption=caption, label='pat-pnrr_mpe_2023q3-4b', position='!htbp',
-                position_float="centering", hrules=True)
-            table_tex_file.write(table_tex_content)
-
-    return True
+from .pat_pnrr_strumenti_misurazione import get_dataframe_excel
+from .pat_pnrr_strumenti_misurazione import get_list_excel
 
 
 class ComuneExcel:
 
-    def __init__(self, path_file, comune_name='Test', path_base=''):
-        if path_base == '':
-            self.path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\' \
-                             'pat_pnrr_mpe\\pat_pnrr_5a_misurazione_tabelle_comunali\\'
-        else:
-            self.path_base = path_base
-        self.path_file = path_file
+    def __init__(self, name_excel_file, path_to_excel_files, path_to_mpe=None, comune_name='Test'):
+        if not path_to_mpe:
+            path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'    
+        self.path_base = path_to_mpe + path_to_excel_files
+        self.path_file = name_excel_file
         self.excel_path = self.path_base + self.path_file
         self.comune_name = comune_name
         self.excel_structure = {
@@ -1056,6 +739,308 @@ class ComuneExcel:
         return comune_measure_series
 
 
+def check_comuni_excel(path_to_excel_files, path_to_mpe=None):
+    if not path_to_mpe:
+        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+    
+    list_excel, list_xls = get_list_excel(path_to_excel_files, path_to_mpe)
+    for name_excel_file, name_comune in list_excel:
+        print('controllo il file excel del comune di {0}'.format(name_comune))
+        comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, path_to_mpe, name_comune)
+        comune_excel.check_headers_excel()
+        comune_excel.check_dataframes_excel()
+
+    return True
+
+
+def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load=True,
+                         path_to_mpe=None):
+    if not path_to_mpe:
+        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+    path_shelve = path_to_mpe + path_to_excel_files
+
+    sheet_suffix = ''
+    if sheet_name == 'Permessi di Costruire':
+        sheet_suffix += '_pdc'
+    if sheet_name == 'Prov di sanatoria':
+        sheet_suffix += '_pds'
+    if sheet_name == 'Controllo CILA':
+        sheet_suffix += '_cila'
+
+    if load:
+        comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + sheet_suffix)
+        comuni_dataframe = comuni_dataframe_shelve['comuni_dataframe']
+        comuni_dataframe_shelve.close()
+    else:
+        comuni_excel_map = [(comune[0], comune[2])
+                            for comune in comuni_excel_map if comune[2] is not None]
+        comuni_dataframe = []
+        for name_comune, name_excel_file in comuni_excel_map:
+            print(name_comune + ' | ' + sheet_name)
+            comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, path_to_mpe,
+                                       name_comune)
+            comune_dataframe = comune_excel.get_comune_dataframe(sheet_name)
+            comuni_dataframe.append(comune_dataframe)
+        comuni_dataframe = pd.concat(comuni_dataframe, axis='rows', join='outer')
+        comuni_dataframe.reset_index(drop=True, inplace=True)
+
+        comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + sheet_suffix)
+        comuni_dataframe_shelve['comuni_dataframe'] = comuni_dataframe
+        comuni_dataframe_shelve.close()
+
+    return comuni_dataframe
+
+
+def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_files,
+                                 type_name=False, type_pdc_ov=True, load=True, path_to_mpe=None):
+    if not path_to_mpe:
+        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+    path_shelve = path_to_mpe + path_to_excel_files
+
+    sheet_suffix = ''
+    if sheet_name == 'Permessi di Costruire':
+        if type_pdc_ov:
+            sheet_suffix += '_pdc_ov'
+        else:
+            sheet_suffix += '_pdc'
+    if sheet_name == 'Prov di sanatoria':
+        sheet_suffix += '_pds'
+    if sheet_name == 'Controllo CILA':
+        sheet_suffix += '_cila'
+
+    if load:
+        comuni_measure_dataframe_shelve = shelve.open(
+            path_shelve + 'comuni_measure_dataframe' + sheet_suffix)
+        comuni_measure_dataframe = comuni_measure_dataframe_shelve['comuni_measure_dataframe']
+        comuni_measure_dataframe_shelve.close()
+    else:
+        comuni_excel_map = [(comune[0], comune[2])
+                            for comune in comuni_excel_map if comune[2] is not None]
+        comuni_names = [comune[0] for comune in comuni_excel_map]
+        comuni_measure_dataframe = []
+        for name_comune, name_excel_file in comuni_excel_map:
+            message = name_comune + ' | ' + sheet_name
+            if type_name:
+                message += ' | ' + type_name
+            if sheet_name == 'Permessi di Costruire':
+                if type_pdc_ov:
+                    message += ' | ' + 'Ordinari e in Variante'
+            print(message)
+            comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, path_to_mpe,
+                                       name_comune)
+            comune_measure_series = comune_excel.get_comune_measure_series(sheet_name, type_name,
+                                                                           type_pdc_ov)
+            comuni_measure_dataframe.append(comune_measure_series)
+        comuni_measure_dataframe = pd.DataFrame(comuni_measure_dataframe, index=comuni_names)
+
+        comuni_measure_dataframe_shelve = shelve.open(
+            path_shelve + 'comuni_measure_dataframe' + sheet_suffix)
+        comuni_measure_dataframe_shelve['comuni_measure_dataframe'] = comuni_measure_dataframe
+        comuni_measure_dataframe_shelve.close()
+
+    return comuni_measure_dataframe
+
+
+def get_comuni_dataframes(comuni_excel_map, load=True):
+
+    get_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire',
+                         'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load)
+    get_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria',
+                         'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load)
+    get_comuni_dataframe(comuni_excel_map, 'Controllo CILA',
+                         'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load)
+
+    return True
+
+
+def get_comuni_measures_dataframe(comuni_excel_map, load=True):
+
+    comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(comuni_excel_map,
+        'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        type_pdc_ov=True, load=load)
+    comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(comuni_excel_map,
+        'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        type_pdc_ov=False, load=load)
+    comuni_measure_dataframe_pds = get_comuni_measure_dataframe(comuni_excel_map,
+        'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        load=load)
+    comuni_measure_dataframe_cila = get_comuni_measure_dataframe(comuni_excel_map,
+        'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        load=load)
+
+    comuni_measures_dataframe = pd.concat(
+        [comuni_measure_dataframe_pdc_ov,
+         comuni_measure_dataframe_pdc,
+         comuni_measure_dataframe_pds,
+         comuni_measure_dataframe_cila],
+        axis='columns', join='outer')
+
+    return comuni_measures_dataframe
+
+
+def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_name=False,
+                       type_pdc_ov=True, measure_period='2023q3-4', load=True, path_to_mpe=None):
+    if not path_to_mpe:
+        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+
+    comuni_measure_dataframe = get_comuni_measure_dataframe(
+        comuni_excel_map=comuni_excel_map, sheet_name=sheet_name,
+        path_to_excel_files=path_to_excel_files, type_name=type_name, type_pdc_ov=type_pdc_ov,
+        load=load, path_to_mpe=path_to_mpe)
+
+    if sheet_name == 'Permessi di Costruire':
+        if type_pdc_ov:
+            measure_labels = [
+                'numero_permessi_costruire_ov_conclusi_con_silenzio-assenso',
+                'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso',
+                'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_con_sospensioni',
+                'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
+                'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso',
+                'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati',
+                'numero_permessi_costruire_ov_avviati',
+                'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo']
+        else:
+            measure_labels = [
+                'numero_permessi_costruire_conclusi_con_silenzio-assenso',
+                'numero_permessi_costruire_conclusi_con_provvedimento_espresso',
+                'numero_permessi_costruire_conclusi_con_provvedimento_espresso_con_sospensioni',
+                'numero_permessi_costruire_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
+                'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso',
+                'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati',
+                'numero_permessi_costruire_avviati',
+                'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo']
+    elif sheet_name == 'Prov di sanatoria':
+        measure_labels = [
+            'numero_sanatorie_concluse_con_silenzio-assenso',
+            'numero_sanatorie_concluse_con_provvedimento_espresso',
+            'numero_sanatorie_concluse_con_provvedimento_espresso_con_sospensioni',
+            'numero_sanatorie_concluse_con_provvedimento_espresso_con_conferenza_servizi',
+            'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso',
+            'giornate_durata_mediana_termine_massimo_sanatorie_avviate',
+            'numero_sanatorie_avviate',
+            'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo']
+    elif sheet_name == 'Controllo CILA':
+        measure_labels = [
+            'numero_controlli_cila_conclusi_con_silenzio-assenso',
+            'numero_controlli_cila_conclusi_con_provvedimento_espresso',
+            'numero_controlli_cila_conclusi_con_provvedimento_espresso_con_sospensioni',
+            'numero_controlli_cila_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
+            'giornate_durata_media_controlli_cila_conclusi_con_provvedimento_espresso',
+            'giornate_durata_mediana_termine_massimo_controlli_cila_avviati',
+            'numero_controlli_cila_avviati',
+            'numero_controlli_cila_arretrati_non_conclusi_scaduto_termine_massimo']
+    else:
+        measure_labels = [
+            'numero_pratiche_concluse_con_silenzio-assenso',
+            'numero_pratiche_concluse_con_provvedimento_espresso',
+            'numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni',
+            'numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi',
+            'giornate_durata_media_pratiche_concluse_con_provvedimento_espresso',
+            'giornate_durata_mediana_termine_massimo_pratiche_avviate',
+            'numero_pratiche_avviate',
+            'numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo']
+    measure_labels = [label + '_' + measure_period for label in measure_labels]
+
+    comuni_measure = []
+    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[0]].sum())
+    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[1]].sum())
+    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[2]].sum())
+    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[3]].sum())
+    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[4]].mean())
+    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[5]].median())
+    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[6]].sum())
+    comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[7]].sum())
+
+    comuni_measure = pd.Series(comuni_measure, index=measure_labels)
+    message = 'Misurazione | ' + sheet_name
+    if type_name:
+        message += ' | ' + type_name
+    if sheet_name == 'Permessi di Costruire':
+        if type_pdc_ov:
+            message += ' | ' + 'Ordinari e in Variante'
+    print()
+    print(message)
+    print(comuni_measure)
+    print('{0}/166 comuni'.format(comuni_measure_dataframe.__len__()))
+    print()
+
+    return comuni_measure
+
+
+def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
+
+    comuni_pdc_measure = get_comuni_measure(
+        comuni_excel_map, 'Permessi di Costruire',
+        'pat_pnrr_5a_misurazione_tabelle_comunali\\', type_pdc_ov=False)
+    comuni_pdc_ov_measure = get_comuni_measure(
+        comuni_excel_map, 'Permessi di Costruire',
+        'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
+    comuni_pds_measure = get_comuni_measure(
+        comuni_excel_map, 'Prov di sanatoria',
+        'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
+    comuni_cila_measure = get_comuni_measure(
+        comuni_excel_map, 'Controllo CILA',
+        'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
+
+    if save_tex:
+        measurement_04_pratiche_header = [
+            'Concluse con SA',
+            'Concluse',
+            'con sospensioni',
+            'con CdS',
+            'Durata [gg]',
+            'Termine [gg]',
+            'Avviate',
+            'Arretrate']
+        tex_file_header = measurement_04_pratiche_header
+
+        comuni_pdc_measure.index = measurement_04_pratiche_header
+        comuni_pdc_ov_measure.index = measurement_04_pratiche_header
+        comuni_pds_measure.index = measurement_04_pratiche_header
+        comuni_cila_measure.index = measurement_04_pratiche_header
+
+        measurement_04_series = {
+            'Permesso di Costruire OV': comuni_pdc_ov_measure.apply(np.rint).astype(int),
+            'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int)}
+        measurement_04 = pd.DataFrame(measurement_04_series).T
+
+        measurement_04b_series = {
+            'Permesso di Costruire': comuni_pdc_measure.apply(np.rint).astype(int),
+            'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int),
+            'Controllo della CILA': comuni_cila_measure.apply(np.rint).astype(int)}
+        measurement_04b = pd.DataFrame(measurement_04b_series).T
+
+        tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
+                         'pat-pnrr_mpe_2023q3-4.tex')
+        with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
+            measurement_04.columns = tex_file_header
+            baseline_styler = measurement_04.style
+            baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
+            caption = 'PAT-PNRR | Procedimenti Edilizi | Misurazione 2023q3-4'
+            if temp_tex:
+                caption += ' | PARZIALE'
+            table_tex_content = baseline_styler.to_latex(
+                caption=caption, label='pat-pnrr_mpe_2023q3-4', position='!htbp',
+                position_float="centering", hrules=True)
+            table_tex_file.write(table_tex_content)
+
+        tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
+                         'pat-pnrr_mpe_2023q3-4b.tex')
+        with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
+            measurement_04b.columns = tex_file_header
+            baseline_styler = measurement_04b.style
+            baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
+            caption='PAT-PNRR | Procedimenti Edilizi | Misurazione 2023q3-4b'
+            if temp_tex:
+                caption += ' | PARZIALE'
+            table_tex_content = baseline_styler.to_latex(
+                caption=caption, label='pat-pnrr_mpe_2023q3-4b', position='!htbp',
+                position_float="centering", hrules=True)
+            table_tex_file.write(table_tex_content)
+
+    return True
+
+
 if __name__ == '__main__':
 
     pd.set_option('display.max_rows', None)
@@ -1064,14 +1049,15 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', None)
 
 
-    # list_excel, list_xls = get_list_excel()
-    # check_comuni_excel()
+    list_excel, list_xls = get_list_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
 
 
     # comune_name = 'Cinte Tesino'
-    # file = '059_CinteTesino_Edilizia.xls'
+    # name_excel_file = '059_CinteTesino_Edilizia.xls'
+    # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
-    # comune = ComuneExcel(file, comune_name)
+    # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
     # comune.check_headers_excel()
     # comune.check_dataframes_excel()
     #
@@ -1086,38 +1072,53 @@ if __name__ == '__main__':
 
     load = True
     comuni_dataframe_pdc_05 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', load=load)
+        comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        load=load)
     comuni_dataframe_pds_05 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', load=load)
+        comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        load=load)
     comuni_dataframe_cila_05 = get_comuni_dataframe(
-        comuni_excel_map, 'Controllo CILA', load=load)
+        comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        load=load)
 
     # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=True, load=load)
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     type_pdc_ov=True, load=load)
     # comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False, load=load)
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     type_pdc_ov=False, load=load)
     # comuni_measure_dataframe_pds = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', load=load)
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load)
     # comuni_measure_dataframe_cila = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Controllo CILA', load=load)
+    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load)
 
 
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC ordinario', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC in variante', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC in deroga', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC convenzionato', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC asseverato', type_pdc_ov=False, load=False)
     #
     # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
+    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC in Sanatoria', load=False)
     # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
+    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #                    type_name='Provvedimenti in Sanatoria', load=False)
     # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
+    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #                    type_name='Regolarizzazione', load=False)
 
 
