@@ -13,8 +13,40 @@ import numpy as np
 import pandas as pd
 
 from .pat_pnrr_comuni_excel_mapping import *
-from .pat_pnrr_strumenti_misurazione import get_dataframe_excel
-from .pat_pnrr_strumenti_misurazione import get_list_excel
+
+
+def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, droprows,
+                        nrows=None, dtype=None, parse_dates=False):
+
+    dataframe_excel = pd.read_excel(path_file_excel, sheet_name=sheet_name, names=names,
+                                    usecols=usecols, skiprows=skiprows, nrows=nrows, dtype=dtype,
+                                    parse_dates=parse_dates, header=None)
+
+    for row in droprows:
+        dataframe_excel.drop(dataframe_excel.index[dataframe_excel[row].isna()], inplace=True)
+    dataframe_excel.drop_duplicates(inplace=True)
+    dataframe_excel.reset_index(drop=True, inplace=True)
+
+    return dataframe_excel
+
+
+def get_list_excel(path_to_excel_files, path_to_mpe=None, missing=False):
+    if not path_to_mpe:
+        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+
+    list_xls = []
+    for file in os.listdir(path_to_mpe + path_to_excel_files):
+        if file.find('xls') != -1:
+            list_xls.append(file)
+
+    if missing:
+        list_excel = [comune[0] for comune in comuni_excel_map
+                      if comune[3] is None]
+    else:
+        list_excel = [(comune[3], comune[0]) for comune in comuni_excel_map
+                      if comune[3] is not None]
+
+    return list_excel, list_xls
 
 
 class ComuneExcel:
@@ -27,21 +59,21 @@ class ComuneExcel:
         self.excel_path = self.path_base + self.path_file
         self.comune_name = comune_name
         self.excel_structure = {
-            'ISTRUZIONI': {
-                'column_labels': [
-                    'organico'  # string | object
-                ],
-                'column_indexes': [
-                    2
-                ],
-                'row_skips': 4,
-                'column_mandatory': [
-                ],
-                'health_header_checks': [
-                ],
-                'health_na_content_checks': [
-                ]
-            },
+            # 'ISTRUZIONI': {
+            #     'column_labels': [
+            #         'organico'  # string | object
+            #     ],
+            #     'column_indexes': [
+            #         2
+            #     ],
+            #     'row_skips': 4,
+            #     'column_mandatory': [
+            #     ],
+            #     'health_header_checks': [
+            #     ],
+            #     'health_na_content_checks': [
+            #     ]
+            # },
             'Permessi di Costruire': {
                 'column_labels': [
                     'tipologia_pratica',  # string | object
@@ -184,7 +216,7 @@ class ComuneExcel:
 
             for health_na_content_check in health_na_content_checks:
                 if sum(dataframe_excel[health_na_content_check].isna()) > 0:
-                    print('{0} assente nel foglio {1} del .csv di {2}'.format(
+                    print('{0} assente nel foglio {1} del file Excel di {2}'.format(
                         health_na_content_check, sheet_name, self.comune_name))
                     # print('[!] excel na content health check')
                     # print('    ' + 'in the file [' + self.path_file + ']')
@@ -248,6 +280,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('20/07/203', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '20/07/2023'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
                     comune_dataframe['data_fine_pratica'],
@@ -386,6 +421,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('09/10(2023', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '09/10/2023'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
                     comune_dataframe['data_fine_pratica'],
@@ -506,6 +544,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('08/092023', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '08/09/2023'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
                     comune_dataframe['data_fine_pratica'],
@@ -1053,24 +1094,24 @@ if __name__ == '__main__':
     # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
 
 
-    comune_name = 'Aldeno'
-    name_excel_file = '003_Aldeno_PNRR Edilzia_Quinta_Rilevazione.xlsx'
-    path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
-    print('controllo il file excel del comune di {0}'.format(comune_name))
-    comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)  # TODO: fix ComuneExcel
+    # comune_name = 'Bieno'
+    # name_excel_file = '015_Bieno_Edilizia_V.xlsx'
+    # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
+    # print('controllo il file excel del comune di {0}'.format(comune_name))
+    # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)  # TODO: fix ComuneExcel
     # comune.check_headers_excel()
     # comune.check_dataframes_excel()
-    #
+    # 
     # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
     # comune_dataframe_pds = comune.get_comune_dataframe('Prov di sanatoria')
     # comune_dataframe_cila = comune.get_comune_dataframe('Controllo CILA')
-    #
+    # 
     # comune_measure_series_pdc = comune.get_comune_measure_series('Permessi di Costruire')
     # comune_measure_series_pds = comune.get_comune_measure_series('Prov di sanatoria')
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    # load = False
+    # load = True
     # comuni_dataframe_pdc_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
@@ -1122,6 +1163,6 @@ if __name__ == '__main__':
     #                    type_name='Regolarizzazione', load=False)
 
 
-    # get_comuni_dataframes(comuni_excel_map, load=False)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    # get_comuni_measures(comuni_excel_map)
+    get_comuni_dataframes(comuni_excel_map, load=False)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures(comuni_excel_map)
