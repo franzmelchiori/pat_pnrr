@@ -59,21 +59,28 @@ class ComuneExcel:
         self.excel_path = self.path_base + self.path_file
         self.comune_name = comune_name
         self.excel_structure = {
-            # 'ISTRUZIONI': {
-            #     'column_labels': [
-            #         'organico'  # string | object
-            #     ],
-            #     'column_indexes': [
-            #         2
-            #     ],
-            #     'row_skips': 4,
-            #     'column_mandatory': [
-            #     ],
-            #     'health_header_checks': [
-            #     ],
-            #     'health_na_content_checks': [
-            #     ]
-            # },
+            'ORGANICO': {
+                'column_labels': [
+                    'tipo_dipendente',  # string | object
+                    'ore_settimana',  # integer | float
+                    'percentuale_ore_edilizia_privata'  # integer | float
+                ],
+                'column_indexes': [
+                    2, 3, 9
+                ],
+                'row_skips': 9,
+                'column_mandatory': [
+                    'tipo_dipendente',
+                    'ore_settimana'
+                ],
+                'health_header_checks': [
+                    'tecnico',
+                    'ore',
+                    'privata',
+                ],
+                'health_na_content_checks': [
+                ]
+            },
             'Permessi di Costruire': {
                 'column_labels': [
                     'tipologia_pratica',  # string | object
@@ -234,11 +241,15 @@ class ComuneExcel:
 
         comune_dataframe = get_dataframe_excel(self.excel_path, sheet_name, names, usecols,
                                               skiprows, droprows, dtype=None)
-
-        comune_dataframe.insert(0, 'comune', self.comune_name)
-        comune_dataframe.dropna(axis=0, subset='id_pratica', inplace=True, ignore_index=True)
-        comune_dataframe.dropna(axis=0, subset='data_inizio_pratica', inplace=True,
-                                ignore_index=True)
+        
+        if sheet_name == 'ORGANICO':
+            comune_dataframe.insert(0, 'comune', self.comune_name)
+            comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'].fillna(1, inplace=True)
+        else:
+            comune_dataframe.insert(0, 'comune', self.comune_name)
+            comune_dataframe.dropna(axis=0, subset='id_pratica', inplace=True, ignore_index=True)
+            comune_dataframe.dropna(axis=0, subset='data_inizio_pratica', inplace=True,
+                                    ignore_index=True)
 
         if sheet_name == 'Permessi di Costruire':
             comune_dataframe.loc[:, 'tipologia_pratica'].fillna(types_pdc[0], inplace=True)
@@ -801,6 +812,8 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
+    if sheet_name == 'ORGANICO':
+        sheet_suffix += '_org'
     if sheet_name == 'Permessi di Costruire':
         sheet_suffix += '_pdc'
     if sheet_name == 'Prov di sanatoria':
@@ -1094,14 +1107,15 @@ if __name__ == '__main__':
     # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
 
 
-    # comune_name = 'Bieno'
-    # name_excel_file = '015_Bieno_Edilizia_V.xlsx'
+    # comune_name = 'Aldeno'
+    # name_excel_file = '003_Aldeno_PNRR Edilzia_Quinta_Rilevazione.xlsx'
     # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
-    # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)  # TODO: fix ComuneExcel
+    # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
     # comune.check_headers_excel()
     # comune.check_dataframes_excel()
-    # 
+
+    # comuni_dataframe_org = comune.get_comune_dataframe('ORGANICO')
     # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
     # comune_dataframe_pds = comune.get_comune_dataframe('Prov di sanatoria')
     # comune_dataframe_cila = comune.get_comune_dataframe('Controllo CILA')
@@ -1112,6 +1126,9 @@ if __name__ == '__main__':
 
 
     # load = True
+    # comuni_dataframe_org_05 = get_comuni_dataframe(
+    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load)
     # comuni_dataframe_pdc_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
@@ -1163,6 +1180,6 @@ if __name__ == '__main__':
     #                    type_name='Regolarizzazione', load=False)
 
 
-    get_comuni_dataframes(comuni_excel_map, load=False)
-    get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    get_comuni_measures(comuni_excel_map)
+    # get_comuni_dataframes(comuni_excel_map, load=False)
+    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    # get_comuni_measures(comuni_excel_map)
