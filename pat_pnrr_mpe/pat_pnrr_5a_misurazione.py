@@ -245,6 +245,25 @@ class ComuneExcel:
         if sheet_name == 'ORGANICO':
             comune_dataframe.insert(0, 'comune', self.comune_name)
             comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'].fillna(1, inplace=True)
+            if comune_dataframe.loc[:, 'ore_settimana'].dtype.str[1] in ['O', 'M']:
+                change_mask = comune_dataframe.loc[:, 'ore_settimana'].astype(
+                    'string').str.contains('36 ore', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'ore_settimana'] = 36
+            try:
+                comune_dataframe['ore_settimana'] = pd.to_numeric(
+                    comune_dataframe['ore_settimana'],
+                    errors='raise', downcast='integer')
+            except:
+                print('ore_settimana is UNKNOWN: ')
+                print(comune_dataframe.loc[:, 'ore_settimana'])
+
+            try:
+                comune_dataframe['percentuale_ore_edilizia_privata'] = pd.to_numeric(
+                    comune_dataframe['percentuale_ore_edilizia_privata'],
+                    errors='raise', downcast='integer')
+            except:
+                print('percentuale_ore_edilizia_privata is UNKNOWN: ')
+                print(comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'])
         else:
             comune_dataframe.insert(0, 'comune', self.comune_name)
             comune_dataframe.dropna(axis=0, subset='id_pratica', inplace=True, ignore_index=True)
@@ -1107,8 +1126,8 @@ if __name__ == '__main__':
     # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
 
 
-    # comune_name = 'Aldeno'
-    # name_excel_file = '003_Aldeno_PNRR Edilzia_Quinta_Rilevazione.xlsx'
+    # comune_name = 'Casel Ivano'
+    # name_excel_file = '240_Castel Ivano_Edilizia_V.xlsx'
     # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
