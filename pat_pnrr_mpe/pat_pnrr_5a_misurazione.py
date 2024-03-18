@@ -1144,7 +1144,7 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    # load = True
+    # load = False
     # comuni_dataframe_org_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
