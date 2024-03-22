@@ -572,6 +572,9 @@ class ComuneExcel:
                     'string').str.contains('non concluso', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = None
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('-', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = None
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('08/092023', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '08/09/2023'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
@@ -1123,7 +1126,6 @@ if __name__ == '__main__':
 
 
     # list_excel, list_xls = get_list_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
-    # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
 
 
     # comune_name = 'Casel Ivano'
@@ -1199,6 +1201,7 @@ if __name__ == '__main__':
     #                    type_name='Regolarizzazione', load=False)
 
 
+    # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
     # get_comuni_dataframes(comuni_excel_map, load=False)
     # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    # get_comuni_measures(comuni_excel_map)
+    get_comuni_measures(comuni_excel_map)
