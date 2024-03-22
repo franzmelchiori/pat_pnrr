@@ -919,6 +919,8 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
 
 def get_comuni_dataframes(comuni_excel_map, load=True):
 
+    get_comuni_dataframe(comuni_excel_map, 'ORGANICO',
+                         'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load)
     get_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire',
                          'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load)
     get_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria',
@@ -1146,10 +1148,10 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    # load = False
-    # comuni_dataframe_org_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-    #     load=load)
+    load = True
+    comuni_dataframe_org_05 = get_comuni_dataframe(
+        comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        load=load)
     # comuni_dataframe_pdc_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
@@ -1204,4 +1206,4 @@ if __name__ == '__main__':
     # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
     # get_comuni_dataframes(comuni_excel_map, load=False)
     # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    get_comuni_measures(comuni_excel_map)
+    # get_comuni_measures(comuni_excel_map)
