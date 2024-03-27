@@ -63,10 +63,11 @@ class ComuneExcel:
                 'column_labels': [
                     'tipo_dipendente',  # string | object
                     'ore_settimana',  # integer | float
-                    'percentuale_ore_edilizia_privata'  # integer | float
+                    'percentuale_ore_edilizia_privata',  # integer | float
+                    'percentuale_ore_comune_considerato'  # integer | float
                 ],
                 'column_indexes': [
-                    2, 3, 9
+                    2, 3, 9, 11
                 ],
                 'row_skips': 9,
                 'column_mandatory': [
@@ -77,6 +78,7 @@ class ComuneExcel:
                     'tecnico',
                     'ore',
                     'privata',
+                    'a questo comune'
                 ],
                 'health_na_content_checks': [
                 ]
@@ -245,6 +247,7 @@ class ComuneExcel:
         if sheet_name == 'ORGANICO':
             comune_dataframe.insert(0, 'comune', self.comune_name)
             comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'].fillna(1, inplace=True)
+            comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'].fillna(1, inplace=True)
             if comune_dataframe.loc[:, 'ore_settimana'].dtype.str[1] in ['O', 'M']:
                 change_mask = comune_dataframe.loc[:, 'ore_settimana'].astype(
                     'string').str.contains('36 ore', case=False, na=False, regex=False)
@@ -264,6 +267,14 @@ class ComuneExcel:
             except:
                 print('percentuale_ore_edilizia_privata is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'])
+
+            try:
+                comune_dataframe['percentuale_ore_comune_considerato'] = pd.to_numeric(
+                    comune_dataframe['percentuale_ore_comune_considerato'],
+                    errors='raise', downcast='integer')
+            except:
+                print('percentuale_ore_comune_considerato is UNKNOWN: ')
+                print(comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'])
         else:
             comune_dataframe.insert(0, 'comune', self.comune_name)
             comune_dataframe.dropna(axis=0, subset='id_pratica', inplace=True, ignore_index=True)
@@ -312,6 +323,9 @@ class ComuneExcel:
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '20/07/2023'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('ARCHIVATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
@@ -1148,10 +1162,10 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    load = True
-    comuni_dataframe_org_05 = get_comuni_dataframe(
-        comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-        load=load)
+    # load = True
+    # comuni_dataframe_org_05 = get_comuni_dataframe(
+    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load)
     # comuni_dataframe_pdc_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
