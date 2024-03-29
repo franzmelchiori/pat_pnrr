@@ -466,6 +466,9 @@ class ComuneExcel:
                     'string').str.contains('09/10(2023', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '09/10/2023'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('08/01/20241', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '08/01/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
@@ -591,6 +594,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('08/092023', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '08/09/2023'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('03/102023', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '03/10/2023'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
@@ -1217,7 +1223,7 @@ if __name__ == '__main__':
     #                    type_name='Regolarizzazione', load=False)
 
 
-    # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
-    # get_comuni_dataframes(comuni_excel_map, load=False)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    # get_comuni_measures(comuni_excel_map)
+    check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    get_comuni_dataframes(comuni_excel_map, load=False)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures(comuni_excel_map)
