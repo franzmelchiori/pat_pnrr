@@ -322,10 +322,16 @@ class ComuneExcel:
                     'string').str.contains('20/07/203', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '20/07/2023'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('05/012024', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '05/01/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVATA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('archiviato', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
@@ -470,6 +476,9 @@ class ComuneExcel:
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '08/01/2024'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('ORDINANZA DI MESSA IN PRISTINO', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
@@ -1067,15 +1076,15 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
 
 def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
 
-    comuni_pdc_measure = get_comuni_measure(
-        comuni_excel_map, 'Permessi di Costruire',
-        'pat_pnrr_5a_misurazione_tabelle_comunali\\', type_pdc_ov=False)
     comuni_pdc_ov_measure = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire',
         'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
     comuni_pds_measure = get_comuni_measure(
         comuni_excel_map, 'Prov di sanatoria',
         'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
+    comuni_pdc_measure = get_comuni_measure(
+        comuni_excel_map, 'Permessi di Costruire',
+        'pat_pnrr_5a_misurazione_tabelle_comunali\\', type_pdc_ov=False)
     comuni_cila_measure = get_comuni_measure(
         comuni_excel_map, 'Controllo CILA',
         'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
@@ -1150,8 +1159,8 @@ if __name__ == '__main__':
     # list_excel, list_xls = get_list_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
 
 
-    # comune_name = 'Casel Ivano'
-    # name_excel_file = '240_Castel Ivano_Edilizia_V.xlsx'
+    # comune_name = 'Trento'
+    # name_excel_file = '205_Trento_Edilizia_V - rev06 - provvisorio.xlsx'
     # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
@@ -1223,7 +1232,7 @@ if __name__ == '__main__':
     #                    type_name='Regolarizzazione', load=False)
 
 
-    check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
     get_comuni_dataframes(comuni_excel_map, load=False)
     get_comuni_measures_dataframe(comuni_excel_map, load=False)
     get_comuni_measures(comuni_excel_map)
