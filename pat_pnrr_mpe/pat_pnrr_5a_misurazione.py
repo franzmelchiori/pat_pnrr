@@ -478,6 +478,9 @@ class ComuneExcel:
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('ARCHIVIATO', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ORDINANZA DI MESSA IN PRISTINO', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
@@ -1156,11 +1159,14 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', None)
 
 
-    # list_excel, list_xls = get_list_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    # list_excel, list_xls = get_list_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #                                       missing=True)
+    # for comune in list_excel:
+    #     print(comune)
 
 
-    # comune_name = 'Trento'
-    # name_excel_file = '205_Trento_Edilizia_V - rev06 - provvisorio.xlsx'
+    # comune_name = 'Civezzano'
+    # name_excel_file = '061_Civezzano_Edilizia_V.xlsx'
     # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
@@ -1236,3 +1242,4 @@ if __name__ == '__main__':
     get_comuni_dataframes(comuni_excel_map, load=False)
     get_comuni_measures_dataframe(comuni_excel_map, load=False)
     get_comuni_measures(comuni_excel_map)
+
