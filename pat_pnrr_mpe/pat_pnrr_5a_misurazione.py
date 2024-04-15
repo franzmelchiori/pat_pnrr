@@ -926,6 +926,7 @@ def check_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, pa
     comuni_dataframe_shelve.close()
 
     if sheet_name == 'Prov di sanatoria':
+        # alcuni comuni riportano pds senza termine normativo e non sono regolarizzazioni
         filter_mask = comuni_dataframe.loc[:, 'tipologia_pratica'] == 'PdC in Sanatoria'
         filter_mask = filter_mask | (
             comuni_dataframe.loc[:, 'tipologia_pratica'] == 'Provvedimenti in Sanatoria')
