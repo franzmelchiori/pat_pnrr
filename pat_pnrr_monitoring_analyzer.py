@@ -1,6 +1,6 @@
 """
     PAT-PNRR Monitoring Analyzer
-    Francesco Melchiori, 2023
+    Francesco Melchiori, 2024
 """
 
 
@@ -20,6 +20,7 @@ from pat_pnrr_questionario_edilizia_02.pat_pnrr_idsurvey_02 import *
 from pat_pnrr_mpe.pat_pnrr_comuni_excel_mapping import *
 from pat_pnrr_mpe import pat_pnrr_3a_misurazione as pat_pnrr_3a
 from pat_pnrr_mpe import pat_pnrr_4a_misurazione as pat_pnrr_4a
+from pat_pnrr_mpe import pat_pnrr_5a_misurazione as pat_pnrr_5a
 
 
 def update_dataframe_subset(dataframe_to_update, dataframe_subset):
@@ -57,6 +58,8 @@ def get_pat_comuni_dataframe(load=True):
             get_pat_comuni_dataframe_ispat(
                 'pat_pnrr_clustering\\',
                 kmeans_clustering_original=True)
+        pat_comunita_valle_dataframe_ispat = \
+            get_pat_comunita_valle()
         pat_comuni_dataframe_idsurvey =\
             get_pat_comuni_dataframe_idsurvey(
                 'pat_pnrr_questionario_edilizia\\')
@@ -69,15 +72,17 @@ def get_pat_comuni_dataframe(load=True):
         pat_comuni_dataframe_excel_04 =\
             pat_pnrr_4a.get_comuni_measures_dataframe(
                 comuni_excel_map)
-        pat_comunita_valle_dataframe_ispat = \
-            get_pat_comunita_valle()
+        pat_comuni_dataframe_excel_05 =\
+            pat_pnrr_5a.get_comuni_measures_dataframe(
+                comuni_excel_map)
         pat_comuni_dataframe = pd.concat(
             [pat_comuni_dataframe_ispat,
              pat_comunita_valle_dataframe_ispat,
              pat_comuni_dataframe_idsurvey,
              pat_comuni_dataframe_idsurvey_02,
              pat_comuni_dataframe_excel_03,
-             pat_comuni_dataframe_excel_04],
+             pat_comuni_dataframe_excel_04,
+             pat_comuni_dataframe_excel_05],
             axis='columns', join='outer')
 
         pat_dataframe_raccolta_puntuale_trento =\
@@ -2144,7 +2149,7 @@ if __name__ == '__main__':
 
 
     # LOAD DATAFRAME COMUNI
-    pat_comuni_dataframe = get_pat_comuni_dataframe(load=True)
+    # pat_comuni_dataframe = get_pat_comuni_dataframe(load=True)
 
 
     # PRINT BASELINES
@@ -2172,6 +2177,10 @@ if __name__ == '__main__':
     # PRINT MEASUREMENT 04
     # pat_pnrr_4a.get_comuni_measures_dataframe(comuni_excel_map, load=True)
     # pat_pnrr_4a.get_comuni_measures(comuni_excel_map, save_tex=True)
+
+    # PRINT MEASUREMENT 05
+    pat_pnrr_5a.get_comuni_measures_dataframe(comuni_excel_map, load=True)
+    pat_pnrr_5a.get_comuni_measures(comuni_excel_map, save_tex=True)
 
 
     # TODO: simulazione scenari di raggiungimento degli obiettivi ministeriali PNRR (PSO?)
