@@ -2149,7 +2149,7 @@ if __name__ == '__main__':
 
 
     # LOAD DATAFRAME COMUNI
-    # pat_comuni_dataframe = get_pat_comuni_dataframe(load=True)
+    pat_comuni_dataframe = get_pat_comuni_dataframe(load=False)
 
 
     # PRINT BASELINES
@@ -2179,8 +2179,8 @@ if __name__ == '__main__':
     # pat_pnrr_4a.get_comuni_measures(comuni_excel_map, save_tex=True)
 
     # PRINT MEASUREMENT 05
-    pat_pnrr_5a.get_comuni_measures_dataframe(comuni_excel_map, load=True)
-    pat_pnrr_5a.get_comuni_measures(comuni_excel_map, save_tex=True)
+    # pat_pnrr_5a.get_comuni_measures_dataframe(comuni_excel_map, load=True)
+    # pat_pnrr_5a.get_comuni_measures(comuni_excel_map, save_tex=True)
 
 
     # TODO: simulazione scenari di raggiungimento degli obiettivi ministeriali PNRR (PSO?)

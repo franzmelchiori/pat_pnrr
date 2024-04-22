@@ -24,7 +24,12 @@ def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, d
 
     for row in droprows:
         dataframe_excel.drop(dataframe_excel.index[dataframe_excel[row].isna()], inplace=True)
+    
+    # if sheet_name == 'ORGANICO':
+    #     pass
+    # else:
     dataframe_excel.drop_duplicates(inplace=True)
+    
     dataframe_excel.reset_index(drop=True, inplace=True)
 
     return dataframe_excel
@@ -61,20 +66,23 @@ class ComuneExcel:
         self.excel_structure = {
             'ORGANICO': {
                 'column_labels': [
+                    'numero_dipendente',  # string | object
                     'tipo_dipendente',  # string | object
                     'ore_settimana',  # integer | float
                     'percentuale_ore_edilizia_privata',  # integer | float
                     'percentuale_ore_comune_considerato'  # integer | float
                 ],
                 'column_indexes': [
-                    2, 3, 9, 11
+                    1, 2, 3, 9, 11
                 ],
                 'row_skips': 9,
                 'column_mandatory': [
+                    'numero_dipendente',
                     'tipo_dipendente',
                     'ore_settimana'
                 ],
                 'health_header_checks': [
+                    'dipendente',
                     'tecnico',
                     'ore',
                     'privata',
@@ -694,7 +702,10 @@ class ComuneExcel:
                                   measure_period='2023q3-4'):
         comune_dataframe = self.get_comune_dataframe(sheet_name=sheet_name)
 
-        if sheet_name == 'Permessi di Costruire':
+        if sheet_name == 'ORGANICO':
+            measure_labels = [
+                'ore_tecnici_settimana']
+        elif sheet_name == 'Permessi di Costruire':
             if type_pdc_ov:
                 measure_labels = [
                     'numero_permessi_costruire_ov_conclusi_con_silenzio-assenso',
@@ -758,7 +769,9 @@ class ComuneExcel:
         if type_name:
             filter_type = comune_dataframe.loc[:, 'tipologia_pratica'] == type_name
         else:
-            if sheet_name == 'Permessi di Costruire' and type_pdc_ov:
+            if sheet_name == 'ORGANICO':
+                filter_type = comune_dataframe.loc[:, 'tipo_dipendente'] == 'tecnico'
+            elif sheet_name == 'Permessi di Costruire' and type_pdc_ov:
                 filter_type = (comune_dataframe.loc[:, 'tipologia_pratica'] ==
                                'PdC ordinario') ^ \
                               (comune_dataframe.loc[:, 'tipologia_pratica'] ==
@@ -766,7 +779,9 @@ class ComuneExcel:
             else:
                 filter_type = comune_dataframe.loc[:, 'tipologia_pratica'] != ''
 
-        if sheet_name == 'Permessi di Costruire':
+        if sheet_name == 'ORGANICO':
+            filter_mask = filter_type
+        elif sheet_name == 'Permessi di Costruire':
             filter_mask = \
                 comune_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False
             filter_mask = filter_mask & filter_type
@@ -788,59 +803,71 @@ class ComuneExcel:
             numero_pratiche_concluse_con_silenzio_assenso = 0
             numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi = 0
 
-        filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna() == False
-        filter_mask = filter_mask & filter_type
-        numero_pratiche_concluse_con_provvedimento_espresso = \
-            comune_dataframe[filter_mask].__len__()
-        giornate_durata_pratiche_concluse_con_provvedimento_espresso = \
-            comune_dataframe.loc[filter_mask, 'data_fine_pratica'] - \
-            comune_dataframe.loc[filter_mask, 'data_inizio_pratica']
-        pratiche_concluse_con_provvedimento_espresso_meno_di_una_giornata = \
-            giornate_durata_pratiche_concluse_con_provvedimento_espresso < \
-            pd.Timedelta(1, unit='D')
-        giornate_durata_pratiche_concluse_con_provvedimento_espresso.loc[
-            pratiche_concluse_con_provvedimento_espresso_meno_di_una_giornata] = \
-            pd.Timedelta(1, unit='D')
-        giornate_durata_media_pratiche_concluse_con_provvedimento_espresso = (
-                comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
-                comune_dataframe.loc[filter_mask, 'data_inizio_pratica']).mean().days
+        if sheet_name == 'ORGANICO':
+            ore_tecnici_settimana = (
+                comune_dataframe.loc[filter_mask, 'ore_settimana'] * \
+                comune_dataframe.loc[filter_mask, 'percentuale_ore_edilizia_privata'] * \
+                comune_dataframe.loc[filter_mask, 'percentuale_ore_comune_considerato']).sum()
 
-        filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna() == False
-        filter_mask = filter_mask & (comune_dataframe.loc[:, 'giorni_sospensioni'] >
-                                     pd.Timedelta(0, unit='D'))
-        filter_mask = filter_mask & filter_type
-        numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni = \
-            comune_dataframe[filter_mask].__len__()
+            measure = [
+                ore_tecnici_settimana]
 
-        filter_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].isna() == False
-        filter_mask = filter_mask & filter_type
-        numero_pratiche_avviate = \
-            comune_dataframe[filter_mask].__len__()
-        giornate_durata_mediana_termine_massimo_pratiche_avviate = \
-            comune_dataframe.loc[filter_mask, 'giorni_termine_normativo'].median().days
+            comune_measure_series = pd.Series(measure, index=measure_labels)
+        else:
+            filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna() == False
+            filter_mask = filter_mask & filter_type
+            numero_pratiche_concluse_con_provvedimento_espresso = \
+                comune_dataframe[filter_mask].__len__()
+            giornate_durata_pratiche_concluse_con_provvedimento_espresso = \
+                comune_dataframe.loc[filter_mask, 'data_fine_pratica'] - \
+                comune_dataframe.loc[filter_mask, 'data_inizio_pratica']
+            pratiche_concluse_con_provvedimento_espresso_meno_di_una_giornata = \
+                giornate_durata_pratiche_concluse_con_provvedimento_espresso < \
+                pd.Timedelta(1, unit='D')
+            giornate_durata_pratiche_concluse_con_provvedimento_espresso.loc[
+                pratiche_concluse_con_provvedimento_espresso_meno_di_una_giornata] = \
+                pd.Timedelta(1, unit='D')
+            giornate_durata_media_pratiche_concluse_con_provvedimento_espresso = (
+                    comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
+                    comune_dataframe.loc[filter_mask, 'data_inizio_pratica']).mean().days
 
-        filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna()
-        if sheet_name == 'Permessi di Costruire':
-            filter_mask = filter_mask ^ (
-                    comune_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False)
-        filter_mask = filter_mask & filter_type
-        numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo = ((
-            measure_end_date -
-            comune_dataframe.loc[filter_mask, 'data_inizio_pratica'] -
-            comune_dataframe.loc[filter_mask, 'giorni_sospensioni']) >
-            comune_dataframe.loc[filter_mask, 'giorni_termine_normativo']).sum()
+            filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna() == False
+            filter_mask = filter_mask & (comune_dataframe.loc[:, 'giorni_sospensioni'] >
+                                        pd.Timedelta(0, unit='D'))
+            filter_mask = filter_mask & filter_type
+            numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni = \
+                comune_dataframe[filter_mask].__len__()
 
-        measure = [
-            numero_pratiche_concluse_con_silenzio_assenso,
-            numero_pratiche_concluse_con_provvedimento_espresso,
-            numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni,
-            numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi,
-            giornate_durata_media_pratiche_concluse_con_provvedimento_espresso,
-            giornate_durata_mediana_termine_massimo_pratiche_avviate,
-            numero_pratiche_avviate,
-            numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo]
+            filter_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].isna() == False
+            filter_mask = filter_mask & filter_type
+            numero_pratiche_avviate = \
+                comune_dataframe[filter_mask].__len__()
+            giornate_durata_mediana_termine_massimo_pratiche_avviate = \
+                comune_dataframe.loc[filter_mask, 'giorni_termine_normativo'].median().days
 
-        comune_measure_series = pd.Series(measure, index=measure_labels)
+            filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna()
+            if sheet_name == 'Permessi di Costruire':
+                filter_mask = filter_mask ^ (
+                    comune_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == 
+                    False)
+            filter_mask = filter_mask & filter_type
+            numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo = ((
+                measure_end_date -
+                comune_dataframe.loc[filter_mask, 'data_inizio_pratica'] -
+                comune_dataframe.loc[filter_mask, 'giorni_sospensioni']) >
+                comune_dataframe.loc[filter_mask, 'giorni_termine_normativo']).sum()
+
+            measure = [
+                numero_pratiche_concluse_con_silenzio_assenso,
+                numero_pratiche_concluse_con_provvedimento_espresso,
+                numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni,
+                numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi,
+                giornate_durata_media_pratiche_concluse_con_provvedimento_espresso,
+                giornate_durata_mediana_termine_massimo_pratiche_avviate,
+                numero_pratiche_avviate,
+                numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo]
+
+            comune_measure_series = pd.Series(measure, index=measure_labels)
 
         return comune_measure_series
 
@@ -950,6 +977,8 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
+    if sheet_name == 'ORGANICO':
+        sheet_suffix += '_org'
     if sheet_name == 'Permessi di Costruire':
         if type_pdc_ov:
             sheet_suffix += '_pdc_ov'
@@ -1026,6 +1055,9 @@ def check_comuni_dataframes(comuni_excel_map):
 
 def get_comuni_measures_dataframe(comuni_excel_map, load=True):
 
+    comuni_measure_dataframe_org = get_comuni_measure_dataframe(comuni_excel_map,
+        'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        load=load)
     comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(comuni_excel_map,
         'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
         type_pdc_ov=True, load=load)
@@ -1040,7 +1072,8 @@ def get_comuni_measures_dataframe(comuni_excel_map, load=True):
         load=load)
 
     comuni_measures_dataframe = pd.concat(
-        [comuni_measure_dataframe_pdc_ov,
+        [comuni_measure_dataframe_org,
+         comuni_measure_dataframe_pdc_ov,
          comuni_measure_dataframe_pdc,
          comuni_measure_dataframe_pds,
          comuni_measure_dataframe_cila],
@@ -1244,7 +1277,7 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    # load = True
+    # load = False
     # comuni_dataframe_org_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
@@ -1258,6 +1291,9 @@ if __name__ == '__main__':
     #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
 
+    # comuni_measure_dataframe_org = get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load)
     # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     type_pdc_ov=True, load=load)
@@ -1301,6 +1337,6 @@ if __name__ == '__main__':
 
     # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
     # get_comuni_dataframes(comuni_excel_map, load=False)
-    check_comuni_dataframes(comuni_excel_map)
+    # check_comuni_dataframes(comuni_excel_map)
     # get_comuni_measures_dataframe(comuni_excel_map, load=False)
     # get_comuni_measures(comuni_excel_map)

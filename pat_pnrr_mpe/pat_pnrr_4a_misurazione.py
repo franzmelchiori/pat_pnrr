@@ -1241,13 +1241,13 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    load = True
-    comuni_dataframe_pdc_04 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', load=load)
-    comuni_dataframe_pds_04 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', load=load)
-    comuni_dataframe_cila_04 = get_comuni_dataframe(
-        comuni_excel_map, 'Controllo CILA', load=load)
+    # load = True
+    # comuni_dataframe_pdc_04 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', load=load)
+    # comuni_dataframe_pds_04 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', load=load)
+    # comuni_dataframe_cila_04 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Controllo CILA', load=load)
 
     # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=True, load=load)

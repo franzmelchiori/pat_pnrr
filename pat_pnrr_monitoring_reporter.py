@@ -30,6 +30,10 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         numero_pratiche_avviate = pat_comuni_dataframe.loc[:, performance_measure_labels[3]]
 
         comuni_durata_measures = giornate_durata_media / giornate_termine_massimo
+        # - giornate_durata_media e' una misura al lordo delle sospensioni per i pareri terzi
+        # - i target ministeriali sono posti rispetto all'attesa dell'utenza finale
+        # ! giornate_termine_massimo e' un limite normativo che non comprende i pareri terzi
+
         comuni_arretrato_measures = numero_pratiche_arretrate / numero_pratiche_avviate
         comuni_performance_measures = (comuni_durata_measures.pow(2) +
                                        comuni_arretrato_measures.pow(2)).pow(0.5)
@@ -126,6 +130,7 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         get_comuni_performance_measures(performance_measure_labels_pdc_2023q3_4)
     performance_trends_pdc_ov_2023q3_4 = \
         get_comuni_performance_measures(performance_measure_labels_pdc_ov_2023q3_4)
+    
     performance_trends_pds_2021q3_4 = \
         get_comuni_performance_measures(performance_measure_labels_pds_2021q3_4)
     performance_trends_pds_2022q1_2 = \
@@ -214,12 +219,40 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                                     just_one=False, save_charts=True):
     # pdc_measure_labels = ['pdc_2022q1_2', 'pdc_2022q3_4']
     # pds_measure_labels = ['pds_2022q1_2', 'pds_2022q3_4']
+    # mpe_number_label = '03'
+    # periodo_label = '2022'
+    # pdc_durata_labels = ['pdc_durata_2022q1_2', 'pdc_durata_2022q3_4']
+    # pdc_arretrato_labels = ['pdc_arretrato_2022q1_2', 'pdc_arretrato_2022q3_4']
+    # pds_durata_labels = ['pds_durata_2022q1_2', 'pds_durata_2022q3_4']
+    # pds_arretrato_labels = ['pds_arretrato_2022q1_2', 'pds_arretrato_2022q3_4']
+    
     # pdc_measure_labels = ['pdc_2022q3_4', 'pdc_2023q1_2']
     # pds_measure_labels = ['pds_2022q3_4', 'pds_2023q1_2']
+    # mpe_number_label = '04'
+    # periodo_label = '2022Q3-4 2023Q1-2'
+    # pdc_durata_labels = ['pdc_durata_2022q3_4', 'pdc_durata_2023q1_2']
+    # pdc_arretrato_labels = ['pdc_arretrato_2022q3_4', 'pdc_arretrato_2023q1_2']
+    # pds_durata_labels = ['pds_durata_2022q3_4', 'pds_durata_2023q1_2']
+    # pds_arretrato_labels = ['pds_arretrato_2022q3_4', 'pds_arretrato_2023q1_2']
+    
     pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
     pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
+    mpe_number_label = '05'
+    periodo_label = '2023'
+    pdc_durata_labels = ['pdc_durata_2023q1_2', 'pdc_durata_2023q3_4']
+    pdc_arretrato_labels = ['pdc_arretrato_2023q1_2', 'pdc_arretrato_2023q3_4']
+    pds_durata_labels = ['pds_durata_2023q1_2', 'pds_durata_2023q3_4']
+    pds_arretrato_labels = ['pds_arretrato_2023q1_2', 'pds_arretrato_2023q3_4']
+    
+    comuni_pdc_durata = comuni_durata_trends.loc[:, pdc_durata_labels].mean(axis=1)
+    comuni_pdc_arretrato = comuni_arretrato_trends.loc[:, pdc_arretrato_labels].mean(axis=1)
+    comuni_pds_durata = comuni_durata_trends.loc[:, pds_durata_labels].mean(axis=1)
+    comuni_pds_arretrato = comuni_arretrato_trends.loc[:, pds_arretrato_labels].mean(axis=1)
+
     comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
         comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+
+    ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2023q3-4']
 
     pdc_pds_score_max = comuni_performance_trends.loc[:,
                         pdc_measure_labels + pds_measure_labels].max(axis=None)
@@ -249,38 +282,15 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     classificazione_comunale = classificazione_comunale.map(classificazione_comunale_map)
     grandezza_comunale = classificazione_comunale+10+pow(classificazione_comunale+1, 3)
 
-    # pdc_durata_labels = ['pdc_durata_2022q1_2', 'pdc_durata_2022q3_4']
-    # pdc_arretrato_labels = ['pdc_arretrato_2022q1_2', 'pdc_arretrato_2022q3_4']
-    # comuni_pdc_durata = comuni_durata_trends.loc[:, pdc_durata_labels].mean(axis=1)
-    # comuni_pdc_arretrato = comuni_arretrato_trends.loc[:, pdc_arretrato_labels].mean(axis=1)
-    # pds_durata_labels = ['pds_durata_2022q1_2', 'pds_durata_2022q3_4']
-    # pds_arretrato_labels = ['pds_arretrato_2022q1_2', 'pds_arretrato_2022q3_4']
-    # comuni_pds_durata = comuni_durata_trends.loc[:, pds_durata_labels].mean(axis=1)
-    # comuni_pds_arretrato = comuni_arretrato_trends.loc[:, pds_arretrato_labels].mean(axis=1)
-    # pdc_durata_labels = ['pdc_durata_2022q3_4', 'pdc_durata_2023q1_2']
-    # pdc_arretrato_labels = ['pdc_arretrato_2022q3_4', 'pdc_arretrato_2023q1_2']
-    # comuni_pdc_durata = comuni_durata_trends.loc[:, pdc_durata_labels].mean(axis=1)
-    # comuni_pdc_arretrato = comuni_arretrato_trends.loc[:, pdc_arretrato_labels].mean(axis=1)
-    # pds_durata_labels = ['pds_durata_2022q3_4', 'pds_durata_2023q1_2']
-    # pds_arretrato_labels = ['pds_arretrato_2022q3_4', 'pds_arretrato_2023q1_2']
-    # comuni_pds_durata = comuni_durata_trends.loc[:, pds_durata_labels].mean(axis=1)
-    # comuni_pds_arretrato = comuni_arretrato_trends.loc[:, pds_arretrato_labels].mean(axis=1)
-    pdc_durata_labels = ['pdc_durata_2023q1_2', 'pdc_durata_2023q3_4']
-    pdc_arretrato_labels = ['pdc_arretrato_2023q1_2', 'pdc_arretrato_2023q3_4']
-    comuni_pdc_durata = comuni_durata_trends.loc[:, pdc_durata_labels].mean(axis=1)
-    comuni_pdc_arretrato = comuni_arretrato_trends.loc[:, pdc_arretrato_labels].mean(axis=1)
-    pds_durata_labels = ['pds_durata_2023q1_2', 'pds_durata_2023q3_4']
-    pds_arretrato_labels = ['pds_arretrato_2023q1_2', 'pds_arretrato_2023q3_4']
-    comuni_pds_durata = comuni_durata_trends.loc[:, pds_durata_labels].mean(axis=1)
-    comuni_pds_arretrato = comuni_arretrato_trends.loc[:, pds_arretrato_labels].mean(axis=1)
-
     fig, ax = plt.subplots(ncols=4, gridspec_kw=dict(width_ratios=[0.25, 0.25, 0.25, 0.25]),
                            layout='constrained')
     fig.set_size_inches(15, 5)
 
-    ax[0].set_title('2023', fontsize=12)
+    ax[0].set_title(periodo_label, fontsize=12)
     plot1 = ax[0].scatter(comuni_pdc_arretrato, comuni_pdc_durata,
                           c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
+    ax[0].set_xlim(-0.05, 0.7)
+    ax[0].set_ylim(-0.05, 6.5)
     ax[0].set_xlabel('Arretrato/avviato PdC')
     ax[0].set_ylabel('Durata/termine PdC')
     ax[0].spines['top'].set_visible(False)
@@ -288,9 +298,11 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     ax[0].spines['bottom'].set_visible(False)
     ax[0].spines['left'].set_visible(False)
 
-    ax[1].set_title('2023', fontsize=12)
+    ax[1].set_title(periodo_label, fontsize=12)
     plot2 = ax[1].scatter(comuni_pds_arretrato, comuni_pds_durata,
                           c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
+    ax[1].set_xlim(-0.05, 0.7)
+    ax[1].set_ylim(-0.05, 6.5)
     ax[1].set_xlabel('Arretrato/avviato PdS')
     ax[1].set_ylabel('Durata/termine PdS')
     ax[1].spines['top'].set_visible(False)
@@ -298,9 +310,11 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     ax[1].spines['bottom'].set_visible(False)
     ax[1].spines['left'].set_visible(False)
 
-    ax[2].set_title('2023', fontsize=12)
+    ax[2].set_title(periodo_label, fontsize=12)
     plot3 = ax[2].scatter(comuni_pds_scores, comuni_pdc_scores,
                           c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
+    ax[2].set_xlim(-0.05, 6.5)
+    ax[2].set_ylim(-0.05, 6.5)
     ax[2].set_xlabel('Pressione PdS')
     ax[2].set_ylabel('Pressione PdC')
     ax[2].spines['top'].set_visible(False)
@@ -308,11 +322,11 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     ax[2].spines['bottom'].set_visible(False)
     ax[2].spines['left'].set_visible(False)
 
-    ax[3].set_title('Pressione', fontsize=12)
+    ax[3].set_title('Pressione ' + periodo_label, fontsize=12)
     plot4 = ax[3].violinplot(comuni_scores, showmeans=True, showextrema=False, showmedians=False)
     Nx, Ny = 1, 1000
     imgArr = np.tile(np.linspace(0, 1, Ny), (Nx, 1)).T
-    ymin, ymax = ax[3].get_ylim()
+    ymin, ymax = 0, 8.5
     xmin, xmax = ax[3].get_xlim()
     path = Path(plot4['bodies'][0].get_paths()[0].vertices)
     patch = PathPatch(path, facecolor='none', edgecolor='none')
@@ -330,15 +344,38 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
                fancybox=True, shadow=True, ncol=5)
     fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
-                'pat_pnrr_performance_chart_provincia_05',
+                'pat_pnrr_performance_chart_provincia_' + mpe_number_label,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
+
+    fig, ax = plt.subplots(ncols=1, gridspec_kw=dict(width_ratios=[1]), layout='constrained')
+
+    ax.set_title(periodo_label, fontsize=12)
+    plot1 = ax.scatter(ore_tecnici_settimana, comuni_scores,
+                       c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
+    ax.set_xlabel('Tecnici [ore/sett]')
+    ax.set_ylabel('Pressione')
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+
+    fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
+               prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
+               fancybox=True, shadow=True, ncol=5)
+    fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
+                'pat_pnrr_performance_organico_chart_provincia_' + mpe_number_label,
+                dpi=300, bbox_inches='tight', pad_inches=0.25)
+    plt.close(fig)
+
+    return
 
     pdc_measure_labels = ['pdc_2021q3_4', 'pdc_2022q1_2', 'pdc_2022q3_4', 'pdc_2023q1_2',
                           'pdc_2023q3_4']
     pds_measure_labels = ['pds_2021q3_4', 'pds_2022q1_2', 'pds_2022q3_4', 'pds_2023q1_2',
                           'pds_2023q3_4']
     for comune in comuni_excel_map:
+        print('produco la dashboard per il comune di ' + comune[0])
 
         # dashboard comunale
         #   a. (+) comune nello scatter pdc durata/arretrato ultimi 12 mesi
@@ -373,6 +410,8 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                               c='gray', marker='o', s=grandezza_comunale, alpha=0.5)
         plot2 = ax[1].scatter(comuni_pds_scores.loc[comune[0]], comuni_pdc_scores.loc[comune[0]],
                               label=comune[0], c='r', marker='D', s=grandezza_comunale[comune[0]])
+        ax[1].set_xlim(-0.05, 6.5)
+        ax[1].set_ylim(-0.05, 6.5)
         ax[1].set_xlabel('Pressione PdS')
         ax[1].set_ylabel('Pressione PdC')
         ax[1].legend()
@@ -386,7 +425,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                                 showmedians=False)
         Nx, Ny = 1, 1000
         imgArr = np.tile(np.linspace(0, 1, Ny), (Nx, 1)).T
-        ymin, ymax = ax[2].get_ylim()
+        ymin, ymax = 0, 8.5
         xmin, xmax = ax[2].get_xlim()
         path = Path(plot['bodies'][0].get_paths()[0].vertices)
         patch = PathPatch(path, facecolor='none', edgecolor='none')
@@ -519,6 +558,8 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
     ]
 
     for comune in comuni_excel_map:
+        print('produco la tabella per il comune di ' + comune[0])
+        
         comune_performance_table = []
         for column_label, original_performance_labels in measure_labels:
             comune_performance_measures = pat_comuni_dataframe.loc[comune[0], original_performance_labels]
@@ -548,6 +589,8 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
 def print_comuni_performance_list(just_one=False, save_tables=True):
     list_tex = ''
     for comune in comuni_excel_map:
+        print('produco la relazione per il comune di ' + comune[0])
+
         comune_edited_name = comune[0]
         comune_edited_name = comune_edited_name.replace('à', 'a')
         comune_edited_name = comune_edited_name.replace('è', 'e')
@@ -599,15 +642,15 @@ if __name__ == '__main__':
 
     comuni_durata_trends, comuni_arretrato_trends, comuni_performance_trends = \
         get_comuni_performance_trends(pat_comuni_dataframe, time_limit=365)
-    pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
-    pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
-    comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
-        comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+    # pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
+    # pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
+    # comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+    #     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
 
     print_comuni_performance_charts(pat_comuni_dataframe,
                                     comuni_durata_trends, comuni_arretrato_trends,
                                     comuni_performance_trends,
-                                    just_one=True, save_charts=True)
+                                    just_one=False, save_charts=True)
     # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
     # print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
