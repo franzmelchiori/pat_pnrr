@@ -348,17 +348,37 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
 
-    fig, ax = plt.subplots(ncols=1, gridspec_kw=dict(width_ratios=[1]), layout='constrained')
+    fig, ax = plt.subplots(ncols=2, gridspec_kw=dict(width_ratios=[0.5, 0.5]),
+                           layout='constrained')
 
-    ax.set_title(periodo_label, fontsize=12)
-    plot1 = ax.scatter(ore_tecnici_settimana, comuni_scores,
+    ax[0].set_title('Pressione ' + periodo_label, fontsize=12)
+    plot4 = ax[0].violinplot(comuni_scores, showmeans=True, showextrema=False, showmedians=False)
+    Nx, Ny = 1, 1000
+    imgArr = np.tile(np.linspace(0, 1, Ny), (Nx, 1)).T
+    ymin, ymax = 0, 8.5
+    xmin, xmax = ax[0].get_xlim()
+    path = Path(plot4['bodies'][0].get_paths()[0].vertices)
+    patch = PathPatch(path, facecolor='none', edgecolor='none')
+    ax[0].add_patch(patch)
+    ax[0].imshow(imgArr, origin="lower", extent=[xmin, xmax, ymin, ymax],
+                 aspect="auto", cmap=mpl.colormaps['turbo'], clip_path=patch)
+    ax[0].hlines(0, 0, 2, colors='r', linewidth=0)
+    ax[0].set_xticks([], [])
+    ax[0].spines['top'].set_visible(False)
+    ax[0].spines['right'].set_visible(False)
+    ax[0].spines['bottom'].set_visible(False)
+    ax[0].spines['left'].set_visible(False)
+
+    ax[1].set_title(periodo_label, fontsize=12)
+    plot1 = ax[1].scatter(ore_tecnici_settimana, comuni_scores,
                        c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
-    ax.set_xlabel('Tecnici [ore/sett]')
-    ax.set_ylabel('Pressione')
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
-    ax.spines['left'].set_visible(False)
+    ax[1].set_ylim(0, 8.5)
+    ax[1].set_xlabel('Ore elaborazione/settimana')
+    ax[1].set_ylabel('Pressione')
+    ax[1].spines['top'].set_visible(False)
+    ax[1].spines['right'].set_visible(False)
+    ax[1].spines['bottom'].set_visible(False)
+    ax[1].spines['left'].set_visible(False)
 
     fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
                prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
@@ -368,7 +388,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
 
-    return
+    # return
 
     pdc_measure_labels = ['pdc_2021q3_4', 'pdc_2022q1_2', 'pdc_2022q3_4', 'pdc_2023q1_2',
                           'pdc_2023q3_4']
@@ -651,12 +671,12 @@ if __name__ == '__main__':
                                     comuni_durata_trends, comuni_arretrato_trends,
                                     comuni_performance_trends,
                                     just_one=False, save_charts=True)
-    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    # print_comuni_performance_list(just_one=False, save_tables=True)
-    # print_comuni_pressure_list(comuni_performance_trends)
+    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    print_comuni_performance_list(just_one=False, save_tables=True)
+    print_comuni_pressure_list(comuni_performance_trends)
 
-    # TODO: mappa 166 comuni: localizzazione pressione
     # TODO: andamento posizione nella lista di comuni per pressione complessiva
+    # TODO: mappa 166 comuni: localizzazione pressione
 
     # TODO: scatter durata/arretrato PdC/PdS, Pressione dei PdC/PdS: commento ai grafici (es. comuni senza arretrato)
     # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]

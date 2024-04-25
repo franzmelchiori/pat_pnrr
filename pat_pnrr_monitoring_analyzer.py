@@ -2149,7 +2149,7 @@ if __name__ == '__main__':
 
 
     # LOAD DATAFRAME COMUNI
-    pat_comuni_dataframe = get_pat_comuni_dataframe(load=False)
+    # pat_comuni_dataframe = get_pat_comuni_dataframe(load=False)
 
 
     # PRINT BASELINES
@@ -2188,9 +2188,51 @@ if __name__ == '__main__':
 
     # CLUSTER BASELINE
     # cluster_baseline(pat_comuni_dataframe)
+    
     # CLUSTER TOOLS
     # cluster_tools(pat_comuni_dataframe)
+    
     # PRINT MODEL BASELINES
     # print_baselines(pat_comuni_dataframe, model_baselines=True)
+    
     # SHOW SURVEY TIMES
     # show_survey_times()
+
+    # REQUEST 20240424
+    #     - dati disaggregati di tutte le pratiche pdc e pds
+    #         - pratiche concluse nella 4a misurazione
+    #             - con data di presentazione antecedente al 01/07/2022
+    #         - pratiche concluse nella 5a misurazione
+    #             - con data di presentazione antecedente al 01/07/2022
+    # comuni_dataframe_pdc_04 = pat_pnrr_4a.get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_4a_misurazione_tabelle_comunali\\')
+    # comuni_dataframe_pds_04 = pat_pnrr_4a.get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_4a_misurazione_tabelle_comunali\\')
+    # comuni_dataframe_pdc_05 = pat_pnrr_5a.get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    # comuni_dataframe_pds_05 = pat_pnrr_5a.get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    # 
+    # filter_mask_pdc_04 = ((comuni_dataframe_pdc_04.loc[:, 'data_fine_pratica'].isna() == False) | \
+    #     (comuni_dataframe_pdc_04.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False)) & \
+    #     (comuni_dataframe_pdc_04.loc[:, 'data_inizio_pratica'] < pd.Timestamp('2022-07-01 23:59:59.999'))
+    # filter_mask_pds_04 = (comuni_dataframe_pds_04.loc[:, 'data_fine_pratica'].isna() == False) & \
+    #     (comuni_dataframe_pds_04.loc[:, 'data_inizio_pratica'] < pd.Timestamp('2022-07-01 23:59:59.999'))
+    # filter_mask_pdc_05 = ((comuni_dataframe_pdc_05.loc[:, 'data_fine_pratica'].isna() == False) | \
+    #     (comuni_dataframe_pdc_05.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False)) & \
+    #     (comuni_dataframe_pdc_05.loc[:, 'data_inizio_pratica'] < pd.Timestamp('2022-07-01 23:59:59.999'))
+    # filter_mask_pds_05 = (comuni_dataframe_pds_05.loc[:, 'data_fine_pratica'].isna() == False) & \
+    #     (comuni_dataframe_pds_05.loc[:, 'data_inizio_pratica'] < pd.Timestamp('2022-07-01 23:59:59.999'))
+    # 
+    # comuni_dataframe_pdc = pd.concat(
+    #     [comuni_dataframe_pdc_04[filter_mask_pdc_04],
+    #      comuni_dataframe_pdc_05[filter_mask_pdc_05]],
+    #     axis='rows', join='outer')
+    # comuni_dataframe_pdc.reset_index(drop=True, inplace=True)
+    # comuni_dataframe_pdc.to_csv('pat-pnrr_edilizia_pdc_request_20240424.csv')
+    # comuni_dataframe_pds = pd.concat(
+    #     [comuni_dataframe_pds_04[filter_mask_pds_04],
+    #      comuni_dataframe_pds_05[filter_mask_pds_05]],
+    #     axis='rows', join='outer')
+    # comuni_dataframe_pds.reset_index(drop=True, inplace=True)
+    # comuni_dataframe_pds.to_csv('pat-pnrr_edilizia_pds_request_20240424.csv')
