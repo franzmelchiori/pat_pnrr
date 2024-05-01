@@ -2185,24 +2185,30 @@ def check_sospensioni_03_04_05():
                 comuni_dataframe_after = comuni_dataframe_after[filter_mask]
                 for index in comuni_dataframe_before.index:
                     pratica = comuni_dataframe_before.loc[index]
-                    if pratica.id_pratica in comuni_dataframe_after.id_pratica.values:
+                    if pratica.data_inizio_pratica in \
+                        comuni_dataframe_after.data_inizio_pratica.values:
                     # TODO: controllare solo data inizio delle pratiche
                         index_giorni_sospensioni_before = comuni_dataframe_before[
-                            comuni_dataframe_before.id_pratica == pratica.id_pratica
+                            comuni_dataframe_before.data_inizio_pratica.values == \
+                                pratica.data_inizio_pratica
                             ].index[0]
                         index_giorni_sospensioni_after = comuni_dataframe_after[
-                            comuni_dataframe_after.id_pratica == pratica.id_pratica
+                            comuni_dataframe_after.data_inizio_pratica.values == \
+                                pratica.data_inizio_pratica
                             ].index[0]
                         giorni_sospensioni_before = comuni_dataframe_before.loc[
                             index_giorni_sospensioni_before].giorni_sospensioni
                         giorni_sospensioni_after = comuni_dataframe_after.loc[
                             index_giorni_sospensioni_after].giorni_sospensioni
                         if giorni_sospensioni_before > giorni_sospensioni_after:
+                            giorni_sospensioni_differenza = giorni_sospensioni_before - \
+                                giorni_sospensioni_after
                             message = \
                                 'sospensioni decrescenti' + \
+                                ' di ' + str(giorni_sospensioni_differenza) + \
                                 ' nel comune di ' + comune + \
-                                ' nella pratica ' + comuni_tipo_pratica + \
-                                ' con id ' + str(pratica.id_pratica) + \
+                                ' della pratica ' + comuni_tipo_pratica + \
+                                ' con data inizio ' + str(pratica.data_inizio_pratica) + \
                                 ' ' + comuni_messaggio_misurazioni
                             issued_messages.append(message)
     for issued_message in issued_messages:
@@ -2310,4 +2316,4 @@ if __name__ == '__main__':
     # REQUEST 20240429
     #     - dati disaggregati di tutte le pratiche pdc e pds dalla 3a alla 5a misurazione
     #         - segnalare quelle con sospensioni totali decrescenti
-    check_sospensioni_03_04_05()
+    # check_sospensioni_03_04_05()
