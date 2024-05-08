@@ -2140,7 +2140,7 @@ def show_survey_times():
     return True
 
 
-def check_sospensioni_03_04_05():
+def check_transit_03_04_05():
     ''' controllo se dalla 3a alla 5a misurazione esistono pratiche pdc e pds
         per le quali i giorni totali di sospensioni sono decrescenti
     '''
@@ -2163,10 +2163,22 @@ def check_sospensioni_03_04_05():
     comuni_received_03 = [comune_excel[1] for comune_excel in list_excel_03]
     comuni_received_04 = [comune_excel[1] for comune_excel in list_excel_04]
     comuni_dataframe_checks = [
-        ['pdc', comuni_dataframe_pdc_03, comuni_dataframe_pdc_04, 'tra 3a e 4a misurazione'],
-        ['pdc', comuni_dataframe_pdc_04, comuni_dataframe_pdc_05, 'tra 4a e 5a misurazione'],
-        ['pds', comuni_dataframe_pds_03, comuni_dataframe_pds_04, 'tra 3a e 4a misurazione'],
-        ['pds', comuni_dataframe_pds_04, comuni_dataframe_pds_05, 'tra 4a e 5a misurazione']]
+        # ['pdc', comuni_dataframe_pdc_03, comuni_dataframe_pdc_04,
+        #     'sospensioni decrescenti', 'tra 3a e 4a misurazione'],
+        # ['pdc', comuni_dataframe_pdc_04, comuni_dataframe_pdc_05,
+        #     'sospensioni decrescenti', 'tra 4a e 5a misurazione'],
+        # ['pds', comuni_dataframe_pds_03, comuni_dataframe_pds_04,
+        #     'sospensioni decrescenti', 'tra 3a e 4a misurazione'],
+        # ['pds', comuni_dataframe_pds_04, comuni_dataframe_pds_05,
+        #     'sospensioni decrescenti', 'tra 4a e 5a misurazione'],
+        ['pdc', comuni_dataframe_pdc_03, comuni_dataframe_pdc_04,
+            'concluse transitate', 'tra 3a e 4a misurazione'],
+        ['pdc', comuni_dataframe_pdc_04, comuni_dataframe_pdc_05,
+            'concluse transitate', 'tra 4a e 5a misurazione'],
+        ['pds', comuni_dataframe_pds_03, comuni_dataframe_pds_04,
+            'concluse transitate', 'tra 3a e 4a misurazione'],
+        ['pds', comuni_dataframe_pds_04, comuni_dataframe_pds_05,
+            'concluse transitate', 'tra 4a e 5a misurazione']]
 
     issued_messages = []
     for comune in comuni_received_03:
@@ -2174,7 +2186,8 @@ def check_sospensioni_03_04_05():
             comuni_tipo_pratica = comuni_dataframe_check[0]
             comuni_dataframe_before = comuni_dataframe_check[1]
             comuni_dataframe_after = comuni_dataframe_check[2]
-            comuni_messaggio_misurazioni = comuni_dataframe_check[3]
+            comuni_tipo_controllo = comuni_dataframe_check[3]
+            comuni_messaggio_misurazioni = comuni_dataframe_check[4]
 
             filter_mask_comuni_before = comuni_dataframe_before.loc[:, 'comune'] == comune
             filter_mask_comuni_after = comuni_dataframe_after.loc[:, 'comune'] == comune
@@ -2187,30 +2200,53 @@ def check_sospensioni_03_04_05():
                     pratica = comuni_dataframe_before.loc[index]
                     if pratica.data_inizio_pratica in \
                         comuni_dataframe_after.data_inizio_pratica.values:
-                    # TODO: controllare solo data inizio delle pratiche
-                        index_giorni_sospensioni_before = comuni_dataframe_before[
-                            comuni_dataframe_before.data_inizio_pratica.values == \
-                                pratica.data_inizio_pratica
-                            ].index[0]
-                        index_giorni_sospensioni_after = comuni_dataframe_after[
-                            comuni_dataframe_after.data_inizio_pratica.values == \
-                                pratica.data_inizio_pratica
-                            ].index[0]
-                        giorni_sospensioni_before = comuni_dataframe_before.loc[
-                            index_giorni_sospensioni_before].giorni_sospensioni
-                        giorni_sospensioni_after = comuni_dataframe_after.loc[
-                            index_giorni_sospensioni_after].giorni_sospensioni
-                        if giorni_sospensioni_before > giorni_sospensioni_after:
-                            giorni_sospensioni_differenza = giorni_sospensioni_before - \
-                                giorni_sospensioni_after
-                            message = \
-                                'sospensioni decrescenti' + \
-                                ' di ' + str(giorni_sospensioni_differenza) + \
-                                ' nel comune di ' + comune + \
-                                ' della pratica ' + comuni_tipo_pratica + \
-                                ' con data inizio ' + str(pratica.data_inizio_pratica) + \
-                                ' ' + comuni_messaggio_misurazioni
-                            issued_messages.append(message)
+                        if comuni_tipo_controllo == 'sospensioni decrescenti':
+                            index_giorni_sospensioni_before = comuni_dataframe_before[
+                                comuni_dataframe_before.data_inizio_pratica.values == \
+                                    pratica.data_inizio_pratica
+                                ].index[0]
+                            index_giorni_sospensioni_after = comuni_dataframe_after[
+                                comuni_dataframe_after.data_inizio_pratica.values == \
+                                    pratica.data_inizio_pratica
+                                ].index[0]
+                            giorni_sospensioni_before = comuni_dataframe_before.loc[
+                                index_giorni_sospensioni_before].giorni_sospensioni
+                            giorni_sospensioni_after = comuni_dataframe_after.loc[
+                                index_giorni_sospensioni_after].giorni_sospensioni
+                            if giorni_sospensioni_before > giorni_sospensioni_after:
+                                giorni_sospensioni_differenza = giorni_sospensioni_before - \
+                                    giorni_sospensioni_after
+                                message = \
+                                    'sospensioni decrescenti' + \
+                                    ' di ' + str(giorni_sospensioni_differenza) + \
+                                    ' nel comune di ' + comune + \
+                                    ' della pratica ' + comuni_tipo_pratica + \
+                                    ' con data inizio ' + str(pratica.data_inizio_pratica) + \
+                                    ' ' + comuni_messaggio_misurazioni
+                                issued_messages.append(message)
+                        if comuni_tipo_controllo == 'concluse transitate':
+                            # - data inizio riportata 1 o piu' volte nella misurazione n
+                            #    - data inizio misurazione n riportata 1 o piu' volte nella misurazione n+1
+                            #        ! riportare tutte le pratiche concluse nella misurazione n
+                            pratica_conclusa_before = comuni_dataframe_before[
+                                comuni_dataframe_before.data_inizio_pratica.values == \
+                                    pratica.data_inizio_pratica
+                                ].data_fine_pratica.isna() == False
+                            if comuni_tipo_pratica == 'pdc':
+                                pratica_conclusa_before |= comuni_dataframe_before[
+                                comuni_dataframe_before.data_inizio_pratica.values == \
+                                    pratica.data_inizio_pratica
+                                ].loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False
+                            pratica_conclusa_before = sum(pratica_conclusa_before) > 0
+                            if pratica_conclusa_before:
+                                message = \
+                                    'almeno una pratica ' + comuni_tipo_pratica + \
+                                    ' con data inizio ' + str(pratica.data_inizio_pratica) + \
+                                    ' nel comune di ' + comune + \
+                                    ' che risulta conclusa e poi presente' + \
+                                    ' ' + comuni_messaggio_misurazioni
+                                issued_messages.append(message)
+                            pass
     for issued_message in issued_messages:
         print(issued_message)
 
@@ -2313,7 +2349,19 @@ if __name__ == '__main__':
     # comuni_dataframe_pds.reset_index(drop=True, inplace=True)
     # comuni_dataframe_pds.to_csv('pat-pnrr_edilizia_pds_request_20240424.csv')
 
-    # REQUEST 20240429
+    # REQUEST 20240429 | giorni sospensioni decrescenti | TODO
     #     - dati disaggregati di tutte le pratiche pdc e pds dalla 3a alla 5a misurazione
     #         - segnalare quelle con sospensioni totali decrescenti
-    # check_sospensioni_03_04_05()
+    #     - dati disaggregati di tutte le pratiche pdc e pds dalla 3a alla 5a misurazione
+    #         - segnalare quelle con cambio di tipologia
+    # REQUEST 20240503 | pratiche concluse ma transitate
+    #     - id pratica inaffidabile occorrerebbe controllo manuale e diretto sul comune
+    #     - data inizio e fine pratica unici indicatori potenzialmente affidabili
+    #         - data inizio riportata 1 o piu' volte nella misurazione n
+    #            - data inizio misurazione n riportata 1 o piu' volte nella misurazione n+1
+    #                ! riportare tutte le pratiche concluse nella misurazione n
+    # check_transit_03_04_05()
+
+    # REQUEST 20240505 | solo pratiche concluse | TODO
+    #     - comuni che dichiarano solo pratiche pdc e pds concluse
+    #         - 3a, 4a e 5a misurazione

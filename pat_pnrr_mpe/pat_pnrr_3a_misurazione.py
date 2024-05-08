@@ -84,13 +84,55 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=Fals
         comuni_dataframe = comuni_dataframe_shelve['comuni_dataframe']
         comuni_dataframe_shelve.close()
     else:
-        comuni_excel_map = [comune for comune in comuni_excel_map if comune[1] is not None]
+        comuni_excel_map = [(comune[0], comune[1])
+                            for comune in comuni_excel_map if comune[1] is not None]
         comuni_dataframe = []
         for comune_name, path_file in comuni_excel_map:
             print(comune_name + ' | ' + sheet_name)
             comune = ComuneExcel(path_file, comune_name)
             comune_dataframe = comune.get_comune_dataframe(sheet_name)
             comuni_dataframe.append(comune_dataframe)
+        
+        # correzione arretrati 202405 | inserimento pratiche pdc e pds arretrate emerse a posteriori
+        if sheet_name == 'Permessi di Costruire':
+            sheet_name = 'correzione_arretrati_pdc_202405'
+            names = [
+                    'comune',
+                    'tipologia_pratica',
+                    'id_pratica',
+                    'data_inizio_pratica',
+                    'giorni_termine_normativo',
+                    'data_fine_pratica',
+                    'data_fine_pratica_silenzio-assenso',
+                    'conferenza_servizi',
+                    'tipologia_massima_sospensione',
+                    'giorni_sospensioni'
+                ]
+            usecols = [
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+                ]
+        elif sheet_name == 'Prov di sanatoria':
+            sheet_name = 'correzione_arretrati_pds_202405'
+            names = [
+                    'comune',
+                    'tipologia_pratica',
+                    'id_pratica',
+                    'data_inizio_pratica',
+                    'giorni_termine_normativo',
+                    'data_fine_pratica',
+                    'tipologia_massima_sospensione',
+                    'giorni_sospensioni'
+                ]
+            usecols = [
+                    0, 1, 2, 3, 4, 5, 6, 7
+                ]
+        if (sheet_name == 'Permessi di Costruire') | (sheet_name == 'Prov di sanatoria'):
+            excel_path = path_shelve + sheet_name + '.xls'
+            comuni_correction_202405_dataframe = get_dataframe_excel(
+                excel_path, sheet_name, names, usecols,
+                skiprows=1, droprows=[], dtype=None)
+            comuni_dataframe.append(comuni_correction_202405_dataframe)
+        
         comuni_dataframe = pd.concat(comuni_dataframe, axis='rows', join='outer')
         comuni_dataframe.reset_index(drop=True, inplace=True)
 
@@ -124,15 +166,17 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, type_name=False, 
         comuni_measure_dataframe = comuni_measure_dataframe_shelve['comuni_measure_dataframe']
         comuni_measure_dataframe_shelve.close()
     else:
-        comuni_excel_map = [comune for comune in comuni_excel_map if comune[1] is not None]
+        comuni_excel_map = [(comune[0], comune[1])
+                            for comune in comuni_excel_map if comune[1] is not None]
         comuni_names = [comune[0] for comune in comuni_excel_map]
         comuni_measure_dataframe = []
         for comune_name, path_file in comuni_excel_map:
             message = comune_name + ' | ' + sheet_name
             if type_name:
                 message += ' | ' + type_name
-            if type_pdc_ov:
-                message += ' | ' + 'Ordinari e in Variante'
+            if sheet_name == 'Permessi di Costruire':
+                if type_pdc_ov:
+                    message += ' | ' + 'Ordinari e in Variante'
             print(message)
             comune = ComuneExcel(path_file, comune_name)
             comune_measure_series = comune.get_comune_measure_series(sheet_name, type_name,
@@ -507,6 +551,54 @@ class ComuneExcel:
         comune_dataframe.dropna(axis=0, subset='id_pratica', inplace=True, ignore_index=True)
         comune_dataframe.dropna(axis=0, subset='data_inizio_pratica', inplace=True,
                                 ignore_index=True)
+        
+        # correzione arretrati 202405 | inserimento pratiche pdc e pds arretrate emerse a posteriori
+        if sheet_name == 'Permessi di Costruire':
+            sheet_name_correction_202405 = 'correzione_arretrati_pdc_202405'
+            names = [
+                    'comune',
+                    'tipologia_pratica',
+                    'id_pratica',
+                    'data_inizio_pratica',
+                    'giorni_termine_normativo',
+                    'data_fine_pratica',
+                    'data_fine_pratica_silenzio-assenso',
+                    'conferenza_servizi',
+                    'tipologia_massima_sospensione',
+                    'giorni_sospensioni'
+                ]
+            usecols = [
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+                ]
+        elif sheet_name == 'Prov di sanatoria':
+            sheet_name_correction_202405 = 'correzione_arretrati_pds_202405'
+            names = [
+                    'comune',
+                    'tipologia_pratica',
+                    'id_pratica',
+                    'data_inizio_pratica',
+                    'giorni_termine_normativo',
+                    'data_fine_pratica',
+                    'tipologia_massima_sospensione',
+                    'giorni_sospensioni'
+                ]
+            usecols = [
+                    0, 1, 2, 3, 4, 5, 6, 7
+                ]
+        if (sheet_name == 'Permessi di Costruire') | (sheet_name == 'Prov di sanatoria'):
+            excel_path_correction_202405 = self.path_base + sheet_name_correction_202405 + '.xls'
+            comuni_correction_202405_dataframe = get_dataframe_excel(
+                excel_path_correction_202405, sheet_name_correction_202405, names, usecols,
+                skiprows=1, droprows=[], dtype=None)
+            change_mask = comuni_correction_202405_dataframe.loc[:, 'comune'] != \
+                self.comune_name
+            comuni_correction_202405_dataframe.drop(
+                comuni_correction_202405_dataframe[change_mask].index, inplace=True)
+            if not comuni_correction_202405_dataframe.empty:
+                comune_dataframe = pd.concat([comune_dataframe,
+                                              comuni_correction_202405_dataframe],
+                                              axis='rows', join='outer')
+                comune_dataframe.reset_index(drop=True, inplace=True)
 
         if sheet_name == 'Permessi di Costruire':
             comune_dataframe.loc[:, 'tipologia_pratica'].fillna(types_pdc[0], inplace=True)
@@ -570,6 +662,12 @@ class ComuneExcel:
             except:
                 print('data_fine_pratica_silenzio-assenso is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'])
+            change_mask = comune_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'] < \
+                          pd.Timestamp('2022-06-30 23:59:59.999')
+            comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+            change_mask = comune_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'] > \
+                          pd.Timestamp('2022-12-31 23:59:59.999')
+            comune_dataframe.loc[change_mask, 'data_fine_pratica_silenzio-assenso'] = pd.NaT
 
             if comune_dataframe.loc[:, 'giorni_termine_normativo'].dtype.str[1] in ['O', 'M']:
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
@@ -581,6 +679,15 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
                     'string').str.contains('-', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
+                change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
+                    'string').str.contains('30 days', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 30
+                change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
+                    'string').str.contains('60 days', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
+                change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
+                    'string').str.contains('90 days', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 90
             if comune_dataframe.loc[:, 'giorni_termine_normativo'].dtype.str[1] in ['i', 'f']:
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'] == 0
                 comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
@@ -629,18 +736,24 @@ class ComuneExcel:
 
             for index in comune_dataframe.index:
                 conferenza_servizi_originale = comune_dataframe.loc[index, 'conferenza_servizi']
-                conferenza_servizi = conferenza_servizi_originale.lower()
-                conferenza_servizi = conferenza_servizi.replace("'", '')
-                conferenza_servizi = conferenza_servizi.lstrip(' ').rstrip(' ')
-                if conferenza_servizi == 'no':
-                    comune_dataframe.loc[index, 'conferenza_servizi'] = False
-                elif conferenza_servizi == 'si':
-                    comune_dataframe.loc[index, 'conferenza_servizi'] = True
-                elif conferenza_servizi == 'sino':
-                    comune_dataframe.loc[index, 'conferenza_servizi'] = False
-                else:
-                    print('conferenza_servizi is UNKNOWN: ')
-                    print(comune_dataframe.loc[index, 'conferenza_servizi'])
+                if type(conferenza_servizi_originale) is float:
+                    if conferenza_servizi_originale == 0:
+                        conferenza_servizi_originale = 'no'
+                    elif conferenza_servizi_originale != 0:
+                        conferenza_servizi_originale = 'si'
+                if type(conferenza_servizi_originale) is str:
+                    conferenza_servizi = conferenza_servizi_originale.lower()
+                    conferenza_servizi = conferenza_servizi.replace("'", '')
+                    conferenza_servizi = conferenza_servizi.lstrip(' ').rstrip(' ')
+                    if conferenza_servizi == 'no':
+                        comune_dataframe.loc[index, 'conferenza_servizi'] = False
+                    elif conferenza_servizi == 'si':
+                        comune_dataframe.loc[index, 'conferenza_servizi'] = True
+                    elif conferenza_servizi == 'sino':
+                        comune_dataframe.loc[index, 'conferenza_servizi'] = False
+                    else:
+                        print('conferenza_servizi is UNKNOWN: ')
+                        print(comune_dataframe.loc[index, 'conferenza_servizi'])
 
         if sheet_name == 'Prov di sanatoria':
             comune_dataframe.loc[:, 'tipologia_pratica'].fillna(types_pds[0], inplace=True)
@@ -698,6 +811,15 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
                     'string').str.contains('senza termine', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
+                change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
+                    'string').str.contains('30 days', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 30
+                change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
+                    'string').str.contains('60 days', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
+                change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
+                    'string').str.contains('90 days', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 90
             if comune_dataframe.loc[:, 'giorni_termine_normativo'].dtype.str[1] in ['i', 'f']:
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'] == 0
                 comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
@@ -1001,7 +1123,7 @@ if __name__ == '__main__':
     # list_excel = get_list_excel(missing=True)
     # check_comuni_excel()
 
-    # comune = ComuneExcel('02.2_Terza rilevazione PNRR_Trento_Edilizia.xlsx', 'Trento')
+    # comune = ComuneExcel('123_Mori_Edilizia.xlsx', 'Mori')
     # comune = ComuneExcel('222_Ton_Edilizia.xlsx', 'Ton')
 
     # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
@@ -1013,7 +1135,7 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    # load=True
+    # load=False
     # comuni_dataframe_pdc_03 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', load=load)
     # comuni_dataframe_pds_03 = get_comuni_dataframe(
@@ -1021,7 +1143,7 @@ if __name__ == '__main__':
     # comuni_dataframe_cila_03 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', load=load)
 
-    # load=True
+    # load=False
     # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', load=load)
     # comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
@@ -1032,7 +1154,7 @@ if __name__ == '__main__':
     #     comuni_excel_map, 'Controllo CILA', load=load)
 
     # get_comuni_dataframes(comuni_excel_map, load=False)
-    # comuni_measures_dataframe = get_comuni_measures_dataframe(comuni_excel_map, load=True)
+    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
 
 
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire')
