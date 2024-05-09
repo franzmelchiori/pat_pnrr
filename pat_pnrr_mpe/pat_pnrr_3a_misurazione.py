@@ -1123,7 +1123,7 @@ if __name__ == '__main__':
     # list_excel = get_list_excel(missing=True)
     # check_comuni_excel()
 
-    # comune = ComuneExcel('123_Mori_Edilizia.xlsx', 'Mori')
+    # comune = ComuneExcel('009_Baselga_Edilizia.xls', 'Baselga di Pinè')
     # comune = ComuneExcel('222_Ton_Edilizia.xlsx', 'Ton')
 
     # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
