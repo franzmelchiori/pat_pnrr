@@ -2260,7 +2260,7 @@ if __name__ == '__main__':
 
 
     # LOAD DATAFRAME COMUNI
-    # pat_comuni_dataframe = get_pat_comuni_dataframe(load=False)
+    pat_comuni_dataframe = get_pat_comuni_dataframe(load=True)
 
 
     # PRINT BASELINES
@@ -2310,6 +2310,7 @@ if __name__ == '__main__':
     # SHOW SURVEY TIMES
     # show_survey_times()
 
+
     # REQUEST 20240424
     #     - dati disaggregati di tutte le pratiche pdc e pds
     #         - pratiche concluse nella 4a misurazione
@@ -2349,6 +2350,7 @@ if __name__ == '__main__':
     # comuni_dataframe_pds.reset_index(drop=True, inplace=True)
     # comuni_dataframe_pds.to_csv('pat-pnrr_edilizia_pds_request_20240424.csv')
 
+
     # REQUEST 20240429 | giorni sospensioni decrescenti | TODO
     #     - dati disaggregati di tutte le pratiche pdc e pds dalla 3a alla 5a misurazione
     #         - segnalare quelle con sospensioni totali decrescenti
@@ -2361,6 +2363,7 @@ if __name__ == '__main__':
     #            - data inizio misurazione n riportata 1 o piu' volte nella misurazione n+1
     #                ! riportare tutte le pratiche concluse nella misurazione n
     # check_transit_03_04_05()
+
 
     # REQUEST 20240505 | solo pratiche concluse | TODO
     #     - comuni che dichiarano solo pratiche pdc e pds concluse

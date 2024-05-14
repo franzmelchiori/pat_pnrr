@@ -215,34 +215,56 @@ def get_comuni_scores(comuni_performance_trends, pdc_measure_labels, pds_measure
 
 def print_comuni_performance_charts(pat_comuni_dataframe,
                                     comuni_durata_trends, comuni_arretrato_trends,
-                                    comuni_performance_trends,
-                                    just_one=False, save_charts=True):
-    # pdc_measure_labels = ['pdc_2022q1_2', 'pdc_2022q3_4']
-    # pds_measure_labels = ['pds_2022q1_2', 'pds_2022q3_4']
-    # mpe_number_label = '03'
-    # periodo_label = '2022'
-    # pdc_durata_labels = ['pdc_durata_2022q1_2', 'pdc_durata_2022q3_4']
-    # pdc_arretrato_labels = ['pdc_arretrato_2022q1_2', 'pdc_arretrato_2022q3_4']
-    # pds_durata_labels = ['pds_durata_2022q1_2', 'pds_durata_2022q3_4']
-    # pds_arretrato_labels = ['pds_arretrato_2022q1_2', 'pds_arretrato_2022q3_4']
+                                    comuni_performance_trends, mpe_number=3,
+                                    just_provincia=True, just_one=False, save_charts=True):
+    if mpe_number == 3:
+        pdc_measure_labels = ['pdc_2022q1_2', 'pdc_2022q3_4']
+        pds_measure_labels = ['pds_2022q1_2', 'pds_2022q3_4']
+        mpe_number_label = '03'
+        periodo_label = '2022'
+        pdc_durata_labels = ['pdc_durata_2022q1_2', 'pdc_durata_2022q3_4']
+        pdc_arretrato_labels = ['pdc_arretrato_2022q1_2', 'pdc_arretrato_2022q3_4']
+        pds_durata_labels = ['pds_durata_2022q1_2', 'pds_durata_2022q3_4']
+        pds_arretrato_labels = ['pds_arretrato_2022q1_2', 'pds_arretrato_2022q3_4']
     
-    # pdc_measure_labels = ['pdc_2022q3_4', 'pdc_2023q1_2']
-    # pds_measure_labels = ['pds_2022q3_4', 'pds_2023q1_2']
-    # mpe_number_label = '04'
-    # periodo_label = '2022Q3-4 2023Q1-2'
-    # pdc_durata_labels = ['pdc_durata_2022q3_4', 'pdc_durata_2023q1_2']
-    # pdc_arretrato_labels = ['pdc_arretrato_2022q3_4', 'pdc_arretrato_2023q1_2']
-    # pds_durata_labels = ['pds_durata_2022q3_4', 'pds_durata_2023q1_2']
-    # pds_arretrato_labels = ['pds_arretrato_2022q3_4', 'pds_arretrato_2023q1_2']
+    elif mpe_number == 4:
+        pdc_measure_labels = ['pdc_2022q3_4', 'pdc_2023q1_2']
+        pds_measure_labels = ['pds_2022q3_4', 'pds_2023q1_2']
+        mpe_number_label = '04'
+        periodo_label = '2022Q3-4 2023Q1-2'
+        pdc_durata_labels = ['pdc_durata_2022q3_4', 'pdc_durata_2023q1_2']
+        pdc_arretrato_labels = ['pdc_arretrato_2022q3_4', 'pdc_arretrato_2023q1_2']
+        pds_durata_labels = ['pds_durata_2022q3_4', 'pds_durata_2023q1_2']
+        pds_arretrato_labels = ['pds_arretrato_2022q3_4', 'pds_arretrato_2023q1_2']
     
-    pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
-    pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
-    mpe_number_label = '05'
-    periodo_label = '2023'
-    pdc_durata_labels = ['pdc_durata_2023q1_2', 'pdc_durata_2023q3_4']
-    pdc_arretrato_labels = ['pdc_arretrato_2023q1_2', 'pdc_arretrato_2023q3_4']
-    pds_durata_labels = ['pds_durata_2023q1_2', 'pds_durata_2023q3_4']
-    pds_arretrato_labels = ['pds_arretrato_2023q1_2', 'pds_arretrato_2023q3_4']
+    elif mpe_number == 5:
+        pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
+        pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
+        mpe_number_label = '05'
+        periodo_label = '2023'
+        pdc_durata_labels = ['pdc_durata_2023q1_2', 'pdc_durata_2023q3_4']
+        pdc_arretrato_labels = ['pdc_arretrato_2023q1_2', 'pdc_arretrato_2023q3_4']
+        pdc_durata_measure_labels = [
+            'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
+            'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4']
+        pdc_avviato_measure_labels = [
+            'numero_permessi_costruire_avviati_2023q1-2',
+            'numero_permessi_costruire_avviati_2023q3-4']
+        pdc_arretrato_measure_labels = [
+            'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
+            'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4']
+        pds_durata_labels = ['pds_durata_2023q1_2', 'pds_durata_2023q3_4']
+        pds_arretrato_labels = ['pds_arretrato_2023q1_2', 'pds_arretrato_2023q3_4']
+        pds_durata_measure_labels = [
+            'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
+            'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4']
+        pds_avviato_measure_labels = [
+            'numero_sanatorie_avviate_2023q1-2',
+            'numero_sanatorie_avviate_2023q3-4']
+        pds_arretrato_measure_labels = [
+            'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2',
+            'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4']
+        ore_tecnici_settimana_label = 'ore_tecnici_settimana_2023q3-4'
     
     comuni_pdc_durata = comuni_durata_trends.loc[:, pdc_durata_labels].mean(axis=1)
     comuni_pdc_arretrato = comuni_arretrato_trends.loc[:, pdc_arretrato_labels].mean(axis=1)
@@ -252,7 +274,18 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
         comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
 
-    ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2023q3-4']
+    # sistemare il calcolo di comuni_pdc_pds_durata e comuni_pdc_pds_arretrato
+    if mpe_number >= 5:
+        ore_tecnici_settimana = pat_comuni_dataframe.loc[:, ore_tecnici_settimana_label]
+        comuni_pdc_pds_durata = \
+            pat_comuni_dataframe.loc[:, pdc_durata_measure_labels].mean(axis=1) + \
+            pat_comuni_dataframe.loc[:, pds_durata_measure_labels].mean(axis=1)
+        comuni_pdc_pds_avviato = \
+            pat_comuni_dataframe.loc[:, pdc_avviato_measure_labels].sum(axis=1) + \
+            pat_comuni_dataframe.loc[:, pds_avviato_measure_labels].sum(axis=1)
+        comuni_pdc_pds_arretrato = \
+            pat_comuni_dataframe.loc[:, pdc_arretrato_measure_labels].sum(axis=1) + \
+            pat_comuni_dataframe.loc[:, pds_arretrato_measure_labels].sum(axis=1)
 
     pdc_pds_score_max = comuni_performance_trends.loc[:,
                         pdc_measure_labels + pds_measure_labels].max(axis=None)
@@ -348,47 +381,110 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
 
-    fig, ax = plt.subplots(ncols=2, gridspec_kw=dict(width_ratios=[0.5, 0.5]),
-                           layout='constrained')
+    if mpe_number >= 5:
+        # fig, ax = plt.subplots(ncols=2, gridspec_kw=dict(width_ratios=[0.5, 0.5]),
+        #                        layout='constrained')
+        # fig.set_size_inches(15, 5)
 
-    ax[0].set_title('Pressione ' + periodo_label, fontsize=12)
-    plot4 = ax[0].violinplot(comuni_scores, showmeans=True, showextrema=False, showmedians=False)
-    Nx, Ny = 1, 1000
-    imgArr = np.tile(np.linspace(0, 1, Ny), (Nx, 1)).T
-    ymin, ymax = 0, 8.5
-    xmin, xmax = ax[0].get_xlim()
-    path = Path(plot4['bodies'][0].get_paths()[0].vertices)
-    patch = PathPatch(path, facecolor='none', edgecolor='none')
-    ax[0].add_patch(patch)
-    ax[0].imshow(imgArr, origin="lower", extent=[xmin, xmax, ymin, ymax],
-                 aspect="auto", cmap=mpl.colormaps['turbo'], clip_path=patch)
-    ax[0].hlines(0, 0, 2, colors='r', linewidth=0)
-    ax[0].set_xticks([], [])
-    ax[0].spines['top'].set_visible(False)
-    ax[0].spines['right'].set_visible(False)
-    ax[0].spines['bottom'].set_visible(False)
-    ax[0].spines['left'].set_visible(False)
+        # ax[0].set_title('Pressione ' + periodo_label, fontsize=12)
+        # plot4 = ax[0].violinplot(comuni_scores, showmeans=True,
+        #                          showextrema=False, showmedians=False)
+        # Nx, Ny = 1, 1000
+        # imgArr = np.tile(np.linspace(0, 1, Ny), (Nx, 1)).T
+        # ymin, ymax = 0, 8.5
+        # xmin, xmax = ax[0].get_xlim()
+        # path = Path(plot4['bodies'][0].get_paths()[0].vertices)
+        # patch = PathPatch(path, facecolor='none', edgecolor='none')
+        # ax[0].add_patch(patch)
+        # ax[0].imshow(imgArr, origin="lower", extent=[xmin, xmax, ymin, ymax],
+        #             aspect="auto", cmap=mpl.colormaps['turbo'], clip_path=patch)
+        # ax[0].hlines(0, 0, 2, colors='r', linewidth=0)
+        # ax[0].set_xticks([], [])
+        # ax[0].spines['top'].set_visible(False)
+        # ax[0].spines['right'].set_visible(False)
+        # ax[0].spines['bottom'].set_visible(False)
+        # ax[0].spines['left'].set_visible(False)
 
-    ax[1].set_title(periodo_label, fontsize=12)
-    plot1 = ax[1].scatter(ore_tecnici_settimana, comuni_scores,
-                       c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
-    ax[1].set_ylim(0, 8.5)
-    ax[1].set_xlabel('Ore elaborazione/settimana')
-    ax[1].set_ylabel('Pressione')
-    ax[1].spines['top'].set_visible(False)
-    ax[1].spines['right'].set_visible(False)
-    ax[1].spines['bottom'].set_visible(False)
-    ax[1].spines['left'].set_visible(False)
+        # ax[1].set_title(periodo_label, fontsize=12)
+        # plot1 = ax[1].scatter(ore_tecnici_settimana, comuni_scores,
+        #                 c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
+        # ax[1].set_ylim(0, 8.5)
+        # ax[1].set_xlabel('Ore elaborazione/settimana')
+        # ax[1].set_ylabel('Pressione')
+        # ax[1].spines['top'].set_visible(False)
+        # ax[1].spines['right'].set_visible(False)
+        # ax[1].spines['bottom'].set_visible(False)
+        # ax[1].spines['left'].set_visible(False)
 
-    fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
-               prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
-               fancybox=True, shadow=True, ncol=5)
-    fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
-                'pat_pnrr_performance_organico_chart_provincia_' + mpe_number_label,
-                dpi=300, bbox_inches='tight', pad_inches=0.25)
-    plt.close(fig)
+        # fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
+        #         prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
+        #         fancybox=True, shadow=True, ncol=5)
+        # fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
+        #             'pat_pnrr_performance_organico_chart_provincia_' + mpe_number_label,
+        #             dpi=300, bbox_inches='tight', pad_inches=0.25)
+        # plt.close(fig)
 
-    # return
+        fig, ax = plt.subplots(ncols=4, gridspec_kw=dict(width_ratios=[0.25, 0.25, 0.25, 0.25]),
+                               layout='constrained')
+        fig.set_size_inches(15, 5)
+
+        # scatter di Durata media PdC+PdS [gg] 2023 ed Ore elaborazione/settimana 2023
+        ax[0].set_title(periodo_label, fontsize=12)
+        plot1 = ax[0].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata,
+                              c=classificazione_comunale,
+                              marker='o', s=grandezza_comunale, alpha=0.5)
+        ax[0].set_xlabel('Ore elaborazione/settimana')
+        ax[0].set_ylabel('Durata media PdC+PdS [gg]')
+        ax[0].spines['top'].set_visible(False)
+        ax[0].spines['right'].set_visible(False)
+        ax[0].spines['bottom'].set_visible(False)
+        ax[0].spines['left'].set_visible(False)
+
+        # scatter di Avviato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
+        ax[1].set_title(periodo_label, fontsize=12)
+        plot2 = ax[1].scatter(ore_tecnici_settimana, comuni_pdc_pds_avviato,
+                              c=classificazione_comunale,
+                              marker='o', s=grandezza_comunale, alpha=0.5)
+        ax[1].set_xlabel('Ore elaborazione/settimana')
+        ax[1].set_ylabel('Avviato PdC+PdS')
+        ax[1].spines['top'].set_visible(False)
+        ax[1].spines['right'].set_visible(False)
+        ax[1].spines['bottom'].set_visible(False)
+        ax[1].spines['left'].set_visible(False)
+
+        # scatter di Arretrato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
+        ax[2].set_title(periodo_label, fontsize=12)
+        plot3 = ax[2].scatter(ore_tecnici_settimana, comuni_pdc_pds_arretrato,
+                              c=classificazione_comunale,
+                              marker='o', s=grandezza_comunale, alpha=0.5)
+        ax[2].set_xlabel('Ore elaborazione/settimana')
+        ax[2].set_ylabel('Arretrato PdC+PdS')
+        ax[2].spines['top'].set_visible(False)
+        ax[2].spines['right'].set_visible(False)
+        ax[2].spines['bottom'].set_visible(False)
+        ax[2].spines['left'].set_visible(False)
+
+        ax[3].set_title(periodo_label, fontsize=12)
+        plot1 = ax[3].scatter(ore_tecnici_settimana, comuni_scores,
+                        c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
+        ax[3].set_ylim(0, 8.5)
+        ax[3].set_xlabel('Ore elaborazione/settimana')
+        ax[3].set_ylabel('Pressione')
+        ax[3].spines['top'].set_visible(False)
+        ax[3].spines['right'].set_visible(False)
+        ax[3].spines['bottom'].set_visible(False)
+        ax[3].spines['left'].set_visible(False)
+
+        fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
+                prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
+                fancybox=True, shadow=True, ncol=5)
+        fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
+                    'pat_pnrr_performance_organico_chart_provincia_' + mpe_number_label,
+                    dpi=300, bbox_inches='tight', pad_inches=0.25)
+        plt.close(fig)
+
+    if just_provincia:
+        return
 
     pdc_measure_labels = ['pdc_2021q3_4', 'pdc_2022q1_2', 'pdc_2022q3_4', 'pdc_2023q1_2',
                           'pdc_2023q3_4']
@@ -667,13 +763,15 @@ if __name__ == '__main__':
     # comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     #     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
 
-    print_comuni_performance_charts(pat_comuni_dataframe,
-                                    comuni_durata_trends, comuni_arretrato_trends,
-                                    comuni_performance_trends,
-                                    just_one=False, save_charts=True)
-    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    print_comuni_performance_list(just_one=False, save_tables=True)
-    print_comuni_pressure_list(comuni_performance_trends)
+    # for mpe_number in [3, 4, 5]:
+    for mpe_number in [5]:
+        print_comuni_performance_charts(pat_comuni_dataframe,
+                                        comuni_durata_trends, comuni_arretrato_trends,
+                                        comuni_performance_trends, mpe_number=mpe_number,
+                                        just_provincia=True, just_one=False, save_charts=True)
+    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    # print_comuni_performance_list(just_one=False, save_tables=True)
+    # print_comuni_pressure_list(comuni_performance_trends)
 
     # TODO: ricalcolo della durata media [gg] al netto delle sospensioni
     # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
