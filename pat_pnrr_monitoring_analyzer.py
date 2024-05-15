@@ -2368,3 +2368,18 @@ if __name__ == '__main__':
     # REQUEST 20240505 | solo pratiche concluse | TODO
     #     - comuni che dichiarano solo pratiche pdc e pds concluse
     #         - 3a, 4a e 5a misurazione
+
+
+    # REQUEST 20240515_01 | 20240513_01_02 | pdc-ov non conclusi durata netta > 120 gg | TODO
+    #     - stessa estrazione sulla 3a e 4a misurazione
+    #         - son sempre alcuni comuni che non tracciano le sospensioni
+    #         - quanti comuni coinvolti
+    #     - cercare di tracciarle fino alla 3a misurazione
+    #     - tutta l'analisi anche per i pds
+
+
+    # REQUEST 20240515_02 | 20240513_02 | pdc-ov avviati durata lorda > 600 gg | TODO
+    #     - quanti comuni coinvolti
+    #     - cercare di tracciarle fino alla 3a misurazione
+    #     - incidenza sulla durata media e sull'arretrato nella 5a misurazione
+    #     - tutta l'analisi anche per i pds
