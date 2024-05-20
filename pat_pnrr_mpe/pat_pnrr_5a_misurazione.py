@@ -333,6 +333,9 @@ class ComuneExcel:
                     'string').str.contains('05/012024', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '05/01/2024'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('01/03/24 - DINIEGO', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '01/03/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
@@ -1277,16 +1280,16 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    # load = True
+    load = True
     # comuni_dataframe_org_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
     # comuni_dataframe_pdc_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
-    # comuni_dataframe_pds_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-    #     load=load)
+    comuni_dataframe_pds_05 = get_comuni_dataframe(
+        comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        load=load)
     # comuni_dataframe_cila_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
@@ -1392,6 +1395,52 @@ if __name__ == '__main__':
     #      filtro_no_trento).sum()
     # print('numero pratiche non concluse giorni sospensioni nulli senza trento = ' + \
     #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento))
+
+
+    # REQUEST 20240515_01 | pds non conclusi durata netta > 120 gg
+    # - pdc-ov, non conclusi, mpe 05
+    #   - data fine semestre (31/12/2023) - data inizio pratica - sospensione (se c'e')
+    #     - quante pratiche risultanti > 120 gg? quante di queste con sospensioni nulle?
+    #     - conteggi con Trento e senza
+    # measure_end_date = pd.Timestamp('2023-12-31')
+    # filter_mask = (
+    #     comuni_dataframe_pds_05.loc[:, 'data_fine_pratica'].isna())
+    # filtro_pratiche_non_concluse = (\
+    #     measure_end_date - \
+    #     comuni_dataframe_pds_05.loc[filter_mask, 'data_inizio_pratica'] - \
+    #     comuni_dataframe_pds_05.loc[filter_mask, 'giorni_sospensioni']) > \
+    #         pd.to_timedelta(120, errors='coerce', unit='D')
+    # filtro_no_trento = comuni_dataframe_pds_05.loc[:, 'comune'] != 'Trento'
+    # numero_pratiche_non_concluse = \
+    #     filtro_pratiche_non_concluse.sum()
+    # print('numero pratiche non concluse = ' + \
+    #       str(numero_pratiche_non_concluse))
+    # comuni_dataframe_pds_05[filter_mask & \
+    #     filtro_pratiche_non_concluse].to_csv(
+    #         'pat-pnrr_edilizia_pds_mpe_05_non_concluse_request_20240515_01_01.csv')
+    # numero_pratiche_non_concluse_no_trento = \
+    #     (filtro_pratiche_non_concluse & filtro_no_trento).sum()
+    # print('numero pratiche non concluse senza trento = ' + \
+    #       str(numero_pratiche_non_concluse_no_trento))
+    
+    # pratiche_non_concluse = comuni_dataframe_pds_05[
+    #     filter_mask & filtro_pratiche_non_concluse]
+    # filtro_non_concluse_giorni_sospensioni_nulli = \
+    #     pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
+    #         pd.to_timedelta(0, errors='coerce', unit='D')
+    # pratiche_non_concluse_giorni_sospensioni_nulli = pratiche_non_concluse[
+    #     filtro_non_concluse_giorni_sospensioni_nulli]
+    # numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
+    #     filtro_non_concluse_giorni_sospensioni_nulli.sum()
+    # print('numero pratiche non concluse giorni sospensioni nulli = ' + \
+    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
+    # comuni_dataframe_pds_05[filter_mask & filtro_non_concluse_giorni_sospensioni_nulli].to_csv(
+    #     'pat-pnrr_edilizia_pds_mpe_05_non_concluse_no_sospensioni_request_20240515_01_02.csv')
+    # numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento = \
+    #     (filtro_non_concluse_giorni_sospensioni_nulli & \
+    #      filtro_no_trento).sum()
+    # print('numero pratiche non concluse giorni sospensioni nulli senza trento = ' + \
+    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento))
     
 
     # REQUEST 20240513_02 | pdc-ov avviati durata lorda > 600 gg
@@ -1454,6 +1503,49 @@ if __name__ == '__main__':
     # numero_pratiche_avviate_sopra_soglia = len(pratiche_avviate_sopra_soglia)
     # pratiche_avviate_sopra_soglia.to_csv(
     #     'pat-pnrr_edilizia_pdc_ov_mpe_05_avviate_sopra_600_gg_request_20240513_02.csv')
+    
+    # print('numero pratiche avviate sopra soglia ' + \
+    #     str(giorni_soglia_alta) + ' = ' + \
+    #     str(numero_pratiche_avviate_sopra_soglia))
+
+
+    # REQUEST 20240515_02 | pds avviati durata lorda > 600 gg
+    # - pds, avviati, 5a misurazione
+    #   - pds conclusi
+    #     - data fine pratica - data inizio
+    #       - > 600 gg? 
+    #   - pds non conclusi
+    #     - data fine semestre (31/12/2023) - data inizio pratica
+    #       - > 600 gg?
+    # giorni_soglia_alta = 600
+    # measure_end_date = pd.Timestamp('2023-12-31')
+
+    # filter_mask_concluse = (
+    #     comuni_dataframe_pds_05.loc[:, 'data_fine_pratica'].isna() == False)
+    # filter_mask_non_concluse = ~filter_mask_concluse
+    
+    # filter_mask_pds_concluse_sopra_soglia = (\
+    #     comuni_dataframe_pds_05.loc[filter_mask_concluse,
+    #         'data_fine_pratica'] - \
+    #     comuni_dataframe_pds_05.loc[filter_mask_concluse,
+    #         'data_inizio_pratica']) > \
+    #         pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
+    
+    # filter_mask_pds_non_concluse_sopra_soglia = (\
+    #     measure_end_date - \
+    #     comuni_dataframe_pds_05.loc[filter_mask_non_concluse,
+    #         'data_inizio_pratica']) > \
+    #         pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
+    
+    # pratiche_avviate_sopra_soglia = pd.concat(
+    #     [comuni_dataframe_pds_05.loc[filter_mask_concluse]
+    #         [filter_mask_pds_concluse_sopra_soglia],
+    #      comuni_dataframe_pds_05.loc[filter_mask_non_concluse]
+    #         [filter_mask_pds_non_concluse_sopra_soglia]],
+    #     axis='rows', join='outer')
+    # numero_pratiche_avviate_sopra_soglia = len(pratiche_avviate_sopra_soglia)
+    # pratiche_avviate_sopra_soglia.to_csv(
+    #     'pat-pnrr_edilizia_pds_mpe_05_avviate_sopra_600_gg_request_20240515_02.csv')
     
     # print('numero pratiche avviate sopra soglia ' + \
     #     str(giorni_soglia_alta) + ' = ' + \
