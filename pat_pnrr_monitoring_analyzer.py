@@ -2260,7 +2260,7 @@ if __name__ == '__main__':
 
 
     # LOAD DATAFRAME COMUNI
-    pat_comuni_dataframe = get_pat_comuni_dataframe(load=False)
+    pat_comuni_dataframe = get_pat_comuni_dataframe(load=True)
 
 
     # PRINT BASELINES
@@ -2371,7 +2371,7 @@ if __name__ == '__main__':
 
 
     # REQUEST 20240515_01 | 20240513_01_02 | pdc-ov non conclusi durata netta > 120 gg | TODO
-    #     * tutta l'analisi anche per i pds
+    #     * tutta l'analisi anche per i pds | DONE
     #     - stessa estrazione sulla 3a e 4a misurazione
     #     - analisi
     #         - son sempre alcuni comuni che non tracciano le sospensioni
@@ -2380,7 +2380,7 @@ if __name__ == '__main__':
 
 
     # REQUEST 20240515_02 | 20240513_02 | pdc-ov avviati durata lorda > 600 gg | TODO
-    #     * tutta l'analisi anche per i pds
+    #     * tutta l'analisi anche per i pds | DONE
     #     - analisi
     #         - quanti comuni coinvolti
     #         - incidenza sulla durata media e sull'arretrato nella 5a misurazione

@@ -216,7 +216,8 @@ def get_comuni_scores(comuni_performance_trends, pdc_measure_labels, pds_measure
 def print_comuni_performance_charts(pat_comuni_dataframe,
                                     comuni_durata_trends, comuni_arretrato_trends,
                                     comuni_performance_trends, mpe_number=3,
-                                    just_provincia=True, just_one=False, save_charts=True):
+                                    just_provincia=True, no_trento=True,
+                                    just_one=False, save_charts=True):
     if mpe_number == 3:
         pdc_measure_labels = ['pdc_2022q1_2', 'pdc_2022q3_4']
         pds_measure_labels = ['pds_2022q1_2', 'pds_2022q3_4']
@@ -427,6 +428,14 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         fig, ax = plt.subplots(ncols=4, gridspec_kw=dict(width_ratios=[0.25, 0.25, 0.25, 0.25]),
                                layout='constrained')
         fig.set_size_inches(15, 5)
+
+        if no_trento:
+            ore_tecnici_settimana.Trento = 0
+            comuni_pdc_pds_durata.Trento = 0
+            comuni_pdc_pds_avviato.Trento = 0
+            comuni_pdc_pds_arretrato.Trento = 0
+            comuni_scores.Trento = 0
+            grandezza_comunale.Trento = 0
 
         # scatter di Durata media PdC+PdS [gg] 2023 ed Ore elaborazione/settimana 2023
         ax[0].set_title(periodo_label, fontsize=12)
@@ -768,7 +777,8 @@ if __name__ == '__main__':
         print_comuni_performance_charts(pat_comuni_dataframe,
                                         comuni_durata_trends, comuni_arretrato_trends,
                                         comuni_performance_trends, mpe_number=mpe_number,
-                                        just_provincia=True, just_one=False, save_charts=True)
+                                        just_provincia=True, no_trento=True,
+                                        just_one=False, save_charts=True)
     # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
     # print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
