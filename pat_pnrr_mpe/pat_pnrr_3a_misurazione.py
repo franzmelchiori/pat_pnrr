@@ -66,7 +66,7 @@ def check_comuni_excel():
     return True
 
 
-def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=False):
+def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=False, lpf=False):
     if not path_base:
         path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\'
     path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\'
@@ -92,51 +92,79 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=Fals
             comune = ComuneExcel(path_file, comune_name)
             comune_dataframe = comune.get_comune_dataframe(sheet_name)
             comuni_dataframe.append(comune_dataframe)
-        
-        # correzione arretrati 202405 | inserimento pratiche pdc e pds arretrate emerse a posteriori
-        if sheet_name == 'Permessi di Costruire':
-            sheet_name = 'correzione_arretrati_pdc_202405'
-            names = [
-                    'comune',
-                    'tipologia_pratica',
-                    'id_pratica',
-                    'data_inizio_pratica',
-                    'giorni_termine_normativo',
-                    'data_fine_pratica',
-                    'data_fine_pratica_silenzio-assenso',
-                    'conferenza_servizi',
-                    'tipologia_massima_sospensione',
-                    'giorni_sospensioni'
-                ]
-            usecols = [
-                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-                ]
-        elif sheet_name == 'Prov di sanatoria':
-            sheet_name = 'correzione_arretrati_pds_202405'
-            names = [
-                    'comune',
-                    'tipologia_pratica',
-                    'id_pratica',
-                    'data_inizio_pratica',
-                    'giorni_termine_normativo',
-                    'data_fine_pratica',
-                    'tipologia_massima_sospensione',
-                    'giorni_sospensioni'
-                ]
-            usecols = [
-                    0, 1, 2, 3, 4, 5, 6, 7
-                ]
-        if (sheet_name == 'Permessi di Costruire') | (sheet_name == 'Prov di sanatoria'):
-            excel_path = path_shelve + sheet_name + '.xls'
-            comuni_correction_202405_dataframe = get_dataframe_excel(
-                excel_path, sheet_name, names, usecols,
-                skiprows=1, droprows=[], dtype=None)
-            comuni_dataframe.append(comuni_correction_202405_dataframe)
-        
+
         comuni_dataframe = pd.concat(comuni_dataframe, axis='rows', join='outer')
         comuni_dataframe.reset_index(drop=True, inplace=True)
-
+            
         comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + sheet_suffix)
+        comuni_dataframe_shelve['comuni_dataframe'] = comuni_dataframe
+        comuni_dataframe_shelve.close()
+    
+    if lpf:
+        if sheet_name=='Permessi di Costruire':
+            # REQUEST 20240513_01 | pdc-ov non conclusi durata netta > 120 gg
+            # - pdc-ov, non conclusi, mpe 03
+            #   - data fine semestre (31/12/2022) - data inizio pratica - sospensione (se c'e')
+            #     - quante pratiche risultanti > 120 gg con sospensioni nulle?
+            measure_end_date = pd.Timestamp('2022-12-31')
+            filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                              'PdC ordinario') ^ \
+                          (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                              'PdC in variante')
+            filter_mask = filter_type & (
+                comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna())
+            filter_mask = filter_mask & (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
+            filtro_pratiche_non_concluse = (\
+                measure_end_date - \
+                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica'] - \
+                comuni_dataframe.loc[filter_mask, 'giorni_sospensioni']) > \
+                    pd.to_timedelta(120, errors='coerce', unit='D')
+            
+            pratiche_non_concluse = comuni_dataframe[
+                filter_mask & filtro_pratiche_non_concluse]
+            filtro_non_concluse_giorni_sospensioni_nulli = \
+                pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
+                    pd.to_timedelta(0, errors='coerce', unit='D')
+            
+            numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
+                filtro_non_concluse_giorni_sospensioni_nulli.sum()
+            print('numero pdc-ov mpe-03 non conclusi con giorni sospensioni nulli = ' + \
+                  str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
+            
+            sheet_suffix += '_ov'
+            
+        if sheet_name=='Prov di sanatoria':
+            # REQUEST 20240515_01 | pds non conclusi durata netta > 120 gg
+            # - pds, non conclusi, mpe 03
+            #   - data fine semestre (31/12/2022) - data inizio pratica - sospensione (se c'e')
+            #     - quante pratiche risultanti > 120 gg con sospensioni nulle?
+            measure_end_date = pd.Timestamp('2022-12-31')
+            filter_mask = (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
+            filtro_pratiche_non_concluse = (\
+                measure_end_date - \
+                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica'] - \
+                comuni_dataframe.loc[filter_mask, 'giorni_sospensioni']) > \
+                    pd.to_timedelta(120, errors='coerce', unit='D')
+
+            pratiche_non_concluse = comuni_dataframe[
+                filter_mask & filtro_pratiche_non_concluse]
+            filtro_non_concluse_giorni_sospensioni_nulli = \
+                pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
+                    pd.to_timedelta(0, errors='coerce', unit='D')
+
+            numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
+                filtro_non_concluse_giorni_sospensioni_nulli.sum()
+            print('numero pds mpe-03 non conclusi con giorni sospensioni nulli = ' + \
+                  str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
+        
+        comuni_dataframe.drop(
+            comuni_dataframe[filter_mask & filtro_non_concluse_giorni_sospensioni_nulli].index,
+            inplace=True)
+
+        comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + \
+                                              sheet_suffix + '_lpf')
         comuni_dataframe_shelve['comuni_dataframe'] = comuni_dataframe
         comuni_dataframe_shelve.close()
 
@@ -144,7 +172,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=Fals
 
 
 def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, type_name=False, type_pdc_ov=True,
-                                 load=True, path_base=False):
+                                 load=True, path_base=False, lpf=False):
     if not path_base:
         path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\'
     path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\'
@@ -161,8 +189,10 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, type_name=False, 
         sheet_suffix += '_cila'
 
     if load:
-        comuni_measure_dataframe_shelve = shelve.open(
-            path_shelve + 'comuni_measure_dataframe' + sheet_suffix)
+        path_shelve_file = path_shelve + 'comuni_measure_dataframe' + sheet_suffix
+        if lpf:
+            path_shelve_file += '_lpf'
+        comuni_measure_dataframe_shelve = shelve.open(path_shelve_file)
         comuni_measure_dataframe = comuni_measure_dataframe_shelve['comuni_measure_dataframe']
         comuni_measure_dataframe_shelve.close()
     else:
@@ -180,12 +210,14 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, type_name=False, 
             print(message)
             comune = ComuneExcel(path_file, comune_name)
             comune_measure_series = comune.get_comune_measure_series(sheet_name, type_name,
-                                                                     type_pdc_ov)
+                                                                     type_pdc_ov, lpf=lpf)
             comuni_measure_dataframe.append(comune_measure_series)
         comuni_measure_dataframe = pd.DataFrame(comuni_measure_dataframe, index=comuni_names)
 
-        comuni_measure_dataframe_shelve = shelve.open(
-            path_shelve + 'comuni_measure_dataframe' + sheet_suffix)
+        path_shelve_file = path_shelve + 'comuni_measure_dataframe' + sheet_suffix
+        if lpf:
+            path_shelve_file += '_lpf'
+        comuni_measure_dataframe_shelve = shelve.open(path_shelve_file)
         comuni_measure_dataframe_shelve['comuni_measure_dataframe'] = comuni_measure_dataframe
         comuni_measure_dataframe_shelve.close()
 
@@ -226,11 +258,11 @@ def get_comuni_measures_dataframe(comuni_excel_map, load=True):
 
 
 def get_comuni_measure(comuni_excel_map, sheet_name, type_name=False, type_pdc_ov=True,
-                       measure_period='2022q3-4', load=True):
+                       measure_period='2022q3-4', load=True, lpf=False):
 
     comuni_measure_dataframe = get_comuni_measure_dataframe(
         comuni_excel_map=comuni_excel_map, sheet_name=sheet_name, type_name=type_name,
-        type_pdc_ov=type_pdc_ov, load=load)
+        type_pdc_ov=type_pdc_ov, load=load, lpf=lpf)
 
     if sheet_name == 'Permessi di Costruire':
         if type_pdc_ov:
@@ -964,8 +996,26 @@ class ComuneExcel:
         return comune_dataframe
 
     def get_comune_measure_series(self, sheet_name, type_name=False, type_pdc_ov=True,
-                                  measure_period='2022q3-4'):
-        comune_dataframe = self.get_comune_dataframe(sheet_name=sheet_name)
+                                  measure_period='2022q3-4', lpf=False):
+        if lpf:
+            path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+            path_to_excel_files = 'pat_pnrr_3a_misurazione_tabelle_comunali\\'
+            path_shelve = path_to_mpe + path_to_excel_files
+
+            sheet_suffix = ''
+            if sheet_name == 'Permessi di Costruire':
+                sheet_suffix += '_pdc_ov'
+            if sheet_name == 'Prov di sanatoria':
+                sheet_suffix += '_pds'
+
+            comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + \
+                                                  sheet_suffix + '_lpf')
+            comuni_dataframe = comuni_dataframe_shelve['comuni_dataframe']
+            comuni_dataframe_shelve.close()
+
+            comune_dataframe = comuni_dataframe[comuni_dataframe.comune == self.comune_name]
+        else:
+            comune_dataframe = self.get_comune_dataframe(sheet_name=sheet_name)
 
         if sheet_name == 'Permessi di Costruire':
             if type_pdc_ov:
@@ -1045,12 +1095,18 @@ class ComuneExcel:
             filter_mask = filter_mask & filter_type
             numero_pratiche_concluse_con_silenzio_assenso = \
                 comune_dataframe[filter_mask].__len__()
-
             filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna() == False
             filter_mask = filter_mask & (comune_dataframe.loc[:, 'conferenza_servizi'] == True)
             filter_mask = filter_mask & filter_type
             numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi = \
                 comune_dataframe[filter_mask].__len__()
+        # elif sheet_name == 'Prov di sanatoria':
+        #     numero_pratiche_concluse_con_silenzio_assenso = 0
+        #     filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna() == False
+        #     filter_mask = filter_mask & (comune_dataframe.loc[:, 'conferenza_servizi'] == True)
+        #     filter_mask = filter_mask & filter_type
+        #     numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi = \
+        #         comune_dataframe[filter_mask].__len__()
         else:
             numero_pratiche_concluse_con_silenzio_assenso = 0
             numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi = 0
@@ -1073,8 +1129,8 @@ class ComuneExcel:
                 comune_dataframe.loc[filter_mask, 'data_inizio_pratica']).mean().days
 
         filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna() == False
-        filter_mask = filter_mask & (comune_dataframe.loc[:, 'giorni_sospensioni'] >
-                                     pd.Timedelta(0, unit='D'))
+        filter_mask = filter_mask & (comune_dataframe.loc[:, 'giorni_sospensioni']
+                                     > pd.Timedelta(0, unit='D'))
         filter_mask = filter_mask & filter_type
         numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni = \
             comune_dataframe[filter_mask].__len__()
@@ -1135,11 +1191,12 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    load=True
-    comuni_dataframe_pdc_03 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', load=load)
-    comuni_dataframe_pds_03 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', load=load)
+    # load = True
+    # lpf = True
+    # comuni_dataframe_pdc_03 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', load=load, lpf=lpf)
+    # comuni_dataframe_pds_03 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', load=load, lpf=lpf)
     # comuni_dataframe_cila_03 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', load=load)
 
@@ -1176,6 +1233,13 @@ if __name__ == '__main__':
 
     # get_comuni_measures(comuni_excel_map)
 
+    # load = True
+    # lpf = False
+    # comuni_pdc_ov_measure = get_comuni_measure(
+    #     comuni_excel_map, 'Permessi di Costruire', load=load, lpf=lpf)
+    # comuni_pds_measure = get_comuni_measure(
+    #     comuni_excel_map, 'Prov di sanatoria', load=load, lpf=lpf)
+
 
     # ATTENZIONE! MEDIA VS. MEDIA DI MEDIE
 
@@ -1199,71 +1263,71 @@ if __name__ == '__main__':
     # - pdc-ov, non conclusi, mpe 03
     #   - data fine semestre (31/12/2022) - data inizio pratica - sospensione (se c'e')
     #     - quante pratiche risultanti > 120 gg con sospensioni nulle?
-    measure_end_date = pd.Timestamp('2022-12-31')
-    filter_type = (comuni_dataframe_pdc_03.loc[:, 'tipologia_pratica'] ==
-                      'PdC ordinario') ^ \
-                  (comuni_dataframe_pdc_03.loc[:, 'tipologia_pratica'] ==
-                      'PdC in variante')
-    filter_mask = filter_type & (
-        comuni_dataframe_pdc_03.loc[:, 'data_fine_pratica_silenzio-assenso'].isna())
-    filter_mask = filter_mask & (
-        comuni_dataframe_pdc_03.loc[:, 'data_fine_pratica'].isna())
-    filtro_pratiche_non_concluse = (\
-        measure_end_date - \
-        comuni_dataframe_pdc_03.loc[filter_mask, 'data_inizio_pratica'] - \
-        comuni_dataframe_pdc_03.loc[filter_mask, 'giorni_sospensioni']) > \
-            pd.to_timedelta(120, errors='coerce', unit='D')
-    filtro_no_trento = comuni_dataframe_pdc_03.loc[:, 'comune'] != 'Trento'
+    # measure_end_date = pd.Timestamp('2022-12-31')
+    # filter_type = (comuni_dataframe_pdc_03.loc[:, 'tipologia_pratica'] ==
+    #                   'PdC ordinario') ^ \
+    #               (comuni_dataframe_pdc_03.loc[:, 'tipologia_pratica'] ==
+    #                   'PdC in variante')
+    # filter_mask = filter_type & (
+    #     comuni_dataframe_pdc_03.loc[:, 'data_fine_pratica_silenzio-assenso'].isna())
+    # filter_mask = filter_mask & (
+    #     comuni_dataframe_pdc_03.loc[:, 'data_fine_pratica'].isna())
+    # filtro_pratiche_non_concluse = (\
+    #     measure_end_date - \
+    #     comuni_dataframe_pdc_03.loc[filter_mask, 'data_inizio_pratica'] - \
+    #     comuni_dataframe_pdc_03.loc[filter_mask, 'giorni_sospensioni']) > \
+    #         pd.to_timedelta(120, errors='coerce', unit='D')
+    # filtro_no_trento = comuni_dataframe_pdc_03.loc[:, 'comune'] != 'Trento'
     
-    pratiche_non_concluse = comuni_dataframe_pdc_03[
-        filter_mask & filtro_pratiche_non_concluse]
-    filtro_non_concluse_giorni_sospensioni_nulli = \
-        pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
-            pd.to_timedelta(0, errors='coerce', unit='D')
-    pratiche_non_concluse_giorni_sospensioni_nulli = pratiche_non_concluse[
-        filtro_non_concluse_giorni_sospensioni_nulli]
-    numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
-        filtro_non_concluse_giorni_sospensioni_nulli.sum()
-    print('numero pdc-ov mpe-03 non conclusi con giorni sospensioni nulli = ' + \
-          str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
-    comuni_dataframe_pdc_03[filter_mask & filtro_non_concluse_giorni_sospensioni_nulli].to_csv(
-        'pat-pnrr_edilizia_pdc_ov_mpe_03_non_concluse_no_sospensioni_request_20240513_01_02.csv')
-    numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento = \
-        (filtro_non_concluse_giorni_sospensioni_nulli & \
-         filtro_no_trento).sum()
-    print('numero pdc-ov mpe-03 non conclusi con giorni sospensioni nulli senza trento = ' + \
-          str(numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento))
+    # pratiche_non_concluse = comuni_dataframe_pdc_03[
+    #     filter_mask & filtro_pratiche_non_concluse]
+    # filtro_non_concluse_giorni_sospensioni_nulli = \
+    #     pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
+    #         pd.to_timedelta(0, errors='coerce', unit='D')
+    # pratiche_non_concluse_giorni_sospensioni_nulli = pratiche_non_concluse[
+    #     filtro_non_concluse_giorni_sospensioni_nulli]
+    # numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
+    #     filtro_non_concluse_giorni_sospensioni_nulli.sum()
+    # print('numero pdc-ov mpe-03 non conclusi con giorni sospensioni nulli = ' + \
+    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
+    # comuni_dataframe_pdc_03[filter_mask & filtro_non_concluse_giorni_sospensioni_nulli].to_csv(
+    #     'pat-pnrr_edilizia_pdc_ov_mpe_03_non_concluse_no_sospensioni_request_20240513_01_02.csv')
+    # numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento = \
+    #     (filtro_non_concluse_giorni_sospensioni_nulli & \
+    #      filtro_no_trento).sum()
+    # print('numero pdc-ov mpe-03 non conclusi con giorni sospensioni nulli senza trento = ' + \
+    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento))
 
 
     # REQUEST 20240515_01 | pds non conclusi durata netta > 120 gg
     # - pds, non conclusi, mpe 03
     #   - data fine semestre (31/12/2022) - data inizio pratica - sospensione (se c'e')
     #     - quante pratiche risultanti > 120 gg con sospensioni nulle?
-    measure_end_date = pd.Timestamp('2022-12-31')
-    filter_mask = (
-        comuni_dataframe_pds_03.loc[:, 'data_fine_pratica'].isna())
-    filtro_pratiche_non_concluse = (\
-        measure_end_date - \
-        comuni_dataframe_pds_03.loc[filter_mask, 'data_inizio_pratica'] - \
-        comuni_dataframe_pds_03.loc[filter_mask, 'giorni_sospensioni']) > \
-            pd.to_timedelta(120, errors='coerce', unit='D')
-    filtro_no_trento = comuni_dataframe_pds_03.loc[:, 'comune'] != 'Trento'
+    # measure_end_date = pd.Timestamp('2022-12-31')
+    # filter_mask = (
+    #     comuni_dataframe_pds_03.loc[:, 'data_fine_pratica'].isna())
+    # filtro_pratiche_non_concluse = (\
+    #     measure_end_date - \
+    #     comuni_dataframe_pds_03.loc[filter_mask, 'data_inizio_pratica'] - \
+    #     comuni_dataframe_pds_03.loc[filter_mask, 'giorni_sospensioni']) > \
+    #         pd.to_timedelta(120, errors='coerce', unit='D')
+    # filtro_no_trento = comuni_dataframe_pds_03.loc[:, 'comune'] != 'Trento'
     
-    pratiche_non_concluse = comuni_dataframe_pds_03[
-        filter_mask & filtro_pratiche_non_concluse]
-    filtro_non_concluse_giorni_sospensioni_nulli = \
-        pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
-            pd.to_timedelta(0, errors='coerce', unit='D')
-    pratiche_non_concluse_giorni_sospensioni_nulli = pratiche_non_concluse[
-        filtro_non_concluse_giorni_sospensioni_nulli]
-    numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
-        filtro_non_concluse_giorni_sospensioni_nulli.sum()
-    print('numero pds mpe-03 non conclusi con giorni sospensioni nulli = ' + \
-          str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
-    comuni_dataframe_pds_03[filter_mask & filtro_non_concluse_giorni_sospensioni_nulli].to_csv(
-        'pat-pnrr_edilizia_pds_mpe_03_non_concluse_no_sospensioni_request_20240515_01_02.csv')
-    numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento = \
-        (filtro_non_concluse_giorni_sospensioni_nulli & \
-         filtro_no_trento).sum()
-    print('numero pds mpe-03 non conclusi con giorni sospensioni nulli senza trento = ' + \
-          str(numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento))
+    # pratiche_non_concluse = comuni_dataframe_pds_03[
+    #     filter_mask & filtro_pratiche_non_concluse]
+    # filtro_non_concluse_giorni_sospensioni_nulli = \
+    #     pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
+    #         pd.to_timedelta(0, errors='coerce', unit='D')
+    # pratiche_non_concluse_giorni_sospensioni_nulli = pratiche_non_concluse[
+    #     filtro_non_concluse_giorni_sospensioni_nulli]
+    # numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
+    #     filtro_non_concluse_giorni_sospensioni_nulli.sum()
+    # print('numero pds mpe-03 non conclusi con giorni sospensioni nulli = ' + \
+    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
+    # comuni_dataframe_pds_03[filter_mask & filtro_non_concluse_giorni_sospensioni_nulli].to_csv(
+    #     'pat-pnrr_edilizia_pds_mpe_03_non_concluse_no_sospensioni_request_20240515_01_02.csv')
+    # numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento = \
+    #     (filtro_non_concluse_giorni_sospensioni_nulli & \
+    #      filtro_no_trento).sum()
+    # print('numero pds mpe-03 non conclusi con giorni sospensioni nulli senza trento = ' + \
+    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento))
