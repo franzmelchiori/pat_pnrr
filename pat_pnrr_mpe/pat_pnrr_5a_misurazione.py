@@ -908,7 +908,7 @@ def check_comuni_excel(path_to_excel_files, path_to_mpe=None):
 
 
 def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load=True,
-                         path_to_mpe=None, lpf=False):
+                         path_to_mpe=None, pf=''):
     if not path_to_mpe:
         path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
     path_shelve = path_to_mpe + path_to_excel_files
@@ -951,7 +951,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
         comuni_dataframe.to_csv(path_shelve + 'pat-pnrr_edilizia' + row_type_name + \
                                 sheet_suffix + '_2023q3-4' + '.csv')
     
-    if lpf:
+    if pf == 'l_01':
         if sheet_name=='Permessi di Costruire':
             # REQUEST 20240513_01 | pdc-ov non conclusi durata netta > 120 gg
             # - pdc-ov, non conclusi, mpe 05
@@ -1020,6 +1020,27 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                                               sheet_suffix + '_lpf')
         comuni_dataframe_shelve['comuni_dataframe'] = comuni_dataframe
         comuni_dataframe_shelve.close()
+
+    elif pf == 'l_02':
+        if sheet_name=='Permessi di Costruire':
+            # REQUEST 20240527_01 | pdc-ov avviati, fuori norma, senza sospensioni | TODO
+            # - lista ordinata di comuni per pratiche del tipo seguente
+            #   - pdc-ov avviati, mpe-05
+            #     - fuori norma (durata netta > termine normativo, pratica per pratica)
+            #     - senza sospensioni (0gg)
+            #       - valore % sulle pratiche fuori norma
+            # - lista pratiche concluse e non concluse
+            pass
+
+        if sheet_name=='Prov di sanatoria':
+            # REQUEST 20240527_02 | pds avviati, fuori norma, senza sospensioni | TODO
+            # - lista ordinata di comuni per pratiche del tipo seguente
+            #   - pds avviati, mpe-05
+            #     - fuori norma (durata netta > termine normativo, pratica per pratica)
+            #     - senza sospensioni (0gg)
+            #       - valore % sulle pratiche fuori norma
+            # - lista pratiche concluse e non concluse
+            pass
 
     return comuni_dataframe
 
@@ -1381,10 +1402,10 @@ if __name__ == '__main__':
     #     load=load)
     comuni_dataframe_pdc_05 = get_comuni_dataframe(
         comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-        load=load, lpf=lpf)
-    comuni_dataframe_pds_05 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-        load=load, lpf=lpf)
+        load=load, pf='l_02')
+    # comuni_dataframe_pds_05 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load, pf='l_02')
     # comuni_dataframe_cila_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
@@ -1439,12 +1460,12 @@ if __name__ == '__main__':
     # get_comuni_measures_dataframe(comuni_excel_map, load=False)
     # get_comuni_measures(comuni_excel_map)
 
-    load = True
-    lpf = True
-    comuni_pdc_ov_measure = get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-        'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
-    comuni_pds_measure = get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
-        'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
+    # load = True
+    # lpf = True
+    # comuni_pdc_ov_measure = get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
+    # comuni_pds_measure = get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
+    #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
 
 
     # REQUEST 20240513_01 | pdc-ov non conclusi durata netta > 120 gg

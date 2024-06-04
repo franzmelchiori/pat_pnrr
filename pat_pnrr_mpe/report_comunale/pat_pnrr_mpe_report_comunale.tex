@@ -1,0 +1,106 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage[official]{eurosym}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{pifont}
+\usepackage[italian]{babel}
+\usepackage{makeidx}
+
+\geometry{a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, heightrounded}
+\definecolor{custom-blue}{RGB}{47,84,150}
+
+\usepackage{fancyhdr} % per personalizzare testatine e piedi
+\pagestyle{fancy} % per applicar le impostazioni di fancyhdr
+% impostazioni fancy delle testatine:
+\renewcommand{\headrule}{}
+%% impostazioni fancy dei piedi:
+\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\dotfill}\vss}}
+\renewcommand{\footrulewidth}{1pt}
+\lfoot{\rmfamily \footnotesize{PAT-PNRR Digital}\\\sffamily \ding{41} pnrr.digital@.provincia.tn.it}
+\cfoot{\footnotesize \rmfamily \today\\v5.0.0}
+\rfoot{\footnotesize PAT-MPE\\\sffamily page \thepage\ of \pageref{LastPage}}
+\usepackage{lastpage}
+
+\makeindex
+
+\begin{document}
+	\begin{center}
+		\includegraphics[height=1.25cm]{../relazione_tecnica/pat-mpe_images/logo_next_generation_eu} \hspace{1.25cm} \includegraphics[height=1.25cm]{../relazione_tecnica/pat-mpe_images/logo_repubblica_italiana} \hspace{1.25cm} \includegraphics[height=1.25cm]{../relazione_tecnica/pat-mpe_images/pat_logo}\\
+		\vspace{0.5cm}
+	\end{center}
+	\begin{center}
+		\textbf{\textcolor{custom-blue}{Piano Nazionale di Ripresa e Resilienza, Missione 1, Componente 1 (PNRR-M1C1)}}\\
+		\textbf{\textcolor{custom-blue}{Investimento 2.2 ``Task force digitalizzazione, monitoraggio e performance''}}\\
+		\textbf{\textcolor{custom-blue}{Sub-investimento 2.2.1 ``Assistenza tecnica a livello centrale e locale del PNRR''}}\\
+		\textbf{\textcolor{custom-blue}{``Progetto 1000 Esperti''}}\\
+		\vspace{4.75cm}
+	\end{center}
+	\begin{center}
+		\textsc{\LARGE{PAT\footnote{Provincia Autonoma di Trento}-MPE}}\\
+        \vspace{0.1cm}
+        \textsc{\Large{Monitoraggio Procedimenti Edilizi}}\\
+		\vspace{0.75cm}
+		\textsc{\large{per il} \Large{Comune di Ledro}}\\
+		\vspace{0.75cm}
+		\textsc{\Large{\today}}\\
+        \vspace{0.3cm}
+        \textsc{\large{v5.0.0}}\\
+		\vspace{4cm}
+	\end{center}
+	\begin{flushright}
+		\includegraphics[height=1.25cm]{../relazione_tecnica/pat-mpe_images/pat-pnrr_logo}\\
+		\vspace{0.5cm}
+		\textsc{\normalsize{A cura di}}\\
+        \textsc{\large{PAT-PNRR Digital}}\\
+		\large{Ing. Francesco Melchiori}\normalsize{, Esperto in Tecnologie Digitali}\\
+		\vspace{0.5cm}
+		\textsc{\normalsize{Struttura di riferimento}}\\
+		\textsc{\large{PAT-UMST\footnote{Unità di Missione Strategica} Digitalizzazione e Reti}}\\
+		\large{Dott.ssa Cristiana Pretto}\normalsize{, Dirigente Generale}\\
+	\end{flushright}
+	\clearpage
+
+	\tableofcontents
+	\clearpage
+	
+	Le elaborazioni numeriche e grafiche della presente relazione sono state programmate e pubblicate con Python e LaTeX. Il codice Python, ad esclusione dei dati, è contenuto nel seguente repository online pubblico GitHub.\\
+	\begin{figure}[!htbp]
+		\begin{center}
+			\includegraphics[height=1cm]{../relazione_tecnica/pat-mpe_images/github_logo.png} \textbf{\texttt{github.com/franzmelchiori/pat\_pnrr}} \hspace{0.3cm}
+			\includegraphics[height=1cm]{../relazione_tecnica/pat-mpe_images/python_logo.png} \hspace{0.3cm}
+			\includegraphics[height=1cm]{../relazione_tecnica/pat-mpe_images/latex_logo.png}\\
+		\end{center}
+	\end{figure}
+	\clearpage
+
+	\section{Introduzione}
+
+	\section{Definizioni}
+	\begin{itemize}
+		\item \textbf{PdC}
+		\item \textbf{PdC-OV}
+		\item \textbf{PdS}
+		\item \textbf{Durata} [gg]  media al lordo delle sospensioni
+		\item \textbf{Termine} [gg] mediano da normativa
+		\item \textbf{Arretrati}
+		\item \textbf{Avviati}
+		\item \textbf{Pressione PdC}
+		\item \textbf{Pressione PdS}
+		\item \textbf{Pressione}
+		\item \textbf{Elaborazione} [ore/settimana] tecnica per l'edilizia
+	\end{itemize}
+
+	\section{Dati ed analisi}
+	\input{../relazione_tecnica/pat_pnrr_performance_tables/pat_pnrr_performance_table_Ledro.tex}
+	\begin{center}
+		\includegraphics[height=5cm]{../relazione_tecnica/pat_pnrr_performance_charts/pat_pnrr_performance_chart_Ledro.png}
+	\end{center}
+	\begin{center}
+		\includegraphics[height=5cm]{../relazione_tecnica/pat_pnrr_performance_charts/pat_pnrr_performance_organico_chart_Ledro.png}
+	\end{center}
+
+\end{document}

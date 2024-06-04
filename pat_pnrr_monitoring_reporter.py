@@ -383,48 +383,6 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     plt.close(fig)
 
     if mpe_number >= 5:
-        # fig, ax = plt.subplots(ncols=2, gridspec_kw=dict(width_ratios=[0.5, 0.5]),
-        #                        layout='constrained')
-        # fig.set_size_inches(15, 5)
-
-        # ax[0].set_title('Pressione ' + periodo_label, fontsize=12)
-        # plot4 = ax[0].violinplot(comuni_scores, showmeans=True,
-        #                          showextrema=False, showmedians=False)
-        # Nx, Ny = 1, 1000
-        # imgArr = np.tile(np.linspace(0, 1, Ny), (Nx, 1)).T
-        # ymin, ymax = 0, 8.5
-        # xmin, xmax = ax[0].get_xlim()
-        # path = Path(plot4['bodies'][0].get_paths()[0].vertices)
-        # patch = PathPatch(path, facecolor='none', edgecolor='none')
-        # ax[0].add_patch(patch)
-        # ax[0].imshow(imgArr, origin="lower", extent=[xmin, xmax, ymin, ymax],
-        #             aspect="auto", cmap=mpl.colormaps['turbo'], clip_path=patch)
-        # ax[0].hlines(0, 0, 2, colors='r', linewidth=0)
-        # ax[0].set_xticks([], [])
-        # ax[0].spines['top'].set_visible(False)
-        # ax[0].spines['right'].set_visible(False)
-        # ax[0].spines['bottom'].set_visible(False)
-        # ax[0].spines['left'].set_visible(False)
-
-        # ax[1].set_title(periodo_label, fontsize=12)
-        # plot1 = ax[1].scatter(ore_tecnici_settimana, comuni_scores,
-        #                 c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
-        # ax[1].set_ylim(0, 8.5)
-        # ax[1].set_xlabel('Ore elaborazione/settimana')
-        # ax[1].set_ylabel('Pressione')
-        # ax[1].spines['top'].set_visible(False)
-        # ax[1].spines['right'].set_visible(False)
-        # ax[1].spines['bottom'].set_visible(False)
-        # ax[1].spines['left'].set_visible(False)
-
-        # fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
-        #         prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
-        #         fancybox=True, shadow=True, ncol=5)
-        # fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
-        #             'pat_pnrr_performance_organico_chart_provincia_' + mpe_number_label,
-        #             dpi=300, bbox_inches='tight', pad_inches=0.25)
-        # plt.close(fig)
-
         fig, ax = plt.subplots(ncols=4, gridspec_kw=dict(width_ratios=[0.25, 0.25, 0.25, 0.25]),
                                layout='constrained')
         fig.set_size_inches(15, 5)
@@ -437,25 +395,25 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             comuni_scores.Trento = 0
             grandezza_comunale.Trento = 0
 
-        # scatter di Durata media PdC+PdS [gg] 2023 ed Ore elaborazione/settimana 2023
+        # scatter di Avviato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
         ax[0].set_title(periodo_label, fontsize=12)
-        plot1 = ax[0].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata,
+        plot1 = ax[0].scatter(ore_tecnici_settimana, comuni_pdc_pds_avviato,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
-        ax[0].set_xlabel('Ore elaborazione/settimana')
-        ax[0].set_ylabel('Durata media PdC+PdS [gg]')
+        ax[0].set_xlabel('Elaborazione [ore/settimana]')
+        ax[0].set_ylabel('Avviato PdC+PdS')
         ax[0].spines['top'].set_visible(False)
         ax[0].spines['right'].set_visible(False)
         ax[0].spines['bottom'].set_visible(False)
         ax[0].spines['left'].set_visible(False)
 
-        # scatter di Avviato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
+        # scatter di Durata media PdC+PdS [gg] 2023 ed Ore elaborazione/settimana 2023
         ax[1].set_title(periodo_label, fontsize=12)
-        plot2 = ax[1].scatter(ore_tecnici_settimana, comuni_pdc_pds_avviato,
+        plot2 = ax[1].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
-        ax[1].set_xlabel('Ore elaborazione/settimana')
-        ax[1].set_ylabel('Avviato PdC+PdS')
+        ax[1].set_xlabel('Elaborazione [ore/settimana]')
+        ax[1].set_ylabel('Durata PdC+PdS [gg]')
         ax[1].spines['top'].set_visible(False)
         ax[1].spines['right'].set_visible(False)
         ax[1].spines['bottom'].set_visible(False)
@@ -466,18 +424,19 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         plot3 = ax[2].scatter(ore_tecnici_settimana, comuni_pdc_pds_arretrato,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
-        ax[2].set_xlabel('Ore elaborazione/settimana')
+        ax[2].set_xlabel('Elaborazione [ore/settimana]')
         ax[2].set_ylabel('Arretrato PdC+PdS')
         ax[2].spines['top'].set_visible(False)
         ax[2].spines['right'].set_visible(False)
         ax[2].spines['bottom'].set_visible(False)
         ax[2].spines['left'].set_visible(False)
 
+        # scatter di Pressione 2023 ed Ore elaborazione/settimana 2023
         ax[3].set_title(periodo_label, fontsize=12)
-        plot1 = ax[3].scatter(ore_tecnici_settimana, comuni_scores,
+        plot4 = ax[3].scatter(ore_tecnici_settimana, comuni_scores,
                         c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
         ax[3].set_ylim(0, 8.5)
-        ax[3].set_xlabel('Ore elaborazione/settimana')
+        ax[3].set_xlabel('Elaborazione [ore/settimana]')
         ax[3].set_ylabel('Pressione')
         ax[3].spines['top'].set_visible(False)
         ax[3].spines['right'].set_visible(False)
@@ -500,7 +459,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     pds_measure_labels = ['pds_2021q3_4', 'pds_2022q1_2', 'pds_2022q3_4', 'pds_2023q1_2',
                           'pds_2023q3_4']
     for comune in comuni_excel_map:
-        print('produco la dashboard per il comune di ' + comune[0])
+        print('produco le dashboard per il comune di ' + comune[0])
 
         # dashboard comunale
         #   a. (+) comune nello scatter pdc durata/arretrato ultimi 12 mesi
@@ -577,8 +536,91 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                         dpi=300, bbox_inches='tight', pad_inches=0.25)
         plt.close(fig)
 
+        if mpe_number >= 5:
+            fig, ax = plt.subplots(ncols=4,
+                                   gridspec_kw=dict(width_ratios=[0.25, 0.25, 0.25, 0.25]),
+                                   layout='constrained')
+            fig.set_size_inches(15, 5)
+
+            if no_trento:
+                ore_tecnici_settimana.Trento = 0
+                comuni_pdc_pds_durata.Trento = 0
+                comuni_pdc_pds_avviato.Trento = 0
+                comuni_pdc_pds_arretrato.Trento = 0
+                comuni_scores.Trento = 0
+                grandezza_comunale.Trento = 0
+
+            # scatter di Avviato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
+            ax[0].set_title(periodo_label, fontsize=12)
+            plot1_1 = ax[0].scatter(ore_tecnici_settimana, comuni_pdc_pds_avviato,
+                                    c='gray', marker='o', s=grandezza_comunale, alpha=0.5)
+            plot1_2 = ax[0].scatter(ore_tecnici_settimana.loc[comune[0]],
+                                    comuni_pdc_pds_avviato.loc[comune[0]],
+                                    label=comune[0],
+                                    c='r', marker='D', s=grandezza_comunale[comune[0]])
+            ax[0].set_xlabel('Elaborazione [ore/settimana]')
+            ax[0].set_ylabel('Avviato PdC+PdS')
+            ax[0].legend()
+            ax[0].spines['top'].set_visible(False)
+            ax[0].spines['right'].set_visible(False)
+            ax[0].spines['bottom'].set_visible(False)
+            ax[0].spines['left'].set_visible(False)
+
+            # scatter di Durata media PdC+PdS [gg] 2023 ed Ore elaborazione/settimana 2023
+            ax[1].set_title(periodo_label, fontsize=12)
+            plot2_1 = ax[1].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata,
+                                    c='grey', marker='o', s=grandezza_comunale, alpha=0.5)
+            plot2_2 = ax[1].scatter(ore_tecnici_settimana.loc[comune[0]],
+                                    comuni_pdc_pds_durata.loc[comune[0]],
+                                    c='r', marker='D', s=grandezza_comunale[comune[0]])
+            ax[1].set_xlabel('Elaborazione [ore/settimana]')
+            ax[1].set_ylabel('Durata PdC+PdS [gg]')
+            ax[1].spines['top'].set_visible(False)
+            ax[1].spines['right'].set_visible(False)
+            ax[1].spines['bottom'].set_visible(False)
+            ax[1].spines['left'].set_visible(False)
+
+            # scatter di Arretrato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
+            ax[2].set_title(periodo_label, fontsize=12)
+            plot3_1 = ax[2].scatter(ore_tecnici_settimana, comuni_pdc_pds_arretrato,
+                                    c='grey', marker='o', s=grandezza_comunale, alpha=0.5)
+            plot3_1 = ax[2].scatter(ore_tecnici_settimana.loc[comune[0]],
+                                    comuni_pdc_pds_arretrato.loc[comune[0]],
+                                    c='r', marker='D', s=grandezza_comunale[comune[0]])
+            ax[2].set_xlabel('Elaborazione [ore/settimana]')
+            ax[2].set_ylabel('Arretrato PdC+PdS')
+            ax[2].spines['top'].set_visible(False)
+            ax[2].spines['right'].set_visible(False)
+            ax[2].spines['bottom'].set_visible(False)
+            ax[2].spines['left'].set_visible(False)
+
+            # scatter di Pressione 2023 ed Ore elaborazione/settimana 2023
+            ax[3].set_title(periodo_label, fontsize=12)
+            plot4_1 = ax[3].scatter(ore_tecnici_settimana, comuni_scores,
+                                    c='grey', marker='o', s=grandezza_comunale, alpha=0.5)
+            plot4_2 = ax[3].scatter(ore_tecnici_settimana.loc[comune[0]],
+                                    comuni_scores.loc[comune[0]],
+                                    c='r', marker='D', s=grandezza_comunale[comune[0]])
+            ax[3].set_ylim(0, 8.5)
+            ax[3].set_xlabel('Elaborazione [ore/settimana]')
+            ax[3].set_ylabel('Pressione')
+            ax[3].spines['top'].set_visible(False)
+            ax[3].spines['right'].set_visible(False)
+            ax[3].spines['bottom'].set_visible(False)
+            ax[3].spines['left'].set_visible(False)
+
+            if save_charts:
+                comune_edited_name = comune[0]
+                comune_edited_name = comune_edited_name.replace('à', 'a')
+                comune_edited_name = comune_edited_name.replace('è', 'e')
+                comune_edited_name = comune_edited_name.replace('é', 'e')
+                comune_edited_name = comune_edited_name.replace('ù', 'u')
+                fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\pat_pnrr_performance_charts\\'
+                            'pat_pnrr_performance_organico_chart_' + comune_edited_name,
+                            dpi=300, bbox_inches='tight', pad_inches=0.25)
+            plt.close(fig)
+
         if just_one:
-            plt.show()
             break
     return comuni_scores
 
@@ -728,6 +770,11 @@ def print_comuni_performance_list(just_one=False, save_tables=True):
                     r'  \includegraphics[height=5cm]{' + \
                     r'pat_pnrr_performance_charts/' + \
                     r'pat_pnrr_performance_chart_{0}.png}}'.format(comune_edited_name) + '\n' + \
+                    r'\end{center}' + '\n' + \
+                    r'\begin{center}' + '\n' \
+                    r'  \includegraphics[height=5cm]{' + \
+                    r'pat_pnrr_performance_charts/' + \
+                    r'pat_pnrr_performance_organico_chart_{0}.png}}'.format(comune_edited_name) + '\n' + \
                     r'\end{center}' + '\n\n'
         if just_one:
             break
@@ -777,14 +824,15 @@ if __name__ == '__main__':
         print_comuni_performance_charts(pat_comuni_dataframe,
                                         comuni_durata_trends, comuni_arretrato_trends,
                                         comuni_performance_trends, mpe_number=mpe_number,
-                                        just_provincia=True, no_trento=True,
+                                        just_provincia=False, no_trento=True,
                                         just_one=False, save_charts=True)
-    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    # print_comuni_performance_list(just_one=False, save_tables=True)
-    # print_comuni_pressure_list(comuni_performance_trends)
+    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    print_comuni_performance_list(just_one=False, save_tables=True)
+    print_comuni_pressure_list(comuni_performance_trends)
 
     # TODO: ricalcolo della durata media [gg] al netto delle sospensioni
     # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
+    
     # TODO: graficare una distribuzione normale di pressione attorno ad un valore compatibile con i target
     # TODO: andamento posizione nella lista di comuni per pressione complessiva
 

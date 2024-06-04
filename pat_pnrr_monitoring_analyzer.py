@@ -2372,7 +2372,7 @@ if __name__ == '__main__':
 
     # REQUEST 20240515_01 | 20240513_01_02 | pdc-ov non conclusi durata netta > 120 gg | TODO
     #     * tutta l'analisi anche per i pds | DONE
-    #     - stessa estrazione sulla 3a e 4a misurazione
+    #     * stessa estrazione sulla 3a e 4a misurazione
     #     - analisi
     #         - son sempre alcuni comuni che non tracciano le sospensioni
     #         - quanti comuni coinvolti
