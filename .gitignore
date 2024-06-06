@@ -15,6 +15,7 @@
 /pat_pnrr_clustering/clustering_*
 /pat_pnrr_mpe/doc
 /pat_pnrr_mpe/relazione_tecnica
+/pat_pnrr_mpe/report_comunale
 /pat_pnrr_mpe/*_tabelle_comunali
 /pat_pnrr_mpe/*_excel_mapping.py
 /pat_pnrr_questionario_edilizia/.idea

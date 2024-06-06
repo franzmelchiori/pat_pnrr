@@ -283,6 +283,8 @@ class ComuneExcel:
             except:
                 print('percentuale_ore_comune_considerato is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'])
+
+            # TODO: se il comune ha indicato "numero" ore e "numero" percentuale ore edilizia privata e "0" nella percentuale ore comune, io sostituirei lo "0" con "1"
         else:
             comune_dataframe.insert(0, 'comune', self.comune_name)
             comune_dataframe.dropna(axis=0, subset='id_pratica', inplace=True, ignore_index=True)
@@ -961,7 +963,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             measure_end_date = pd.Timestamp('2023-12-31')
             filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
                             'PdC ordinario') ^ \
-                        (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                          (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
                             'PdC in variante')
             filter_mask = filter_type & (
                 comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna())
@@ -1030,7 +1032,126 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             #     - senza sospensioni (0gg)
             #       - valore % sulle pratiche fuori norma
             # - lista pratiche concluse e non concluse
-            pass
+            measure_end_date = pd.Timestamp('2023-12-31')
+            filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                            'PdC ordinario') ^ \
+                          (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                            'PdC in variante')
+            sheet_suffix += '_ov'
+            filter_mask = filter_type & (
+                comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna())
+            filter_mask = filter_mask & (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
+            filter_mask = filter_mask & (
+                comuni_dataframe.loc[:, 'giorni_sospensioni'] == \
+                    pd.to_timedelta(0, errors='coerce', unit='D'))
+            
+            filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma = (\
+                measure_end_date - \
+                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica']) > \
+                    comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
+            comuni_dataframe.loc[
+                (filter_mask & \
+                 filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma)].to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    '_pratiche_non_concluse_sospensioni_nulle_fuori_norma' + \
+                    '_request_20240527_01' + '.csv')
+
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma = []
+            for nome_comune in nomi_comuni:
+                filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
+                totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma.append(
+                    comuni_dataframe.loc[
+                        (filter_comune & \
+                         filter_mask & \
+                         filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma)].__len__())
+            totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma = \
+                pd.Series(totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma, \
+                          index=nomi_comuni,
+                          name='pdc_non_conclusi_sospensioni_nulle_fuori_norma')
+            
+            filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                            'PdC ordinario') ^ \
+                          (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                            'PdC in variante')
+            filter_mask = filter_type & (
+                comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False)
+            filter_mask = filter_mask & (
+                comuni_dataframe.loc[:, 'giorni_sospensioni'] == \
+                    pd.to_timedelta(0, errors='coerce', unit='D'))
+            
+            filtro_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma = (\
+                comuni_dataframe.loc[filter_mask, 'data_fine_pratica_silenzio-assenso'] - \
+                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica']) > \
+                    comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
+            comuni_dataframe.loc[
+                (filter_mask & \
+                 filtro_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma)].to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    '_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma' + \
+                    '_request_20240527_01' + '.csv')
+
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            totali_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma = []
+            for nome_comune in nomi_comuni:
+                filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
+                totali_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma.append(
+                    comuni_dataframe.loc[
+                        (filter_comune & \
+                         filter_mask & \
+                         filtro_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma)].__len__())
+            totali_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma = \
+                pd.Series(totali_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma, \
+                          index=nomi_comuni,
+                          name='pdc_conclusi_con_silenzio_assenso_sospensioni_nulle_fuori_norma')
+            
+            filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                            'PdC ordinario') ^ \
+                          (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                            'PdC in variante')
+            filter_mask = filter_type & (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna() == False)
+            filter_mask = filter_mask & (
+                comuni_dataframe.loc[:, 'giorni_sospensioni'] == \
+                    pd.to_timedelta(0, errors='coerce', unit='D'))
+            
+            filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = (\
+                comuni_dataframe.loc[filter_mask, 'data_fine_pratica'] - \
+                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica']) > \
+                    comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
+            comuni_dataframe.loc[
+                (filter_mask & \
+                 filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma)].to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    '_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma' + \
+                    '_request_20240527_01' + '.csv')
+
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = []
+            for nome_comune in nomi_comuni:
+                filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
+                totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma.append(
+                    comuni_dataframe.loc[
+                        (filter_comune & \
+                         filter_mask & \
+                         filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma)].__len__())
+            totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = \
+                pd.Series(totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma, \
+                          index=nomi_comuni,
+                          name='pdc_conclusi_con_espressione_sospensioni_nulle_fuori_norma')
+            
+            totali_pratiche_avviate_sospensioni_nulle_fuori_norma = pd.concat([
+                totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma,
+                totali_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma,
+                totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma],
+                axis='columns', join='outer')
+            totali_pratiche_avviate_sospensioni_nulle_fuori_norma\
+                .sum(axis=1).sort_values(ascending=False)\
+                .to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    '_comuni_per_pdc_avviati_sospensioni_nulle_fuori_norma' + \
+                    '_request_20240527_01' + '.csv')
 
         if sheet_name=='Prov di sanatoria':
             # REQUEST 20240527_02 | pds avviati, fuori norma, senza sospensioni | TODO
@@ -1040,8 +1161,79 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             #     - senza sospensioni (0gg)
             #       - valore % sulle pratiche fuori norma
             # - lista pratiche concluse e non concluse
-            pass
+            measure_end_date = pd.Timestamp('2023-12-31')
+            filter_mask = (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
+            filter_mask = filter_mask & (
+                comuni_dataframe.loc[:, 'giorni_sospensioni'] == \
+                    pd.to_timedelta(0, errors='coerce', unit='D'))
+            
+            filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma = (\
+                measure_end_date - \
+                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica']) > \
+                    comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
+            comuni_dataframe.loc[
+                (filter_mask & \
+                 filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma)].to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    '_pratiche_non_concluse_sospensioni_nulle_fuori_norma' + \
+                    '_request_20240527_02' + '.csv')
 
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma = []
+            for nome_comune in nomi_comuni:
+                filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
+                totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma.append(
+                    comuni_dataframe.loc[
+                        (filter_comune & \
+                         filter_mask & \
+                         filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma)].__len__())
+            totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma = \
+                pd.Series(totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma, \
+                          index=nomi_comuni,
+                          name='pds_non_conclusi_sospensioni_nulle_fuori_norma')
+            
+            filter_mask = (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna() == False)
+            filter_mask = filter_mask & (
+                comuni_dataframe.loc[:, 'giorni_sospensioni'] == \
+                    pd.to_timedelta(0, errors='coerce', unit='D'))
+            
+            filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = (\
+                comuni_dataframe.loc[filter_mask, 'data_fine_pratica'] - \
+                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica']) > \
+                    comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
+            comuni_dataframe.loc[
+                (filter_mask & \
+                 filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma)].to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    '_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma' + \
+                    '_request_20240527_02' + '.csv')
+
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = []
+            for nome_comune in nomi_comuni:
+                filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
+                totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma.append(
+                    comuni_dataframe.loc[
+                        (filter_comune & \
+                         filter_mask & \
+                         filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma)].__len__())
+            totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = \
+                pd.Series(totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma, \
+                          index=nomi_comuni,
+                          name='pds_conclusi_con_espressione_sospensioni_nulle_fuori_norma')
+            
+            totali_pratiche_avviate_sospensioni_nulle_fuori_norma = pd.concat([
+                totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma,
+                totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma],
+                axis='columns', join='outer')
+            totali_pratiche_avviate_sospensioni_nulle_fuori_norma\
+                .sum(axis=1).sort_values(ascending=False)\
+                .to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    '_comuni_per_pds_avviati_sospensioni_nulle_fuori_norma' + \
+                    '_request_20240527_02' + '.csv')
     return comuni_dataframe
 
 
@@ -1396,16 +1588,15 @@ if __name__ == '__main__':
 
 
     load = True
-    lpf = True
     # comuni_dataframe_org_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
     comuni_dataframe_pdc_05 = get_comuni_dataframe(
         comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
         load=load, pf='l_02')
-    # comuni_dataframe_pds_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-    #     load=load, pf='l_02')
+    comuni_dataframe_pds_05 = get_comuni_dataframe(
+        comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        load=load, pf='l_02')
     # comuni_dataframe_cila_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)

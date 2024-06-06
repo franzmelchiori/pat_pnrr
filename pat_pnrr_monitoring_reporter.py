@@ -325,7 +325,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                           c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
     ax[0].set_xlim(-0.05, 0.7)
     ax[0].set_ylim(-0.05, 6.5)
-    ax[0].set_xlabel('Arretrato/avviato PdC')
+    ax[0].set_xlabel('Arretrati/avviato PdC')
     ax[0].set_ylabel('Durata/termine PdC')
     ax[0].spines['top'].set_visible(False)
     ax[0].spines['right'].set_visible(False)
@@ -337,7 +337,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                           c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
     ax[1].set_xlim(-0.05, 0.7)
     ax[1].set_ylim(-0.05, 6.5)
-    ax[1].set_xlabel('Arretrato/avviato PdS')
+    ax[1].set_xlabel('Arretrati/avviato PdS')
     ax[1].set_ylabel('Durata/termine PdS')
     ax[1].spines['top'].set_visible(False)
     ax[1].spines['right'].set_visible(False)
@@ -401,7 +401,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
         ax[0].set_xlabel('Elaborazione [ore/settimana]')
-        ax[0].set_ylabel('Avviato PdC+PdS')
+        ax[0].set_ylabel('Avviati PdC+PdS')
         ax[0].spines['top'].set_visible(False)
         ax[0].spines['right'].set_visible(False)
         ax[0].spines['bottom'].set_visible(False)
@@ -413,7 +413,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
         ax[1].set_xlabel('Elaborazione [ore/settimana]')
-        ax[1].set_ylabel('Durata PdC+PdS [gg]')
+        ax[1].set_ylabel('Durata [gg] PdC+PdS')
         ax[1].spines['top'].set_visible(False)
         ax[1].spines['right'].set_visible(False)
         ax[1].spines['bottom'].set_visible(False)
@@ -425,7 +425,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
         ax[2].set_xlabel('Elaborazione [ore/settimana]')
-        ax[2].set_ylabel('Arretrato PdC+PdS')
+        ax[2].set_ylabel('Arretrati PdC+PdS')
         ax[2].spines['top'].set_visible(False)
         ax[2].spines['right'].set_visible(False)
         ax[2].spines['bottom'].set_visible(False)
@@ -559,7 +559,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                                     label=comune[0],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
             ax[0].set_xlabel('Elaborazione [ore/settimana]')
-            ax[0].set_ylabel('Avviato PdC+PdS')
+            ax[0].set_ylabel('Avviati PdC+PdS')
             ax[0].legend()
             ax[0].spines['top'].set_visible(False)
             ax[0].spines['right'].set_visible(False)
@@ -574,7 +574,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                                     comuni_pdc_pds_durata.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
             ax[1].set_xlabel('Elaborazione [ore/settimana]')
-            ax[1].set_ylabel('Durata PdC+PdS [gg]')
+            ax[1].set_ylabel('Durata [gg] PdC+PdS')
             ax[1].spines['top'].set_visible(False)
             ax[1].spines['right'].set_visible(False)
             ax[1].spines['bottom'].set_visible(False)
@@ -588,7 +588,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                                     comuni_pdc_pds_arretrato.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
             ax[2].set_xlabel('Elaborazione [ore/settimana]')
-            ax[2].set_ylabel('Arretrato PdC+PdS')
+            ax[2].set_ylabel('Arretrati PdC+PdS')
             ax[2].spines['top'].set_visible(False)
             ax[2].spines['right'].set_visible(False)
             ax[2].spines['bottom'].set_visible(False)
