@@ -656,26 +656,27 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2022q3-4',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
         'numero_permessi_costruire_avviati_2022q3-4']
-    performance_measure_labels_pdc_ov_2022q3_4 = [
-        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
-        'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2022q3-4',
-        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
-        'numero_permessi_costruire_ov_avviati_2022q3-4']
     performance_measure_labels_pdc_2023q1_2 = [
         'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2023q1-2',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
         'numero_permessi_costruire_avviati_2023q1-2']
-    performance_measure_labels_pdc_ov_2023q1_2 = [
-        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
-        'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2023q1-2',
-        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
-        'numero_permessi_costruire_ov_avviati_2023q1-2']
     performance_measure_labels_pdc_2023q3_4 = [
         'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2023q3-4',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
         'numero_permessi_costruire_avviati_2023q3-4']
+
+    performance_measure_labels_pdc_ov_2022q3_4 = [
+        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2022q3-4',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
+        'numero_permessi_costruire_ov_avviati_2022q3-4']
+    performance_measure_labels_pdc_ov_2023q1_2 = [
+        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2023q1-2',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
+        'numero_permessi_costruire_ov_avviati_2023q1-2']
     performance_measure_labels_pdc_ov_2023q3_4 = [
         'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2023q3-4',
@@ -712,10 +713,10 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         ['PdC 2021Q3-4', performance_measure_labels_pdc_2021q3_4],
         ['PdC 2022Q1-2', performance_measure_labels_pdc_2022q1_2],
         ['PdC 2022Q3-4', performance_measure_labels_pdc_2022q3_4],
-        ['PdC-OV 2022Q3-4', performance_measure_labels_pdc_ov_2022q3_4],
         ['PdC 2023Q1-2', performance_measure_labels_pdc_2023q1_2],
-        ['PdC-OV 2023Q1-2', performance_measure_labels_pdc_ov_2023q1_2],
         ['PdC 2023Q3-4', performance_measure_labels_pdc_2023q3_4],
+        ['PdC-OV 2022Q3-4', performance_measure_labels_pdc_ov_2022q3_4],
+        ['PdC-OV 2023Q1-2', performance_measure_labels_pdc_ov_2023q1_2],
         ['PdC-OV 2023Q3-4', performance_measure_labels_pdc_ov_2023q3_4],
         ['PdS 2021Q3-4', performance_measure_labels_pds_2021q3_4],
         ['PdS 2022Q1-2', performance_measure_labels_pds_2022q1_2],
@@ -824,7 +825,7 @@ if __name__ == '__main__':
         print_comuni_performance_charts(pat_comuni_dataframe,
                                         comuni_durata_trends, comuni_arretrato_trends,
                                         comuni_performance_trends, mpe_number=mpe_number,
-                                        just_provincia=False, no_trento=True,
+                                        just_provincia=False, no_trento=False,
                                         just_one=False, save_charts=True)
     print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
     print_comuni_performance_list(just_one=False, save_tables=True)

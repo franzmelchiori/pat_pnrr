@@ -285,6 +285,11 @@ class ComuneExcel:
                 print(comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'])
 
             # TODO: se il comune ha indicato "numero" ore e "numero" percentuale ore edilizia privata e "0" nella percentuale ore comune, io sostituirei lo "0" con "1"
+            for index_dipendente in comune_dataframe.index:
+                if (comune_dataframe.loc[index_dipendente, 'ore_settimana'] > 0) & \
+                   (comune_dataframe.loc[index_dipendente, 'percentuale_ore_edilizia_privata'] > 0) & \
+                   (comune_dataframe.loc[index_dipendente, 'percentuale_ore_comune_considerato'] == 0):
+                    comune_dataframe.loc[index_dipendente, 'percentuale_ore_comune_considerato'] = 1
         else:
             comune_dataframe.insert(0, 'comune', self.comune_name)
             comune_dataframe.dropna(axis=0, subset='id_pratica', inplace=True, ignore_index=True)
@@ -1025,7 +1030,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
 
     elif pf == 'l_02':
         if sheet_name=='Permessi di Costruire':
-            # REQUEST 20240527_01 | pdc-ov avviati, fuori norma, senza sospensioni | TODO
+            # REQUEST 20240527_01 | pdc-ov avviati, fuori norma, senza sospensioni
             # - lista ordinata di comuni per pratiche del tipo seguente
             #   - pdc-ov avviati, mpe-05
             #     - fuori norma (durata netta > termine normativo, pratica per pratica)
@@ -1154,7 +1159,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_request_20240527_01' + '.csv')
 
         if sheet_name=='Prov di sanatoria':
-            # REQUEST 20240527_02 | pds avviati, fuori norma, senza sospensioni | TODO
+            # REQUEST 20240527_02 | pds avviati, fuori norma, senza sospensioni
             # - lista ordinata di comuni per pratiche del tipo seguente
             #   - pds avviati, mpe-05
             #     - fuori norma (durata netta > termine normativo, pratica per pratica)
@@ -1569,8 +1574,8 @@ if __name__ == '__main__':
     #     print(comune)
 
 
-    # comune_name = 'Civezzano'
-    # name_excel_file = '061_Civezzano_Edilizia_V.xlsx'
+    # comune_name = 'Trento'
+    # name_excel_file = '205_Trento_Edilizia_V - rev08 - provvisorio.xlsx'
     # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
@@ -1587,16 +1592,16 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    load = True
+    # load = False
     # comuni_dataframe_org_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
-    comuni_dataframe_pdc_05 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-        load=load, pf='l_02')
-    comuni_dataframe_pds_05 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
-        load=load, pf='l_02')
+    # comuni_dataframe_pdc_05 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load, pf='l_02')
+    # comuni_dataframe_pds_05 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     load=load, pf='l_02')
     # comuni_dataframe_cila_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
     #     load=load)
@@ -1649,7 +1654,7 @@ if __name__ == '__main__':
     # get_comuni_dataframes(comuni_excel_map, load=False)
     # check_comuni_dataframes(comuni_excel_map)
     # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    # get_comuni_measures(comuni_excel_map)
+    # get_comuni_measures(comuni_excel_map, save_tex=True)
 
     # load = True
     # lpf = True
@@ -1657,6 +1662,9 @@ if __name__ == '__main__':
     #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
     # comuni_pds_measure = get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
     #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
+
+
+    # --
 
 
     # REQUEST 20240513_01 | pdc-ov non conclusi durata netta > 120 gg
