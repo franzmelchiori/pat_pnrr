@@ -776,7 +776,8 @@ def print_comuni_performance_list(just_one=False, save_tables=True):
                     r'  \includegraphics[height=5cm]{' + \
                     r'pat_pnrr_performance_charts/' + \
                     r'pat_pnrr_performance_organico_chart_{0}.png}}'.format(comune_edited_name) + '\n' + \
-                    r'\end{center}' + '\n\n'
+                    r'\end{center}' + '\n' + \
+                    r'\clearpage' + '\n\n'
         if just_one:
             break
 
