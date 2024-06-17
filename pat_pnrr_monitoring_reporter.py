@@ -825,11 +825,11 @@ if __name__ == '__main__':
         print_comuni_performance_charts(pat_comuni_dataframe,
                                         comuni_durata_trends, comuni_arretrato_trends,
                                         comuni_performance_trends, mpe_number=mpe_number,
-                                        just_provincia=True, no_trento=False,
+                                        just_provincia=False, no_trento=False,
                                         just_one=False, save_charts=True)
-    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    # print_comuni_performance_list(just_one=False, save_tables=True)
-    # print_comuni_pressure_list(comuni_performance_trends)
+    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    print_comuni_performance_list(just_one=False, save_tables=True)
+    print_comuni_pressure_list(comuni_performance_trends)
 
     # TODO: ricalcolo della durata media [gg] al netto delle sospensioni
     # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
