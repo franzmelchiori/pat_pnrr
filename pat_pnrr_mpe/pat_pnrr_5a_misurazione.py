@@ -1575,7 +1575,7 @@ if __name__ == '__main__':
 
 
     # comune_name = 'Trento'
-    # name_excel_file = '205_Trento_Edilizia_V - rev08 - provvisorio.xlsx'
+    # name_excel_file = '205_Trento_Edilizia_V - rev09.xlsx'
     # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
