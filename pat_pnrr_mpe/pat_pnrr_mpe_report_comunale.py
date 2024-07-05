@@ -21,7 +21,7 @@ def print_report_comunale(name_comune, version):
     version_file = version
     version_file = version_file.replace('.', '-')
 
-    with open('pat_pnrr_mpe\\report_comunale\\pat_pnrr_mpe_report_comunale.tex', \
+    with open('pat_pnrr_mpe\\report_comunale\\pat_pnrr_mpe_report_comunale.txt', \
               mode='r', encoding='utf-8') as f1:
         tex_pat_pnrr_mpe_report_comunale = f1.read()
     f1.close()
