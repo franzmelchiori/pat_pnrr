@@ -820,6 +820,7 @@ if __name__ == '__main__':
     # pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
     # comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     #     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+    # comuni_scores.to_csv('pat-pnrr_edilizia_pressione_2023.csv')
 
     # for mpe_number in [3, 4, 5]:
     for mpe_number in [5]:
