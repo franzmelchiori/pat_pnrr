@@ -1,7 +1,7 @@
 """
-    PAT-PNRR Baseline June 2022
-    Clustering Comuni Trentini
-    Francesco Melchiori, 2022
+    PAT-PNRR Clustering
+    Cluster di Comuni Trentini
+    Francesco Melchiori, 2022-2024
 """
 
 
@@ -14,6 +14,11 @@ from sklearn.cluster import KMeans
 # from sklearn.cluster import DBSCAN
 from sklearn.metrics.pairwise import pairwise_distances_argmin_min
 from sklearn.decomposition import PCA
+
+from pat_pnrr_mpe.pat_pnrr_comuni_excel_mapping import *
+from pat_pnrr_mpe import pat_pnrr_3a_misurazione as pat_pnrr_3a
+from pat_pnrr_mpe import pat_pnrr_4a_misurazione as pat_pnrr_4a
+from pat_pnrr_mpe import pat_pnrr_5a_misurazione as pat_pnrr_5a
 
 
 def get_pat_comuni_dataframe_ispat(path_base='', kmeans_clustering_original=True):
@@ -238,7 +243,7 @@ def get_pat_comuni_dataframe_ispat(path_base='', kmeans_clustering_original=True
     return pat_comuni_dataframe_ispat
 
 
-if __name__ == '__main__':
+def cluster_comuni_2022():
     # settings
     n_clusters = 4
     n_pat_comuni_cluster_selected = 166
@@ -524,3 +529,60 @@ if __name__ == '__main__':
         for i in range(3):
             plt.scatter(X[:, i], X[:, i+1], c=y_dbscan, s=50, alpha=0.5, cmap='viridis')
             plt.show()
+
+
+def cluster_comuni_2024():
+    comuni_measures_dataframe_mpe_3 = pat_pnrr_3a.get_comuni_measures_dataframe(
+        comuni_excel_map, load=True)
+    comuni_measures_dataframe_mpe_4 = pat_pnrr_4a.get_comuni_measures_dataframe(
+        comuni_excel_map, load=True)
+    comuni_measures_dataframe_mpe_5 = pat_pnrr_5a.get_comuni_measures_dataframe(
+        comuni_excel_map, load=True)
+
+    comuni_measure_labels_mpe_3 = [
+        # 'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
+        # 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
+        # 'numero_permessi_costruire_avviati_2022q3-4',
+        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
+        'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
+        'numero_permessi_costruire_ov_avviati_2022q3-4',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
+        'numero_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
+        'numero_sanatorie_avviate_2022q3-4',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4']
+
+    comuni_measure_labels_mpe_4 = [
+        # 'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
+        # 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
+        # 'numero_permessi_costruire_avviati_2023q1-2',
+        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
+        'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
+        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
+        'numero_permessi_costruire_ov_avviati_2023q1-2',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
+        'numero_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
+        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
+        'numero_sanatorie_avviate_2023q1-2',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2']
+    
+    comuni_measure_labels_mpe_5 = [
+        # 'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
+        # 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
+        # 'numero_permessi_costruire_avviati_2023q3-4',
+        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
+        'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4',
+        'numero_permessi_costruire_ov_avviati_2023q3-4',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
+        'numero_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
+        'numero_sanatorie_avviate_2023q3-4',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4']
+    
+    return
+
+
+if __name__ == '__main__':
+    cluster_comuni_2024()

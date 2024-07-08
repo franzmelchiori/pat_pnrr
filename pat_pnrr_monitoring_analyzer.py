@@ -2280,7 +2280,7 @@ if __name__ == '__main__':
     # print_pat_comuni_meeting(pat_comuni_dataframe)
 
     # PRINT MEASUREMENT 03
-    # pat_pnrr_3a.get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    # pat_pnrr_3a.get_comuni_measures_dataframe(comuni_excel_map, load=True)
     # pat_pnrr_3a.get_comuni_measures(comuni_excel_map, save_tex=True)
     # SHOW MEASUREMENT 03 CHARTS (no more valid, after new baseline 202306)
     # show_measurement_03(pat_comuni_dataframe)
