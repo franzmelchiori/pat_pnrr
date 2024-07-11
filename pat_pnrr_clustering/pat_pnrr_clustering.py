@@ -531,7 +531,10 @@ def cluster_comuni_2022():
             plt.show()
 
 
-def cluster_comuni_2024():
+def cluster_comuni_2024(n_clusters):
+    n_clusters = n_clusters
+
+    # LOAD DATA
     comuni_measures_dataframe_mpe_3 = pat_pnrr_3a.get_comuni_measures_dataframe(
         comuni_excel_map, load=True)
     comuni_measures_dataframe_mpe_4 = pat_pnrr_4a.get_comuni_measures_dataframe(
@@ -539,50 +542,165 @@ def cluster_comuni_2024():
     comuni_measures_dataframe_mpe_5 = pat_pnrr_5a.get_comuni_measures_dataframe(
         comuni_excel_map, load=True)
 
-    comuni_measure_labels_mpe_3 = [
-        # 'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
-        # 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
-        # 'numero_permessi_costruire_avviati_2022q3-4',
-        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
-        'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
-        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
-        'numero_permessi_costruire_ov_avviati_2022q3-4',
-        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
-        'numero_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
-        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
-        'numero_sanatorie_avviate_2022q3-4',
-        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4']
+    # SELECT DATA and FILL NANs
+    numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso = pd.concat([
+        comuni_measures_dataframe_mpe_3[
+            'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4'],
+        comuni_measures_dataframe_mpe_4[
+            'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2'],
+        comuni_measures_dataframe_mpe_5[
+            'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4']],
+        axis='columns', join='outer')
+    numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso.ffill(
+        axis='columns', inplace=True)
 
-    comuni_measure_labels_mpe_4 = [
-        # 'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
-        # 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
-        # 'numero_permessi_costruire_avviati_2023q1-2',
-        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
-        'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
-        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
-        'numero_permessi_costruire_ov_avviati_2023q1-2',
-        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
-        'numero_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
-        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
-        'numero_sanatorie_avviate_2023q1-2',
-        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2']
+    giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso = pd.concat([
+        comuni_measures_dataframe_mpe_3[
+            'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4'],
+        comuni_measures_dataframe_mpe_4[
+            'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2'],
+        comuni_measures_dataframe_mpe_5[
+            'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4']],
+        axis='columns', join='outer')
+    giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso.ffill(
+        axis='columns', inplace=True)
+    giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso.bfill(
+        axis='columns', inplace=True)
+    giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso.fillna(
+        value=60, axis='columns', inplace=True)
     
-    comuni_measure_labels_mpe_5 = [
-        # 'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
-        # 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
-        # 'numero_permessi_costruire_avviati_2023q3-4',
-        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
-        'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4',
-        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4',
-        'numero_permessi_costruire_ov_avviati_2023q3-4',
-        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
-        'numero_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
-        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
-        'numero_sanatorie_avviate_2023q3-4',
-        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4']
+    numero_permessi_costruire_ov_avviati = pd.concat([
+        comuni_measures_dataframe_mpe_3[
+            'numero_permessi_costruire_ov_avviati_2022q3-4'],
+        comuni_measures_dataframe_mpe_4[
+            'numero_permessi_costruire_ov_avviati_2023q1-2'],
+        comuni_measures_dataframe_mpe_5[
+            'numero_permessi_costruire_ov_avviati_2023q3-4']],
+        axis='columns', join='outer')
+    numero_permessi_costruire_ov_avviati.ffill(
+        axis='columns', inplace=True)
     
+    numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo = pd.concat([
+        comuni_measures_dataframe_mpe_3[
+            'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4'],
+        comuni_measures_dataframe_mpe_4[
+            'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2'],
+        comuni_measures_dataframe_mpe_5[
+            'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4']],
+        axis='columns', join='outer')
+    numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo.ffill(
+        axis='columns', inplace=True)
+    
+    numero_sanatorie_concluse_con_provvedimento_espresso = pd.concat([
+        comuni_measures_dataframe_mpe_3[
+            'numero_sanatorie_concluse_con_provvedimento_espresso_2022q3-4'],
+        comuni_measures_dataframe_mpe_4[
+            'numero_sanatorie_concluse_con_provvedimento_espresso_2023q1-2'],
+        comuni_measures_dataframe_mpe_5[
+            'numero_sanatorie_concluse_con_provvedimento_espresso_2023q3-4']],
+        axis='columns', join='outer')
+    numero_sanatorie_concluse_con_provvedimento_espresso.ffill(
+        axis='columns', inplace=True)
+    
+    giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso = pd.concat([
+        comuni_measures_dataframe_mpe_3[
+            'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4'],
+        comuni_measures_dataframe_mpe_4[
+            'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2'],
+        comuni_measures_dataframe_mpe_5[
+            'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4']],
+        axis='columns', join='outer')
+    giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso.ffill(
+        axis='columns', inplace=True)
+    giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso.bfill(
+        axis='columns', inplace=True)
+    giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso.fillna(
+        value=60, axis='columns', inplace=True)
+    
+    numero_sanatorie_avviate = pd.concat([
+        comuni_measures_dataframe_mpe_3[
+            'numero_sanatorie_avviate_2022q3-4'],
+        comuni_measures_dataframe_mpe_4[
+            'numero_sanatorie_avviate_2023q1-2'],
+        comuni_measures_dataframe_mpe_5[
+            'numero_sanatorie_avviate_2023q3-4']],
+        axis='columns', join='outer')
+    numero_sanatorie_avviate.ffill(
+        axis='columns', inplace=True)
+    
+    numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo = pd.concat([
+        comuni_measures_dataframe_mpe_3[
+            'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4'],
+        comuni_measures_dataframe_mpe_4[
+            'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2'],
+        comuni_measures_dataframe_mpe_5[
+            'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4']],
+        axis='columns', join='outer')
+    numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo.ffill(
+        axis='columns', inplace=True)
+    
+    comuni_measures_dataframe_mpe = pd.concat([
+        numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso,
+        giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso,
+        numero_permessi_costruire_ov_avviati,
+        numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo,
+        numero_sanatorie_concluse_con_provvedimento_espresso,
+        giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso,
+        numero_sanatorie_avviate,
+        numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo],
+        axis='columns', join='outer')
+    n_features = comuni_measures_dataframe_mpe.shape[1]
+    
+    # STANDARDIZATION
+    scaler = preprocessing.StandardScaler().fit(comuni_measures_dataframe_mpe)
+    comuni_tensors_dataframe_mpe = scaler.transform(comuni_measures_dataframe_mpe)
+
+    # KMEANS
+    kmeans = KMeans(n_clusters=n_clusters, random_state=0)
+    kmeans.fit(comuni_tensors_dataframe_mpe)
+    y_kmeans = kmeans.predict(comuni_tensors_dataframe_mpe)
+    centers = kmeans.cluster_centers_
+    
+    # PRINT CLUSTERS
+    pat_comuni_clusters = pd.Series(
+        data=pairwise_distances_argmin_min(comuni_tensors_dataframe_mpe, centers)[0],
+        index=comuni_measures_dataframe_mpe.index,
+        name='pat_comune_cluster')
+    for n_cluster in range(n_clusters):
+        print('PAT comuni cluster ', n_cluster+1, ':')
+        for comune in pat_comuni_clusters[pat_comuni_clusters == n_cluster].index:
+            print('    ' + comune)
+        print('')
+
+    # PCA
+    pca = PCA(n_components=4)
+    pca.fit(comuni_tensors_dataframe_mpe)
+    X_pca = pca.transform(comuni_tensors_dataframe_mpe)
+    centers_pca = pca.transform(centers)
+
+    # SCATTER 2D
+    plt.scatter(X_pca[:, 0], X_pca[:, 1],
+                c=y_kmeans, s=50, alpha=0.5, cmap='viridis')
+    plt.scatter(centers_pca[:, 0], centers_pca[:, 1],
+                marker='2', c=range(n_clusters), s=100, alpha=0.75, cmap='viridis')
+    plt.show()
+
+    # SCATTER 3D
+    fig = plt.figure()
+    ax = fig.add_subplot(projection='3d')
+    ax.scatter(X_pca[:, 0], X_pca[:, 1], X_pca[:, 2],
+               c=y_kmeans, s=50, alpha=0.5, cmap='viridis')
+    ax.scatter(centers_pca[:, 0], centers_pca[:, 1], centers_pca[:, 2],
+               marker='2', c=range(n_clusters), s=100, alpha=0.75, cmap='viridis')
+    plt.show()
+
     return
 
 
 if __name__ == '__main__':
-    cluster_comuni_2024()
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', None)
+    pd.set_option('display.max_colwidth', None)
+
+    cluster_comuni_2024(n_clusters = 7)
