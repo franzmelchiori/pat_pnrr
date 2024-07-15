@@ -19,6 +19,7 @@
 /pat_pnrr_mpe/report_comunale
 /pat_pnrr_mpe/*_tabelle_comunali
 /pat_pnrr_mpe/*_excel_mapping.py
+/pat_pnrr_mpe/*_bck_*
 /pat_pnrr_questionario_edilizia/.idea
 /pat_pnrr_questionario_edilizia/doc
 /pat_pnrr_questionario_edilizia/idsurvey_data

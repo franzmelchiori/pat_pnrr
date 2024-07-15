@@ -2294,10 +2294,6 @@ if __name__ == '__main__':
     # pat_pnrr_5a.get_comuni_measures(comuni_excel_map, save_tex=True)
 
 
-    # TODO: controllo progressione crescente delle sospensioni pratica per pratica dalla 3a alla 5a misurazione
-    # TODO: simulazione scenari di raggiungimento degli obiettivi ministeriali PNRR (PSO?)
-
-
     # CLUSTER BASELINE
     # cluster_baseline(pat_comuni_dataframe)
     
@@ -2351,7 +2347,7 @@ if __name__ == '__main__':
     # comuni_dataframe_pds.to_csv('pat-pnrr_edilizia_pds_request_20240424.csv')
 
 
-    # REQUEST 20240429 | giorni sospensioni decrescenti | TODO
+    # REQUEST 20240429 | giorni sospensioni decrescenti
     #     - dati disaggregati di tutte le pratiche pdc e pds dalla 3a alla 5a misurazione
     #         - segnalare quelle con sospensioni totali decrescenti
     #     - dati disaggregati di tutte le pratiche pdc e pds dalla 3a alla 5a misurazione
@@ -2365,12 +2361,12 @@ if __name__ == '__main__':
     # check_transit_03_04_05()
 
 
-    # REQUEST 20240505 | solo pratiche concluse | TODO
+    # REQUEST 20240505 | solo pratiche concluse
     #     - comuni che dichiarano solo pratiche pdc e pds concluse
     #         - 3a, 4a e 5a misurazione
 
 
-    # REQUEST 20240515_01 | 20240513_01_02 | pdc-ov non conclusi durata netta > 120 gg | TODO
+    # REQUEST 20240515_01 | 20240513_01_02 | pdc-ov non conclusi durata netta > 120 gg
     #     * tutta l'analisi anche per i pds | DONE
     #     * stessa estrazione sulla 3a e 4a misurazione
     #     - analisi
@@ -2379,9 +2375,11 @@ if __name__ == '__main__':
     #     - cercare di tracciarle fino alla 3a misurazione
 
 
-    # REQUEST 20240515_02 | 20240513_02 | pdc-ov avviati durata lorda > 600 gg | TODO
+    # REQUEST 20240515_02 | 20240513_02 | pdc-ov avviati durata lorda > 600 gg
     #     * tutta l'analisi anche per i pds | DONE
     #     - analisi
     #         - quanti comuni coinvolti
     #         - incidenza sulla durata media e sull'arretrato nella 5a misurazione
     #     - cercare di tracciarle fino alla 3a misurazione
+
+    # TODO: controllo progressione crescente delle sospensioni pratica per pratica dalla 3a alla 5a misurazione

@@ -1,0 +1,64 @@
+Proposta integrazione organico
+Uffici tecnici comunali per l'edilizia
+Calcolo assorbimento durata ed arretrato
+Francesco Melchiori, 2024
+
+
+Idea: raggiungere i target integrando pochi nuovi tecnici per l'edilizia in pochi selezionati uffici comunali
+1*. Nuovo clustering dei 166 comuni trentini sulla base degli ultimi 3 monitoraggi procedimenti edilizi
+2*. Risolvere un problema di ottimizzazione nello spazio delle soluzioni individuando
+	* il minor numero di uffici su cui agire
+	- o il minor numero di ore di elaborazione tecnica da aggiungere
+3*. * Su tutti i comuni trentini inferire l'assorbimento sulla durata e sugli arretrati di 1 ora di elaborazione tecnica in piu'
+	- o per 7-9 selezionali comuni trentini inferire l'assorbimento sulla durata e sugli arretrati di 1 ora di elaborazione tecnica in piu'
+	! o per 7-9 selezionali comuni trentini approfondire il monitoraggio su tutti i titoli edilizi principali (es. incl. SCIA)
+4*. Calcolare il numero di nuovi tecnici da assegnare ad un selezionato gruppo di uffici comunali per raggiungere i target finali
+
+
+- percorso ottimale sui dati sull'edilizia dei 166 comuni al fine di fornire un set di comuni ai quali chiedere una specifica discesa dei numeri verso i target finali (legati ai tempi di elaborazione e alle pratiche arretrate)
+	- 1 stato e' rappresentato da 166 comuni per 2 misure: tempi e arretrati
+	- 1 stato puo' essere valido o meno come target finale pat-pnrr: ovvero 2 misure provinciali complessive calcolate sulle 2 misure di ogni comune
+	- da 1 stato all'altro ci si sposta al variare di almeno 1 misura di almeno 1 comune
+	- 1 spostamento puo' avere un peso variabile
+		- puo' coinvolgere un numero variabile di comuni, al meglio il minore possibile
+		- puo' coinvolgere una variazione di ampiezza variabile delle 2 misure
+			- la variazione delle misure e' funzione di un incremento delle risorse umane assegnate all'elaborazione delle pratiche
+			- parametro della ricerca: il numero di ore a settimana finanziate di elaborazione tecnica per l'edilizia
+				- periodo_misura_settimane: periodo di misura in settimane: 23 settimane (6 mesi, 3 settimane di ferie)
+				[!] giorni_elaborazione_disponibili_settimana = sommatoria tecnici {ore_settimana_tecnico * percentuale_ore_edilizia_privata_tecnico * percentuale_ore_edilizia_comune} / 8
+				- giorni_elaborazione_disponibili = giorni_elaborazione_disponibili_settimana * periodo_misura_settimane
+			- parametro della ricerca: il numero di comuni sui quali si puo' suddividere l'operato di un tecnico comunale per l'ediliza (1 tecnico equivale, ad esempio, a 18 ore a settimana per 2 comuni)
+			* parametro della ricerca: giorni di durata media di elaborazione di una pratica edilizia che si abbassano in sei mesi con 1 ora a settimana in piu' di un tecnico comunale per l'edilizia
+				- periodo_misura: periodo di misura: 6 mesi
+				- pratiche edilizie concluse (con provvedimento espresso) nel periodo di misura
+					[1] naive approach
+						- numero_pratiche_concluse_con_espressione: numero delle pratiche edilizie concluse (con provvedimento espresso) nel periodo di misura
+						- giorni_elaborazione_effettuati: totale dei giorni di elaborazione (al netto delle sospensioni) per concludere (con espressione) le pratiche nel periodo di misura
+							[!] giorni_elaborazione_effettuati ~ giorni_elaborazione_media * numero_pratiche_concluse_con_espressione
+							[!] giorni_elaborazione_effettuati = il lavorato effettivo (al netto delle sospensioni) dall'inizio alla fine del periodo di misurazione, concluse o non concluse che siano le pratiche
+						* efficienza_elaborazione = giorni_elaborazione_effettuati / giorni_elaborazione_disponibili
+							1. comune per comune: efficienza_elaborazione_comune
+							2. media dei comuni: efficienza_elaborazione_provincia
+							3. incremento risorse: giorni_elaborazione_effettuati_aggiuntivi = giorni_elaborazione_disponibili_aggiuntive (tecnici comunali per l'edilizia aggiuntivi) * efficienza_elaborazione_provincia
+							4. vantaggio comunale: giorni_elaborazione_media_supportati = (giorni_elaborazione_effettuati + giorni_elaborazione_effettuati_aggiuntivi) / numero_pratiche_concluse_con_espressione
+					[2] convolutional approach
+			* parametro della ricerca: pratiche edilizie arretrate che si abbassano in sei mesi con 1 ora a settimana in piu' di un tecnico comunale per l'edilizia
+				- periodo_misura: periodo di misura: 6 mesi
+				- pratiche edilizie arretrate (non concluse, oltre termine) nel periodo di misura
+					- numero_pratiche_arretrate: numero delle pratiche edilizie arretrate nel periodo di misura
+
+
+--
+
+
+- algoritmi evolutivi
+	- algoritmi genetici per trovare la soluzione migliore modificando iterativamente i parametri per generarla in funzione della bonta' del risultato transitorio
+		- genitor
+		- chc
+		- island model
+		- strategie evolutive
+			- cma-es
+			- nes
+	- swarm intelligence per trovare la soluzione migliore possibile sfruttando un'intelligenza collettiva
+		- particle swarm optimization vettore di spostamento funzione della migliore soluzione trovata dalla particelle e da tutto il gruppo di particelle
+		- ant colony optimization le particelle marcano il percorso, quello piu' breve sara' segnato piu' intensamente, visto che quelli piu' lunghi perdono via via la marcatura

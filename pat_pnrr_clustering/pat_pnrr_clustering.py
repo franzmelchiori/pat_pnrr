@@ -655,6 +655,9 @@ def cluster_comuni_2024(n_clusters):
     scaler = preprocessing.StandardScaler().fit(comuni_measures_dataframe_mpe)
     comuni_tensors_dataframe_mpe = scaler.transform(comuni_measures_dataframe_mpe)
 
+    # NORMALIZATION
+    # comuni_tensors_dataframe_mpe = preprocessing.normalize(comuni_tensors_dataframe_mpe, norm='l2')
+
     # KMEANS
     kmeans = KMeans(n_clusters=n_clusters, random_state=0)
     kmeans.fit(comuni_tensors_dataframe_mpe)
