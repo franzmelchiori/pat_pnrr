@@ -71,13 +71,28 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2022q3-4',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
         'numero_permessi_costruire_avviati_2022q3-4']
+    performance_measure_labels_pdc_durata_netta_2022q3_4 = [
+        'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2022q3-4',
+        'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
+        'numero_permessi_costruire_avviati_2022q3-4']
     performance_measure_labels_pdc_ov_2022q3_4 = [
         'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2022q3-4',
         'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
         'numero_permessi_costruire_ov_avviati_2022q3-4']
+    performance_measure_labels_pdc_ov_durata_netta_2022q3_4 = [
+        'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2022q3-4',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
+        'numero_permessi_costruire_ov_avviati_2022q3-4']
     performance_measure_labels_pds_2022q3_4 = [
         'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2022q3-4',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4',
+        'numero_sanatorie_avviate_2022q3-4']
+    performance_measure_labels_pds_durata_netta_2022q3_4 = [
+        'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2022q3-4',
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4',
         'numero_sanatorie_avviate_2022q3-4']
@@ -87,13 +102,28 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2023q1-2',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
         'numero_permessi_costruire_avviati_2023q1-2']
+    performance_measure_labels_pdc_durata_netta_2023q1_2 = [
+        'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2023q1-2',
+        'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
+        'numero_permessi_costruire_avviati_2023q1-2']
     performance_measure_labels_pdc_ov_2023q1_2 = [
         'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2023q1-2',
         'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
         'numero_permessi_costruire_ov_avviati_2023q1-2']
+    performance_measure_labels_pdc_ov_durata_netta_2023q1_2 = [
+        'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2023q1-2',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
+        'numero_permessi_costruire_ov_avviati_2023q1-2']
     performance_measure_labels_pds_2023q1_2 = [
         'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
+        'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2023q1-2',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2',
+        'numero_sanatorie_avviate_2023q1-2']
+    performance_measure_labels_pds_durata_netta_2023q1_2 = [
+        'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2023q1-2',
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2',
         'numero_sanatorie_avviate_2023q1-2']
@@ -103,13 +133,28 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2023q3-4',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
         'numero_permessi_costruire_avviati_2023q3-4']
+    performance_measure_labels_pdc_durata_netta_2023q3_4 = [
+        'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2023q3-4',
+        'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
+        'numero_permessi_costruire_avviati_2023q3-4']
     performance_measure_labels_pdc_ov_2023q3_4 = [
         'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2023q3-4',
         'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
         'numero_permessi_costruire_ov_avviati_2023q3-4']
+    performance_measure_labels_pdc_ov_durata_netta_2023q3_4 = [
+        'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2023q3-4',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
+        'numero_permessi_costruire_ov_avviati_2023q3-4']
     performance_measure_labels_pds_2023q3_4 = [
         'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2023q3-4',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4',
+        'numero_sanatorie_avviate_2023q3-4']
+    performance_measure_labels_pds_durata_netta_2023q3_4 = [
+        'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2023q3-4',
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4',
         'numero_sanatorie_avviate_2023q3-4']
@@ -130,6 +175,19 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         get_comuni_performance_measures(performance_measure_labels_pdc_2023q3_4)
     performance_trends_pdc_ov_2023q3_4 = \
         get_comuni_performance_measures(performance_measure_labels_pdc_ov_2023q3_4)
+
+    performance_trends_pdc_durata_netta_2022q3_4 = \
+        get_comuni_performance_measures(performance_measure_labels_pdc_durata_netta_2022q3_4)
+    performance_trends_pdc_ov_durata_netta_2022q3_4 = \
+        get_comuni_performance_measures(performance_measure_labels_pdc_ov_durata_netta_2022q3_4)
+    performance_trends_pdc_durata_netta_2023q1_2 = \
+        get_comuni_performance_measures(performance_measure_labels_pdc_durata_netta_2023q1_2)
+    performance_trends_pdc_ov_durata_netta_2023q1_2 = \
+        get_comuni_performance_measures(performance_measure_labels_pdc_ov_durata_netta_2023q1_2)
+    performance_trends_pdc_durata_netta_2023q3_4 = \
+        get_comuni_performance_measures(performance_measure_labels_pdc_durata_netta_2023q3_4)
+    performance_trends_pdc_ov_durata_netta_2023q3_4 = \
+        get_comuni_performance_measures(performance_measure_labels_pdc_ov_durata_netta_2023q3_4)
     
     performance_trends_pds_2021q3_4 = \
         get_comuni_performance_measures(performance_measure_labels_pds_2021q3_4)
@@ -141,6 +199,13 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         get_comuni_performance_measures(performance_measure_labels_pds_2023q1_2)
     performance_trends_pds_2023q3_4 = \
         get_comuni_performance_measures(performance_measure_labels_pds_2023q3_4)
+
+    performance_trends_pds_durata_netta_2022q3_4 = \
+        get_comuni_performance_measures(performance_measure_labels_pds_durata_netta_2022q3_4)
+    performance_trends_pds_durata_netta_2023q1_2 = \
+        get_comuni_performance_measures(performance_measure_labels_pds_durata_netta_2023q1_2)
+    performance_trends_pds_durata_netta_2023q3_4 = \
+        get_comuni_performance_measures(performance_measure_labels_pds_durata_netta_2023q3_4)
 
     comuni_durata_trends = pd.concat([
         performance_trends_pdc_2021q3_4[0],
@@ -248,6 +313,9 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         pdc_durata_measure_labels = [
             'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
             'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4']
+        pdc_durata_netta_measure_labels = [
+            'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
+            'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4']
         pdc_avviato_measure_labels = [
             'numero_permessi_costruire_avviati_2023q1-2',
             'numero_permessi_costruire_avviati_2023q3-4']
@@ -259,6 +327,9 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         pds_durata_measure_labels = [
             'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
             'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4']
+        pds_durata_netta_measure_labels = [
+            'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
+            'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2023q3-4']
         pds_avviato_measure_labels = [
             'numero_sanatorie_avviate_2023q1-2',
             'numero_sanatorie_avviate_2023q3-4']
@@ -281,6 +352,9 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         comuni_pdc_pds_durata = \
             pat_comuni_dataframe.loc[:, pdc_durata_measure_labels].mean(axis=1) + \
             pat_comuni_dataframe.loc[:, pds_durata_measure_labels].mean(axis=1)
+        comuni_pdc_pds_durata_netta = \
+            pat_comuni_dataframe.loc[:, pdc_durata_netta_measure_labels].mean(axis=1) + \
+            pat_comuni_dataframe.loc[:, pds_durata_netta_measure_labels].mean(axis=1)
         comuni_pdc_pds_avviato = \
             pat_comuni_dataframe.loc[:, pdc_avviato_measure_labels].sum(axis=1) + \
             pat_comuni_dataframe.loc[:, pds_avviato_measure_labels].sum(axis=1)
@@ -383,13 +457,14 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     plt.close(fig)
 
     if mpe_number >= 5:
-        fig, ax = plt.subplots(ncols=4, gridspec_kw=dict(width_ratios=[0.25, 0.25, 0.25, 0.25]),
+        fig, ax = plt.subplots(ncols=5, gridspec_kw=dict(width_ratios=[0.2, 0.2, 0.2, 0.2, 0.2]),
                                layout='constrained')
         fig.set_size_inches(15, 5)
 
         if no_trento:
             ore_tecnici_settimana.Trento = 0
             comuni_pdc_pds_durata.Trento = 0
+            comuni_pdc_pds_durata_netta.Trento = 0
             comuni_pdc_pds_avviato.Trento = 0
             comuni_pdc_pds_arretrato.Trento = 0
             comuni_scores.Trento = 0
@@ -400,6 +475,8 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         plot1 = ax[0].scatter(ore_tecnici_settimana, comuni_pdc_pds_avviato,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
+        ax[0].set_xlim(-10, 800)
+        ax[0].set_ylim(-10, 1400)
         ax[0].set_xlabel('Elaborazione [ore/settimana]')
         ax[0].set_ylabel('Avviati PdC+PdS')
         ax[0].spines['top'].set_visible(False)
@@ -412,6 +489,8 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         plot2 = ax[1].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
+        ax[1].set_xlim(-10, 800)
+        ax[1].set_ylim(-10, 700)
         ax[1].set_xlabel('Elaborazione [ore/settimana]')
         ax[1].set_ylabel('Durata [gg] PdC+PdS')
         ax[1].spines['top'].set_visible(False)
@@ -419,29 +498,47 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         ax[1].spines['bottom'].set_visible(False)
         ax[1].spines['left'].set_visible(False)
 
-        # scatter di Arretrato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
+        # scatter di Durata media netta PdC+PdS [gg] 2023 ed Ore elaborazione/settimana 2023
         ax[2].set_title(periodo_label, fontsize=12)
-        plot3 = ax[2].scatter(ore_tecnici_settimana, comuni_pdc_pds_arretrato,
+        plot3 = ax[2].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata_netta,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
+        ax[2].set_xlim(-10, 800)
+        ax[2].set_ylim(-10, 700)
         ax[2].set_xlabel('Elaborazione [ore/settimana]')
-        ax[2].set_ylabel('Arretrati PdC+PdS')
+        ax[2].set_ylabel('Durata netta [gg] PdC+PdS')
         ax[2].spines['top'].set_visible(False)
         ax[2].spines['right'].set_visible(False)
         ax[2].spines['bottom'].set_visible(False)
         ax[2].spines['left'].set_visible(False)
 
-        # scatter di Pressione 2023 ed Ore elaborazione/settimana 2023
+        # scatter di Arretrato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
         ax[3].set_title(periodo_label, fontsize=12)
-        plot4 = ax[3].scatter(ore_tecnici_settimana, comuni_scores,
-                        c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
-        ax[3].set_ylim(0, 8.5)
+        plot4 = ax[3].scatter(ore_tecnici_settimana, comuni_pdc_pds_arretrato,
+                              c=classificazione_comunale,
+                              marker='o', s=grandezza_comunale, alpha=0.5)
+        ax[3].set_xlim(-10, 800)
+        ax[3].set_ylim(-10, 400)
         ax[3].set_xlabel('Elaborazione [ore/settimana]')
-        ax[3].set_ylabel('Pressione')
+        ax[3].set_ylabel('Arretrati PdC+PdS')
         ax[3].spines['top'].set_visible(False)
         ax[3].spines['right'].set_visible(False)
         ax[3].spines['bottom'].set_visible(False)
         ax[3].spines['left'].set_visible(False)
+
+        # scatter di Pressione 2023 ed Ore elaborazione/settimana 2023
+        ax[4].set_title(periodo_label, fontsize=12)
+        plot5 = ax[4].scatter(ore_tecnici_settimana, comuni_scores,
+                              c=classificazione_comunale,
+                              marker='o', s=grandezza_comunale, alpha=0.5)
+        ax[4].set_xlim(-10, 800)
+        ax[4].set_ylim(0, 8.5)
+        ax[4].set_xlabel('Elaborazione [ore/settimana]')
+        ax[4].set_ylabel('Pressione')
+        ax[4].spines['top'].set_visible(False)
+        ax[4].spines['right'].set_visible(False)
+        ax[4].spines['bottom'].set_visible(False)
+        ax[4].spines['left'].set_visible(False)
 
         fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
                 prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
@@ -537,14 +634,15 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         plt.close(fig)
 
         if mpe_number >= 5:
-            fig, ax = plt.subplots(ncols=4,
-                                   gridspec_kw=dict(width_ratios=[0.25, 0.25, 0.25, 0.25]),
+            fig, ax = plt.subplots(ncols=5,
+                                   gridspec_kw=dict(width_ratios=[0.2, 0.2, 0.2, 0.2, 0.2]),
                                    layout='constrained')
             fig.set_size_inches(15, 5)
 
             if no_trento:
                 ore_tecnici_settimana.Trento = 0
                 comuni_pdc_pds_durata.Trento = 0
+                comuni_pdc_pds_durata_netta.Trento = 0
                 comuni_pdc_pds_avviato.Trento = 0
                 comuni_pdc_pds_arretrato.Trento = 0
                 comuni_scores.Trento = 0
@@ -558,6 +656,8 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                                     comuni_pdc_pds_avviato.loc[comune[0]],
                                     label=comune[0],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
+            ax[0].set_xlim(-10, 800)
+            ax[0].set_ylim(-10, 1400)
             ax[0].set_xlabel('Elaborazione [ore/settimana]')
             ax[0].set_ylabel('Avviati PdC+PdS')
             ax[0].legend()
@@ -573,6 +673,8 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             plot2_2 = ax[1].scatter(ore_tecnici_settimana.loc[comune[0]],
                                     comuni_pdc_pds_durata.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
+            ax[1].set_xlim(-10, 800)
+            ax[1].set_ylim(-10, 700)
             ax[1].set_xlabel('Elaborazione [ore/settimana]')
             ax[1].set_ylabel('Durata [gg] PdC+PdS')
             ax[1].spines['top'].set_visible(False)
@@ -580,34 +682,54 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             ax[1].spines['bottom'].set_visible(False)
             ax[1].spines['left'].set_visible(False)
 
-            # scatter di Arretrato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
+            # scatter di Durata media netta PdC+PdS [gg] 2023 ed Ore elaborazione/settimana 2023
             ax[2].set_title(periodo_label, fontsize=12)
-            plot3_1 = ax[2].scatter(ore_tecnici_settimana, comuni_pdc_pds_arretrato,
+            plot3_1 = ax[2].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata_netta,
                                     c='grey', marker='o', s=grandezza_comunale, alpha=0.5)
-            plot3_1 = ax[2].scatter(ore_tecnici_settimana.loc[comune[0]],
-                                    comuni_pdc_pds_arretrato.loc[comune[0]],
+            plot3_2 = ax[2].scatter(ore_tecnici_settimana.loc[comune[0]],
+                                    comuni_pdc_pds_durata.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
+            ax[2].set_xlim(-10, 800)
+            ax[2].set_ylim(-10, 700)
             ax[2].set_xlabel('Elaborazione [ore/settimana]')
-            ax[2].set_ylabel('Arretrati PdC+PdS')
+            ax[2].set_ylabel('Durata netta [gg] PdC+PdS')
             ax[2].spines['top'].set_visible(False)
             ax[2].spines['right'].set_visible(False)
             ax[2].spines['bottom'].set_visible(False)
             ax[2].spines['left'].set_visible(False)
 
-            # scatter di Pressione 2023 ed Ore elaborazione/settimana 2023
+            # scatter di Arretrato PdC+PdS 2023 ed Ore elaborazione/settimana 2023
             ax[3].set_title(periodo_label, fontsize=12)
-            plot4_1 = ax[3].scatter(ore_tecnici_settimana, comuni_scores,
+            plot4_1 = ax[3].scatter(ore_tecnici_settimana, comuni_pdc_pds_arretrato,
                                     c='grey', marker='o', s=grandezza_comunale, alpha=0.5)
-            plot4_2 = ax[3].scatter(ore_tecnici_settimana.loc[comune[0]],
-                                    comuni_scores.loc[comune[0]],
+            plot4_1 = ax[3].scatter(ore_tecnici_settimana.loc[comune[0]],
+                                    comuni_pdc_pds_arretrato.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
-            ax[3].set_ylim(0, 8.5)
+            ax[3].set_xlim(-10, 800)
+            ax[3].set_ylim(-10, 400)
             ax[3].set_xlabel('Elaborazione [ore/settimana]')
-            ax[3].set_ylabel('Pressione')
+            ax[3].set_ylabel('Arretrati PdC+PdS')
             ax[3].spines['top'].set_visible(False)
             ax[3].spines['right'].set_visible(False)
             ax[3].spines['bottom'].set_visible(False)
             ax[3].spines['left'].set_visible(False)
+
+            # scatter di Pressione 2023 ed Ore elaborazione/settimana 2023
+            ax[4].set_title(periodo_label, fontsize=12)
+            plot5_1 = ax[4].scatter(ore_tecnici_settimana, comuni_scores,
+                                    c='grey', marker='o', s=grandezza_comunale, alpha=0.5)
+            plot5_2 = ax[4].scatter(ore_tecnici_settimana.loc[comune[0]],
+                                    comuni_scores.loc[comune[0]],
+                                    c='r', marker='D', s=grandezza_comunale[comune[0]])
+            ax[4].set_xlim(-10, 800)
+            ax[4].set_ylim(0, 8.5)
+            ax[4].set_ylim(0, 8.5)
+            ax[4].set_xlabel('Elaborazione [ore/settimana]')
+            ax[4].set_ylabel('Pressione')
+            ax[4].spines['top'].set_visible(False)
+            ax[4].spines['right'].set_visible(False)
+            ax[4].spines['bottom'].set_visible(False)
+            ax[4].spines['left'].set_visible(False)
 
             if save_charts:
                 comune_edited_name = comune[0]
@@ -634,77 +756,100 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2021q3_4'] = 60
     pat_comuni_dataframe[
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2022q1_2'] = 60
+    
+    pat_comuni_dataframe[
+        'giornate_durata_media_netta_permessi_costruire_conclusi_2021q3-4'] = np.nan
+    pat_comuni_dataframe[
+        'giornate_durata_media_netta_permessi_costruire_conclusi_2022q1-2'] = np.nan
+    pat_comuni_dataframe[
+        'giornate_durata_media_netta_sanatorie_concluse_2021q3-4'] = np.nan
+    pat_comuni_dataframe[
+        'giornate_durata_media_netta_sanatorie_concluse_2022q1-2'] = np.nan
 
     performance_labels = [
         'Durata [gg]',  # 'Durata media [gg]',
+        'Durata netta [gg]',  # 'Durata media netta [gg]',
         'Termine [gg]',  # 'Termine mediano [gg]',
         'Arretrati',  # 'Pratiche arretrate',
         'Avviati']  # 'Pratiche avviate']
 
     performance_measure_labels_pdc_2021q3_4 = [
         'giornate_durata_media_permessi_costruire_conclusi_2021q3-4',
+        'giornate_durata_media_netta_permessi_costruire_conclusi_2021q3-4',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2021q3_4',
         'numero_permessi_costruire_non_conclusi_scaduti_termini_2021q3-4',
         'numero_permessi_costruire_2021q3-4']
     performance_measure_labels_pdc_2022q1_2 = [
         'giornate_durata_media_permessi_costruire_conclusi_2022q1-2',
+        'giornate_durata_media_netta_permessi_costruire_conclusi_2022q1-2',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2022q1_2',
         'numero_permessi_costruire_non_conclusi_scaduti_termini_2022q1-2',
         'numero_permessi_costruire_2022q1-2']
     performance_measure_labels_pdc_2022q3_4 = [
         'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2022q3-4',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
         'numero_permessi_costruire_avviati_2022q3-4']
     performance_measure_labels_pdc_2023q1_2 = [
         'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
+        'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2023q1-2',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
         'numero_permessi_costruire_avviati_2023q1-2']
     performance_measure_labels_pdc_2023q3_4 = [
         'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2023q3-4',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
         'numero_permessi_costruire_avviati_2023q3-4']
 
     performance_measure_labels_pdc_ov_2022q3_4 = [
         'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2022q3-4',
         'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
         'numero_permessi_costruire_ov_avviati_2022q3-4']
     performance_measure_labels_pdc_ov_2023q1_2 = [
         'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
+        'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q1-2',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2023q1-2',
         'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
         'numero_permessi_costruire_ov_avviati_2023q1-2']
     performance_measure_labels_pdc_ov_2023q3_4 = [
         'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2023q3-4',
         'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2023q3-4',
         'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
         'numero_permessi_costruire_ov_avviati_2023q3-4']
 
     performance_measure_labels_pds_2021q3_4 = [
         'giornate_durata_media_sanatorie_concluse_2021q3-4',
+        'giornate_durata_media_netta_sanatorie_concluse_2021q3-4',
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2021q3_4',
         'numero_sanatorie_non_concluse_scaduti_termini_2021q3-4',
         'numero_sanatorie_2021q3-4']
     performance_measure_labels_pds_2022q1_2 = [
         'giornate_durata_media_sanatorie_concluse_2022q1-2',
+        'giornate_durata_media_netta_sanatorie_concluse_2022q1-2',
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2022q1_2',
         'numero_sanatorie_non_concluse_scaduti_termini_2022q1-2',
         'numero_sanatorie_2022q1-2']
     performance_measure_labels_pds_2022q3_4 = [
         'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2022q3-4',
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4',
         'numero_sanatorie_avviate_2022q3-4']
     performance_measure_labels_pds_2023q1_2 = [
         'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
+        'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2023q1-2',
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2',
         'numero_sanatorie_avviate_2023q1-2']
     performance_measure_labels_pds_2023q3_4 = [
         'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2023q3-4',
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4',
         'numero_sanatorie_avviate_2023q3-4']
@@ -833,9 +978,8 @@ if __name__ == '__main__':
     print_comuni_performance_list(just_one=False, save_tables=True)
     print_comuni_pressure_list(comuni_performance_trends)
 
-    # TODO: ! scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
-    
     # TODO: ! graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
 
+    # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
     # TODO: andamento posizione nella lista di comuni per pressione complessiva
     # TODO: mappa 166 comuni: localizzazione pressione

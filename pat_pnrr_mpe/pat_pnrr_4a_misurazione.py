@@ -1235,20 +1235,20 @@ if __name__ == '__main__':
     # check_transit_03_04(still_to_check=True, already_fine=False)
 
 
-    # comune_name = 'Trento'
-    # file = 'TRENTO - Foglio_Quarta_Rilevazione.1696487868-rev03- PROVVISORIO.xlsx'
+    # comune_name = 'Canazei'
+    # file = '039_Canazei_Edilizia.xls'
     # comune = ComuneExcel(file, comune_name)
     # # print('controllo il file excel del comune di {0}'.format(comune_name))
     # # comune.check_headers_excel()
     # # comune.check_dataframes_excel()
     
-    # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
+    # # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
     # comune_dataframe_pds = comune.get_comune_dataframe('Prov di sanatoria')
-    # comune_dataframe_cila = comune.get_comune_dataframe('Controllo CILA')
+    # # comune_dataframe_cila = comune.get_comune_dataframe('Controllo CILA')
     
-    # comune_measure_series_pdc = comune.get_comune_measure_series('Permessi di Costruire')
+    # # comune_measure_series_pdc = comune.get_comune_measure_series('Permessi di Costruire')
     # comune_measure_series_pds = comune.get_comune_measure_series('Prov di sanatoria')
-    # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
+    # # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
     # load = True
@@ -1289,8 +1289,8 @@ if __name__ == '__main__':
 
 
     # get_comuni_dataframes(comuni_excel_map, load=False)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    # get_comuni_measures(comuni_excel_map)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures(comuni_excel_map)
     #
     # get_comuni_organico(comuni_excel_map, load=True)
 
