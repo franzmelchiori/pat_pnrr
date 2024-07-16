@@ -1025,6 +1025,7 @@ class ComuneExcel:
                     'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_con_sospensioni',
                     'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
                     'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso',
+                    'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso',
                     'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati',
                     'numero_permessi_costruire_ov_avviati',
                     'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo']
@@ -1035,6 +1036,7 @@ class ComuneExcel:
                     'numero_permessi_costruire_conclusi_con_provvedimento_espresso_con_sospensioni',
                     'numero_permessi_costruire_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
                     'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso',
+                    'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso',
                     'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati',
                     'numero_permessi_costruire_avviati',
                     'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo']
@@ -1045,6 +1047,7 @@ class ComuneExcel:
                 'numero_sanatorie_concluse_con_provvedimento_espresso_con_sospensioni',
                 'numero_sanatorie_concluse_con_provvedimento_espresso_con_conferenza_servizi',
                 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso',
+                'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso',
                 'giornate_durata_mediana_termine_massimo_sanatorie_avviate',
                 'numero_sanatorie_avviate',
                 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo']
@@ -1055,6 +1058,7 @@ class ComuneExcel:
                 'numero_controlli_cila_conclusi_con_provvedimento_espresso_con_sospensioni',
                 'numero_controlli_cila_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
                 'giornate_durata_media_controlli_cila_conclusi_con_provvedimento_espresso',
+                'giornate_durata_media_netta_controlli_cila_conclusi_con_provvedimento_espresso',
                 'giornate_durata_mediana_termine_massimo_controlli_cila_avviati',
                 'numero_controlli_cila_avviati',
                 'numero_controlli_cila_arretrati_non_conclusi_scaduto_termine_massimo']
@@ -1065,6 +1069,7 @@ class ComuneExcel:
                 'numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni',
                 'numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi',
                 'giornate_durata_media_pratiche_concluse_con_provvedimento_espresso',
+                'giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso',
                 'giornate_durata_mediana_termine_massimo_pratiche_avviate',
                 'numero_pratiche_avviate',
                 'numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo']
@@ -1127,6 +1132,10 @@ class ComuneExcel:
         giornate_durata_media_pratiche_concluse_con_provvedimento_espresso = (
                 comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
                 comune_dataframe.loc[filter_mask, 'data_inizio_pratica']).mean().days
+        giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso = (
+                comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
+                comune_dataframe.loc[filter_mask, 'data_inizio_pratica'] -
+                comune_dataframe.loc[filter_mask, 'giorni_sospensioni']).mean().days
 
         filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna() == False
         filter_mask = filter_mask & (comune_dataframe.loc[:, 'giorni_sospensioni']
@@ -1159,6 +1168,7 @@ class ComuneExcel:
             numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni,
             numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi,
             giornate_durata_media_pratiche_concluse_con_provvedimento_espresso,
+            giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso,
             giornate_durata_mediana_termine_massimo_pratiche_avviate,
             numero_pratiche_avviate,
             numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo]
@@ -1209,9 +1219,7 @@ if __name__ == '__main__':
     #     comuni_excel_map, 'Prov di sanatoria', load=load)
     # comuni_measure_dataframe_cila = get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Controllo CILA', load=load)
-
     # get_comuni_dataframes(comuni_excel_map, load=False)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
 
 
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire')
@@ -1231,7 +1239,9 @@ if __name__ == '__main__':
     # get_comuni_measure(comuni_excel_map, 'Controllo CILA', 'CILA ordinaria', load=False)
     # get_comuni_measure(comuni_excel_map, 'Controllo CILA', 'CILA con sanzione', load=False)
 
-    # get_comuni_measures(comuni_excel_map)
+
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures(comuni_excel_map)
 
     # load = True
     # lpf = False
@@ -1239,6 +1249,9 @@ if __name__ == '__main__':
     #     comuni_excel_map, 'Permessi di Costruire', load=load, lpf=lpf)
     # comuni_pds_measure = get_comuni_measure(
     #     comuni_excel_map, 'Prov di sanatoria', load=load, lpf=lpf)
+
+
+    # --
 
 
     # ATTENZIONE! MEDIA VS. MEDIA DI MEDIE

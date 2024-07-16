@@ -1425,7 +1425,6 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
                 'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_con_sospensioni',
                 'numero_permessi_costruire_ov_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
                 'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso',
-                'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso',
                 'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati',
                 'numero_permessi_costruire_ov_avviati',
                 'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo']
@@ -1436,7 +1435,6 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
                 'numero_permessi_costruire_conclusi_con_provvedimento_espresso_con_sospensioni',
                 'numero_permessi_costruire_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
                 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso',
-                'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso',
                 'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati',
                 'numero_permessi_costruire_avviati',
                 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo']
@@ -1447,7 +1445,6 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
             'numero_sanatorie_concluse_con_provvedimento_espresso_con_sospensioni',
             'numero_sanatorie_concluse_con_provvedimento_espresso_con_conferenza_servizi',
             'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso',
-            'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso',
             'giornate_durata_mediana_termine_massimo_sanatorie_avviate',
             'numero_sanatorie_avviate',
             'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo']
@@ -1458,7 +1455,6 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
             'numero_controlli_cila_conclusi_con_provvedimento_espresso_con_sospensioni',
             'numero_controlli_cila_conclusi_con_provvedimento_espresso_con_conferenza_servizi',
             'giornate_durata_media_controlli_cila_conclusi_con_provvedimento_espresso',
-            'giornate_durata_media_netta_controlli_cila_conclusi_con_provvedimento_espresso',
             'giornate_durata_mediana_termine_massimo_controlli_cila_avviati',
             'numero_controlli_cila_avviati',
             'numero_controlli_cila_arretrati_non_conclusi_scaduto_termine_massimo']
@@ -1469,7 +1465,6 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
             'numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni',
             'numero_pratiche_concluse_con_provvedimento_espresso_con_conferenza_servizi',
             'giornate_durata_media_pratiche_concluse_con_provvedimento_espresso',
-            'giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso',
             'giornate_durata_mediana_termine_massimo_pratiche_avviate',
             'numero_pratiche_avviate',
             'numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo']
@@ -1677,8 +1672,6 @@ if __name__ == '__main__':
     #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
     # comuni_pds_measure = get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
     #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
-
-    # TODO: ! ricalcolo della durata media [gg] al netto delle sospensioni
 
 
     # --
