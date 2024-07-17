@@ -475,8 +475,12 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         plot1 = ax[0].scatter(ore_tecnici_settimana, comuni_pdc_pds_avviato,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
-        ax[0].set_xlim(-10, 800)
-        ax[0].set_ylim(-10, 1400)
+        if no_trento:
+            ax[0].set_xlim(-10, 400)
+            ax[0].set_ylim(-10, 400)
+        else:
+            ax[0].set_xlim(-10, 800)
+            ax[0].set_ylim(-10, 1400)
         ax[0].set_xlabel('Elaborazione [ore/settimana]')
         ax[0].set_ylabel('Avviati PdC+PdS')
         ax[0].spines['top'].set_visible(False)
@@ -489,8 +493,12 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         plot2 = ax[1].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
-        ax[1].set_xlim(-10, 800)
-        ax[1].set_ylim(-10, 700)
+        if no_trento:
+            ax[1].set_xlim(-10, 400)
+            ax[1].set_ylim(-10, 700)
+        else:
+            ax[1].set_xlim(-10, 800)
+            ax[1].set_ylim(-10, 700)
         ax[1].set_xlabel('Elaborazione [ore/settimana]')
         ax[1].set_ylabel('Durata [gg] PdC+PdS')
         ax[1].spines['top'].set_visible(False)
@@ -503,8 +511,12 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         plot3 = ax[2].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata_netta,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
-        ax[2].set_xlim(-10, 800)
-        ax[2].set_ylim(-10, 700)
+        if no_trento:
+            ax[2].set_xlim(-10, 400)
+            ax[2].set_ylim(-10, 700)
+        else:
+            ax[2].set_xlim(-10, 800)
+            ax[2].set_ylim(-10, 700)
         ax[2].set_xlabel('Elaborazione [ore/settimana]')
         ax[2].set_ylabel('Durata netta [gg] PdC+PdS')
         ax[2].spines['top'].set_visible(False)
@@ -517,8 +529,12 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         plot4 = ax[3].scatter(ore_tecnici_settimana, comuni_pdc_pds_arretrato,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
-        ax[3].set_xlim(-10, 800)
-        ax[3].set_ylim(-10, 400)
+        if no_trento:
+            ax[3].set_xlim(-10, 400)
+            ax[3].set_ylim(-10, 150)
+        else:
+            ax[3].set_xlim(-10, 800)
+            ax[3].set_ylim(-10, 400)
         ax[3].set_xlabel('Elaborazione [ore/settimana]')
         ax[3].set_ylabel('Arretrati PdC+PdS')
         ax[3].spines['top'].set_visible(False)
@@ -531,8 +547,12 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         plot5 = ax[4].scatter(ore_tecnici_settimana, comuni_scores,
                               c=classificazione_comunale,
                               marker='o', s=grandezza_comunale, alpha=0.5)
-        ax[4].set_xlim(-10, 800)
-        ax[4].set_ylim(0, 8.5)
+        if no_trento:
+            ax[4].set_xlim(-10, 400)
+            ax[4].set_ylim(0, 8.5)
+        else:
+            ax[4].set_xlim(-10, 800)
+            ax[4].set_ylim(0, 8.5)
         ax[4].set_xlabel('Elaborazione [ore/settimana]')
         ax[4].set_ylabel('Pressione')
         ax[4].spines['top'].set_visible(False)
@@ -540,11 +560,16 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         ax[4].spines['bottom'].set_visible(False)
         ax[4].spines['left'].set_visible(False)
 
+        if no_trento:
+            trento_label = 'senza_trento_'
+        else:
+            trento_label = ''
         fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
                 prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
                 fancybox=True, shadow=True, ncol=5)
         fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
-                    'pat_pnrr_performance_organico_chart_provincia_' + mpe_number_label,
+                    'pat_pnrr_performance_organico_chart_provincia_' + \
+                    trento_label + mpe_number_label,
                     dpi=300, bbox_inches='tight', pad_inches=0.25)
         plt.close(fig)
 
