@@ -126,7 +126,7 @@ class Particle:
         self.best_swarm = position
 
     def quantize_vector(self, vector):
-        vector_expanded = np.array(vector + 0.5, dtype=np.int16)
+        vector_expanded = np.array(vector + 0.5, dtype=np.int16)  # TODO: debug 0.5
         position_control = vector_expanded < self.solution_sizes
         position_valid = vector_expanded * np.equal(position_control, True)
         position_correct = (self.solution_sizes - 1) * np.equal(
@@ -250,7 +250,9 @@ class PSO:
     
 
 class MPE:
-    def __init__(self):
+    def __init__(self, upperbound_comune=3, variation_comune=0.3):
+        self.upperbound_comune = upperbound_comune
+        self.variation_comune = variation_comune
         self.load_data()
         self.get_targets()
         self.serialize_params()
@@ -364,7 +366,17 @@ class MPE:
             con ParameterSampling
         """
 
-        self.params = [ParameterSampling(-10, 0, 11) for i_param in range(self.n_params)]
+        params_lowerbound = np.floor(np.reshape(self.comuni_measures_dataframe_mpe.values,
+            self.n_params) * (1 - self.variation_comune))
+        params_upperbound = np.ceil(np.reshape(self.comuni_measures_dataframe_mpe.values,
+            self.n_params) * (1 + self.variation_comune))
+        params_upperbound[params_upperbound == 0] = self.upperbound_comune
+        params_steps = (params_upperbound - params_lowerbound).astype(int) + 1
+
+        self.params = [ParameterSampling(params_lowerbound[i_param],
+                                         params_upperbound[i_param],
+                                         params_steps[i_param])
+                       for i_param in range(self.n_params)]
 
         return self.params
     
