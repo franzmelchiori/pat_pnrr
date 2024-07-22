@@ -10,12 +10,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# from mpl_toolkits.mplot3d import Axes3D
-# import matplotlib.animation as animation
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.animation as animation
 
-# from matplotlib import cbook
-# from matplotlib.colors import LightSource
-# from matplotlib import cm
+from matplotlib import cbook
+from matplotlib.colors import LightSource
+from matplotlib import cm
 
 # import cv2
 
@@ -31,15 +31,17 @@ class ParameterSampling:
                  sampling_type='linear'):
         self.lowerbound = lowerbound
         self.upperbound = upperbound
-        if samples_amount <= 255:
-            self.samples_amount = samples_amount
-        else:
-            self.samples_amount = 255
+        self.samples_amount = samples_amount
+        # if samples_amount <= 255:
+        #     self.samples_amount = samples_amount
+        # else:
+        #     self.samples_amount = 255
         self.sampling_type = sampling_type
-        if type(float()) in (type(self.lowerbound), type(self.upperbound)):
-            self.samples_type = np.float16
-        else:
-            self.samples_type = np.int16
+        self.samples_type = np.int16
+        # if type(float()) in (type(self.lowerbound), type(self.upperbound)):
+        #     self.samples_type = np.float16
+        # else:
+        #     self.samples_type = np.int16
         self.samples = np.zeros(shape=self.samples_amount,
                                 dtype=self.samples_type)
         if sampling_type == 'linear':
@@ -125,12 +127,38 @@ class Particle:
     def set_best_swarm(self, position):
         self.best_swarm = position
 
-    def quantize_vector(self, vector):
-        vector_expanded = np.array(vector + 0.5, dtype=np.int16)  # TODO: debug 0.5
-        position_control = vector_expanded < self.solution_sizes
-        position_valid = vector_expanded * np.equal(position_control, True)
-        position_correct = (self.solution_sizes - 1) * np.equal(
-            position_control, False)
+    def quantize_vector(self, vector, bumping=False):
+        position_control = abs(vector) < self.solution_sizes
+        position_valid = vector * np.equal(position_control, True)
+
+        position_correct_edge_positive = vector > 0
+        position_correct_edge_bumps = abs(vector) // self.solution_sizes
+        position_correct_edge_even_bumps = (position_correct_edge_bumps % 2) == 0
+        position_correct_edge_distance = abs(vector) % self.solution_sizes
+
+        # TODO: develop proper bumping and not bumping effect
+        if bumping:
+            # edge_positive | edge_even_bumps | position_correct
+            #             1 |               1 |  zero + distance
+            #             0 |               0 |  zero + distance
+            #             1 |               0 |  size - distance
+            #             0 |               1 |  size - distance
+            position_correct_zero_distance = position_correct_edge_distance * \
+                (position_correct_edge_positive == position_correct_edge_even_bumps) * \
+                np.equal(position_control, False)
+            position_correct_size_distance = (self.solution_sizes - position_correct_edge_distance) * \
+                (position_correct_edge_positive != position_correct_edge_even_bumps) * \
+                np.equal(position_control, False)
+        else:
+            position_correct = (self.solution_sizes - 1) * np.equal(
+                position_control, False)
+            # if position_correct_edge_positive:
+            #     position_correct = (self.solution_sizes - 1) * np.equal(
+            #         position_control, False)
+            # else:
+            #     position_correct = 0 * np.equal(
+            #         position_control, False)
+
         vector = np.array(position_valid + position_correct, dtype=np.int16)
         return vector
 
@@ -246,7 +274,10 @@ class PSO:
                 particle.set_best_swarm(self.particle_result.best_swarm)
             if self.verbose >= 1:
                 print(self)
-        return particles_data
+        solution_values = [self.parameters[i].samples[p]
+                           for i, p
+                           in enumerate(self.particle_result.best_swarm)]
+        return particles_data, solution_values
     
 
 class MPE:
@@ -380,6 +411,26 @@ class MPE:
 
         return self.params
     
+    def evaluate_solution(self, solution):
+        
+        solution_array = np.reshape(solution, (self.n_comuni, self.n_measures))
+        solution_dataframe = pd.DataFrame(solution_array,
+            index=self.comuni_measures_dataframe_mpe.index,
+            columns=self.comuni_measures_dataframe_mpe.columns)
+        
+        solution_durata_pdc_ov = solution_dataframe.iloc[:, 0].mean()
+        solution_arretrato_pdc_ov = solution_dataframe.iloc[:, 1].sum()
+        solution_durata_pds = solution_dataframe.iloc[:, 2].mean()
+        solution_arretrato_pds = solution_dataframe.iloc[:, 3].sum()
+
+        print('Risultato:')
+        print('    durata PdC OV: ' + str(np.ceil(solution_durata_pdc_ov).astype(int)))
+        print('    arretrato PdC OV: ' + str(np.ceil(solution_arretrato_pdc_ov).astype(int)))
+        print('    durata PdS: ' + str(np.ceil(solution_durata_pds).astype(int)))
+        print('    arretrato PdS: ' + str(np.ceil(solution_arretrato_pds).astype(int)))
+        
+        return True
+    
     def gain_function(self, params):
         """ deserializzare la lista di parametri
             per associare ogni variazione ad ogni comune e misura
@@ -413,22 +464,78 @@ class MPE:
         self.changed_arretrato_pds = comuni_changed_measures_dataframe.iloc[:, 3].sum()
 
         # distanza complessiva tra le misure target risultanti ed i target finali
-        gain = 0 + \
-            (self.changed_durata_pdc_ov - self.target_durata_pdc_ov) + \
-            (self.changed_arretrato_pdc_ov - self.target_arretrato_pdc_ov) + \
-            (self.changed_durata_pds - self.target_durata_pds) + \
-            (self.changed_arretrato_pds - self.target_arretrato_pds)
-        if self.changed_durata_pdc_ov == self.target_durata_pdc_ov:
-            gain += 1000
-        if self.changed_arretrato_pdc_ov == self.target_arretrato_pdc_ov:
-            gain += 1000
-        if self.changed_durata_pds == self.target_durata_pds:
-            gain += 1000
-        if self.changed_arretrato_pds == self.target_arretrato_pds:
-            gain += 1000
+        gain = (150 - abs(self.changed_durata_pdc_ov - self.target_durata_pdc_ov)) + \
+               (350 - abs(self.changed_arretrato_pdc_ov - self.target_arretrato_pdc_ov)) + \
+               (150 - abs(self.changed_durata_pds - self.target_durata_pds)) + \
+               (350 - abs(self.changed_arretrato_pds - self.target_arretrato_pds))
 
         return gain
-    
+
+
+class Mountain:
+
+    def __init__(self, param_1_dim, param_2_dim):
+        filename = cbook.get_sample_data('jacksboro_fault_dem.npz',
+                                         asfileobj=False)
+        with np.load(filename) as dem:
+            z = dem['elevation']
+            nrows, ncols = z.shape
+            x = np.linspace(dem['xmin'], dem['xmax'], ncols)
+            y = np.linspace(dem['ymin'], dem['ymax'], nrows)
+            x, y = np.meshgrid(x, y)
+            region = np.s_[0:param_1_dim, 0:param_2_dim]
+            self.x, self.y, self.z = x[region], y[region], z[region]
+
+    def altitude_function(self, params):
+        return self.z[params[0], params[1]]
+
+    def surface_plot_2d(self):
+        fig, ax = plt.subplots()
+        ax.imshow(self.z, interpolation='nearest')
+        plt.show()
+
+    def particle_trajectory(self, particle_data):
+        p = particle_data
+        iterations = len(particle_data[0])
+        dimensions = 3
+        trajectory_data = np.empty((dimensions, iterations))
+        for i in range(iterations):
+            trajectory_data[:, i] = self.x[int(p[0, i]), int(p[1, i])], \
+                                    self.y[int(p[0, i]), int(p[1, i])], \
+                                    self.z[int(p[0, i]), int(p[1, i])]+10
+        return trajectory_data
+
+    def update_trajectories(self, num, trajectories_data, lines):
+        for line, data in zip(lines, trajectories_data):
+            line.set_data(data[0:2, :num])
+            line.set_3d_properties(data[2, :num])
+        return lines
+
+    def surface_plot_3d(self, particles_data):
+        iterations = len(particles_data[0][0])
+        fig, ax = plt.subplots(subplot_kw=dict(projection='3d'))
+
+        ls = LightSource(270, 45)
+        rgb = ls.shade(self.z, cmap=cm.gist_earth, vert_exag=0.1,
+                       blend_mode='soft')
+
+        ax.plot_surface(self.x, self.y, self.z*(1-0.5), facecolors=rgb,
+                        antialiased=True)
+
+        data = [self.particle_trajectory(particle_data)
+                for particle_data in particles_data]
+        lines = [ax.plot(dat[0, 0:1], dat[1, 0:1], dat[2, 0:1]+10)[0]
+                 for dat in data]
+        # points = [ax.scatter3D(self.x[int(p[0][1]), int(p[1][1])],
+        #                        self.y[int(p[0][1]), int(p[1][1])],
+        #                        self.z[int(p[0][1]), int(p[1][1])]+10,
+        #                        s=30, c='r') for p in particles_data]
+
+        animate_trajectories = animation.FuncAnimation(
+            fig=fig, func=self.update_trajectories, frames=iterations,
+            fargs=(data, lines), interval=24, blit=False)
+        plt.show()
+
 
 def pso_mpe(i=10, p=3, iw=.75, cw=.5, sw=.5, v=1):
 
@@ -437,8 +544,25 @@ def pso_mpe(i=10, p=3, iw=.75, cw=.5, sw=.5, v=1):
               iterations=i, particle_amount=p,
               inertial_weight=iw, cognitive_weight=cw, social_weight=sw,
               verbose=v)
-    particles_data = pso.iter_particle_swarm()
+    particles_data, solution_values = pso.iter_particle_swarm()
+    mpe.evaluate_solution(solution_values)
+
+
+def pso_test(s=255, i=100, p=10, iw=.75, cw=.5, sw=.5, v=1):
+    
+    param_1 = ParameterSampling(0, s-1, s)
+    param_2 = ParameterSampling(0, s-1, s)
+    params = [param_1, param_2]
+    # print(params)
+    fnc = Mountain(s, s)
+    gain_function = fnc.altitude_function
+    pso = PSO(gain_function=gain_function, parameters=params, iterations=i,
+              particle_amount=p, inertial_weight=iw, cognitive_weight=cw,
+              social_weight=sw, verbose=v)
+    particles_data, solution_values = pso.iter_particle_swarm()
+    fnc.surface_plot_3d(particles_data)
 
 
 if __name__ == '__main__':
-    pso_mpe(i=100, p=30, v=1)
+    # pso_test(i=100, p=10, iw=.5, v=1)
+    pso_mpe(i=100, p=100, iw=.1, cw=.3, sw=.7, v=1)
