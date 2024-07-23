@@ -1289,8 +1289,8 @@ if __name__ == '__main__':
 
 
     # get_comuni_dataframes(comuni_excel_map, load=False)
-    get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    get_comuni_measures(comuni_excel_map)
+    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    # get_comuni_measures(comuni_excel_map)
     #
     # get_comuni_organico(comuni_excel_map, load=True)
 

@@ -88,5 +88,5 @@ def print_report_comunali(version, just_one = False):
 
 
 if __name__ == '__main__':
-    # print_report_comunale(name_comune = 'Baselga di Pinè', version = 'v5.5.0')
-    print_report_comunali(version = 'v5.5.0')
+    print_report_comunale(name_comune = 'Trento', version = 'v5.5.1')
+    # print_report_comunali(version = 'v5.5.0')

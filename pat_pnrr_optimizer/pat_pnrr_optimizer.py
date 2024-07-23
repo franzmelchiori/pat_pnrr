@@ -127,39 +127,45 @@ class Particle:
     def set_best_swarm(self, position):
         self.best_swarm = position
 
-    def quantize_vector(self, vector, bumping=False):
+    def quantize_vector(self, vector, bumping=True):
         position_control = abs(vector) < self.solution_sizes
-        position_valid = vector * np.equal(position_control, True)
+        position_correct_indexes = np.where(position_control == False)
 
-        position_correct_edge_positive = vector > 0
-        position_correct_edge_bumps = abs(vector) // self.solution_sizes
+        position_correct_edge_positive = vector[position_correct_indexes] > 0
+        position_correct_edge_negative = vector[position_correct_indexes] < 0
+        position_correct_edge_bumps = abs(vector[position_correct_indexes]) // \
+            self.solution_sizes[position_correct_indexes]
         position_correct_edge_even_bumps = (position_correct_edge_bumps % 2) == 0
-        position_correct_edge_distance = abs(vector) % self.solution_sizes
+        position_correct_edge_distance = abs(vector[position_correct_indexes]) % \
+            self.solution_sizes[position_correct_indexes]
+        
+        position_correct_zero_distance = position_correct_edge_positive == \
+            position_correct_edge_even_bumps
+        position_correct_size_distance = position_correct_edge_positive != \
+            position_correct_edge_even_bumps
 
-        # TODO: develop proper bumping and not bumping effect
+        vector_correction = np.zeros(vector[position_correct_indexes].shape[0])
         if bumping:
             # edge_positive | edge_even_bumps | position_correct
             #             1 |               1 |  zero + distance
             #             0 |               0 |  zero + distance
             #             1 |               0 |  size - distance
             #             0 |               1 |  size - distance
-            position_correct_zero_distance = position_correct_edge_distance * \
-                (position_correct_edge_positive == position_correct_edge_even_bumps) * \
-                np.equal(position_control, False)
-            position_correct_size_distance = (self.solution_sizes - position_correct_edge_distance) * \
-                (position_correct_edge_positive != position_correct_edge_even_bumps) * \
-                np.equal(position_control, False)
+            vector_correction[position_correct_zero_distance] = \
+                position_correct_edge_distance[position_correct_zero_distance]
+            vector_correction[position_correct_size_distance] = \
+                self.solution_sizes[position_correct_indexes][position_correct_size_distance] - \
+                position_correct_edge_distance[position_correct_size_distance]
         else:
-            position_correct = (self.solution_sizes - 1) * np.equal(
-                position_control, False)
-            # if position_correct_edge_positive:
-            #     position_correct = (self.solution_sizes - 1) * np.equal(
-            #         position_control, False)
-            # else:
-            #     position_correct = 0 * np.equal(
-            #         position_control, False)
+            vector_correction[position_correct_edge_negative] = \
+                position_correct_edge_distance[position_correct_edge_negative]
+            vector_correction[position_correct_edge_positive] = \
+                self.solution_sizes[position_correct_indexes][position_correct_edge_positive] - \
+                position_correct_edge_distance[position_correct_edge_positive]
 
-        vector = np.array(position_valid + position_correct, dtype=np.int16)
+        vector[position_correct_indexes] = vector_correction
+        vector = np.floor(vector).astype(int)
+
         return vector
 
     def sample_gain_function(self):
@@ -435,9 +441,11 @@ class MPE:
         """ deserializzare la lista di parametri
             per associare ogni variazione ad ogni comune e misura
             per valutarne infine il valore della soluzione
-            applicando tutte le variazioni e
-            calcolando il raggiungimento dei target e
-            il minor numero di comuni coinvolti
+            applicando tutte le variazioni
+            calcolando il raggiungimento dei target
+            al minor numero di comuni coinvolti (e
+            ad almeno un comune per comunita' di valle e
+            ad almeno un comune per cluster)
         """
         
         measure_changes_array = np.reshape(params, (self.n_comuni, self.n_measures))
@@ -565,4 +573,4 @@ def pso_test(s=255, i=100, p=10, iw=.75, cw=.5, sw=.5, v=1):
 
 if __name__ == '__main__':
     # pso_test(i=100, p=10, iw=.5, v=1)
-    pso_mpe(i=100, p=100, iw=.1, cw=.3, sw=.7, v=1)
+    pso_mpe(i=100, p=300, iw=0.2, cw=.2, sw=.8, v=1)
