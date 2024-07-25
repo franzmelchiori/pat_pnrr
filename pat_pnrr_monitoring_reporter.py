@@ -221,11 +221,34 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         performance_trends_pds_2022q3_4[0],
         performance_trends_pds_2023q1_2[0],
         performance_trends_pds_2023q3_4[0]],
-        keys=['pdc_durata_2021q3_4', 'pdc_durata_2022q1_2', 'pdc_durata_2022q3_4',
-              'pdc_ov_durata_2022q3_4', 'pdc_durata_2023q1_2', 'pdc_ov_durata_2023q1_2',
+        keys=['pdc_durata_2021q3_4',
+              'pdc_durata_2022q1_2',
+              'pdc_durata_2022q3_4', 'pdc_ov_durata_2022q3_4',
+              'pdc_durata_2023q1_2', 'pdc_ov_durata_2023q1_2',
               'pdc_durata_2023q3_4', 'pdc_ov_durata_2023q3_4',
-              'pds_durata_2021q3_4', 'pds_durata_2022q1_2', 'pds_durata_2022q3_4',
-              'pds_durata_2023q1_2', 'pds_durata_2023q3_4'],
+              'pds_durata_2021q3_4',
+              'pds_durata_2022q1_2',
+              'pds_durata_2022q3_4',
+              'pds_durata_2023q1_2',
+              'pds_durata_2023q3_4'],
+        axis='columns', join='outer')
+
+    comuni_durata_netta_trends = pd.concat([
+        performance_trends_pdc_durata_netta_2022q3_4[0],
+        performance_trends_pdc_ov_durata_netta_2022q3_4[0],
+        performance_trends_pdc_durata_netta_2023q1_2[0],
+        performance_trends_pdc_ov_durata_netta_2023q1_2[0],
+        performance_trends_pdc_durata_netta_2023q3_4[0],
+        performance_trends_pdc_ov_durata_netta_2023q3_4[0],
+        performance_trends_pds_durata_netta_2022q3_4[0],
+        performance_trends_pds_durata_netta_2023q1_2[0],
+        performance_trends_pds_durata_netta_2023q3_4[0]],
+        keys=['pdc_durata_netta_2022q3_4', 'pdc_ov_durata_netta_2022q3_4',
+              'pdc_durata_netta_2023q1_2', 'pdc_ov_durata_netta_2023q1_2',
+              'pdc_durata_netta_2023q3_4', 'pdc_ov_durata_netta_2023q3_4',
+              'pds_durata_netta_2022q3_4',
+              'pds_durata_netta_2023q1_2',
+              'pds_durata_netta_2023q3_4'],
         axis='columns', join='outer')
 
     comuni_arretrato_trends = pd.concat([
@@ -242,11 +265,16 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         performance_trends_pds_2022q3_4[1],
         performance_trends_pds_2023q1_2[1],
         performance_trends_pds_2023q3_4[1]],
-        keys=['pdc_arretrato_2021q3_4', 'pdc_arretrato_2022q1_2', 'pdc_arretrato_2022q3_4',
-              'pdc_ov_arretrato_2022q3_4', 'pdc_arretrato_2023q1_2', 'pdc_ov_arretrato_2023q1_2',
+        keys=['pdc_arretrato_2021q3_4',
+              'pdc_arretrato_2022q1_2',
+              'pdc_arretrato_2022q3_4', 'pdc_ov_arretrato_2022q3_4',
+              'pdc_arretrato_2023q1_2', 'pdc_ov_arretrato_2023q1_2',
               'pdc_arretrato_2023q3_4', 'pdc_ov_arretrato_2023q3_4',
-              'pds_arretrato_2021q3_4', 'pds_arretrato_2022q1_2', 'pds_arretrato_2022q3_4',
-              'pds_arretrato_2023q1_2', 'pds_arretrato_2023q3_4'],
+              'pds_arretrato_2021q3_4',
+              'pds_arretrato_2022q1_2',
+              'pds_arretrato_2022q3_4',
+              'pds_arretrato_2023q1_2',
+              'pds_arretrato_2023q3_4'],
         axis='columns', join='outer')
 
     comuni_performance_trends = pd.concat([
@@ -263,12 +291,39 @@ def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
         performance_trends_pds_2022q3_4[2],
         performance_trends_pds_2023q1_2[2],
         performance_trends_pds_2023q3_4[2]],
-        keys=['pdc_2021q3_4', 'pdc_2022q1_2', 'pdc_2022q3_4', 'pdc_ov_2022q3_4', 'pdc_2023q1_2',
-              'pdc_ov_2023q1_2','pdc_2023q3_4', 'pdc_ov_2023q3_4',
-              'pds_2021q3_4', 'pds_2022q1_2', 'pds_2022q3_4', 'pds_2023q1_2', 'pds_2023q3_4'],
+        keys=['pdc_2021q3_4',
+              'pdc_2022q1_2',
+              'pdc_2022q3_4', 'pdc_ov_2022q3_4',
+              'pdc_2023q1_2', 'pdc_ov_2023q1_2',
+              'pdc_2023q3_4', 'pdc_ov_2023q3_4',
+              'pds_2021q3_4',
+              'pds_2022q1_2',
+              'pds_2022q3_4',
+              'pds_2023q1_2',
+              'pds_2023q3_4'],
         axis='columns', join='outer')
 
-    return comuni_durata_trends, comuni_arretrato_trends, comuni_performance_trends
+    comuni_performance_netta_trends = pd.concat([
+        performance_trends_pdc_durata_netta_2022q3_4[2],
+        performance_trends_pdc_ov_durata_netta_2022q3_4[2],
+        performance_trends_pdc_durata_netta_2023q1_2[2],
+        performance_trends_pdc_ov_durata_netta_2023q1_2[2],
+        performance_trends_pdc_durata_netta_2023q3_4[2],
+        performance_trends_pdc_ov_durata_netta_2023q3_4[2],
+        performance_trends_pds_durata_netta_2022q3_4[2],
+        performance_trends_pds_durata_netta_2023q1_2[2],
+        performance_trends_pds_durata_netta_2023q3_4[2]],
+        keys=['pdc_performance_netta_2022q3_4', 'pdc_ov_performance_netta_2022q3_4',
+              'pdc_performance_netta_2023q1_2', 'pdc_ov_performance_netta_2023q1_2',
+              'pdc_performance_netta_2023q3_4', 'pdc_ov_performance_netta_2023q3_4',
+              'pds_performance_netta_2022q3_4',
+              'pds_performance_netta_2023q1_2',
+              'pds_performance_netta_2023q3_4'],
+        axis='columns', join='outer')
+
+    return comuni_durata_trends, comuni_durata_netta_trends, \
+           comuni_arretrato_trends, \
+           comuni_performance_trends, comuni_performance_netta_trends
 
 
 def get_comuni_scores(comuni_performance_trends, pdc_measure_labels, pds_measure_labels):
@@ -984,27 +1039,36 @@ if __name__ == '__main__':
 
     pat_comuni_dataframe = get_pat_comuni_dataframe()
 
-    comuni_durata_trends, comuni_arretrato_trends, comuni_performance_trends = \
+    comuni_durata_trends, comuni_durata_netta_trends, \
+    comuni_arretrato_trends, \
+    comuni_performance_trends, comuni_performance_netta_trends= \
         get_comuni_performance_trends(pat_comuni_dataframe, time_limit=365)
-    # pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
-    # pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
-    # comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
-    #     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
-    # comuni_scores.to_csv('pat-pnrr_edilizia_pressione_2023.csv')
+    
+    pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
+    pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
+    comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+        comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+    comuni_scores.to_csv('pat-pnrr_edilizia_pressione_2023.csv')
+    
+    pdc_measure_labels = ['pdc_performance_netta_2023q1_2', 'pdc_performance_netta_2023q3_4']
+    pds_measure_labels = ['pds_performance_netta_2023q1_2', 'pds_performance_netta_2023q3_4']
+    comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+        comuni_performance_netta_trends, pdc_measure_labels, pds_measure_labels)
+    comuni_scores.to_csv('pat-pnrr_edilizia_pressione_netta_2023.csv')
 
     # for mpe_number in [3, 4, 5]:
-    for mpe_number in [5]:
-        print_comuni_performance_charts(pat_comuni_dataframe,
-                                        comuni_durata_trends, comuni_arretrato_trends,
-                                        comuni_performance_trends, mpe_number=mpe_number,
-                                        just_provincia=False, no_trento=False,
-                                        just_one=False, save_charts=True)
-    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    print_comuni_performance_list(just_one=False, save_tables=True)
-    print_comuni_pressure_list(comuni_performance_trends)
-
-    # TODO: ! graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
+    # for mpe_number in [5]:
+    #     print_comuni_performance_charts(pat_comuni_dataframe,
+    #                                     comuni_durata_trends, comuni_arretrato_trends,
+    #                                     comuni_performance_trends, mpe_number=mpe_number,
+    #                                     just_provincia=False, no_trento=False,
+    #                                     just_one=False, save_charts=True)
+    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    # print_comuni_performance_list(just_one=False, save_tables=True)
+    # print_comuni_pressure_list(comuni_performance_trends)
 
     # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
+    # TODO: graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
+
     # TODO: andamento posizione nella lista di comuni per pressione complessiva
     # TODO: mappa 166 comuni: localizzazione pressione
