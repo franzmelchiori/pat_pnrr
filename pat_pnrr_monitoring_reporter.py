@@ -1044,28 +1044,28 @@ if __name__ == '__main__':
     comuni_performance_trends, comuni_performance_netta_trends= \
         get_comuni_performance_trends(pat_comuni_dataframe, time_limit=365)
     
-    pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
-    pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
-    comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
-        comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
-    comuni_scores.to_csv('pat-pnrr_edilizia_pressione_2023.csv')
+    # pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
+    # pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
+    # comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+    #     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+    # comuni_scores.to_csv('pat-pnrr_edilizia_pressione_2023.csv')
     
-    pdc_measure_labels = ['pdc_performance_netta_2023q1_2', 'pdc_performance_netta_2023q3_4']
-    pds_measure_labels = ['pds_performance_netta_2023q1_2', 'pds_performance_netta_2023q3_4']
-    comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
-        comuni_performance_netta_trends, pdc_measure_labels, pds_measure_labels)
-    comuni_scores.to_csv('pat-pnrr_edilizia_pressione_netta_2023.csv')
+    # pdc_measure_labels = ['pdc_performance_netta_2023q1_2', 'pdc_performance_netta_2023q3_4']
+    # pds_measure_labels = ['pds_performance_netta_2023q1_2', 'pds_performance_netta_2023q3_4']
+    # comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+    #     comuni_performance_netta_trends, pdc_measure_labels, pds_measure_labels)
+    # comuni_scores.to_csv('pat-pnrr_edilizia_pressione_netta_2023.csv')
 
     # for mpe_number in [3, 4, 5]:
-    # for mpe_number in [5]:
-    #     print_comuni_performance_charts(pat_comuni_dataframe,
-    #                                     comuni_durata_trends, comuni_arretrato_trends,
-    #                                     comuni_performance_trends, mpe_number=mpe_number,
-    #                                     just_provincia=False, no_trento=False,
-    #                                     just_one=False, save_charts=True)
-    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    # print_comuni_performance_list(just_one=False, save_tables=True)
-    # print_comuni_pressure_list(comuni_performance_trends)
+    for mpe_number in [5]:
+        print_comuni_performance_charts(pat_comuni_dataframe,
+                                        comuni_durata_trends, comuni_arretrato_trends,
+                                        comuni_performance_trends, mpe_number=mpe_number,
+                                        just_provincia=False, no_trento=False,
+                                        just_one=False, save_charts=True)
+    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    print_comuni_performance_list(just_one=False, save_tables=True)
+    print_comuni_pressure_list(comuni_performance_trends)
 
     # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
     # TODO: graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
