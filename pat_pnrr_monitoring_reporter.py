@@ -5,6 +5,7 @@
 
 
 import numpy as np
+from scipy.interpolate import make_interp_spline
 import pandas as pd
 import matplotlib as mpl
 from matplotlib.path import Path
@@ -334,10 +335,12 @@ def get_comuni_scores(comuni_performance_trends, pdc_measure_labels, pds_measure
 
 
 def print_comuni_performance_charts(pat_comuni_dataframe,
-                                    comuni_durata_trends, comuni_arretrato_trends,
-                                    comuni_performance_trends, mpe_number=3,
-                                    just_provincia=True, no_trento=True,
-                                    just_one=False, save_charts=True):
+                                    comuni_durata_trends, comuni_durata_netta_trends,
+                                    comuni_arretrato_trends,
+                                    comuni_performance_trends, comuni_performance_netta_trends,
+                                    mpe_number,
+                                    just_provincia=False, no_trento=False, just_one=True,
+                                    save_charts=False):
     if mpe_number == 3:
         pdc_measure_labels = ['pdc_2022q1_2', 'pdc_2022q3_4']
         pds_measure_labels = ['pds_2022q1_2', 'pds_2022q3_4']
@@ -351,19 +354,26 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     elif mpe_number == 4:
         pdc_measure_labels = ['pdc_2022q3_4', 'pdc_2023q1_2']
         pds_measure_labels = ['pds_2022q3_4', 'pds_2023q1_2']
+        pdc_net_measure_labels = ['pdc_performance_netta_2022q3_4', 'pdc_performance_netta_2023q1_2']
+        pds_net_measure_labels = ['pds_performance_netta_2022q3_4', 'pds_performance_netta_2023q1_2']
         mpe_number_label = '04'
         periodo_label = '2022Q3-4 2023Q1-2'
         pdc_durata_labels = ['pdc_durata_2022q3_4', 'pdc_durata_2023q1_2']
+        pdc_durata_netta_labels = ['pdc_durata_netta_2022q3_4', 'pdc_durata_netta_2023q1_2']
         pdc_arretrato_labels = ['pdc_arretrato_2022q3_4', 'pdc_arretrato_2023q1_2']
         pds_durata_labels = ['pds_durata_2022q3_4', 'pds_durata_2023q1_2']
+        pds_durata_netta_labels = ['pds_durata_netta_2022q3_4', 'pds_durata_netta_2023q1_2']
         pds_arretrato_labels = ['pds_arretrato_2022q3_4', 'pds_arretrato_2023q1_2']
     
     elif mpe_number == 5:
         pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
         pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
+        pdc_net_measure_labels = ['pdc_performance_netta_2023q1_2', 'pdc_performance_netta_2023q3_4']
+        pds_net_measure_labels = ['pds_performance_netta_2023q1_2', 'pds_performance_netta_2023q3_4']
         mpe_number_label = '05'
         periodo_label = '2023'
         pdc_durata_labels = ['pdc_durata_2023q1_2', 'pdc_durata_2023q3_4']
+        pdc_durata_netta_labels = ['pdc_durata_netta_2023q1_2', 'pdc_durata_netta_2023q3_4']
         pdc_arretrato_labels = ['pdc_arretrato_2023q1_2', 'pdc_arretrato_2023q3_4']
         pdc_durata_measure_labels = [
             'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
@@ -378,6 +388,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
             'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4']
         pds_durata_labels = ['pds_durata_2023q1_2', 'pds_durata_2023q3_4']
+        pds_durata_netta_labels = ['pds_durata_netta_2023q1_2', 'pds_durata_netta_2023q3_4']
         pds_arretrato_labels = ['pds_arretrato_2023q1_2', 'pds_arretrato_2023q3_4']
         pds_durata_measure_labels = [
             'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
@@ -394,12 +405,16 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         ore_tecnici_settimana_label = 'ore_tecnici_settimana_2023q3-4'
     
     comuni_pdc_durata = comuni_durata_trends.loc[:, pdc_durata_labels].mean(axis=1)
+    comuni_pdc_durata_netta = comuni_durata_netta_trends.loc[:, pdc_durata_netta_labels].mean(axis=1)
     comuni_pdc_arretrato = comuni_arretrato_trends.loc[:, pdc_arretrato_labels].mean(axis=1)
     comuni_pds_durata = comuni_durata_trends.loc[:, pds_durata_labels].mean(axis=1)
+    comuni_pds_durata_netta = comuni_durata_netta_trends.loc[:, pds_durata_netta_labels].mean(axis=1)
     comuni_pds_arretrato = comuni_arretrato_trends.loc[:, pds_arretrato_labels].mean(axis=1)
 
     comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
         comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+    comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
+        comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
 
     # sistemare il calcolo di comuni_pdc_pds_durata e comuni_pdc_pds_arretrato
     if mpe_number >= 5:
@@ -419,8 +434,8 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
 
     pdc_pds_score_max = comuni_performance_trends.loc[:,
                         pdc_measure_labels + pds_measure_labels].max(axis=None)
-    pdc_pds_score_ticks = np.arange(0, pdc_pds_score_max, 1)
-    pdc_pds_score_range = (pdc_pds_score_ticks[0], pdc_pds_score_ticks[-1])
+    pdc_pds_score_ticks = np.arange(0, pdc_pds_score_max + 1, 1)
+    pdc_pds_score_range = (pdc_pds_score_ticks[0] - 0.1, pdc_pds_score_ticks[-1])
 
     classificazione_comunale = pat_comuni_dataframe['pat_comuni_kmeans_clustering_labels']
     classificazione_comunale_labels = [
@@ -508,6 +523,72 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                fancybox=True, shadow=True, ncol=5)
     fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
                 'pat_pnrr_performance_chart_provincia_' + mpe_number_label,
+                dpi=300, bbox_inches='tight', pad_inches=0.25)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(ncols=4, gridspec_kw=dict(width_ratios=[0.25, 0.25, 0.25, 0.25]),
+                           layout='constrained')
+    fig.set_size_inches(15, 5)
+
+    ax[0].set_title(periodo_label, fontsize=12)
+    plot1 = ax[0].scatter(comuni_pdc_arretrato, comuni_pdc_durata_netta,
+                          c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
+    ax[0].set_xlim(-0.05, 0.7)
+    ax[0].set_ylim(-0.05, 6.5)
+    ax[0].set_xlabel('Arretrati/avviato PdC')
+    ax[0].set_ylabel('Durata netta/termine PdC')
+    ax[0].spines['top'].set_visible(False)
+    ax[0].spines['right'].set_visible(False)
+    ax[0].spines['bottom'].set_visible(False)
+    ax[0].spines['left'].set_visible(False)
+
+    ax[1].set_title(periodo_label, fontsize=12)
+    plot2 = ax[1].scatter(comuni_pds_arretrato, comuni_pds_durata_netta,
+                          c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
+    ax[1].set_xlim(-0.05, 0.7)
+    ax[1].set_ylim(-0.05, 6.5)
+    ax[1].set_xlabel('Arretrati/avviato PdS')
+    ax[1].set_ylabel('Durata netta/termine PdS')
+    ax[1].spines['top'].set_visible(False)
+    ax[1].spines['right'].set_visible(False)
+    ax[1].spines['bottom'].set_visible(False)
+    ax[1].spines['left'].set_visible(False)
+
+    ax[2].set_title(periodo_label, fontsize=12)
+    plot3 = ax[2].scatter(comuni_pds_net_scores, comuni_pdc_net_scores,
+                          c=classificazione_comunale, marker='o', s=grandezza_comunale, alpha=0.5)
+    ax[2].set_xlim(-0.05, 6.5)
+    ax[2].set_ylim(-0.05, 6.5)
+    ax[2].set_xlabel('Pressione netta PdS')
+    ax[2].set_ylabel('Pressione netta PdC')
+    ax[2].spines['top'].set_visible(False)
+    ax[2].spines['right'].set_visible(False)
+    ax[2].spines['bottom'].set_visible(False)
+    ax[2].spines['left'].set_visible(False)
+
+    ax[3].set_title('Pressione netta ' + periodo_label, fontsize=12)
+    plot4 = ax[3].violinplot(comuni_net_scores, showmeans=True, showextrema=False, showmedians=False)
+    Nx, Ny = 1, 1000
+    imgArr = np.tile(np.linspace(0, 1, Ny), (Nx, 1)).T
+    ymin, ymax = 0, 8.5
+    xmin, xmax = ax[3].get_xlim()
+    path = Path(plot4['bodies'][0].get_paths()[0].vertices)
+    patch = PathPatch(path, facecolor='none', edgecolor='none')
+    ax[3].add_patch(patch)
+    ax[3].imshow(imgArr, origin="lower", extent=[xmin, xmax, ymin, ymax],
+                 aspect="auto", cmap=mpl.colormaps['turbo'], clip_path=patch, alpha=0.5)
+    ax[3].hlines(0, 0, 2, colors='r', linewidth=0)
+    ax[3].set_xticks([], [])
+    ax[3].spines['top'].set_visible(False)
+    ax[3].spines['right'].set_visible(False)
+    ax[3].spines['bottom'].set_visible(False)
+    ax[3].spines['left'].set_visible(False)
+
+    fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
+               prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
+               fancybox=True, shadow=True, ncol=5)
+    fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
+                'pat_pnrr_performance_netta_chart_provincia_' + mpe_number_label,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
 
@@ -631,10 +712,17 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     if just_provincia:
         return
 
-    pdc_measure_labels = ['pdc_2021q3_4', 'pdc_2022q1_2', 'pdc_2022q3_4', 'pdc_2023q1_2',
-                          'pdc_2023q3_4']
-    pds_measure_labels = ['pds_2021q3_4', 'pds_2022q1_2', 'pds_2022q3_4', 'pds_2023q1_2',
-                          'pds_2023q3_4']
+    pdc_measure_labels = ['pdc_2021q3_4',
+                          'pdc_2022q1_2', 'pdc_2022q3_4',
+                          'pdc_2023q1_2', 'pdc_2023q3_4']
+    pds_measure_labels = ['pds_2021q3_4',
+                          'pds_2022q1_2', 'pds_2022q3_4',
+                          'pds_2023q1_2', 'pds_2023q3_4']
+    pdc_net_measure_labels = ['pdc_performance_netta_2022q3_4',
+                              'pdc_performance_netta_2023q1_2', 'pdc_performance_netta_2023q3_4']
+    pds_net_measure_labels = ['pds_performance_netta_2022q3_4',
+                              'pds_performance_netta_2023q1_2', 'pds_performance_netta_2023q3_4']
+    # comuni_excel_map = [['Trento', '', '', '']]
     for comune in comuni_excel_map:
         print('produco le dashboard per il comune di ' + comune[0])
 
@@ -642,18 +730,27 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         #   a. (+) comune nello scatter pdc durata/arretrato ultimi 12 mesi
         #   b. (+) comune nello scatter pds durata/arretrato ultimi 12 mesi
 
-        fig, ax = plt.subplots(ncols=3, gridspec_kw=dict(width_ratios=[0.4, 0.4, 0.2]))
+        fig, ax = plt.subplots(ncols=4, gridspec_kw=dict(width_ratios=[0.35, 0.35, 0.15, 0.15]))
         fig.set_size_inches(15, 5)
 
         # ax[0].set_title('Andamento PdC e PdS', fontsize=12)
         plot1 = ax[0].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
                            comuni_performance_trends.loc[comune[0], pdc_measure_labels].values,
                            label='Pressione PdC', c='grey', linestyle='dotted', marker='o',
-                           alpha=0.75)
-        plot2 = ax[0].plot(np.arange(0, pds_measure_labels.__len__(), 1),
+                           linewidth=2, alpha=0.75)
+        plot2 = ax[0].plot(np.arange(0 + 2, pdc_net_measure_labels.__len__() + 2, 1),
+                           comuni_performance_netta_trends.loc[comune[0], pdc_net_measure_labels].values,
+                           label='Pressione netta PdC', c='grey', linestyle='dotted', marker='o',
+                           linewidth=1, alpha=0.5)
+        plot3 = ax[0].plot(np.arange(0, pds_measure_labels.__len__(), 1),
                            comuni_performance_trends.loc[comune[0], pds_measure_labels].values,
                            label='Pressione PdS', c='grey', linestyle='dashed', marker='x',
-                           alpha=0.75)
+                           linewidth=2, alpha=0.75)
+        plot4 = ax[0].plot(np.arange(0 + 2, pds_net_measure_labels.__len__() + 2, 1),
+                           comuni_performance_netta_trends.loc[comune[0], pds_net_measure_labels].values,
+                           label='Pressione netta PdS', c='grey', linestyle='dashed', marker='x',
+                           linewidth=1, alpha=0.5)
+        
         # ax[0].yaxis.grid(True)
         ax[0].set_yticks(pdc_pds_score_ticks)
         ax[0].set_ylim(pdc_pds_score_range)
@@ -666,13 +763,15 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         ax[0].spines['bottom'].set_visible(False)
         ax[0].spines['left'].set_visible(False)
 
-        ax[1].set_title('Ultimi 12 mesi', fontsize=12)
+        ax[1].set_title('Media ultimi 12 mesi', fontsize=12)
         plot1 = ax[1].scatter(comuni_pds_scores, comuni_pdc_scores,
                               c='gray', marker='o', s=grandezza_comunale, alpha=0.5)
         plot2 = ax[1].scatter(comuni_pds_scores.loc[comune[0]], comuni_pdc_scores.loc[comune[0]],
                               label=comune[0], c='r', marker='D', s=grandezza_comunale[comune[0]])
-        ax[1].set_xlim(-0.05, 6.5)
-        ax[1].set_ylim(-0.05, 6.5)
+        # ax[1].set_xlim(-0.05, 6.5)
+        # ax[1].set_ylim(-0.05, 6.5)
+        ax[1].set_xlim(pdc_pds_score_range)
+        ax[1].set_ylim(pdc_pds_score_range)
         ax[1].set_xlabel('Pressione PdS')
         ax[1].set_ylabel('Pressione PdC')
         ax[1].legend()
@@ -702,6 +801,28 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         ax[2].spines['bottom'].set_visible(False)
         ax[2].spines['left'].set_visible(False)
 
+        ax[3].set_title('Pressione netta', fontsize=12)
+        plot = ax[3].violinplot(comuni_net_scores, showmeans=True, showextrema=False,
+                                showmedians=False)
+        Nx, Ny = 1, 1000
+        imgArr = np.tile(np.linspace(0, 1, Ny), (Nx, 1)).T
+        ymin, ymax = 0, 8.5
+        xmin, xmax = ax[2].get_xlim()
+        path = Path(plot['bodies'][0].get_paths()[0].vertices)
+        patch = PathPatch(path, facecolor='none', edgecolor='none')
+        ax[3].add_patch(patch)
+        ax[3].imshow(imgArr, origin="lower", extent=[xmin, xmax, ymin, ymax],
+                     aspect="auto", cmap=mpl.colormaps['turbo'], clip_path=patch, alpha=0.5)
+        ax[3].hlines(comuni_net_scores[comune[0]], 0, 2, colors='r', linewidth=1, alpha=0.5)
+        ax[3].text(0, comuni_net_scores[comune[0]] + 0.1,
+                   s='{0}: {1:.2f}'.format(comune[0], comuni_net_scores[comune[0]]))
+        ax[3].set_xticks([], [])
+        ax[3].set_yticks([], [])
+        ax[3].spines['top'].set_visible(False)
+        ax[3].spines['right'].set_visible(False)
+        ax[3].spines['bottom'].set_visible(False)
+        ax[3].spines['left'].set_visible(False)
+
         if save_charts:
             comune_edited_name = comune[0]
             comune_edited_name = comune_edited_name.replace('à', 'a')
@@ -719,7 +840,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                                    layout='constrained')
             fig.set_size_inches(15, 5)
 
-            if no_trento:
+            if comune[0] != 'Trento':
                 ore_tecnici_settimana.Trento = 0
                 comuni_pdc_pds_durata.Trento = 0
                 comuni_pdc_pds_durata_netta.Trento = 0
@@ -736,8 +857,14 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                                     comuni_pdc_pds_avviato.loc[comune[0]],
                                     label=comune[0],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
-            ax[0].set_xlim(-10, 800)
-            ax[0].set_ylim(-10, 1400)
+            # ax[0].set_xlim(-10, 800)
+            # ax[0].set_ylim(-10, 1400)
+            if comune[0] != 'Trento':
+                ax[0].set_xlim(-10, 400)
+                ax[0].set_ylim(-10, 400)
+            else:
+                ax[0].set_xlim(-10, 800)
+                ax[0].set_ylim(-10, 1400)
             ax[0].set_xlabel('Elaborazione [ore/settimana]')
             ax[0].set_ylabel('Avviati PdC+PdS')
             ax[0].legend()
@@ -753,8 +880,14 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             plot2_2 = ax[1].scatter(ore_tecnici_settimana.loc[comune[0]],
                                     comuni_pdc_pds_durata.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
-            ax[1].set_xlim(-10, 800)
-            ax[1].set_ylim(-10, 700)
+            # ax[1].set_xlim(-10, 800)
+            # ax[1].set_ylim(-10, 700)
+            if comune[0] != 'Trento':
+                ax[1].set_xlim(-10, 400)
+                ax[1].set_ylim(-10, 700)
+            else:
+                ax[1].set_xlim(-10, 800)
+                ax[1].set_ylim(-10, 700)
             ax[1].set_xlabel('Elaborazione [ore/settimana]')
             ax[1].set_ylabel('Durata [gg] PdC+PdS')
             ax[1].spines['top'].set_visible(False)
@@ -769,8 +902,14 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             plot3_2 = ax[2].scatter(ore_tecnici_settimana.loc[comune[0]],
                                     comuni_pdc_pds_durata.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
-            ax[2].set_xlim(-10, 800)
-            ax[2].set_ylim(-10, 700)
+            # ax[2].set_xlim(-10, 800)
+            # ax[2].set_ylim(-10, 700)
+            if comune[0] != 'Trento':
+                ax[2].set_xlim(-10, 400)
+                ax[2].set_ylim(-10, 700)
+            else:
+                ax[2].set_xlim(-10, 800)
+                ax[2].set_ylim(-10, 700)
             ax[2].set_xlabel('Elaborazione [ore/settimana]')
             ax[2].set_ylabel('Durata netta [gg] PdC+PdS')
             ax[2].spines['top'].set_visible(False)
@@ -785,8 +924,14 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             plot4_1 = ax[3].scatter(ore_tecnici_settimana.loc[comune[0]],
                                     comuni_pdc_pds_arretrato.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
-            ax[3].set_xlim(-10, 800)
-            ax[3].set_ylim(-10, 400)
+            # ax[3].set_xlim(-10, 800)
+            # ax[3].set_ylim(-10, 400)
+            if comune[0] != 'Trento':
+                ax[3].set_xlim(-10, 400)
+                ax[3].set_ylim(-10, 150)
+            else:
+                ax[3].set_xlim(-10, 800)
+                ax[3].set_ylim(-10, 400)
             ax[3].set_xlabel('Elaborazione [ore/settimana]')
             ax[3].set_ylabel('Arretrati PdC+PdS')
             ax[3].spines['top'].set_visible(False)
@@ -801,9 +946,14 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             plot5_2 = ax[4].scatter(ore_tecnici_settimana.loc[comune[0]],
                                     comuni_scores.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
-            ax[4].set_xlim(-10, 800)
-            ax[4].set_ylim(0, 8.5)
-            ax[4].set_ylim(0, 8.5)
+            # ax[4].set_xlim(-10, 800)
+            # ax[4].set_ylim(0, 8.5)
+            if comune[0] != 'Trento':
+                ax[4].set_xlim(-10, 400)
+                ax[4].set_ylim(0, 8.5)
+            else:
+                ax[4].set_xlim(-10, 800)
+                ax[4].set_ylim(0, 8.5)
             ax[4].set_xlabel('Elaborazione [ore/settimana]')
             ax[4].set_ylabel('Pressione')
             ax[4].spines['top'].set_visible(False)
@@ -1059,13 +1209,15 @@ if __name__ == '__main__':
     # for mpe_number in [3, 4, 5]:
     for mpe_number in [5]:
         print_comuni_performance_charts(pat_comuni_dataframe,
-                                        comuni_durata_trends, comuni_arretrato_trends,
-                                        comuni_performance_trends, mpe_number=mpe_number,
-                                        just_provincia=False, no_trento=False,
-                                        just_one=False, save_charts=True)
-    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    print_comuni_performance_list(just_one=False, save_tables=True)
-    print_comuni_pressure_list(comuni_performance_trends)
+                                        comuni_durata_trends, comuni_durata_netta_trends,
+                                        comuni_arretrato_trends,
+                                        comuni_performance_trends, comuni_performance_netta_trends,
+                                        mpe_number=mpe_number,
+                                        just_provincia=True, no_trento=False, just_one=False,
+                                        save_charts=True)
+    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    # print_comuni_performance_list(just_one=False, save_tables=True)
+    # print_comuni_pressure_list(comuni_performance_trends)
 
     # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
     # TODO: graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target

@@ -10,7 +10,7 @@ import subprocess
 from .pat_pnrr_comuni_excel_mapping import *
 
 
-def print_report_comunale(name_comune, version):
+def print_report_comunale(name_comune, version, version_to_remove=''):
     name_comune = name_comune
     name_comune_file = name_comune
     name_comune_file = name_comune_file.replace('à', 'a')
@@ -20,6 +20,9 @@ def print_report_comunale(name_comune, version):
     version = version
     version_file = version
     version_file = version_file.replace('.', '-')
+    version_to_remove = version_to_remove
+    version_file_to_remove = version_to_remove
+    version_file_to_remove = version_file_to_remove.replace('.', '-')
 
     with open('pat_pnrr_mpe\\report_comunale\\pat_pnrr_mpe_report_comunale.txt', \
               mode='r', encoding='utf-8') as f1:
@@ -35,7 +38,20 @@ def print_report_comunale(name_comune, version):
     tex_pat_pnrr_mpe_report_comunale = \
         tex_pat_pnrr_mpe_report_comunale.replace(
             '<VERSION>', version)
+    if name_comune != 'Trento':
+        tex_pat_pnrr_mpe_report_comunale = \
+            tex_pat_pnrr_mpe_report_comunale.replace(
+                '<NO_TRENTO>', '')  #' ; dal grafico sono esclusi i dati di Trento')
+    else:
+        tex_pat_pnrr_mpe_report_comunale = \
+            tex_pat_pnrr_mpe_report_comunale.replace(
+                '<NO_TRENTO>', '')
 
+    try:                
+        os.remove('pat_pnrr_mpe\\report_comunale\\texes\\pat_pnrr_mpe_' + \
+                name_comune_file + '_' + version_file_to_remove + '.tex')
+    except:
+        pass
     try:
         os.remove('pat_pnrr_mpe\\report_comunale\\texes\\pat_pnrr_mpe_' + \
                 name_comune_file + '_' + version_file + '.tex')
@@ -75,18 +91,24 @@ def print_report_comunale(name_comune, version):
                 name_comune_file + '_' + version_file + '.toc')
     except:
         pass
+    try:                
+        os.remove('pat_pnrr_mpe\\report_comunale\\pdfs\\pat_pnrr_mpe_' + \
+                name_comune_file + '_' + version_file_to_remove + '.pdf')
+    except:
+        pass
     return
 
 
-def print_report_comunali(version, just_one = False):
+def print_report_comunali(version, version_to_remove, just_one = False):
     name_comuni = [comune[0] for comune in comuni_excel_map]
     for name_comune in name_comuni:
-        print_report_comunale(name_comune, version = version)
+        print_report_comunale(name_comune, version = version, version_to_remove = version_to_remove)
         if just_one:
             break
     return
 
 
 if __name__ == '__main__':
-    print_report_comunale(name_comune = 'Trento', version = 'v5.5.1')
-    # print_report_comunali(version = 'v5.5.0')
+    # print_report_comunale(name_comune = 'Trento', version = 'v5.7.0', version_file_to_remove = 'v5.5.0')
+    # print_report_comunale(name_comune = 'Ala', version = 'v5.7.0', version_to_remove = 'v5.5.0')
+    print_report_comunali(version = 'v5.7.0', version_to_remove = 'v5.5.0')
