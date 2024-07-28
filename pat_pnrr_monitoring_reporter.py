@@ -900,7 +900,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             plot3_1 = ax[2].scatter(ore_tecnici_settimana, comuni_pdc_pds_durata_netta,
                                     c='grey', marker='o', s=grandezza_comunale, alpha=0.5)
             plot3_2 = ax[2].scatter(ore_tecnici_settimana.loc[comune[0]],
-                                    comuni_pdc_pds_durata.loc[comune[0]],
+                                    comuni_pdc_pds_durata_netta.loc[comune[0]],
                                     c='r', marker='D', s=grandezza_comunale[comune[0]])
             # ax[2].set_xlim(-10, 800)
             # ax[2].set_ylim(-10, 700)
@@ -1213,7 +1213,7 @@ if __name__ == '__main__':
                                         comuni_arretrato_trends,
                                         comuni_performance_trends, comuni_performance_netta_trends,
                                         mpe_number=mpe_number,
-                                        just_provincia=True, no_trento=False, just_one=False,
+                                        just_provincia=False, no_trento=False, just_one=False,
                                         save_charts=True)
     # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
     # print_comuni_performance_list(just_one=False, save_tables=True)
