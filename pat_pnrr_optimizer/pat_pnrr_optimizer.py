@@ -436,6 +436,12 @@ class MPE:
         print('    arretrato PdS: ' + str(np.ceil(solution_arretrato_pds).astype(int)))
         
         return True
+
+    def gaussian_gain_function(self, x, mu, sig):
+            return ((1.0 / (sig * np.sqrt(2.0 * np.pi))) * \
+                    np.exp(-np.power((x - mu), 2.0) / \
+                            np.power((2.0 * sig), 2.0))
+            )
     
     def gain_function(self, params):
         """ deserializzare la lista di parametri
@@ -472,12 +478,25 @@ class MPE:
         self.changed_arretrato_pds = comuni_changed_measures_dataframe.iloc[:, 3].sum()
 
         # distanza complessiva tra le misure target risultanti ed i target finali
-        gain = (150 - abs(self.changed_durata_pdc_ov - self.target_durata_pdc_ov)) + \
-               (350 - abs(self.changed_arretrato_pdc_ov - self.target_arretrato_pdc_ov)) + \
-               (150 - abs(self.changed_durata_pds - self.target_durata_pds)) + \
-               (350 - abs(self.changed_arretrato_pds - self.target_arretrato_pds))
+        gain = (self.gaussian_gain_function(self.changed_durata_pdc_ov,
+                mu=self.target_durata_pdc_ov, sig=30)) + \
+               (self.gaussian_gain_function(self.changed_arretrato_pdc_ov,
+                mu=self.target_arretrato_pdc_ov, sig=30)) + \
+               (self.gaussian_gain_function(self.changed_durata_pds,
+                mu=self.target_durata_pds, sig=30)) + \
+               (self.gaussian_gain_function(self.changed_arretrato_pds,
+                mu=self.target_arretrato_pds, sig=30))
 
         return gain
+
+    def plot_gain_function(self, target_value=60, max_gain=100, function_shape='gaussian'):
+        if function_shape == 'linear':
+            pass
+        elif function_shape == 'gaussian':
+            x_values = np.linspace(0, 180, 1000)
+            plt.plot(x_values, self.gaussian_gain_function(x_values, mu=target_value, sig=30))
+            plt.show()
+        return
 
 
 class Mountain:
@@ -573,4 +592,6 @@ def pso_test(s=255, i=100, p=10, iw=.75, cw=.5, sw=.5, v=1):
 
 if __name__ == '__main__':
     # pso_test(i=100, p=10, iw=.5, v=1)
-    pso_mpe(i=100, p=300, iw=0.2, cw=.2, sw=.8, v=1)
+    # pso_mpe(i=100, p=300, iw=0.2, cw=.2, sw=.8, v=1)
+    mpe = MPE()
+    mpe.plot_gain_function()

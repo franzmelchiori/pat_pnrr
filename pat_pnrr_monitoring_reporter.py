@@ -722,7 +722,8 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                               'pdc_performance_netta_2023q1_2', 'pdc_performance_netta_2023q3_4']
     pds_net_measure_labels = ['pds_performance_netta_2022q3_4',
                               'pds_performance_netta_2023q1_2', 'pds_performance_netta_2023q3_4']
-    # comuni_excel_map = [['Trento', '', '', '']]
+    
+    # comuni_excel_map = [['Ala', '', '', ''], ['Trento', '', '', '']]
     for comune in comuni_excel_map:
         print('produco le dashboard per il comune di ' + comune[0])
 
@@ -841,6 +842,14 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             fig.set_size_inches(15, 5)
 
             if comune[0] != 'Trento':
+                ore_tecnici_settimana_trento = ore_tecnici_settimana.Trento
+                comuni_pdc_pds_durata_trento = comuni_pdc_pds_durata.Trento
+                comuni_pdc_pds_durata_netta_trento = comuni_pdc_pds_durata_netta.Trento
+                comuni_pdc_pds_avviato_trento = comuni_pdc_pds_avviato.Trento
+                comuni_pdc_pds_arretrato_trento = comuni_pdc_pds_arretrato.Trento
+                comuni_scores_trento = comuni_scores.Trento
+                grandezza_comunale_trento = grandezza_comunale.Trento
+
                 ore_tecnici_settimana.Trento = 0
                 comuni_pdc_pds_durata.Trento = 0
                 comuni_pdc_pds_durata_netta.Trento = 0
@@ -971,6 +980,15 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                             'pat_pnrr_performance_organico_chart_' + comune_edited_name,
                             dpi=300, bbox_inches='tight', pad_inches=0.25)
             plt.close(fig)
+
+            if comune[0] != 'Trento':
+                ore_tecnici_settimana.Trento = ore_tecnici_settimana_trento
+                comuni_pdc_pds_durata.Trento = comuni_pdc_pds_durata_trento
+                comuni_pdc_pds_durata_netta.Trento = comuni_pdc_pds_durata_netta_trento
+                comuni_pdc_pds_avviato.Trento = comuni_pdc_pds_avviato_trento
+                comuni_pdc_pds_arretrato.Trento = comuni_pdc_pds_arretrato_trento
+                comuni_scores.Trento = comuni_scores_trento
+                grandezza_comunale.Trento = grandezza_comunale_trento
 
         if just_one:
             break
