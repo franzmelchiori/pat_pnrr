@@ -593,9 +593,9 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     plt.close(fig)
 
     # Pressione e pressione netta ∝ popolazione
-    fig, ax = plt.subplots(ncols=2, gridspec_kw=dict(width_ratios=[0.5, 0.5]),
+    fig, ax = plt.subplots(ncols=1, gridspec_kw=dict(width_ratios=[1]),
                            layout='constrained')
-    fig.set_size_inches(15, 5)
+    fig.set_size_inches(10, 5)
     pie_width = 0.3
 
     comuni_popolazione = pat_comuni_dataframe.pat_comuni_popolazione
@@ -619,29 +619,53 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
               'comuni_colore_score',
               'comuni_colore_net_score'],
         axis='columns', join='outer')
+    comuni_top10_nome = []
+    for comune_nome in comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).index:
+        if comuni_pressione_dimensionata.loc[comune_nome].comuni_popolazione > 7000:
+            comuni_top10_nome.append(comune_nome)
+        else:
+            comuni_top10_nome.append('')
 
-    ax[0].set_title("Pressione (all'esterno) e pressione netta " + periodo_label + \
+    ax.set_title("Pressione " + periodo_label + \
                  ' ∝ popolazione', fontsize=12)
-    plot1 = ax[0].pie(
+    plot1 = ax.pie(
         comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_popolazione,
         colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_score,
+        labels=comuni_top10_nome,
         radius=1, wedgeprops=dict(width=pie_width, edgecolor='w'))
-    plot1_2 = ax[0].pie(
+    plot1_2 = ax.pie(
         comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_popolazione,
         colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_net_score,
         radius=1 - pie_width, wedgeprops=dict(width=pie_width, alpha=0.5))
-    ax[1].set_title("Pressione (all'esterno) e pressione netta " + periodo_label + \
-                 ' ∝ avviati PdC+PdS', fontsize=12)
-    plot2 = ax[1].pie(
-        comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_pdc_pds_avviato,
-        colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_score,
-        radius=1, wedgeprops=dict(width=pie_width, edgecolor='w'))
-    plot2_2 = ax[1].pie(
-        comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_pdc_pds_avviato,
-        colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_net_score,
-        radius=1 - pie_width, wedgeprops=dict(width=pie_width, alpha=0.5))
+    # ax[1].set_title("Pressione (all'esterno) e pressione netta " + periodo_label + \
+    #              ' ∝ avviati PdC+PdS', fontsize=12)
+    # plot2 = ax[1].pie(
+    #     comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_pdc_pds_avviato,
+    #     colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_score,
+    #     radius=1, wedgeprops=dict(width=pie_width, edgecolor='w'))
+    # plot2_2 = ax[1].pie(
+    #     comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_pdc_pds_avviato,
+    #     colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_net_score,
+    #     radius=1 - pie_width, wedgeprops=dict(width=pie_width, alpha=0.5))
     # plt.show()
 
+    legend_labels = [
+        i for i in np.linspace(1,8,8).astype(int)]
+    legend_colors = [
+        mpl.colormaps['turbo'].colors[i] for i in np.linspace(0,255,8).astype(int)]
+    legend_elements_scores = [
+        mpl.patches.Patch(facecolor=legend_colors[i], label=legend_labels[i])
+        for i in list(range(8))]
+    legend_elements_net_scores = [
+        mpl.patches.Patch(facecolor=legend_colors[i], label=legend_labels[i], alpha=0.5)
+        for i in list(range(8))]
+    legend_scores = fig.legend(title='Pressione', \
+                              handles=legend_elements_scores, \
+                              loc='lower left', fontsize=12)
+    fig.add_artist(legend_scores)
+    fig.legend(title='Pressione netta', \
+              handles=legend_elements_net_scores, \
+              loc='lower right', fontsize=12)
     fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
                 'pat_pnrr_performance_dimensionata_chart_provincia_' + mpe_number_label,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
