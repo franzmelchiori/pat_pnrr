@@ -1292,7 +1292,6 @@ if __name__ == '__main__':
     # print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
 
-    # TODO: scatter Pressione NETTA dei PdC/PdS: Pressione NETTA dei PdC/PdS con Pd = durata media NETTA [gg] / termine massimo [gg]
     # TODO: graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
 
     # TODO: andamento posizione nella lista di comuni per pressione complessiva
