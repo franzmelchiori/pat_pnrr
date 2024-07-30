@@ -592,6 +592,61 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
 
+    # Pressione e pressione netta ∝ popolazione
+    fig, ax = plt.subplots(ncols=2, gridspec_kw=dict(width_ratios=[0.5, 0.5]),
+                           layout='constrained')
+    fig.set_size_inches(15, 5)
+    pie_width = 0.3
+
+    comuni_popolazione = pat_comuni_dataframe.pat_comuni_popolazione
+    comuni_nome = comuni_popolazione.index
+    comuni_colori = mpl.colormaps['turbo'].colors
+    comuni_colore_score = pd.Series([comuni_colori[i] \
+        for i in (comuni_scores*255/comuni_scores.max()).astype(int)],
+        index=pat_comuni_dataframe.index)
+    comuni_colore_net_score = pd.Series([comuni_colori[i] \
+        for i in (comuni_net_scores*255/comuni_scores.max()).astype(int)],
+        index=pat_comuni_dataframe.index)
+    comuni_pressione_dimensionata = pd.concat([
+        comuni_scores,
+        pat_comuni_dataframe.pat_comuni_popolazione,
+        comuni_pdc_pds_avviato,
+        comuni_colore_score,
+        comuni_colore_net_score],
+        keys=['comuni_scores',
+              'comuni_popolazione',
+              'comuni_pdc_pds_avviato',
+              'comuni_colore_score',
+              'comuni_colore_net_score'],
+        axis='columns', join='outer')
+
+    ax[0].set_title("Pressione (all'esterno) e pressione netta " + periodo_label + \
+                 ' ∝ popolazione', fontsize=12)
+    plot1 = ax[0].pie(
+        comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_popolazione,
+        colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_score,
+        radius=1, wedgeprops=dict(width=pie_width, edgecolor='w'))
+    plot1_2 = ax[0].pie(
+        comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_popolazione,
+        colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_net_score,
+        radius=1 - pie_width, wedgeprops=dict(width=pie_width, alpha=0.5))
+    ax[1].set_title("Pressione (all'esterno) e pressione netta " + periodo_label + \
+                 ' ∝ avviati PdC+PdS', fontsize=12)
+    plot2 = ax[1].pie(
+        comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_pdc_pds_avviato,
+        colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_score,
+        radius=1, wedgeprops=dict(width=pie_width, edgecolor='w'))
+    plot2_2 = ax[1].pie(
+        comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_pdc_pds_avviato,
+        colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_net_score,
+        radius=1 - pie_width, wedgeprops=dict(width=pie_width, alpha=0.5))
+    # plt.show()
+
+    fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
+                'pat_pnrr_performance_dimensionata_chart_provincia_' + mpe_number_label,
+                dpi=300, bbox_inches='tight', pad_inches=0.25)
+    plt.close(fig)
+
     if mpe_number >= 5:
         fig, ax = plt.subplots(ncols=5, gridspec_kw=dict(width_ratios=[0.2, 0.2, 0.2, 0.2, 0.2]),
                                layout='constrained')
@@ -1231,7 +1286,7 @@ if __name__ == '__main__':
                                         comuni_arretrato_trends,
                                         comuni_performance_trends, comuni_performance_netta_trends,
                                         mpe_number=mpe_number,
-                                        just_provincia=False, no_trento=False, just_one=False,
+                                        just_provincia=True, no_trento=False, just_one=False,
                                         save_charts=True)
     # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
     # print_comuni_performance_list(just_one=False, save_tables=True)
