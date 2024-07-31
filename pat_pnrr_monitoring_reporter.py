@@ -601,23 +601,31 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     comuni_popolazione = pat_comuni_dataframe.pat_comuni_popolazione
     comuni_nome = comuni_popolazione.index
     comuni_colori = mpl.colormaps['turbo'].colors
+    comuni_colori_ore = mpl.colormaps['viridis'].colors
     comuni_colore_score = pd.Series([comuni_colori[i] \
         for i in (comuni_scores*255/comuni_scores.max()).astype(int)],
         index=pat_comuni_dataframe.index)
     comuni_colore_net_score = pd.Series([comuni_colori[i] \
         for i in (comuni_net_scores*255/comuni_scores.max()).astype(int)],
         index=pat_comuni_dataframe.index)
+    comuni_colore_ore = pd.Series([comuni_colori_ore[i] \
+        for i in ((ore_tecnici_settimana*255/ore_tecnici_settimana.max()).fillna(0)).astype(int)],
+        index=pat_comuni_dataframe.index)
     comuni_pressione_dimensionata = pd.concat([
         comuni_scores,
         pat_comuni_dataframe.pat_comuni_popolazione,
         comuni_pdc_pds_avviato,
+        ore_tecnici_settimana,
         comuni_colore_score,
-        comuni_colore_net_score],
+        comuni_colore_net_score,
+        comuni_colore_ore],
         keys=['comuni_scores',
               'comuni_popolazione',
               'comuni_pdc_pds_avviato',
+              'ore_tecnici_settimana',
               'comuni_colore_score',
-              'comuni_colore_net_score'],
+              'comuni_colore_net_score',
+              'comuni_colore_ore'],
         axis='columns', join='outer')
     comuni_top10_nome = []
     for comune_nome in comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).index:
@@ -632,32 +640,32 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_popolazione,
         colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_score,
         labels=comuni_top10_nome,
-        radius=1, wedgeprops=dict(width=pie_width, edgecolor='w'))
+        radius=1, wedgeprops=dict(width=pie_width))  # , edgecolor='w'))
     plot1_2 = ax.pie(
         comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_popolazione,
         colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_net_score,
         radius=1 - pie_width, wedgeprops=dict(width=pie_width, alpha=0.5))
-    # ax[1].set_title("Pressione (all'esterno) e pressione netta " + periodo_label + \
-    #              ' ∝ avviati PdC+PdS', fontsize=12)
-    # plot2 = ax[1].pie(
-    #     comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_pdc_pds_avviato,
-    #     colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_score,
-    #     radius=1, wedgeprops=dict(width=pie_width, edgecolor='w'))
-    # plot2_2 = ax[1].pie(
-    #     comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_pdc_pds_avviato,
-    #     colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_net_score,
-    #     radius=1 - pie_width, wedgeprops=dict(width=pie_width, alpha=0.5))
-    # plt.show()
+    # plot1_3 = ax.pie(
+    #     comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_popolazione,
+    #     colors=comuni_pressione_dimensionata.sort_values(by=['comuni_scores']).comuni_colore_ore,
+    #     radius=1 - (2 * pie_width), wedgeprops=dict(width=pie_width))
 
     legend_labels = [
         i for i in np.linspace(1,8,8).astype(int)]
+    legend_labels_ore = [
+        i for i in np.linspace(1,800,8).astype(int)]
     legend_colors = [
         mpl.colormaps['turbo'].colors[i] for i in np.linspace(0,255,8).astype(int)]
+    legend_colors_ore = [
+        mpl.colormaps['viridis'].colors[i] for i in np.linspace(0,255,8).astype(int)]
     legend_elements_scores = [
         mpl.patches.Patch(facecolor=legend_colors[i], label=legend_labels[i])
         for i in list(range(8))]
     legend_elements_net_scores = [
         mpl.patches.Patch(facecolor=legend_colors[i], label=legend_labels[i], alpha=0.5)
+        for i in list(range(8))]
+    legend_elements_ore = [
+        mpl.patches.Patch(facecolor=legend_colors_ore[i], label=legend_labels_ore[i])
         for i in list(range(8))]
     legend_scores = fig.legend(title='Pressione', \
                               handles=legend_elements_scores, \
@@ -666,6 +674,10 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     fig.legend(title='Pressione netta', \
               handles=legend_elements_net_scores, \
               loc='lower right', fontsize=12)
+    # fig.add_artist(legend_scores)
+    # fig.legend(title='Elaborazione', \
+    #           handles=legend_elements_ore, \
+    #           loc='upper right', fontsize=12)
     fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
                 'pat_pnrr_performance_dimensionata_chart_provincia_' + mpe_number_label,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
