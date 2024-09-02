@@ -1,5 +1,5 @@
 """
-    PAT-PNRR 5a misurazione (June 2024)
+    PAT-PNRR 6a misurazione (December 2024)
     Monitoraggio Procedimenti Edilizi v2.x
     Francesco Melchiori, 2024
 """
@@ -46,10 +46,10 @@ def get_list_excel(path_to_excel_files, path_to_mpe=None, missing=False):
 
     if missing:
         list_excel = [comune[0] for comune in comuni_excel_map
-                      if comune[3] is None]
+                      if comune[4] is None]
     else:
-        list_excel = [(comune[3], comune[0]) for comune in comuni_excel_map
-                      if comune[3] is not None]
+        list_excel = [(comune[4], comune[0]) for comune in comuni_excel_map
+                      if comune[4] is not None]
 
     return list_excel, list_xls
 
@@ -254,7 +254,7 @@ class ComuneExcel:
         
         if sheet_name == 'ORGANICO':
             comune_dataframe.insert(0, 'comune', self.comune_name)
-            comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'].fillna(1, inplace=True)
+            comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'].fillna(1, inplace=True)  # TODO: to refactor
             comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'].fillna(1, inplace=True)
             if comune_dataframe.loc[:, 'ore_settimana'].dtype.str[1] in ['O', 'M']:
                 change_mask = comune_dataframe.loc[:, 'ore_settimana'].astype(
@@ -318,7 +318,7 @@ class ComuneExcel:
                 print('data_inizio_pratica is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'data_inizio_pratica'])
             change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'] > \
-                          pd.Timestamp('2023-12-31 23:59:59.999')
+                          pd.Timestamp('2024-06-30 23:59:59.999')
             comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
 
             if comune_dataframe.loc[:, 'data_fine_pratica'].dtype.str[1] in ['O', 'M']:
@@ -359,10 +359,10 @@ class ComuneExcel:
                 print('data_fine_pratica is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'data_fine_pratica'])
             change_mask = comune_dataframe.loc[:, 'data_fine_pratica'] < \
-                          pd.Timestamp('2022-12-31 23:59:59.999')
+                          pd.Timestamp('2023-12-31 23:59:59.999')
             comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             change_mask = comune_dataframe.loc[:, 'data_fine_pratica'] > \
-                          pd.Timestamp('2023-12-31 23:59:59.999')
+                          pd.Timestamp('2024-06-30 23:59:59.999')
             comune_dataframe.loc[change_mask, 'data_fine_pratica'] = pd.NaT
 
             if comune_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].dtype.str[1] in \
@@ -468,7 +468,7 @@ class ComuneExcel:
                 print('data_inizio_pratica is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'data_inizio_pratica'])
             change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'] > \
-                          pd.Timestamp('2023-12-31 23:59:59.999')
+                          pd.Timestamp('2024-06-30 23:59:59.999')
             comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
 
             if comune_dataframe.loc[:, 'data_fine_pratica'].dtype.str[1] in ['O', 'M']:
@@ -509,10 +509,10 @@ class ComuneExcel:
                 print('data_fine_pratica is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'data_fine_pratica'])
             change_mask = comune_dataframe.loc[:, 'data_fine_pratica'] < \
-                          pd.Timestamp('2022-12-31 23:59:59.999')
+                          pd.Timestamp('2023-12-31 23:59:59.999')
             comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             change_mask = comune_dataframe.loc[:, 'data_fine_pratica'] > \
-                          pd.Timestamp('2023-12-31 23:59:59.999')
+                          pd.Timestamp('2024-06-30 23:59:59.999')
             comune_dataframe.loc[change_mask, 'data_fine_pratica'] = pd.NaT
 
             if comune_dataframe.loc[:, 'giorni_termine_normativo'].dtype.str[1] in ['O', 'M']:
@@ -609,7 +609,7 @@ class ComuneExcel:
                 print('data_inizio_pratica is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'data_inizio_pratica'])
             change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'] > \
-                          pd.Timestamp('2023-12-31 23:59:59.999')
+                          pd.Timestamp('2024-06-30 23:59:59.999')
             comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
 
             if comune_dataframe.loc[:, 'data_fine_pratica'].dtype == 'O':
@@ -638,10 +638,10 @@ class ComuneExcel:
                 print('data_fine_pratica is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'data_fine_pratica'])
             change_mask = comune_dataframe.loc[:, 'data_fine_pratica'] < \
-                          pd.Timestamp('2022-12-31 23:59:59.999')
+                          pd.Timestamp('2023-12-31 23:59:59.999')
             comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             change_mask = comune_dataframe.loc[:, 'data_fine_pratica'] > \
-                          pd.Timestamp('2023-12-31 23:59:59.999')
+                          pd.Timestamp('2024-06-30 23:59:59.999')
             comune_dataframe.loc[change_mask, 'data_fine_pratica'] = pd.NaT
 
             if comune_dataframe.loc[:, 'giorni_termine_normativo'].dtype.str[1] in ['O', 'M']:
@@ -709,10 +709,10 @@ class ComuneExcel:
         return comune_dataframe
 
     def get_comune_measure_series(self, sheet_name, type_name=False, type_pdc_ov=True,
-                                  measure_period='2023q3-4', lpf=False):
+                                  measure_period='2024q1-2', lpf=False):
         if lpf:
             path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
-            path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
+            path_to_excel_files = 'pat_pnrr_6a_misurazione_tabelle_comunali\\'
             path_shelve = path_to_mpe + path_to_excel_files
 
             sheet_suffix = ''
@@ -949,8 +949,8 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
         comuni_dataframe = comuni_dataframe_shelve['comuni_dataframe']
         comuni_dataframe_shelve.close()
     else:
-        comuni_excel_map = [(comune[0], comune[3])
-                            for comune in comuni_excel_map if comune[3] is not None]
+        comuni_excel_map = [(comune[0], comune[4])
+                            for comune in comuni_excel_map if comune[4] is not None]
         comuni_dataframe = []
         for name_comune, name_excel_file in comuni_excel_map:
             print(name_comune + ' | ' + sheet_name)
@@ -966,7 +966,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
         comuni_dataframe_shelve.close()
 
         comuni_dataframe.to_csv(path_shelve + 'pat-pnrr_edilizia' + row_type_name + \
-                                sheet_suffix + '_2023q3-4' + '.csv')
+                                sheet_suffix + '_2024q1-2' + '.csv')
     
     if pf == 'l_01':
         if sheet_name=='Permessi di Costruire':
@@ -975,7 +975,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             #   - data fine semestre (31/12/2023) - data inizio pratica - sospensione (se c'e')
             #     - quante pratiche risultanti > 120 gg? quante di queste con sospensioni nulle?
             #     - conteggi con Trento e senza
-            measure_end_date = pd.Timestamp('2023-12-31')
+            measure_end_date = pd.Timestamp('2024-06-30')
             filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
                             'PdC ordinario') ^ \
                           (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
@@ -1009,7 +1009,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             #   - data fine semestre (31/12/2023) - data inizio pratica - sospensione (se c'e')
             #     - quante pratiche risultanti > 120 gg? quante di queste con sospensioni nulle?
             #     - conteggi con Trento e senza
-            measure_end_date = pd.Timestamp('2023-12-31')
+            measure_end_date = pd.Timestamp('2024-06-30')
             filter_mask = (
                 comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
             filtro_pratiche_non_concluse = (\
@@ -1047,7 +1047,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             #     - senza sospensioni (0gg)
             #       - valore % sulle pratiche fuori norma
             # - lista pratiche concluse e non concluse
-            measure_end_date = pd.Timestamp('2023-12-31')
+            measure_end_date = pd.Timestamp('2024-06-30')
             filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
                             'PdC ordinario') ^ \
                           (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
@@ -1072,7 +1072,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_non_concluse_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_01' + '.csv')
 
-            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[4] is not None]
             totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma = []
             for nome_comune in nomi_comuni:
                 filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
@@ -1107,7 +1107,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_01' + '.csv')
 
-            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[4] is not None]
             totali_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma = []
             for nome_comune in nomi_comuni:
                 filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
@@ -1142,7 +1142,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_01' + '.csv')
 
-            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[4] is not None]
             totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = []
             for nome_comune in nomi_comuni:
                 filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
@@ -1176,7 +1176,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             #     - senza sospensioni (0gg)
             #       - valore % sulle pratiche fuori norma
             # - lista pratiche concluse e non concluse
-            measure_end_date = pd.Timestamp('2023-12-31')
+            measure_end_date = pd.Timestamp('2024-06-30')
             filter_mask = (
                 comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
             filter_mask = filter_mask & (
@@ -1194,7 +1194,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_non_concluse_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_02' + '.csv')
 
-            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[4] is not None]
             totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma = []
             for nome_comune in nomi_comuni:
                 filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
@@ -1225,7 +1225,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_02' + '.csv')
 
-            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[3] is not None]
+            nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[4] is not None]
             totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = []
             for nome_comune in nomi_comuni:
                 filter_comune = comuni_dataframe.loc[:, 'comune'] == nome_comune
@@ -1317,8 +1317,8 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
         comuni_measure_dataframe = comuni_measure_dataframe_shelve['comuni_measure_dataframe']
         comuni_measure_dataframe_shelve.close()
     else:
-        comuni_excel_map = [(comune[0], comune[3])
-                            for comune in comuni_excel_map if comune[3] is not None]
+        comuni_excel_map = [(comune[0], comune[4])
+                            for comune in comuni_excel_map if comune[4] is not None]
         comuni_names = [comune[0] for comune in comuni_excel_map]
         comuni_measure_dataframe = []
         for name_comune, name_excel_file in comuni_excel_map:
@@ -1344,7 +1344,7 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
         comuni_measure_dataframe_shelve.close()
 
         # comuni_measure_dataframe.to_csv(path_shelve + 'pat-pnrr_edilizia_misure' + \
-        #                                 sheet_suffix + '_2023q3-4' + '.csv')
+        #                                 sheet_suffix + '_2024q1-2' + '.csv')
 
     return comuni_measure_dataframe
 
@@ -1352,13 +1352,13 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
 def get_comuni_dataframes(comuni_excel_map, load=True):
 
     get_comuni_dataframe(comuni_excel_map, 'ORGANICO',
-                         'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load)
+                         'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load)
     get_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire',
-                         'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load)
+                         'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load)
     get_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria',
-                         'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load)
+                         'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load)
     get_comuni_dataframe(comuni_excel_map, 'Controllo CILA',
-                         'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load)
+                         'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load)
 
     return True
 
@@ -1366,13 +1366,13 @@ def get_comuni_dataframes(comuni_excel_map, load=True):
 def check_comuni_dataframes(comuni_excel_map):
 
     check_comuni_dataframe(comuni_excel_map, 'ORGANICO',
-                           'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+                           'pat_pnrr_6a_misurazione_tabelle_comunali\\')
     check_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire',
-                           'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+                           'pat_pnrr_6a_misurazione_tabelle_comunali\\')
     check_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria',
-                           'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+                           'pat_pnrr_6a_misurazione_tabelle_comunali\\')
     check_comuni_dataframe(comuni_excel_map, 'Controllo CILA',
-                           'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+                           'pat_pnrr_6a_misurazione_tabelle_comunali\\')
 
     return True
 
@@ -1380,19 +1380,19 @@ def check_comuni_dataframes(comuni_excel_map):
 def get_comuni_measures_dataframe(comuni_excel_map, load=True):
 
     comuni_measure_dataframe_org = get_comuni_measure_dataframe(comuni_excel_map,
-        'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        'ORGANICO', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
         load=load)
     comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(comuni_excel_map,
-        'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
         type_pdc_ov=True, load=load)
     comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(comuni_excel_map,
-        'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
         type_pdc_ov=False, load=load)
     comuni_measure_dataframe_pds = get_comuni_measure_dataframe(comuni_excel_map,
-        'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
         load=load)
     comuni_measure_dataframe_cila = get_comuni_measure_dataframe(comuni_excel_map,
-        'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+        'Controllo CILA', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
         load=load)
 
     comuni_measures_dataframe = pd.concat(
@@ -1407,7 +1407,7 @@ def get_comuni_measures_dataframe(comuni_excel_map, load=True):
 
 
 def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_name=False,
-                       type_pdc_ov=True, measure_period='2023q3-4', load=True, path_to_mpe=None,
+                       type_pdc_ov=True, measure_period='2024q1-2', load=True, path_to_mpe=None,
                        lpf=False):
     if not path_to_mpe:
         path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
@@ -1500,16 +1500,16 @@ def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
 
     comuni_pdc_ov_measure = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire',
-        'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
+        'pat_pnrr_6a_misurazione_tabelle_comunali\\',)
     comuni_pds_measure = get_comuni_measure(
         comuni_excel_map, 'Prov di sanatoria',
-        'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
+        'pat_pnrr_6a_misurazione_tabelle_comunali\\',)
     comuni_pdc_measure = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire',
-        'pat_pnrr_5a_misurazione_tabelle_comunali\\', type_pdc_ov=False)
+        'pat_pnrr_6a_misurazione_tabelle_comunali\\', type_pdc_ov=False)
     comuni_cila_measure = get_comuni_measure(
         comuni_excel_map, 'Controllo CILA',
-        'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
+        'pat_pnrr_6a_misurazione_tabelle_comunali\\',)
 
     if save_tex:
         measurement_05_pratiche_header = [
@@ -1540,30 +1540,30 @@ def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
         measurement_05b = pd.DataFrame(measurement_05b_series).T
 
         tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
-                         'pat-pnrr_mpe_2023q3-4.tex')
+                         'pat-pnrr_mpe_2024q1-2.tex')
         with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
             measurement_05.columns = tex_file_header
             baseline_styler = measurement_05.style
             baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
-            caption = 'PAT-PNRR | Procedimenti Edilizi | Misurazione 2023q3-4'
+            caption = 'PAT-PNRR | Procedimenti Edilizi | Misurazione 2024q1-2'
             if temp_tex:
                 caption += ' | PARZIALE'
             table_tex_content = baseline_styler.to_latex(
-                caption=caption, label='pat-pnrr_mpe_2023q3-4', position='!htbp',
+                caption=caption, label='pat-pnrr_mpe_2024q1-2', position='!htbp',
                 position_float="centering", hrules=True)
             table_tex_file.write(table_tex_content)
 
         tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
-                         'pat-pnrr_mpe_2023q3-4b.tex')
+                         'pat-pnrr_mpe_2024q1-2b.tex')
         with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
             measurement_05b.columns = tex_file_header
             baseline_styler = measurement_05b.style
             baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
-            caption='PAT-PNRR | Procedimenti Edilizi | Misurazione 2023q3-4b'
+            caption='PAT-PNRR | Procedimenti Edilizi | Misurazione 2024q1-2b'
             if temp_tex:
                 caption += ' | PARZIALE'
             table_tex_content = baseline_styler.to_latex(
-                caption=caption, label='pat-pnrr_mpe_2023q3-4b', position='!htbp',
+                caption=caption, label='pat-pnrr_mpe_2024q1-2b', position='!htbp',
                 position_float="centering", hrules=True)
             table_tex_file.write(table_tex_content)
 
@@ -1578,7 +1578,7 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', None)
 
 
-    # list_excel, list_xls = get_list_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    # list_excel, list_xls = get_list_excel('pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #                                       missing=True)
     # for comune in list_excel:
     #     print(comune)
@@ -1586,7 +1586,7 @@ if __name__ == '__main__':
 
     # comune_name = 'Trento'
     # name_excel_file = '205_Trento_Edilizia_V - rev09.xlsx'
-    # path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
+    # path_to_excel_files = 'pat_pnrr_6a_misurazione_tabelle_comunali\\'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
     # comune.check_headers_excel()
@@ -1604,64 +1604,64 @@ if __name__ == '__main__':
 
     # load = False
     # comuni_dataframe_org_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     load=load)
     # comuni_dataframe_pdc_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     load=load, pf='l_02')
     # comuni_dataframe_pds_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     load=load, pf='l_02')
     # comuni_dataframe_cila_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     load=load)
 
     # comuni_measure_dataframe_org = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     load=load)
     # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     type_pdc_ov=True, load=load)
     # comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     type_pdc_ov=False, load=load)
     # comuni_measure_dataframe_pds = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     load=load)
     # comuni_measure_dataframe_cila = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     load=load)
 
 
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC ordinario', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC in variante', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC in deroga', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC convenzionato', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC asseverato', type_pdc_ov=False, load=False)
     #
     # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
-    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #                    type_name='PdC in Sanatoria', load=False)
     # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
-    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #                    type_name='Provvedimenti in Sanatoria', load=False)
     # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
-    #                    'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #                    type_name='Regolarizzazione', load=False)
 
 
-    # check_comuni_excel('pat_pnrr_5a_misurazione_tabelle_comunali\\')
-    # get_comuni_dataframes(comuni_excel_map, load=False)
+    # check_comuni_excel('pat_pnrr_6a_misurazione_tabelle_comunali\\')
+    get_comuni_dataframes(comuni_excel_map, load=False)
     # check_comuni_dataframes(comuni_excel_map)
     # get_comuni_measures_dataframe(comuni_excel_map, load=False)
     # get_comuni_measures(comuni_excel_map, save_tex=True)
@@ -1669,216 +1669,6 @@ if __name__ == '__main__':
     # load = True
     # lpf = True
     # comuni_pdc_ov_measure = get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
+    #     'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
     # comuni_pds_measure = get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
-    #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
-
-
-    # --
-
-
-    # REQUEST 20240513_01 | pdc-ov non conclusi durata netta > 120 gg
-    # - pdc-ov, non conclusi, mpe 05
-    #   - data fine semestre (31/12/2023) - data inizio pratica - sospensione (se c'e')
-    #     - quante pratiche risultanti > 120 gg? quante di queste con sospensioni nulle?
-    #     - conteggi con Trento e senza
-    # measure_end_date = pd.Timestamp('2023-12-31')
-    # filter_type = (comuni_dataframe_pdc_05.loc[:, 'tipologia_pratica'] ==
-    #                   'PdC ordinario') ^ \
-    #               (comuni_dataframe_pdc_05.loc[:, 'tipologia_pratica'] ==
-    #                   'PdC in variante')
-    # filter_mask = filter_type & (
-    #     comuni_dataframe_pdc_05.loc[:, 'data_fine_pratica_silenzio-assenso'].isna())
-    # filter_mask = filter_mask & (
-    #     comuni_dataframe_pdc_05.loc[:, 'data_fine_pratica'].isna())
-    # filtro_pratiche_non_concluse = (\
-    #     measure_end_date - \
-    #     comuni_dataframe_pdc_05.loc[filter_mask, 'data_inizio_pratica'] - \
-    #     comuni_dataframe_pdc_05.loc[filter_mask, 'giorni_sospensioni']) > \
-    #         pd.to_timedelta(120, errors='coerce', unit='D')
-    # filtro_no_trento = comuni_dataframe_pdc_05.loc[:, 'comune'] != 'Trento'
-    # # numero_pratiche_non_concluse = \
-    # #     filtro_pratiche_non_concluse.sum()
-    # # print('numero pratiche non concluse = ' + \
-    # #       str(numero_pratiche_non_concluse))
-    # # comuni_dataframe_pdc_05[filter_mask & \
-    # #     filtro_pratiche_non_concluse].to_csv(
-    # #         'pat-pnrr_edilizia_pdc_ov_mpe_05_non_concluse_request_20240513_01_01.csv')
-    # # numero_pratiche_non_concluse_no_trento = \
-    # #     (filtro_pratiche_non_concluse & filtro_no_trento).sum()
-    # # print('numero pratiche non concluse senza trento = ' + \
-    # #       str(numero_pratiche_non_concluse_no_trento))
-    
-    # pratiche_non_concluse = comuni_dataframe_pdc_05[
-    #     filter_mask & filtro_pratiche_non_concluse]
-    # filtro_non_concluse_giorni_sospensioni_nulli = \
-    #     pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
-    #         pd.to_timedelta(0, errors='coerce', unit='D')
-    # pratiche_non_concluse_giorni_sospensioni_nulli = pratiche_non_concluse[
-    #     filtro_non_concluse_giorni_sospensioni_nulli]
-    # numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
-    #     filtro_non_concluse_giorni_sospensioni_nulli.sum()
-    # print('numero pdc-ov mpe-05 non conclusi con giorni sospensioni nulli = ' + \
-    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
-    # comuni_dataframe_pdc_05[filter_mask & filtro_non_concluse_giorni_sospensioni_nulli].to_csv(
-    #     'pat-pnrr_edilizia_pdc_ov_mpe_05_non_concluse_no_sospensioni_request_20240513_01_02.csv')
-    # numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento = \
-    #     (filtro_non_concluse_giorni_sospensioni_nulli & \
-    #      filtro_no_trento).sum()
-    # print('numero pdc-ov mpe-05 non conclusi con giorni sospensioni nulli senza trento = ' + \
-    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento))
-
-
-    # REQUEST 20240515_01 | pds non conclusi durata netta > 120 gg
-    # - pdc-ov, non conclusi, mpe 05
-    #   - data fine semestre (31/12/2023) - data inizio pratica - sospensione (se c'e')
-    #     - quante pratiche risultanti > 120 gg? quante di queste con sospensioni nulle?
-    #     - conteggi con Trento e senza
-    # measure_end_date = pd.Timestamp('2023-12-31')
-    # filter_mask = (
-    #     comuni_dataframe_pds_05.loc[:, 'data_fine_pratica'].isna())
-    # filtro_pratiche_non_concluse = (\
-    #     measure_end_date - \
-    #     comuni_dataframe_pds_05.loc[filter_mask, 'data_inizio_pratica'] - \
-    #     comuni_dataframe_pds_05.loc[filter_mask, 'giorni_sospensioni']) > \
-    #         pd.to_timedelta(120, errors='coerce', unit='D')
-    # filtro_no_trento = comuni_dataframe_pds_05.loc[:, 'comune'] != 'Trento'
-    # # numero_pratiche_non_concluse = \
-    # #     filtro_pratiche_non_concluse.sum()
-    # # print('numero pratiche non concluse = ' + \
-    # #       str(numero_pratiche_non_concluse))
-    # # comuni_dataframe_pds_05[filter_mask & \
-    # #     filtro_pratiche_non_concluse].to_csv(
-    # #         'pat-pnrr_edilizia_pds_mpe_05_non_concluse_request_20240515_01_01.csv')
-    # # numero_pratiche_non_concluse_no_trento = \
-    # #     (filtro_pratiche_non_concluse & filtro_no_trento).sum()
-    # # print('numero pratiche non concluse senza trento = ' + \
-    # #       str(numero_pratiche_non_concluse_no_trento))
-    
-    # pratiche_non_concluse = comuni_dataframe_pds_05[
-    #     filter_mask & filtro_pratiche_non_concluse]
-    # filtro_non_concluse_giorni_sospensioni_nulli = \
-    #     pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
-    #         pd.to_timedelta(0, errors='coerce', unit='D')
-    # pratiche_non_concluse_giorni_sospensioni_nulli = pratiche_non_concluse[
-    #     filtro_non_concluse_giorni_sospensioni_nulli]
-    # numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
-    #     filtro_non_concluse_giorni_sospensioni_nulli.sum()
-    # print('numero pds mpe-05 non conclusi con giorni sospensioni nulli = ' + \
-    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
-    # comuni_dataframe_pds_05[filter_mask & filtro_non_concluse_giorni_sospensioni_nulli].to_csv(
-    #     'pat-pnrr_edilizia_pds_mpe_05_non_concluse_no_sospensioni_request_20240515_01_02.csv')
-    # numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento = \
-    #     (filtro_non_concluse_giorni_sospensioni_nulli & \
-    #      filtro_no_trento).sum()
-    # print('numero pds mpe-05 non conclusi con giorni sospensioni nulli senza trento = ' + \
-    #       str(numero_pratiche_non_concluse_giorni_sospensioni_nulli_no_trento))
-
-
-    # REQUEST 20240513_02 | pdc-ov avviati durata lorda > 600 gg
-    # - pdc-ov, avviati, 5a misurazione
-    #   - pdc conclusi (con espressione o silenzio-assenso)
-    #     - data fine pratica - data inizio
-    #       - > 600 gg? 
-    #   - pdc non conclusi
-    #     - data fine semestre (31/12/2023) - data inizio pratica
-    #       - > 600 gg?
-    # giorni_soglia_alta = 600
-    # measure_end_date = pd.Timestamp('2023-12-31')
-
-    # filter_type = (comuni_dataframe_pdc_05.loc[:, 'tipologia_pratica'] ==
-    #                   'PdC ordinario') | \
-    #               (comuni_dataframe_pdc_05.loc[:, 'tipologia_pratica'] ==
-    #                   'PdC in variante')
-    # filter_mask_concluse_espressione = (
-    #     comuni_dataframe_pdc_05.loc[:, 'data_fine_pratica'].isna() == False)
-    # filter_mask_concluse_silenzio_assenso = (
-    #     comuni_dataframe_pdc_05.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False)
-    # filter_mask_concluse = filter_mask_concluse_espressione | \
-    #     filter_mask_concluse_silenzio_assenso
-    # filter_mask_non_concluse = ~filter_mask_concluse
-    
-    # filter_mask_pdc_ov_concluse_espressione = filter_type & \
-    #     filter_mask_concluse_espressione
-    # filter_mask_pdc_ov_concluse_espressione_sopra_soglia = (\
-    #     comuni_dataframe_pdc_05.loc[filter_mask_pdc_ov_concluse_espressione,
-    #         'data_fine_pratica'] - \
-    #     comuni_dataframe_pdc_05.loc[filter_mask_pdc_ov_concluse_espressione,
-    #         'data_inizio_pratica']) > \
-    #         pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
-    
-    # filter_mask_pdc_ov_concluse_silenzio_assenso = filter_type & \
-    #     filter_mask_concluse_silenzio_assenso
-    # filter_mask_pdc_ov_concluse_silenzio_assenso_sopra_soglia = (\
-    #     comuni_dataframe_pdc_05.loc[filter_mask_pdc_ov_concluse_silenzio_assenso,
-    #         'data_fine_pratica_silenzio-assenso'] - \
-    #     comuni_dataframe_pdc_05.loc[filter_mask_pdc_ov_concluse_silenzio_assenso,
-    #         'data_inizio_pratica']) > \
-    #         pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
-    
-    # filter_mask_pdc_ov_non_concluse = filter_type & \
-    #     filter_mask_non_concluse
-    # filter_mask_pdc_ov_non_concluse_sopra_soglia = (\
-    #     measure_end_date - \
-    #     comuni_dataframe_pdc_05.loc[filter_mask_pdc_ov_non_concluse,
-    #         'data_inizio_pratica']) > \
-    #         pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
-    
-    # pratiche_avviate_sopra_soglia = pd.concat(
-    #     [comuni_dataframe_pdc_05.loc[filter_mask_pdc_ov_concluse_espressione]
-    #         [filter_mask_pdc_ov_concluse_espressione_sopra_soglia],
-    #      comuni_dataframe_pdc_05.loc[filter_mask_pdc_ov_concluse_silenzio_assenso]
-    #         [filter_mask_pdc_ov_concluse_silenzio_assenso_sopra_soglia],
-    #      comuni_dataframe_pdc_05.loc[filter_mask_pdc_ov_non_concluse]
-    #         [filter_mask_pdc_ov_non_concluse_sopra_soglia]],
-    #     axis='rows', join='outer')
-    # numero_pratiche_avviate_sopra_soglia = len(pratiche_avviate_sopra_soglia)
-    # pratiche_avviate_sopra_soglia.to_csv(
-    #     'pat-pnrr_edilizia_pdc_ov_mpe_05_avviate_sopra_600_gg_request_20240513_02.csv')
-    
-    # print('numero pratiche avviate sopra soglia ' + \
-    #     str(giorni_soglia_alta) + ' = ' + \
-    #     str(numero_pratiche_avviate_sopra_soglia))
-
-
-    # REQUEST 20240515_02 | pds avviati durata lorda > 600 gg
-    # - pds, avviati, 5a misurazione
-    #   - pds conclusi
-    #     - data fine pratica - data inizio
-    #       - > 600 gg? 
-    #   - pds non conclusi
-    #     - data fine semestre (31/12/2023) - data inizio pratica
-    #       - > 600 gg?
-    # giorni_soglia_alta = 600
-    # measure_end_date = pd.Timestamp('2023-12-31')
-
-    # filter_mask_concluse = (
-    #     comuni_dataframe_pds_05.loc[:, 'data_fine_pratica'].isna() == False)
-    # filter_mask_non_concluse = ~filter_mask_concluse
-    
-    # filter_mask_pds_concluse_sopra_soglia = (\
-    #     comuni_dataframe_pds_05.loc[filter_mask_concluse,
-    #         'data_fine_pratica'] - \
-    #     comuni_dataframe_pds_05.loc[filter_mask_concluse,
-    #         'data_inizio_pratica']) > \
-    #         pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
-    
-    # filter_mask_pds_non_concluse_sopra_soglia = (\
-    #     measure_end_date - \
-    #     comuni_dataframe_pds_05.loc[filter_mask_non_concluse,
-    #         'data_inizio_pratica']) > \
-    #         pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
-    
-    # pratiche_avviate_sopra_soglia = pd.concat(
-    #     [comuni_dataframe_pds_05.loc[filter_mask_concluse]
-    #         [filter_mask_pds_concluse_sopra_soglia],
-    #      comuni_dataframe_pds_05.loc[filter_mask_non_concluse]
-    #         [filter_mask_pds_non_concluse_sopra_soglia]],
-    #     axis='rows', join='outer')
-    # numero_pratiche_avviate_sopra_soglia = len(pratiche_avviate_sopra_soglia)
-    # pratiche_avviate_sopra_soglia.to_csv(
-    #     'pat-pnrr_edilizia_pds_mpe_05_avviate_sopra_600_gg_request_20240515_02.csv')
-    
-    # print('numero pratiche avviate sopra soglia ' + \
-    #     str(giorni_soglia_alta) + ' = ' + \
-    #     str(numero_pratiche_avviate_sopra_soglia))
+    #     'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
