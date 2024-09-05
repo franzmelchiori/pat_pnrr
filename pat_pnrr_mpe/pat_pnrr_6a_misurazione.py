@@ -12,15 +12,19 @@ import difflib
 import numpy as np
 import pandas as pd
 
+import warnings
+
 from .pat_pnrr_comuni_excel_mapping import *
 
 
 def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, droprows,
                         nrows=None, dtype=None, parse_dates=False):
 
+    # warnings.simplefilter(action='ignore', category=UserWarning)
     dataframe_excel = pd.read_excel(path_file_excel, sheet_name=sheet_name, names=names,
                                     usecols=usecols, skiprows=skiprows, nrows=nrows, dtype=dtype,
                                     parse_dates=parse_dates, header=None)
+    # warnings.resetwarnings()
 
     for row in droprows:
         dataframe_excel.drop(dataframe_excel.index[dataframe_excel[row].isna()], inplace=True)
@@ -72,6 +76,13 @@ class ComuneExcel:
                     'percentuale_ore_edilizia_privata',  # integer | float
                     'percentuale_ore_comune_considerato'  # integer | float
                 ],
+                'column_dtype': {
+                    'numero_dipendente': str,
+                    'tipo_dipendente': str,
+                    'ore_settimana': str,  # float,
+                    'percentuale_ore_edilizia_privata': str,  # float,
+                    'percentuale_ore_comune_considerato': str  # float
+                },
                 'column_indexes': [
                     1, 2, 3, 9, 11
                 ],
@@ -103,6 +114,17 @@ class ComuneExcel:
                     'tipologia_massima_sospensione',  # string | object
                     'giorni_sospensioni'  # integer | float
                 ],
+                'column_dtype': {
+                    'tipologia_pratica': str,
+                    'id_pratica': str,
+                    'data_inizio_pratica': str,
+                    'giorni_termine_normativo': str,  # float,
+                    'data_fine_pratica': str,
+                    'data_fine_pratica_silenzio-assenso': str,
+                    'conferenza_servizi': str,
+                    'tipologia_massima_sospensione': str,
+                    'giorni_sospensioni': str  # float
+                },
                 'column_indexes': [
                     1, 2, 3, 4, 5, 6, 7, 8, 9
                 ],
@@ -137,6 +159,16 @@ class ComuneExcel:
                     'tipologia_massima_sospensione',
                     'giorni_sospensioni'
                 ],
+                'column_dtype': {
+                    'tipologia_pratica': str,
+                    'id_pratica': str,
+                    'data_inizio_pratica': str,
+                    'giorni_termine_normativo': str,  # float,
+                    'data_fine_pratica': str,
+                    'conferenza_servizi': str,
+                    'tipologia_massima_sospensione': str,
+                    'giorni_sospensioni': str,  # float
+                },
                 'column_indexes': [
                     1, 2, 3, 4, 5, 6, 7, 8
                 ],
@@ -169,6 +201,15 @@ class ComuneExcel:
                     'tipologia_massima_sospensione',
                     'giorni_sospensioni'
                 ],
+                'column_dtype': {
+                    'tipologia_pratica': str,
+                    'id_pratica': str,
+                    'data_inizio_pratica': str,
+                    'giorni_termine_normativo': str,  # float,
+                    'data_fine_pratica': str,
+                    'tipologia_massima_sospensione': str,
+                    'giorni_sospensioni': str  # float
+                },
                 'column_indexes': [
                     1, 2, 3, 4, 5, 6, 7
                 ],
@@ -197,6 +238,7 @@ class ComuneExcel:
 
         for sheet_name in sheet_names:
             names = self.excel_structure[sheet_name]['column_labels']
+            dtypecols = None  # self.excel_structure[sheet_name]['column_dtype']
             usecols = self.excel_structure[sheet_name]['column_indexes']
             skiprows = self.excel_structure[sheet_name]['row_skips']-2
             droprows = self.excel_structure[sheet_name]['column_mandatory']
@@ -204,7 +246,7 @@ class ComuneExcel:
             health_header_checks = self.excel_structure[sheet_name]['health_header_checks']
 
             header_excel = get_dataframe_excel(self.excel_path, sheet_name, names, usecols,
-                                               skiprows, droprows, nrows)
+                                               skiprows, droprows, nrows, dtypecols)
 
             for (column_index, health_header_check) in enumerate(health_header_checks):
                 if not header_excel.iloc[0].values[column_index].casefold().find(
@@ -222,13 +264,14 @@ class ComuneExcel:
 
         for sheet_name in sheet_names:
             names = self.excel_structure[sheet_name]['column_labels']
+            dtypecols = None  # self.excel_structure[sheet_name]['column_dtype']
             usecols = self.excel_structure[sheet_name]['column_indexes']
             skiprows = self.excel_structure[sheet_name]['row_skips']
             droprows = self.excel_structure[sheet_name]['column_mandatory']
             health_na_content_checks = self.excel_structure[sheet_name]['health_na_content_checks']
 
             dataframe_excel = get_dataframe_excel(self.excel_path, sheet_name, names, usecols,
-                                                  skiprows, droprows, dtype=None,
+                                                  skiprows, droprows, dtype=dtypecols,
                                                   parse_dates=False)
 
             for health_na_content_check in health_na_content_checks:
@@ -245,17 +288,20 @@ class ComuneExcel:
 
     def get_comune_dataframe(self, sheet_name):
         names = self.excel_structure[sheet_name]['column_labels']
+        dtypecols = None  # self.excel_structure[sheet_name]['column_dtype']
         usecols = self.excel_structure[sheet_name]['column_indexes']
         skiprows = self.excel_structure[sheet_name]['row_skips']
         droprows = self.excel_structure[sheet_name]['column_mandatory']
 
         comune_dataframe = get_dataframe_excel(self.excel_path, sheet_name, names, usecols,
-                                              skiprows, droprows, dtype=None)
+                                              skiprows, droprows, dtype=dtypecols)
         
         if sheet_name == 'ORGANICO':
             comune_dataframe.insert(0, 'comune', self.comune_name)
-            comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'].fillna(1, inplace=True)  # TODO: to refactor
-            comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'].fillna(1, inplace=True)
+            comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'] = \
+                comune_dataframe.loc[:, 'percentuale_ore_edilizia_privata'].fillna(1)
+            comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'] = \
+                comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'].fillna(1)
             if comune_dataframe.loc[:, 'ore_settimana'].dtype.str[1] in ['O', 'M']:
                 change_mask = comune_dataframe.loc[:, 'ore_settimana'].astype(
                     'string').str.contains('36 ore', case=False, na=False, regex=False)
@@ -297,11 +343,16 @@ class ComuneExcel:
                                     ignore_index=True)
 
         if sheet_name == 'Permessi di Costruire':
-            comune_dataframe.loc[:, 'tipologia_pratica'].fillna(types_pdc[0], inplace=True)
-            comune_dataframe.loc[:, 'giorni_termine_normativo'].fillna(60, inplace=True)
-            comune_dataframe.loc[:, 'conferenza_servizi'].fillna('NO', inplace=True)
-            comune_dataframe.loc[:, 'tipologia_massima_sospensione'].fillna('', inplace=True)
-            comune_dataframe.loc[:, 'giorni_sospensioni'].fillna(0, inplace=True)
+            comune_dataframe.loc[:, 'tipologia_pratica'] = \
+                comune_dataframe.loc[:, 'tipologia_pratica'].fillna(types_pdc[0])
+            comune_dataframe.loc[:, 'giorni_termine_normativo'] = \
+                comune_dataframe.loc[:, 'giorni_termine_normativo'].fillna(60)
+            comune_dataframe.loc[:, 'conferenza_servizi'] = \
+                comune_dataframe.loc[:, 'conferenza_servizi'].fillna('NO')
+            comune_dataframe.loc[:, 'tipologia_massima_sospensione'] = \
+                comune_dataframe.loc[:, 'tipologia_massima_sospensione'].fillna('')
+            comune_dataframe.loc[:, 'giorni_sospensioni'] = \
+                comune_dataframe.loc[:, 'giorni_sospensioni'].fillna(0)
 
             if comune_dataframe.loc[:, 'data_inizio_pratica'].dtype.str[1] in ['O', 'M']:
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
@@ -342,6 +393,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('01/03/24 - DINIEGO', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '01/03/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('1575/2024', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '15/05/2024'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
@@ -450,11 +504,16 @@ class ComuneExcel:
                     print(comune_dataframe.loc[index, 'conferenza_servizi'])
 
         if sheet_name == 'Prov di sanatoria':
-            comune_dataframe.loc[:, 'tipologia_pratica'].fillna(types_pds[0], inplace=True)
-            comune_dataframe.loc[:, 'giorni_termine_normativo'].fillna(60, inplace=True)
-            comune_dataframe.loc[:, 'conferenza_servizi'].fillna('NO', inplace=True)
-            comune_dataframe.loc[:, 'tipologia_massima_sospensione'].fillna('', inplace=True)
-            comune_dataframe.loc[:, 'giorni_sospensioni'].fillna(0, inplace=True)
+            comune_dataframe.loc[:, 'tipologia_pratica'] = \
+                comune_dataframe.loc[:, 'tipologia_pratica'].fillna(types_pds[0])
+            comune_dataframe.loc[:, 'giorni_termine_normativo'] = \
+                comune_dataframe.loc[:, 'giorni_termine_normativo'].fillna(60)
+            comune_dataframe.loc[:, 'conferenza_servizi'] = \
+                comune_dataframe.loc[:, 'conferenza_servizi'].fillna('NO')
+            comune_dataframe.loc[:, 'tipologia_massima_sospensione'] = \
+                comune_dataframe.loc[:, 'tipologia_massima_sospensione'].fillna('')
+            comune_dataframe.loc[:, 'giorni_sospensioni'] = \
+                comune_dataframe.loc[:, 'giorni_sospensioni'].fillna(0)
 
             if comune_dataframe.loc[:, 'data_inizio_pratica'].dtype.str[1] in ['O', 'M']:
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
@@ -586,10 +645,14 @@ class ComuneExcel:
                     print(comune_dataframe.loc[index, 'conferenza_servizi'])
 
         if sheet_name == 'Controllo CILA':
-            comune_dataframe.loc[:, 'tipologia_pratica'].fillna(types_cila[0], inplace=True)
-            comune_dataframe.loc[:, 'giorni_termine_normativo'].fillna(0, inplace=True)
-            comune_dataframe.loc[:, 'tipologia_massima_sospensione'].fillna('', inplace=True)
-            comune_dataframe.loc[:, 'giorni_sospensioni'].fillna(0, inplace=True)
+            comune_dataframe.loc[:, 'tipologia_pratica'] = \
+                comune_dataframe.loc[:, 'tipologia_pratica'].fillna(types_cila[0])
+            comune_dataframe.loc[:, 'giorni_termine_normativo'] = \
+                comune_dataframe.loc[:, 'giorni_termine_normativo'].fillna(0)
+            comune_dataframe.loc[:, 'tipologia_massima_sospensione'] = \
+                comune_dataframe.loc[:, 'tipologia_massima_sospensione'].fillna('')
+            comune_dataframe.loc[:, 'giorni_sospensioni'] = \
+                comune_dataframe.loc[:, 'giorni_sospensioni'].fillna(0)
 
             if comune_dataframe.loc[:, 'data_inizio_pratica'].dtype.str[1] in ['O', 'M']:
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
@@ -1584,8 +1647,8 @@ if __name__ == '__main__':
     #     print(comune)
 
 
-    # comune_name = 'Trento'
-    # name_excel_file = '205_Trento_Edilizia_V - rev09.xlsx'
+    # comune_name = 'Altavalle'
+    # name_excel_file = '235_Altavalle_Edilizia_V.xlsx'
     # path_to_excel_files = 'pat_pnrr_6a_misurazione_tabelle_comunali\\'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
@@ -1661,10 +1724,10 @@ if __name__ == '__main__':
 
 
     # check_comuni_excel('pat_pnrr_6a_misurazione_tabelle_comunali\\')
-    get_comuni_dataframes(comuni_excel_map, load=False)
+    # get_comuni_dataframes(comuni_excel_map, load=False)
     # check_comuni_dataframes(comuni_excel_map)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    # get_comuni_measures(comuni_excel_map, save_tex=True)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures(comuni_excel_map, save_tex=True)
 
     # load = True
     # lpf = True
