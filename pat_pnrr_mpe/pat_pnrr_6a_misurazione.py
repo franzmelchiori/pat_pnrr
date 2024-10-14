@@ -1742,9 +1742,10 @@ if __name__ == '__main__':
 
 
     # check_comuni_excel('pat_pnrr_6a_misurazione_tabelle_comunali\\')
+    # check_comuni_excel('drive-download-20241014T121710Z-001\\')
     # get_comuni_dataframes(comuni_excel_map, load=False)
     # check_comuni_dataframes(comuni_excel_map)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
     # get_comuni_measures(comuni_excel_map, save_tex=True)
 
     # load = True
