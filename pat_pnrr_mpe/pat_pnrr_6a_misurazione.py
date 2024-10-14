@@ -361,6 +361,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
                     'string').str.contains('23/0523', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '23/05/2023'
+                change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
+                    'string').str.contains('8/5/204', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '08/05/2024'
             try:
                 comune_dataframe['data_inizio_pratica'] = pd.to_datetime(
                     comune_dataframe['data_inizio_pratica'],
