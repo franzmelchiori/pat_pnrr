@@ -1481,6 +1481,7 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
     comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[7]].sum())
 
     comuni_measure = pd.Series(comuni_measure, index=measure_labels)
+    comuni_monitored = comuni_measure_dataframe.__len__()
     message = 'Misurazione | ' + sheet_name
     if type_name:
         message += ' | ' + type_name
@@ -1490,24 +1491,24 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
     print()
     print(message)
     print(comuni_measure)
-    print('{0}/166 comuni'.format(comuni_measure_dataframe.__len__()))
+    print('{0}/166 comuni'.format(comuni_monitored))
     print()
 
-    return comuni_measure
+    return comuni_measure, comuni_monitored
 
 
 def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
 
-    comuni_pdc_ov_measure = get_comuni_measure(
+    comuni_pdc_ov_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire',
         'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
-    comuni_pds_measure = get_comuni_measure(
+    comuni_pds_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Prov di sanatoria',
         'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
-    comuni_pdc_measure = get_comuni_measure(
+    comuni_pdc_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire',
         'pat_pnrr_5a_misurazione_tabelle_comunali\\', type_pdc_ov=False)
-    comuni_cila_measure = get_comuni_measure(
+    comuni_cila_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Controllo CILA',
         'pat_pnrr_5a_misurazione_tabelle_comunali\\',)
 
@@ -1668,9 +1669,9 @@ if __name__ == '__main__':
 
     # load = True
     # lpf = True
-    # comuni_pdc_ov_measure = get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    # comuni_pdc_ov_measure, comuni_monitored = get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
     #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
-    # comuni_pds_measure = get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
+    # comuni_pds_measure, comuni_monitored = get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
     #     'pat_pnrr_5a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
 
 
