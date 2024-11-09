@@ -43,14 +43,22 @@
                 <td>{{ pdc_ov[6] | int }}</td>
                 <td><strong>{{ pdc_ov[7] | int }}</strong> 🞜{{ target.pdc_ov_arretrati }}
                     <br>
-                    <div class="progress-stacked">
-                        <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100" style="width: 99%">
-                            <div class="progress-bar bg-warning"></div>
+                    {% if pdc_ov[7] > target.pdc_ov_arretrati %}
+                        <div class="progress-stacked">
+                            <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pdc_ov_arretrati/pdc_ov[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pdc_ov_arretrati/pdc_ov[7]*100 }}%">
+                                <div class="progress-bar bg-warning"></div>
+                            </div>
+                            <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pdc_ov_arretrati/pdc_ov[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pdc_ov_arretrati/pdc_ov[7]*100 }}%">
+                                <div class="progress-bar bg-danger">{{ pdc_ov[7]-target.pdc_ov_arretrati }}</div>
+                            </div>
                         </div>
-                        <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%">
-                            <div class="progress-bar bg-danger">2</div>
+                    {% else %}
+                        <div class="progress-stacked">
+                            <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pdc_ov[7]/target.pdc_ov_arretrati*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pdc_ov[7]/target.pdc_ov_arretrati*100 }}%">
+                                <div class="progress-bar bg-success"></div>
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -61,28 +69,44 @@
                 <td>{{ pds[3] | int }}</td>
                 <td><strong>{{ pds[4] | int }}</strong> 🞜{{ target.pds_durata }}
                     <br>
-                    <div class="progress-stacked">
-                        <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100" style="width: 96%">
-                            <div class="progress-bar bg-success"></div>
+                    {% if pds[4] > target.pds_durata %}
+                        <div class="progress-stacked">
+                            <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pds_durata/pds[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pds_durata/pds[4]*100 }}%">
+                                <div class="progress-bar bg-warning"></div>
+                            </div>
+                            <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pds_durata/pds[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pds_durata/pds[4]*100 }}%">
+                                <div class="progress-bar bg-danger">{{ pds[4]-target.pds_durata }}</div>
+                            </div>
                         </div>
-                        <!-- <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="4" aria-valuemin="0" aria-valuemax="100" style="width: 4%">
-                            <div class="progress-bar bg-danger">bla</div>
-                        </div> -->
-                    </div>
+                    {% else %}
+                        <div class="progress-stacked">
+                            <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pds[4]/target.pds_durata*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pds[4]/target.pds_durata*100 }}%">
+                                <div class="progress-bar bg-success"></div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </td>
                 </td>
                 <td>{{ pds[5] | int }}</td>
                 <td>{{ pds[6] | int }}</td>
                 <td><strong>{{ pds[7] | int }}</strong> 🞜{{ target.pds_arretrati }}
                     <br>
-                    <div class="progress-stacked">
-                        <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="59" aria-valuemin="0" aria-valuemax="100" style="width: 59%">
-                            <div class="progress-bar bg-success"></div>
+                    {% if pds[7] > target.pds_arretrati %}
+                        <div class="progress-stacked">
+                            <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pds_arretrati/pds[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pds_arretrati/pds[7]*100 }}%">
+                                <div class="progress-bar bg-warning"></div>
+                            </div>
+                            <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pds_arretrati/pds[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pds_arretrati/pds[7]*100 }}%">
+                                <div class="progress-bar bg-danger">{{ pds[7]-target.pds_arretrati }}</div>
+                            </div>
                         </div>
-                        <!-- <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100" style="width: 1%">
-                            <div class="progress-bar bg-danger">bla</div>
-                        </div> -->
-                    </div>
+                    {% else %}
+                        <div class="progress-stacked">
+                            <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pds[7]/target.pds_arretrati*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pds[7]/target.pds_arretrati*100 }}%">
+                                <div class="progress-bar bg-success"></div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </td>
                 </td>
             </tr>
@@ -114,9 +138,14 @@
     </table>
 </div>
 <div class="container">
-    <div class="progress" role="progressbar" aria-label="comuni trentini monitorati" aria-valuenow="91" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
-        <!-- <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 91%">151/166 comuni trentini</div> -->
-        <div class="progress-bar bg-warning text-dark progress-bar-striped progress-bar-animated" style="width: 91%">{{ comuni }}/166 comuni trentini</div>
-    </div>
+    {% if comuni < 163 %}
+        <div class="progress" role="progressbar" aria-label="comuni trentini monitorati" aria-valuenow="{{ comuni/166*100 }}" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
+            <div class="progress-bar bg-warning text-dark" style="width: {{ comuni/166*100 }}%">{{ comuni }}/166 comuni trentini</div>
+        </div>
+    {% else %}
+        <div class="progress" role="progressbar" aria-label="comuni trentini monitorati" aria-valuenow="{{ comuni/166*100 }}" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
+            <div class="progress-bar bg-success" style="width: {{ comuni/166*100 }}%">{{ comuni }}/166 comuni trentini</div>
+        </div>
+    {% endif %}
 </div>
 <br>
