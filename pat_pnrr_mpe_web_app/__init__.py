@@ -15,6 +15,8 @@ def index():
         'pds_durata': 130,
         'pds_arretrati': 300}
     btnradio_mpe = request.args.get('btnradio_mpe')
+    if not btnradio_mpe:
+        btnradio_mpe = 'btnradio_mpe_2024Q1_2'
     if btnradio_mpe == 'btnradio_mpe_2024Q1_2':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_6a_misurazione.get_comuni_measure(
             pat_pnrr_6a_misurazione.comuni_excel_map, 'Permessi di Costruire',
