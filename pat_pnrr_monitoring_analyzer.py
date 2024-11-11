@@ -21,6 +21,7 @@ from pat_pnrr_mpe.pat_pnrr_comuni_excel_mapping import *
 from pat_pnrr_mpe import pat_pnrr_3a_misurazione as pat_pnrr_3a
 from pat_pnrr_mpe import pat_pnrr_4a_misurazione as pat_pnrr_4a
 from pat_pnrr_mpe import pat_pnrr_5a_misurazione as pat_pnrr_5a
+from pat_pnrr_mpe import pat_pnrr_6a_misurazione as pat_pnrr_6a
 
 
 def update_dataframe_subset(dataframe_to_update, dataframe_subset):
@@ -75,6 +76,9 @@ def get_pat_comuni_dataframe(load=True):
         pat_comuni_dataframe_excel_05 =\
             pat_pnrr_5a.get_comuni_measures_dataframe(
                 comuni_excel_map)
+        pat_comuni_dataframe_excel_06 =\
+            pat_pnrr_6a.get_comuni_measures_dataframe(
+                comuni_excel_map)
         pat_comuni_dataframe = pd.concat(
             [pat_comuni_dataframe_ispat,
              pat_comunita_valle_dataframe_ispat,
@@ -82,7 +86,8 @@ def get_pat_comuni_dataframe(load=True):
              pat_comuni_dataframe_idsurvey_02,
              pat_comuni_dataframe_excel_03,
              pat_comuni_dataframe_excel_04,
-             pat_comuni_dataframe_excel_05],
+             pat_comuni_dataframe_excel_05,
+             pat_comuni_dataframe_excel_06],
             axis='columns', join='outer')
 
         pat_dataframe_raccolta_puntuale_trento =\
@@ -2260,7 +2265,7 @@ if __name__ == '__main__':
 
 
     # LOAD DATAFRAME COMUNI
-    pat_comuni_dataframe = get_pat_comuni_dataframe(load=True)
+    pat_comuni_dataframe = get_pat_comuni_dataframe(load=False)
 
 
     # PRINT BASELINES
@@ -2292,6 +2297,10 @@ if __name__ == '__main__':
     # PRINT MEASUREMENT 05
     # pat_pnrr_5a.get_comuni_measures_dataframe(comuni_excel_map, load=True)
     # pat_pnrr_5a.get_comuni_measures(comuni_excel_map, save_tex=True)
+
+    # PRINT MEASUREMENT 06
+    # pat_pnrr_6a.get_comuni_measures_dataframe(comuni_excel_map, load=True)
+    # pat_pnrr_6a.get_comuni_measures(comuni_excel_map, save_tex=True)
 
 
     # CLUSTER BASELINE
