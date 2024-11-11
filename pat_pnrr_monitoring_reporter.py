@@ -1328,17 +1328,17 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         ['PdC 2022Q3-4', performance_measure_labels_pdc_2022q3_4],
         ['PdC 2023Q1-2', performance_measure_labels_pdc_2023q1_2],
         ['PdC 2023Q3-4', performance_measure_labels_pdc_2023q3_4],
-        ['PdC 2023Q3-4', performance_measure_labels_pdc_2024q1_2],
+        ['PdC 2024Q1-2', performance_measure_labels_pdc_2024q1_2],
         ['PdC-OV 2022Q3-4', performance_measure_labels_pdc_ov_2022q3_4],
         ['PdC-OV 2023Q1-2', performance_measure_labels_pdc_ov_2023q1_2],
         ['PdC-OV 2023Q3-4', performance_measure_labels_pdc_ov_2023q3_4],
-        ['PdC-OV 2023Q3-4', performance_measure_labels_pdc_ov_2024q1_2],
+        ['PdC-OV 2024Q1-2', performance_measure_labels_pdc_ov_2024q1_2],
         ['PdS 2021Q3-4', performance_measure_labels_pds_2021q3_4],
         ['PdS 2022Q1-2', performance_measure_labels_pds_2022q1_2],
         ['PdS 2022Q3-4', performance_measure_labels_pds_2022q3_4],
         ['PdS 2023Q1-2', performance_measure_labels_pds_2023q1_2],
         ['PdS 2023Q3-4', performance_measure_labels_pds_2023q3_4],
-        ['PdS 2023Q3-4', performance_measure_labels_pds_2024q1_2]
+        ['PdS 2024Q1-2', performance_measure_labels_pds_2024q1_2]
     ]
 
     for comune in comuni_excel_map:
@@ -1448,15 +1448,15 @@ if __name__ == '__main__':
     # comuni_scores.to_csv('pat-pnrr_edilizia_pressione_netta_2023.csv')
 
     # for mpe_number in [3, 4, 5, 6]:
-    for mpe_number in [6]:
-        print_comuni_performance_charts(pat_comuni_dataframe,
-                                        comuni_durata_trends, comuni_durata_netta_trends,
-                                        comuni_arretrato_trends,
-                                        comuni_performance_trends, comuni_performance_netta_trends,
-                                        mpe_number=mpe_number,
-                                        just_provincia=False, no_trento=False, just_one=False,
-                                        save_charts=True)
-    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    # for mpe_number in [6]:
+    #     print_comuni_performance_charts(pat_comuni_dataframe,
+    #                                     comuni_durata_trends, comuni_durata_netta_trends,
+    #                                     comuni_arretrato_trends,
+    #                                     comuni_performance_trends, comuni_performance_netta_trends,
+    #                                     mpe_number=mpe_number,
+    #                                     just_provincia=False, no_trento=False, just_one=False,
+    #                                     save_charts=True)
+    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
     # print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
 
