@@ -61,6 +61,8 @@ chart_provincia_area_time_arretrato_pdc_pds_series = {
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2'].sum().astype(int)),
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2'].sum().astype(int))]}
+chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = {
+    }
 
 
 @app.route('/')
@@ -91,7 +93,8 @@ def index():
             btnradio_mpe = btnradio_mpe,
             chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
-            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
+            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_5a_misurazione.get_comuni_measure(
             pat_pnrr_5a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -115,7 +118,8 @@ def index():
             btnradio_mpe = btnradio_mpe,
             chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
-            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
+            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series)
 
 # @app.route('/progetto')
 # def project():
