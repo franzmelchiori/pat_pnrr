@@ -1,19 +1,70 @@
 import numpy as np
+import json
 from flask import render_template, url_for, request
 from markupsafe import escape, Markup
 
 from pat_pnrr.pat_pnrr_mpe_server import app
+from pat_pnrr_monitoring_analyzer import get_pat_comuni_dataframe
 from pat_pnrr.pat_pnrr_mpe import pat_pnrr_5a_misurazione
 from pat_pnrr.pat_pnrr_mpe import pat_pnrr_6a_misurazione
 
 
+target = {
+    'pdc_ov_durata': 109,
+    'pdc_ov_arretrati': 324,
+    'pds_durata': 130,
+    'pds_arretrati': 300}
+
+pat_comuni_dataframe = get_pat_comuni_dataframe()
+chart_provincia_area_time_avviato_pdc_pds_series = {
+    'pdc_avviato': [
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_2021q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_2022q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_avviati_2022q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_avviati_2023q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_avviati_2023q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_avviati_2024q1-2'].sum().astype(int))],
+    'pds_avviato': [
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_2021q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_2022q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_avviate_2022q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_avviate_2023q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_avviate_2023q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_avviate_2024q1-2'].sum().astype(int))]}
+chart_provincia_line_time_durata_pdc_pds_series = {
+    'pdc_durata': [
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_permessi_costruire_conclusi_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_permessi_costruire_conclusi_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q1-2'].mean()).astype(int))],
+    'pds_durata': [
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_sanatorie_concluse_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_sanatorie_concluse_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q1-2'].mean()).astype(int))]}
+chart_provincia_area_time_arretrato_pdc_pds_series = {
+    'pdc_arretrato': [
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_non_conclusi_scaduti_termini_2021q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_non_conclusi_scaduti_termini_2022q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2'].sum().astype(int))],
+    'pds_arretrato': [
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_non_concluse_scaduti_termini_2021q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_non_concluse_scaduti_termini_2022q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2'].sum().astype(int))]}
+
+
 @app.route('/')
 def index():
-    target = {
-        'pdc_ov_durata': 109,
-        'pdc_ov_arretrati': 324,
-        'pds_durata': 130,
-        'pds_arretrati': 300}
     btnradio_mpe = request.args.get('btnradio_mpe')
     if not btnradio_mpe:
         btnradio_mpe = 'btnradio_mpe_2024Q1_2'
@@ -37,7 +88,10 @@ def index():
             cila = np.ceil(comuni_cila_measure.values).astype(int),
             comuni = comuni_monitored,
             target = target,
-            btnradio_mpe = btnradio_mpe)
+            btnradio_mpe = btnradio_mpe,
+            chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
+            chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_5a_misurazione.get_comuni_measure(
             pat_pnrr_5a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -58,7 +112,10 @@ def index():
             cila = np.ceil(comuni_cila_measure.values).astype(int),
             comuni = comuni_monitored,
             target = target,
-            btnradio_mpe = btnradio_mpe)
+            btnradio_mpe = btnradio_mpe,
+            chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
+            chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
 
 # @app.route('/progetto')
 # def project():

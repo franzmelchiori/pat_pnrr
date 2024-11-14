@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-    {% block content %}
+{% block content %}
     <div class="container">
         <form action="{{url_for('index')}}">
             <div class="btn-group btn-group-sm" role="group" aria-label="mpe radio toggle button group">
-                <!-- onchange="this.form.submit();" is a bad practice, on* attributes make code hard to debug and maintain: use JavaScript instead!  -->
+                <!-- TODO: onchange="this.form.submit();" is a bad practice, on* attributes make code hard to debug and maintain: use JavaScript instead!  -->
                 <input type="radio" class="btn-check" name="btnradio_mpe" value="btnradio_mpe_2024Q1_2" id="btnradio_mpe_2024Q1_2" autocomplete="off" onchange="this.form.submit();"
                 {% if btnradio_mpe == 'btnradio_mpe_2024Q1_2' %} checked> {% else %} > {% endif %}
                 <label class="btn btn-outline-primary" for="btnradio_mpe_2024Q1_2">2024Q1-2 <span class="badge text-bg-secondary">Nuovo</span></label>
@@ -26,8 +26,31 @@
             </div>
             <!-- <input type="submit" class="btn btn-primary btn-sm" value="Invia"> -->
         </form>
-        <br>
-        
-        {% include 'table.html' %}
-        {% endblock %}
     </div>
+    <br>
+
+    {% include 'table.html' %}
+
+    {# chart | provincia | area | time | avviato [nr] pdc_pds | mpe 1-6 (time)  #}
+    {% include 'charts/chart_provincia_area_time_avviato_pdc_pds.html' %}
+    {# chart | provincia | line | time | durata [gg] pdc_pds | mpe 1-6 (time)  #}
+    {% include 'charts/chart_provincia_line_time_durata_pdc_pds.html' %}
+    {# chart | provincia | area | time | arretrato [nr] pdc_pds | mpe 1-6 (time)  #}
+    {% include 'charts/chart_provincia_area_time_arretrato_pdc_pds.html' %}
+
+    {# chart | comuni | scatter | cluster pop | pressione [idx] pdc pds | mpe 1-6 (static) #}
+    {# chart | comuni | scatter | cluster pop | pressione [idx] pdc pds | mpe 1-6 (timelapse)  #}
+    {# chart | comuni | area | distro | pressione [idx] | mpe 1-6 (timelapse)  #}
+    {# chart | provincia | gauge | mean | pressione [idx] | mpe 1-6 (timelapse)  #}
+    {# chart | comuni | pie | pop | pressione [idx] | mpe 1-6 (timelapse?)  #}
+
+    {# chart | comuni | scatter | cluster | pressione [idx]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
+    {# chart | comuni | scatter | cluster | avviato [nr]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
+    {# chart | comuni | scatter | cluster | durata [gg]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
+    {# chart | comuni | scatter | cluster | arretrato [nr]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
+    
+    {# chart | comuni | rank | time | classifica pressione [idx] | mpe 1-6 (time)  #}
+
+    {# chart | provincia | map | .. | mpe 1-6 (timelapse?)  #}
+
+{% endblock %}
