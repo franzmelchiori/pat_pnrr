@@ -1,12 +1,17 @@
-import numpy as np
 import json
+import numpy as np
+import pandas as pd
 from flask import render_template, url_for, request
 from markupsafe import escape, Markup
 
 from pat_pnrr.pat_pnrr_mpe_server import app
 from pat_pnrr_monitoring_analyzer import get_pat_comuni_dataframe
+from pat_pnrr_monitoring_reporter import get_comuni_performance_trends, get_comuni_scores
 from pat_pnrr.pat_pnrr_mpe import pat_pnrr_5a_misurazione
 from pat_pnrr.pat_pnrr_mpe import pat_pnrr_6a_misurazione
+
+
+pd.options.mode.copy_on_write = True
 
 
 target = {
@@ -16,6 +21,58 @@ target = {
     'pds_arretrati': 300}
 
 pat_comuni_dataframe = get_pat_comuni_dataframe()
+comuni_popolazione = pat_comuni_dataframe.pat_comuni_popolazione
+classificazione_comunale_map = {
+    'Cluster 1: comuni piccoli (130)': 0,
+    'Cluster 2: comuni medio-piccoli (31)': 1,
+    'Cluster 3: comuni medi (3)': 2,
+    'Cluster 4: Rovereto': 3,
+    'Cluster 5: Trento': 4}
+classificazione_comunale = pat_comuni_dataframe.pat_comuni_kmeans_clustering_labels
+classificazione_comunale = classificazione_comunale.map(classificazione_comunale_map)
+
+# TODO: modulare le ore e gli scores per misurazione (es. 2023q3-2024q2, 2023)
+ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q1-2']
+ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = \
+    pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2023q3-4'].loc[ore_tecnici_settimana.isna()]
+ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = 0
+comuni_durata_trends, comuni_durata_netta_trends, \
+comuni_arretrato_trends, \
+comuni_performance_trends, comuni_performance_netta_trends= \
+    get_comuni_performance_trends(pat_comuni_dataframe)  #, time_limit=365)
+pdc_measure_labels = ['pdc_2023q3_4', 'pdc_2024q1_2']
+pds_measure_labels = ['pds_2023q3_4', 'pds_2024q1_2']
+pdc_net_measure_labels = ['pdc_performance_netta_2023q3_4', 'pdc_performance_netta_2024q1_2']
+pds_net_measure_labels = ['pds_performance_netta_2023q3_4', 'pds_performance_netta_2024q1_2']
+comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+    comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
+    comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
+
+scatter_pressione_data = pd.concat([
+    classificazione_comunale,
+    comuni_pds_scores,
+    comuni_pdc_scores,
+    comuni_popolazione,
+    comuni_scores,
+    ore_tecnici_settimana,
+    comuni_pds_net_scores,
+    comuni_pdc_net_scores,
+    comuni_net_scores,
+    pd.Series(pat_comuni_dataframe.index, pat_comuni_dataframe.index)],
+    keys=[
+        'cluster_comune',
+        'pds_score',
+        'pdc_score',
+        'popolazione',
+        'score',
+        'ore_tecnici_settimana',
+        'pds_net_score',
+        'pdc_net_score',
+        'net_score',
+        'nome_comune'],
+    axis='columns', join='outer')
+
 chart_provincia_area_time_avviato_pdc_pds_series = {
     'pdc_avviato': [
         str(pat_comuni_dataframe.loc[:, 'numero_permessi_costruire_2021q3-4'].sum().astype(int)),
@@ -62,7 +119,16 @@ chart_provincia_area_time_arretrato_pdc_pds_series = {
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2'].sum().astype(int))]}
 chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = {
-    }
+    'comuni_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':
+        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':
+        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 3].iloc[:, 1:])],
+    'trento':
+        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 4].iloc[:, 1:])]}
 
 
 @app.route('/')

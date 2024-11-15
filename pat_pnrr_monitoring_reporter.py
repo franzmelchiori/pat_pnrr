@@ -1445,7 +1445,7 @@ if __name__ == '__main__':
     # pds_measure_labels = ['pds_performance_netta_2023q3_4', 'pds_performance_netta_2024q1_2']
     # comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     #     comuni_performance_netta_trends, pdc_measure_labels, pds_measure_labels)
-    # comuni_scores.to_csv('pat-pnrr_edilizia_pressione_netta_2023.csv')
+    # comuni_scores.to_csv('pat-pnrr_edilizia_pressione_netta_2023q3-2024q2.csv')
 
     # for mpe_number in [3, 4, 5, 6]:
     for mpe_number in [6]:
