@@ -1,5 +1,5 @@
 <div class="container">
-    <div id="chart_comuni_scatter_cluster_pop_pressione_pdc_pds" style="height:540px;"></div>
+    <div id="chart_comuni_scatter_cluster_pop_pressione_pdc_pds" style="height:720px;"></div>
     <script type="text/javascript">
         var dom = document.getElementById('chart_comuni_scatter_cluster_pop_pressione_pdc_pds');
         var myChart = echarts.init(dom, null, {
@@ -13,16 +13,16 @@
             legend: {
                 top: 10,
                 data: [
-                    'Comuni piccoli',
-                    'Comuni medio-piccoli',
-                    'Comuni medi',
+                    'Cluster 130 comuni',
+                    'Cluster 31 comuni',
+                    'Cluster 3 comuni',
                     'Rovereto',
                     'Trento'],
                 textStyle: {
                     fontSize: 16}},
             xAxis: {
                 type: 'value',
-                name: 'da PdS',
+                name: 'PdS',
                 nameGap: 16,
                 nameTextStyle: {
                     fontSize: 16},
@@ -30,7 +30,7 @@
                     show: false}},
             yAxis: {
                 type: 'value',
-                name: 'da PdC',
+                name: 'PdC',
                 nameLocation: 'end',
                 nameGap: 20,
                 nameTextStyle: {
@@ -39,7 +39,7 @@
                     show: false}},
             series: [
                 {
-                    name: 'Comuni piccoli',
+                    name: 'Cluster 130 comuni',
                     type: 'scatter',
                     itemStyle: {
                         opacity: 0.8,
@@ -51,7 +51,7 @@
                         {{ chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series.comuni_piccoli | safe }}
                 },
                 {
-                    name: 'Comuni medio-piccoli',
+                    name: 'Cluster 31 comuni',
                     type: 'scatter',
                     itemStyle: {
                         opacity: 0.8,
@@ -63,7 +63,7 @@
                         {{ chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series.comuni_medio_piccoli | safe }}
                 },
                 {
-                    name: 'Comuni medi',
+                    name: 'Cluster 3 comuni',
                     type: 'scatter',
                     itemStyle: {
                         opacity: 0.8,
@@ -102,8 +102,8 @@
             grid: {
                 left: '10%',
                 right: 150,
-                top: '18%',
-                bottom: '10%'},
+                top: '15%',
+                bottom: '15%'},
             tooltip: {
                 backgroundColor: 'rgba(255,255,255,0.7)',
                 formatter: function (param) {
@@ -111,77 +111,106 @@
                     return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
                             + 'Comune di ' + value[8]
                             + '</div>'
-                            + 'Pressione PdS: ' + value[0] + '<br>'
-                            + 'Pressione PdC: ' + value[1] + '<br>'
-                            + 'Popolazione: ' + value[2] + '<br>'
-                            + 'Pressione: ' + value[3] + '<br>'
-                            + 'Elaborazione ore/sett: ' + value[4] + '<br>'
-                            + 'Pressione netta PdS: ' + value[5] + '<br>'
-                            + 'Pressione netta PdC: ' + value[6] + '<br>'
-                            + 'Pressione netta: ' + value[7] + '<br>';}},
+                            + 'Popolazione: ' + value[2].toFixed(0) + '<br>'
+                            + 'Elaborazione ore/sett: ' + value[4].toFixed(1) + '<br>'
+                            + '</div>'
+                            + 'Pressione: ' + value[3].toFixed(3) + '<br>'
+                            + 'Pressione PdS: ' + value[0].toFixed(3) + '<br>'
+                            + 'Pressione PdC: ' + value[1].toFixed(3) + '<br>'
+                            + '</div>'
+                            + 'Pressione netta: ' + value[7].toFixed(3) + '<br>'
+                            + 'Pressione netta PdS: ' + value[5].toFixed(3) + '<br>'
+                            + 'Pressione netta PdC: ' + value[6].toFixed(3) + '<br>';}},
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {},
+                    brush: {type: ['polygon']},
+                    restore: {},
+                    saveAsImage: {}}},
+            brush: {},
             visualMap: [
                 {
-                    left: 'right',
-                    top: '20%',
+                    orient: 'horizontal',
+                    left: '10%',
+                    bottom: '0px',
+                    padding: [50, 10, 10, 10],
+                    {# right: '10px',
+                    top: '10%', #}
                     dimension: 3,
                     min: 0,
                     max: 10,
-                    itemWidth: 30,
+                    itemWidth: 25,
                     itemHeight: 120,
                     calculable: true,
                     precision: 0.1,
                     text: ['Pressione'],
-                    textGap: 30,
+                    textGap: 20,
                     inRange: {
+                        colorLightness: [0.9, 0.5],
                         symbolSize: [10, 70]},
                     outOfRange: {
                         symbolSize: [10, 70],
                         color: ['rgba(255,255,255,0.4)']},
                     controller: {
                         inRange: {
-                            color: ['#c23531']},
+                            color: ['#37A2FF']},
                         outOfRange: {
                             color: ['#999']}}
                 },
                 {
-                    left: 'right',
-                    top: '40%',
+                    orient: 'horizontal',
+                    left: '40%',
+                    bottom: '0px',
+                    padding: [50, 10, 10, 10],
+                    {# right: '10px',
+                    top: '35%', #}
                     dimension: 4,
                     min: 0,
-                    max: 1000,
-                    itemWidth: 30,
+                    max: 350,
+                    itemWidth: 25,
                     itemHeight: 120,
                     calculable: true,
                     precision: 0.1,
                     text: ['Elaborazione ore/sett'],
-                    textGap: 30,
+                    textGap: 20,
                     inRange: {
+                        colorLightness: [0.9, 0.5],
                         symbolSize: [10, 70]},
                     outOfRange: {
                         symbolSize: [10, 70],
                         color: ['rgba(255,255,255,0.4)']},
                     controller: {
                         inRange: {
-                            color: ['#c23531']},
+                            color: ['#37A2FF']},
                         outOfRange: {
                             color: ['#999']}}
                 },
                 {
-                    left: 'right',
-                    bottom: '10%',
+                    orient: 'horizontal',
+                    left: '70%',
+                    bottom: '0px',
+                    padding: [50, 10, 10, 10],
+                    {# right: '10px',
+                    top: '60%', #}
                     dimension: 2,
                     min: 0,
-                    max: 39411,
+                    max: 60000,
+                    itemWidth: 25,
                     itemHeight: 120,
+                    calculable: true,
+                    precision: 0.1,
                     text: ['Popolazione'],
-                    textGap: 30,
+                    textGap: 20,
                     inRange: {
-                        colorLightness: [0.9, 0.5]},
+                        colorLightness: [0.9, 0.5],
+                        symbolSize: [10, 70]},
                     outOfRange: {
+                        symbolSize: [10, 70],
                         color: ['rgba(255,255,255,0.4)']},
                     controller: {
                         inRange: {
-                            color: ['#c23531']},
+                            color: ['#37A2FF']},
                         outOfRange: {
                             color: ['#999']}}
                 }]};
