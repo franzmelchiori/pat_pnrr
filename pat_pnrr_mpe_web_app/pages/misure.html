@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h3 id="oggetto_misurazione">Oggetto della misurazione</h3>
+            <p>Una misurazione PNRR, secondo la definizione della Gazzetta Ufficiale (Criteri per la misurazione dei tempi: Gazzetta Ufficiale della Repubblica Italiana, nr. 284, del 29 novembre 2021, pagina 98), è una sequenza di 8 misure relative ad una Procedura della Pubblica Amministrazione.</p>
+            <p>Queste misure possono essere rilevate presso enti interlocutori come i 166 Comuni Trentini come nel caso dei Procedimenti Edilizi.</p>
+            <p>Inoltre, le misure in questione sono fondamentalmente di 2 tipi: numeri puri, ad esempio il numero totale di pratiche avviate, oppure tempi in giornate, ad esempio la durata media di lavorazione delle pratiche concluse.</p>
+            <p>In questa sezione, si definiscono le pratiche considerate in funzione del periodo temporale di riferimento, interpretato dalle linee guida della Gazzetta Ufficiale, e la classificazione delle stesse in funzione del loro svolgimento.</p>
+            <p>L'intenzione è di fornire i necessari e sufficienti elementi scientifici con i quali è stata impostata l'attività di misurazione.</p>
+            <p>Inizialmente, all'1 gennaio 2022, sul Piano Territoriale della PAT, trasmesso a Funzione Pubblica, i Procedimenti Edilizi oggetto di monitoraggio e supporto erano i seguenti:
+            <ul>
+                <li>Permesso di Costruire (PdC);</li>
+                <li>Provvedimento di Sanatoria (PdS);</li>
+                <li>Controllo della CILA.</li>
+            </ul></p>
+            <p>Contestualmente alla misurazione 3 (elaborata e trasmessa il 30 giugno 2023) è stata comunicata a Funzione Pubblica una proposta di revisione del Piano Territoriale della PAT, in merito alla tipologia dei Procedimenti Edilizi oggetto di misurazione e supporto, oltre ad una rimodulazione dei relativi obiettivi numerici. La proposta consiste nel considerare i seguenti Procedimenti Edilizi:
+            <ul>
+                <li>Permesso di Costruire Ordinario e in Variante (PdC-OV);</li>
+                <li>Provvedimento di Sanatoria (PdS).</li>
+            </ul></p>
+    </div>
+    <br>
+
+    <div class="container">
+        <h3 id="periodo_rilevazione">Periodo di rilevazione</h3>
+            <p>Una pratica, nella sua complessità, è caratterizzata da un inizio (tipicamente la data in cui è presa in carico da un ufficio tecnico) ed uno svolgimento entro i termini di scadenza previsti. Potrebbe, inoltre, svolgersi oltre tali termini e presentare una o più sospensioni in qualunque momento della sua lavorazione. Infine, ad una certa data, la pratica potrebbe risultare ancora non conclusa oppure conclusa in vari modi.</p>
+            <p>La legenda di seguito sintetizza graficamente le varie condizioni in cui si può trovare una pratica avviata, mentre lo schema di seguito illustra possibili transiti di pratiche nel periodo di rilevazione delle misurazioni in questione.</p>
+            <p>Il periodo di rilevazione è il primo (Q1-2) o il secondo semestre (Q3-4) di un anno, ovvero dall'1 gennaio al 30 giugno o dall'1 luglio al 31 dicembre. Più specificatamente occorre considerare le seguenti pratiche al fine della raccolta dati e delle successive misure:
+            <ul>
+                <li>pratiche iniziate prima dell'1 gennaio (o dell'1 luglio) e concluse tra l'1 gennaio (o l'1 luglio) ed il 30 giugno (o il 31 dicembre);</li>
+                <li>pratiche iniziate tra l'1 gennaio (o l'1 luglio) ed il 30 giugno (o il 31 dicembre) e concluse tra l'1 gennaio (o l'1 luglio) ed il 30 giugno (o il 31 dicembre);</li>
+                <li>pratiche iniziate prima dell'1 gennaio (o dell'1 luglio) e non concluse il 30 giugno (o il 31 dicembre);</li>
+                <li>pratiche iniziate tra l'1 gennaio (o l'1 luglio) ed il 30 giugno (o il 31 dicembre) e non concluse il 30 giugno (o il 31 dicembre).</li>
+            </ul></p><br>
+            <p><figure class="figure">
+                <img src="{{url_for('static', filename='pat-mpe_scheme_01.png')}}" class="figure-img img-fluid rounded" alt="pat-mpe_scheme_01">
+                <figcaption class="figure-caption">Legenda delle pratiche (i numeri delle pratiche si riferiscono alla loro classe)</figcaption>
+            </figure></p><br>
+            <p><figure class="figure">
+                <img src="{{url_for('static', filename='pat-mpe_scheme_02.png')}}" class="figure-img img-fluid rounded" alt="pat-mpe_scheme_02">
+                <figcaption class="figure-caption">Schema delle pratiche in transito in un semestre di riferimento, Q1-2 o Q3-4 (i numeri delle pratiche si riferiscono alla loro classe)</figcaption>
+            </figure></p><br>
+    </div>
+    <br>
+
+    <div class="container">
+        <h3 id="classificazione_pratiche">Classificazione delle pratiche</h3>
+            <p>Le pratiche di riferimento, ovvero quelle che in qualche modo intersecano il periodo di rilevazione, possono essere classificate in relazione al loro svolgimento, come illustrato nella figura di seguito.</p>
+            <p>Generalmente le pratiche avviate possono essere concluse o meno, ed in entrambi i casi possono oltrepassare o meno i termini di scadenza previsti. La lista esauriente delle classi è la seguente:
+            <ol>
+                <li>pratica avviata, conclusa con un'espressione positiva o negativa, entro od oltre i termini di scadenza e senza sospensioni;</li>
+                <li>pratica avviata, conclusa con un'espressione positiva o negativa, entro od oltre i termini di scadenza e con sospensioni;</li>
+                <li>pratica avviata, conclusa con un'espressione positiva o negativa, entro od oltre i termini di scadenza e con Conferenza dei Servizi;</li>
+                <li>pratica avviata, conclusa con silenzio assenso, quindi oltre i termini di scadenza, con o senza sospensioni;</li>
+                <li>pratica avviata, non conclusa, entro i termini di scadenza;</li>
+                <li>pratica avviata, ancora non conclusa, oltre i termini di scadenza, ovvero un arretrato.</li>
+            </ol></p><br>
+            <p><figure class="figure">
+                <img src="{{url_for('static', filename='pat-mpe_scheme_03.png')}}" class="figure-img img-fluid rounded" alt="pat-mpe_scheme_03">
+                <figcaption class="figure-caption">Classificazione delle pratiche</figcaption>
+            </figure></p><br>
+    </div>
+    <br>
+
+    <div class="container">
+        <h3 id="misure_pnrr">Le 8 misure PNRR</h3>
+            <p>Considerando il periodo di rilevazione (schematizzato nella figura di seguito) ed in particolare modo il 30 giugno (o il 31 dicembre), per la valutazione delle pratiche non concluse in tale data, e considerando inoltre la classificazione delle pratiche (illustrata nella figura di seguito) è infine possibile elencare (nella tabella a seguire) le definizioni delle 8 misure PNRR:
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Pratiche da misurare</th>
+                        <th scope="col">Unità di misura</th>
+                        <th scope="col">Descrizione della misura</th>
+                        <th scope="col">Classe della pratica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Concluse con silenzio-assenso</th>
+                        <td>numero, intero</td>
+                        <td>Somma totale delle pratiche avviate, concluse con silenzio assenso, quindi oltre i termini di scadenza, con o senza sospensioni</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Concluse con provvedimento espresso</th>
+                        <td>numero, intero</td>
+                        <td>Somma totale delle pratiche avviate, concluse con un'espressione positiva o negativa, entro od oltre i termini di scadenza, con e senza sospensioni o Conferenza dei Servizi</td>
+                        <td>1+2+3</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">di cui: con sospensioni</th>
+                        <td>numero, intero</td>
+                        <td>Somma totale delle pratiche avviate, concluse con un'espressione positiva o negativa, entro od oltre i termini di scadenza e con sospensioni</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">di cui: con Conferenza dei Servizi</th>
+                        <td>numero, intero</td>
+                        <td>Somma totale delle pratiche avviate, concluse con un'espressione positiva o negativa, entro od oltre i termini di scadenza e con Conferenza dei Servizi</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Durata media</th>
+                        <td>giornate, intere</td>
+                        <td>Giornate medie lorde di lavorazione delle pratiche avviate, concluse con un'espressione positiva o negativa, entro od oltre i termini di scadenza, con e senza sospensioni o Conferenza dei Servizi</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Termine massimo</th>
+                        <td>giornate, intere</td>
+                        <td>Giornate massime nette di lavorazione prima della scadenza dei termini previsti per le pratiche avviate, concluse con un'espressione positiva o negativa, entro od oltre i termini di scadenza, con e senza sospensioni o Conferenza dei Servizi</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Avviate</th>
+                        <td>numero, intero</td>
+                        <td>Somma totale delle pratiche avviate, concluse o meno, entro od oltre i termini di scadenza</td>
+                        <td>1+2+3+4+6+7</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Arretrato</th>
+                        <td>numero, intero</td>
+                        <td>Somma totale delle pratiche avviate, ancora non concluse, oltre i termini di scadenza</td>
+                        <td>7</td>
+                    </tr>
+                </tbody>
+            </table></p><br>
+    </div>
+    <br>
+
+    <div class="container">
+        <h3 id="obiettivi_ministeriali">Obiettivi ministeriali</h3>
+            <p>Inizialmente, all'1 gennaio 2022, gli obiettivi sul Piano Territoriale della PAT trasmessi a Funzione Pubblica e relativi ai Procedimenti Edilizi oggetto di monitoraggio e supporto erano i seguenti:
+            <ol>
+                <li>Target 1 intermedio (al 30 giugno 2024, considerando il 2023Q3-4) in funzione della baseline (del 30 giugno 2022, considerando il 2021Q3-4) -10\% durata media [gg], -50\% pratiche arretrate;</li>
+                <li>Target 2 finale (al 31 dicembre 2025, considerando il 2025Q1-2) in funzione della baseline (del 30 giugno 2022, considerando il 2021Q3-4) -15\% durata media [gg], -100\% pratiche arretrate.</li>
+            </ol></p>
+            <p>Contestualmente alla misurazione 3 (elaborata e trasmessa il 30 giugno 2023) è stata comunicata a Funzione Pubblica una proposta di revisione del Piano Territoriale della PAT, in merito ai Procedimenti Edilizi oggetto di misurazione e supporto, oltre ad una rimodulazione dei relativi obiettivi numerici. La proposta consiste nel considerare i seguenti nuovi obiettivi:
+            <ol>
+                <li>Nuovo target 1 intermedio (al 30 giugno 2024, considerando il 2023Q3-4) in funzione della nuova baseline (del 30 giugno 2023, considerando il 2022Q3-4) -5\% durata media [gg], -30\% pratiche arretrate;</li>
+                <li>Nuovo target 2 finale (al 31 dicembre 2025, considerando il 2025Q1-2) in funzione della nuova baseline (del 30 giugno 2023, considerando il 2022Q3-4) -10\% durata media [gg], -80\% pratiche arretrate.</li>
+            </ol></p>
+    </div>
+    <br>
+
+{% endblock %}

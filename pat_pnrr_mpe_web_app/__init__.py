@@ -187,9 +187,9 @@ def index():
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
             chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series)
 
-# @app.route('/progetto')
-# def project():
-#     return '<h1>project</h1>'
+@app.route('/misure')
+def misure():
+    return render_template('misure.html')
 
 # @app.route('/mpe_comunale/<name_comune>', methods=['GET', 'POST'])
 # def mpe_comunale(name_comune):

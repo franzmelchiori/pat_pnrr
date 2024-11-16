@@ -37,11 +37,11 @@
                                 Misure
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Oggetto della misurazione</a></li>
-                                <li><a class="dropdown-item" href="#">Periodo di rilevazione</a></li>
-                                <li><a class="dropdown-item" href="#">Classificazione delle pratiche</a></li>
-                                <li><a class="dropdown-item" href="#">Le 8 misure PNRR</a></li>
-                                <li><a class="dropdown-item" href="#">Obiettivi ministeriali</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('misure', _anchor='oggetto_misurazione')}}">Oggetto della misurazione</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('misure', _anchor='periodo_rilevazione')}}">Periodo di rilevazione</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('misure', _anchor='classificazione_pratiche')}}">Classificazione delle pratiche</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('misure', _anchor='misure_pnrr')}}">Le 8 misure PNRR</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('misure', _anchor='obiettivi_ministeriali')}}">Obiettivi ministeriali</a></li>
                             </ul>
                         </li>
                     </ul>
