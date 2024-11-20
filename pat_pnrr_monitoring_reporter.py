@@ -1435,17 +1435,17 @@ if __name__ == '__main__':
     comuni_performance_trends, comuni_performance_netta_trends= \
         get_comuni_performance_trends(pat_comuni_dataframe, time_limit=365)
     
-    # pdc_measure_labels = ['pdc_2023q3_4', 'pdc_2024q1_2']
-    # pds_measure_labels = ['pds_2023q3_4', 'pds_2024q1_2']
-    # comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
-    #     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
-    # comuni_scores.to_csv('pat-pnrr_edilizia_pressione_2023q3-2024q2.csv')
+    pdc_measure_labels = ['pdc_2023q3_4', 'pdc_2024q1_2']
+    pds_measure_labels = ['pds_2023q3_4', 'pds_2024q1_2']
+    comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+        comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+    comuni_scores.to_csv('pat-pnrr_edilizia_pressione_2023q3-2024q2.csv')
     
-    # pdc_measure_labels = ['pdc_performance_netta_2023q3_4', 'pdc_performance_netta_2024q1_2']
-    # pds_measure_labels = ['pds_performance_netta_2023q3_4', 'pds_performance_netta_2024q1_2']
-    # comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
-    #     comuni_performance_netta_trends, pdc_measure_labels, pds_measure_labels)
-    # comuni_scores.to_csv('pat-pnrr_edilizia_pressione_netta_2023q3-2024q2.csv')
+    pdc_measure_labels = ['pdc_performance_netta_2023q3_4', 'pdc_performance_netta_2024q1_2']
+    pds_measure_labels = ['pds_performance_netta_2023q3_4', 'pds_performance_netta_2024q1_2']
+    comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
+        comuni_performance_netta_trends, pdc_measure_labels, pds_measure_labels)
+    comuni_net_scores.to_csv('pat-pnrr_edilizia_pressione_netta_2023q3-2024q2.csv')
 
     # for mpe_number in [3, 4, 5, 6]:
     for mpe_number in [6]:
