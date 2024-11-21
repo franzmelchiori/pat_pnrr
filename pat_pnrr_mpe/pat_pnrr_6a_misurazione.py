@@ -1427,8 +1427,8 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
         comuni_measure_dataframe_shelve['comuni_measure_dataframe'] = comuni_measure_dataframe
         comuni_measure_dataframe_shelve.close()
 
-        # comuni_measure_dataframe.to_csv(path_shelve + 'pat-pnrr_edilizia_misure' + \
-        #                                 sheet_suffix + '_2024q1-2' + '.csv')
+        comuni_measure_dataframe.to_csv(path_shelve + 'pat-pnrr_edilizia_misure' + \
+                                        sheet_suffix + '_2024q1-2' + '.csv')
 
     return comuni_measure_dataframe
 
@@ -1748,8 +1748,8 @@ if __name__ == '__main__':
     # check_comuni_excel('pat_pnrr_6a_misurazione_tabelle_comunali\\')
     # get_comuni_dataframes(comuni_excel_map, load=False)
     # check_comuni_dataframes(comuni_excel_map)
-    get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    get_comuni_measures(comuni_excel_map, save_tex=True)
+    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    # get_comuni_measures(comuni_excel_map, save_tex=True)
 
     # load = True
     # lpf = True
