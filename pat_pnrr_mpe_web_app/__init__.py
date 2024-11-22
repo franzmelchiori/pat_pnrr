@@ -40,25 +40,18 @@ comuni_durata_trends, comuni_durata_netta_trends, \
 comuni_arretrato_trends, \
 comuni_performance_trends, comuni_performance_netta_trends= \
     get_comuni_performance_trends(pat_comuni_dataframe)  #, time_limit=365)
-pdc_measure_labels = ['pdc_2023q3_4', 'pdc_2024q1_2']
-pds_measure_labels = ['pds_2023q3_4', 'pds_2024q1_2']
-pdc_net_measure_labels = ['pdc_performance_netta_2023q3_4', 'pdc_performance_netta_2024q1_2']
-pds_net_measure_labels = ['pds_performance_netta_2023q3_4', 'pds_performance_netta_2024q1_2']
+
+pdc_measure_labels = ['pdc_2021q3_4', 'pdc_2022q1_2']
+pds_measure_labels = ['pds_2021q3_4', 'pds_2022q1_2']
 comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
-comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
-    comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
-
-scatter_pressione_data = pd.concat([
+scatter_pressione_data_2021q3_2022q2 = pd.concat([
     classificazione_comunale,
     comuni_pds_scores,
     comuni_pdc_scores,
     comuni_popolazione,
     comuni_scores,
     ore_tecnici_settimana,
-    comuni_pds_net_scores,
-    comuni_pdc_net_scores,
-    comuni_net_scores,
     pd.Series(pat_comuni_dataframe.index, pat_comuni_dataframe.index)],
     keys=[
         'cluster_comune',
@@ -67,9 +60,157 @@ scatter_pressione_data = pd.concat([
         'popolazione',
         'score',
         'ore_tecnici_settimana',
+        'nome_comune'],
+    axis='columns', join='outer')
+
+pdc_measure_labels = ['pdc_2022q1_2', 'pdc_2022q3_4']
+pds_measure_labels = ['pds_2022q1_2', 'pds_2022q3_4']
+comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+    comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+scatter_pressione_data_2022 = pd.concat([
+    classificazione_comunale,
+    comuni_pds_scores,
+    comuni_pdc_scores,
+    comuni_popolazione,
+    comuni_scores,
+    ore_tecnici_settimana,
+    pd.Series(pat_comuni_dataframe.index, pat_comuni_dataframe.index)],
+    keys=[
+        'cluster_comune',
+        'pds_score',
+        'pdc_score',
+        'popolazione',
+        'score',
+        'ore_tecnici_settimana',
+        'nome_comune'],
+    axis='columns', join='outer')
+
+pdc_measure_labels = ['pdc_2022q3_4', 'pdc_2023q1_2']
+pds_measure_labels = ['pds_2022q3_4', 'pds_2023q1_2']
+pdc_net_measure_labels = ['pdc_performance_netta_2022q3_4', 'pdc_performance_netta_2023q1_2']
+pds_net_measure_labels = ['pds_performance_netta_2022q3_4', 'pds_performance_netta_2023q1_2']
+comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+    comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
+    comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
+scatter_pressione_data_2022q3_2023q2 = pd.concat([
+    classificazione_comunale,
+    comuni_pds_scores,
+    comuni_pdc_scores,
+    comuni_popolazione,
+    comuni_scores,
+    ore_tecnici_settimana,
+    pd.Series(pat_comuni_dataframe.index, pat_comuni_dataframe.index)],
+    keys=[
+        'cluster_comune',
+        'pds_score',
+        'pdc_score',
+        'popolazione',
+        'score',
+        'ore_tecnici_settimana',
+        'nome_comune'],
+    axis='columns', join='outer')
+scatter_pressione_netta_data_2022q3_2023q2 = pd.concat([
+    classificazione_comunale,
+    comuni_pds_net_scores,
+    comuni_pdc_net_scores,
+    comuni_popolazione,
+    comuni_net_scores,
+    ore_tecnici_settimana,
+    pd.Series(pat_comuni_dataframe.index, pat_comuni_dataframe.index)],
+    keys=[
+        'cluster_comune',
         'pds_net_score',
         'pdc_net_score',
+        'popolazione',
         'net_score',
+        'ore_tecnici_settimana',
+        'nome_comune'],
+    axis='columns', join='outer')
+
+pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
+pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
+pdc_net_measure_labels = ['pdc_performance_netta_2023q1_2', 'pdc_performance_netta_2023q3_4']
+pds_net_measure_labels = ['pds_performance_netta_2023q1_2', 'pds_performance_netta_2023q3_4']
+comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+    comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
+    comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
+scatter_pressione_data_2023 = pd.concat([
+    classificazione_comunale,
+    comuni_pds_scores,
+    comuni_pdc_scores,
+    comuni_popolazione,
+    comuni_scores,
+    ore_tecnici_settimana,
+    pd.Series(pat_comuni_dataframe.index, pat_comuni_dataframe.index)],
+    keys=[
+        'cluster_comune',
+        'pds_score',
+        'pdc_score',
+        'popolazione',
+        'score',
+        'ore_tecnici_settimana',
+        'nome_comune'],
+    axis='columns', join='outer')
+scatter_pressione_netta_data_2023 = pd.concat([
+    classificazione_comunale,
+    comuni_pds_net_scores,
+    comuni_pdc_net_scores,
+    comuni_popolazione,
+    comuni_net_scores,
+    ore_tecnici_settimana,
+    pd.Series(pat_comuni_dataframe.index, pat_comuni_dataframe.index)],
+    keys=[
+        'cluster_comune',
+        'pds_net_score',
+        'pdc_net_score',
+        'popolazione',
+        'net_score',
+        'ore_tecnici_settimana',
+        'nome_comune'],
+    axis='columns', join='outer')
+
+pdc_measure_labels = ['pdc_2023q3_4', 'pdc_2024q1_2']
+pds_measure_labels = ['pds_2023q3_4', 'pds_2024q1_2']
+pdc_net_measure_labels = ['pdc_performance_netta_2023q3_4', 'pdc_performance_netta_2024q1_2']
+pds_net_measure_labels = ['pds_performance_netta_2023q3_4', 'pds_performance_netta_2024q1_2']
+comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
+    comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
+    comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
+scatter_pressione_data_2023q3_2024q2 = pd.concat([
+    classificazione_comunale,
+    comuni_pds_scores,
+    comuni_pdc_scores,
+    comuni_popolazione,
+    comuni_scores,
+    ore_tecnici_settimana,
+    pd.Series(pat_comuni_dataframe.index, pat_comuni_dataframe.index)],
+    keys=[
+        'cluster_comune',
+        'pds_score',
+        'pdc_score',
+        'popolazione',
+        'score',
+        'ore_tecnici_settimana',
+        'nome_comune'],
+    axis='columns', join='outer')
+scatter_pressione_netta_data_2023q3_2024q2 = pd.concat([
+    classificazione_comunale,
+    comuni_pds_net_scores,
+    comuni_pdc_net_scores,
+    comuni_popolazione,
+    comuni_net_scores,
+    ore_tecnici_settimana,
+    pd.Series(pat_comuni_dataframe.index, pat_comuni_dataframe.index)],
+    keys=[
+        'cluster_comune',
+        'pds_net_score',
+        'pdc_net_score',
+        'popolazione',
+        'net_score',
+        'ore_tecnici_settimana',
         'nome_comune'],
     axis='columns', join='outer')
 
@@ -118,17 +259,100 @@ chart_provincia_area_time_arretrato_pdc_pds_series = {
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2'].sum().astype(int)),
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2'].sum().astype(int))]}
-chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = {
+chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = [{
     'comuni_piccoli':
-        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 0].iloc[:, 1:])],
+        [list(a) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 0].iloc[:, 1:])],
     'comuni_medio_piccoli':
-        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 1].iloc[:, 1:])],
+        [list(a) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 1].iloc[:, 1:])],
     'comuni_medi':
-        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 2].iloc[:, 1:])],
+        [list(a) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 2].iloc[:, 1:])],
     'rovereto':
-        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 3].iloc[:, 1:])],
+        [list(a) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 3].iloc[:, 1:])],
     'trento':
-        [list(a) for a in np.array(scatter_pressione_data[scatter_pressione_data.cluster_comune == 4].iloc[:, 1:])]}
+        [list(a) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 4].iloc[:, 1:])]
+    },
+    {
+    'comuni_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':
+        [list(a) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':
+        [list(a) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 3].iloc[:, 1:])],
+    'trento':
+        [list(a) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 4].iloc[:, 1:])]
+    },
+    {
+    'comuni_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':
+        [list(a) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':
+        [list(a) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':
+        [list(a) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 4].iloc[:, 1:])]
+    },
+    {
+    'comuni_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':
+        [list(a) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':
+        [list(a) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 3].iloc[:, 1:])],
+    'trento':
+        [list(a) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 4].iloc[:, 1:])]
+    },
+    {
+    'comuni_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':
+        [list(a) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':
+        [list(a) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':
+        [list(a) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':
+        [list(a) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 4].iloc[:, 1:])]}]
+chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = [{
+    'comuni_piccoli':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 4].iloc[:, 1:])]
+    },
+    {
+    'comuni_piccoli':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 3].iloc[:, 1:])],
+    'trento':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 4].iloc[:, 1:])]
+    },
+    {
+    'comuni_piccoli':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_netta_data_2023q3_2024q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_netta_data_2023q3_2024q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_netta_data_2023q3_2024q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_netta_data_2023q3_2024q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':
+        [list(a) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 4].iloc[:, 1:])]}]
 
 
 @app.route('/')
@@ -136,6 +360,7 @@ def index():
     btnradio_mpe = request.args.get('btnradio_mpe')
     if not btnradio_mpe:
         btnradio_mpe = 'btnradio_mpe_2024Q1_2'
+    durata_netta = request.args.get('durata_netta')
     if btnradio_mpe == 'btnradio_mpe_2024Q1_2':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_6a_misurazione.get_comuni_measure(
             pat_pnrr_6a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -157,10 +382,12 @@ def index():
             comuni = comuni_monitored,
             target = target,
             btnradio_mpe = btnradio_mpe,
+            durata_netta = durata_netta,
             chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series)
+            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
+            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_5a_misurazione.get_comuni_measure(
             pat_pnrr_5a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -182,10 +409,12 @@ def index():
             comuni = comuni_monitored,
             target = target,
             btnradio_mpe = btnradio_mpe,
+            durata_netta = durata_netta,
             chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series)
+            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
+            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series)
 
 @app.route('/misure')
 def misure():
