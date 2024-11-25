@@ -7,21 +7,6 @@
             useDirtyRect: false});
         var app = {};
 
-        function makeData() {
-            let data = [];
-            for (let i = 0; i < 6; i++) {
-                let cate = [];
-                for (let j = 0; j < 167; j++) {
-                    cate.push(Math.random() * 10);}
-                data.push(cate);}
-            return data;}
-
-        const data0 = makeData();
-        const data1 = makeData();
-        const data2 = makeData();
-        const data3 = makeData();
-        const data4 = makeData();
-
         option = {
             title: {
                 text: 'Pressione'},
@@ -35,74 +20,96 @@
                     show: true},
                 splitLine: {
                     show: false}},
+                // data: ['2022Q1-2','2022Q3-4','2023Q1-2','2023Q3-4','2024Q1-2']},
             yAxis: {
                 type: 'value',
                 min: 0,
                 max: 10,
                 splitArea: {
                     show: false}},
-            series: [
-                {
-                name: 'Cluster 130 comuni',
-                type: 'boxplot',
-                datasetIndex: 5
-                },
-                {
-                name: 'Cluster 31 comuni',
-                type: 'boxplot',
-                datasetIndex: 6
-                },
-                {
-                name: 'Cluster 3 comuni',
-                type: 'boxplot',
-                datasetIndex: 7
-                },
-                {
-                name: 'Rovereto',
-                type: 'boxplot',
-                datasetIndex: 8
-                },
-                {
-                name: 'Trento',
-                type: 'boxplot',
-                datasetIndex: 9
-                }],
             dataset: [
                 {
-                source: data0
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[0].comuni_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[1].comuni_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[2].comuni_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[3].comuni_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[4].comuni_piccoli]
                 },
                 {
-                source: data1
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[0].comuni_medio_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[1].comuni_medio_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[2].comuni_medio_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[3].comuni_medio_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[4].comuni_medio_piccoli]
                 },
                 {
-                source: data2
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[0].comuni_medi,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[1].comuni_medi,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[2].comuni_medi,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[3].comuni_medi,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[4].comuni_medi]
                 },
                 {
-                source: data3
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[0].rovereto,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[1].rovereto,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[2].rovereto,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[3].rovereto,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[4].rovereto]
                 },
                 {
-                source: data4
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[0].trento,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[1].trento,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[2].trento,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[3].trento,
+                    {{ chart_comuni_box_cluster_pressione_series | safe }}[4].trento]
                 },
                 {
                 fromDatasetIndex: 0,
-                transform: { type: 'boxplot' }
+                transform: {
+                    type: 'boxplot'}
                 },
                 {
                 fromDatasetIndex: 1,
-                transform: { type: 'boxplot' }
+                transform: {
+                    type: 'boxplot'}
                 },
                 {
                 fromDatasetIndex: 2,
-                transform: { type: 'boxplot' }
+                transform: {
+                    type: 'boxplot'}
                 },
                 {
                 fromDatasetIndex: 3,
-                transform: { type: 'boxplot' }
+                transform: {
+                    type: 'boxplot'}
                 },
                 {
                 fromDatasetIndex: 4,
-                transform: { type: 'boxplot' }
-                }],
+                transform: {
+                    type: 'boxplot'}
+                }
+            ],
+            series: [{
+                name: 'Cluster 130 comuni',
+                type: 'boxplot',
+                datasetIndex: 5},{
+                name: 'Cluster 31 comuni',
+                type: 'boxplot',
+                datasetIndex: 6},{
+                name: 'Cluster 3 comuni',
+                type: 'boxplot',
+                datasetIndex: 7},{
+                name: 'Rovereto',
+                type: 'boxplot',
+                datasetIndex: 8},{
+                name: 'Trento',
+                type: 'boxplot',
+                datasetIndex: 9}],
             color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
             grid: {
                 left: '10%',

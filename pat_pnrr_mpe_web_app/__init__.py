@@ -353,6 +353,66 @@ chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = [{
         [list(a) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_netta_data_2023q3_2024q2.cluster_comune == 3].iloc[:, 1:])],
     'trento':
         [list(a) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 4].iloc[:, 1:])]}]
+chart_comuni_box_cluster_pressione_series = [{
+    'comuni_piccoli':
+        list(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 0].score),
+    'comuni_medio_piccoli':
+        list(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 1].score),
+    'comuni_medi':
+        list(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 2].score),
+    'rovereto':
+        list(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 3].score),
+    'trento':
+        list(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 4].score)
+    },
+    {
+    'comuni_piccoli':
+        list(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 0].score),
+    'comuni_medio_piccoli':
+        list(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 1].score),
+    'comuni_medi':
+        list(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 2].score),
+    'rovereto':
+        list(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 3].score),
+    'trento':
+        list(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 4].score)
+    },
+    {
+    'comuni_piccoli':
+        list(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 0].score),
+    'comuni_medio_piccoli':
+        list(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 1].score),
+    'comuni_medi':
+        list(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 2].score),
+    'rovereto':
+        list(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 3].score),
+    'trento':
+        list(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 4].score)
+    },
+    {
+    'comuni_piccoli':
+        list(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 0].score),
+    'comuni_medio_piccoli':
+        list(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 1].score),
+    'comuni_medi':
+        list(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 2].score),
+    'rovereto':
+        list(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 3].score),
+    'trento':
+        list(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 4].score)
+    },
+    {
+    'comuni_piccoli':
+        list(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 0].score),
+    'comuni_medio_piccoli':
+        list(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 1].score),
+    'comuni_medi':
+        list(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 2].score),
+    'rovereto':
+        list(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 3].score),
+    'trento':
+        list(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 4].score)
+    }]
 
 
 @app.route('/')
@@ -387,7 +447,8 @@ def index():
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
             chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series)
+            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
+            chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_5a_misurazione.get_comuni_measure(
             pat_pnrr_5a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -414,7 +475,8 @@ def index():
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
             chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series)
+            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
+            chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series)
 
 @app.route('/misure')
 def misure():
