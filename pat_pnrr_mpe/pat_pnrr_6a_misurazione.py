@@ -364,6 +364,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
                     'string').str.contains('8/5/204', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '08/05/2024'
+                change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
+                    'string').str.contains('10/6/0204', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '10/06/2024'
             try:
                 comune_dataframe['data_inizio_pratica'] = pd.to_datetime(
                     comune_dataframe['data_inizio_pratica'],
@@ -1748,8 +1751,8 @@ if __name__ == '__main__':
     # check_comuni_excel('pat_pnrr_6a_misurazione_tabelle_comunali\\')
     # get_comuni_dataframes(comuni_excel_map, load=False)
     # check_comuni_dataframes(comuni_excel_map)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    # get_comuni_measures(comuni_excel_map, save_tex=True)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures(comuni_excel_map, save_tex=True)
 
     # load = True
     # lpf = True

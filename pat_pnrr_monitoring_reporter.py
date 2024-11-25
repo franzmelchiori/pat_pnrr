@@ -1448,14 +1448,14 @@ if __name__ == '__main__':
     comuni_net_scores.to_csv('pat-pnrr_edilizia_pressione_netta_2023q3-2024q2.csv')
 
     # for mpe_number in [3, 4, 5, 6]:
-    for mpe_number in [6]:
-        print_comuni_performance_charts(pat_comuni_dataframe,
-                                        comuni_durata_trends, comuni_durata_netta_trends,
-                                        comuni_arretrato_trends,
-                                        comuni_performance_trends, comuni_performance_netta_trends,
-                                        mpe_number=mpe_number,
-                                        just_provincia=False, no_trento=False, just_one=False,
-                                        save_charts=True)
+    # for mpe_number in [6]:
+    #     print_comuni_performance_charts(pat_comuni_dataframe,
+    #                                     comuni_durata_trends, comuni_durata_netta_trends,
+    #                                     comuni_arretrato_trends,
+    #                                     comuni_performance_trends, comuni_performance_netta_trends,
+    #                                     mpe_number=mpe_number,
+    #                                     just_provincia=False, no_trento=False, just_one=False,
+    #                                     save_charts=True)
     print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
     print_comuni_performance_list(just_one=False, save_tables=True)
     print_comuni_pressure_list(comuni_performance_trends)
