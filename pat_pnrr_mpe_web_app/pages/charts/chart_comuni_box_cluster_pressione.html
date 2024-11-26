@@ -7,6 +7,8 @@
             useDirtyRect: false});
         var app = {};
 
+        const mpe_labels = ['2022Q1-2','2022Q3-4','2023Q1-2','2023Q3-4','2024Q1-2'];
+
         option = {
             title: {
                 text: 'Pressione'},
@@ -20,7 +22,6 @@
                     show: true},
                 splitLine: {
                     show: false}},
-                // data: ['2022Q1-2','2022Q3-4','2023Q1-2','2023Q3-4','2024Q1-2']},
             yAxis: {
                 type: 'value',
                 min: 0,
@@ -71,27 +72,32 @@
                 {
                 fromDatasetIndex: 0,
                 transform: {
-                    type: 'boxplot'}
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
                 },
                 {
                 fromDatasetIndex: 1,
                 transform: {
-                    type: 'boxplot'}
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
                 },
                 {
                 fromDatasetIndex: 2,
                 transform: {
-                    type: 'boxplot'}
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
                 },
                 {
                 fromDatasetIndex: 3,
                 transform: {
-                    type: 'boxplot'}
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
                 },
                 {
                 fromDatasetIndex: 4,
                 transform: {
-                    type: 'boxplot'}
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
                 }
             ],
             series: [{
