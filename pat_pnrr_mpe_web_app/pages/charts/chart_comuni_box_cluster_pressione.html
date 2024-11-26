@@ -13,19 +13,25 @@
             title: {
                 text: 'Pressione'},
             legend: {
-                top: '10%'},
+                top: 10,
+                textStyle: {
+                    fontSize: 12}},
             xAxis: {
                 type: 'category',
-                boundaryGap: true,
-                nameGap: 30,
-                splitArea: {
-                    show: true},
+                nameGap: 12,
+                nameTextStyle: {
+                    fontSize: 12},
                 splitLine: {
                     show: false}},
             yAxis: {
                 type: 'value',
                 min: 0,
                 max: 10,
+                name: 'PdC e PdS',
+                nameLocation: 'end',
+                nameGap: 12,
+                nameTextStyle: {
+                    fontSize: 12},
                 splitArea: {
                     show: false}},
             dataset: [
@@ -119,14 +125,25 @@
             color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
             grid: {
                 left: '10%',
-                top: '20%',
                 right: '10%',
+                top: '15%',
                 bottom: '15%'},
             tooltip: {
+                backgroundColor: 'rgba(255,255,255,0.7)',
                 trigger: 'item',
                 axisPointer: {
-                    type: 'shadow'}},
+                    type: 'shadow'},
+                formatter: function (param) {
+                    var value = param.value;
+                    return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 12px">'
+                            + 'max: ' + value[5].toFixed(3) + '<br>'
+                            + 'Q3: ' + value[4].toFixed(3) + '<br>'
+                            + 'mediana: ' + value[3].toFixed(3) + '<br>'
+                            + 'Q1: ' + value[2].toFixed(3) + '<br>'
+                            + 'min: ' + value[1].toFixed(3) + '<br>'
+                            + '</div>';}},
             toolbox: {
+                show: true,
                 feature: {
                     restore: {},
                     saveAsImage: {}}}};
