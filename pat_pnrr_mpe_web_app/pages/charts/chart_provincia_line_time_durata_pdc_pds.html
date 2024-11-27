@@ -11,7 +11,7 @@
             title: {
                 text: 'Durata'},
             legend: {
-                data: ['PdC', 'PdS']},
+                data: ['PdC', 'netta PdC', 'PdS', 'netta PdS']},
             xAxis: [{
                 type: 'category',
                 boundaryGap: false,
@@ -27,12 +27,30 @@
                     data: {{ chart_provincia_line_time_durata_pdc_pds_series.pdc_durata | safe }}
                 },
                 {
+                    name: 'netta PdC',
+                    type: 'line',
+                    symbol: 'emptyTriangle',
+                    lineStyle: {
+                        type: 'dashed'},
+                    smooth: true,
+                    data: {{ chart_provincia_line_time_durata_netta_pdc_pds_series.pdc_durata | safe }}
+                },
+                {
                     name: 'PdS',
                     type: 'line',
                     smooth: true,
                     data: {{ chart_provincia_line_time_durata_pdc_pds_series.pds_durata | safe }}
+                },
+                {
+                    name: 'netta PdS',
+                    type: 'line',
+                    symbol: 'emptyTriangle',
+                    lineStyle: {
+                        type: 'dashed'},
+                    smooth: true,
+                    data: {{ chart_provincia_line_time_durata_netta_pdc_pds_series.pds_durata | safe }}
                 }],
-            color: ['#FF0087', '#FFBF00'],
+            color: ['#FF0087', '#FF0087', '#FFBF00', '#FFBF00'],
             grid: {
                 left: '3%',
                 right: '4%',
@@ -42,6 +60,7 @@
                 trigger: 'axis'},
             toolbox: {
                 feature: {
+                    restore: {},
                     saveAsImage: {}}}
         };
 

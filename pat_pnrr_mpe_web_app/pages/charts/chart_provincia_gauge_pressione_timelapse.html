@@ -1,0 +1,71 @@
+<div class="container">
+    <div id="chart_provincia_gauge_pressione_timelapse" style="height:360px;"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById('chart_provincia_gauge_pressione_timelapse');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false});
+        var app = {};
+
+        var timeline = [
+            '2022Q1-2',
+            '2022Q3-4',
+            '2023Q1-2',
+            '2023Q3-4',
+            '2024Q1-2']
+
+        var option = {
+            baseOption: {
+                title: {
+                    text: 'Pressione'},
+                series: [{
+                    name: 'Pressione',
+                    type: 'gauge',
+                    min: 0,
+                    max: 10,
+                    progress: {
+                        show: true},
+                    detail: {
+                        valueAnimation: true,
+                        formatter: function (value) {return value.toFixed(3);}},
+                    data: [{{ chart_provincia_gauge_pressione_timelapse_series | safe }}[0]]}],
+                tooltip: {
+                    show: true},
+                toolbox: {
+                    show: true,
+                    feature: {
+                        saveAsImage: {}}},
+                timeline: {
+                    axisType: 'category',
+                    orient: 'vertical',
+                    autoPlay: true,
+                    inverse: true,
+                    playInterval: 1000,
+                    left: null,
+                    right: 0,
+                    top: 75,
+                    bottom: 75,
+                    width: 85,
+                    height: null,
+                    symbol: 'none',
+                    checkpointStyle: {
+                        borderWidth: 2},
+                    controlStyle: {
+                        showNextBtn: false,
+                        showPrevBtn: false},
+                    data: []},
+                animationDurationUpdate: 1000,
+                animationEasingUpdate: 'quinticInOut'},
+            options: []};
+
+        for (var n = 0; n < timeline.length; n++) {
+            option.baseOption.timeline.data.push(timeline[n]);
+            option.options.push({
+                series: [{
+                    data: [{{ chart_provincia_gauge_pressione_timelapse_series | safe }}[n]]}]})}
+
+        myChart.setOption(option);
+        window.addEventListener('resize', myChart.resize);
+    </script>
+</div>
+<br>

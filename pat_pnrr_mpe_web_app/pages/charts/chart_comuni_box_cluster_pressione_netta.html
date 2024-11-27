@@ -1,0 +1,145 @@
+<div class="container">
+    <div id="chart_comuni_box_cluster_pressione_netta" style="height:360px;"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById('chart_comuni_box_cluster_pressione_netta');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false});
+        var app = {};
+
+        const mpe_labels = ['2023Q1-2','2023Q3-4','2024Q1-2'];
+
+        option = {
+            title: {
+                text: 'Pressione netta'},
+            legend: {
+                top: 10,
+                textStyle: {
+                    fontSize: 12}},
+            xAxis: {
+                type: 'category',
+                nameGap: 12,
+                nameTextStyle: {
+                    fontSize: 12},
+                splitLine: {
+                    show: false}},
+            yAxis: {
+                type: 'value',
+                min: 0,
+                max: 10,
+                name: 'PdC e PdS',
+                nameLocation: 'end',
+                nameGap: 12,
+                nameTextStyle: {
+                    fontSize: 12},
+                splitArea: {
+                    show: false}},
+            dataset: [
+                {
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[0].comuni_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[1].comuni_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[2].comuni_piccoli]
+                },
+                {
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[0].comuni_medio_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[1].comuni_medio_piccoli,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[2].comuni_medio_piccoli]
+                },
+                {
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[0].comuni_medi,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[1].comuni_medi,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[2].comuni_medi]
+                },
+                {
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[0].rovereto,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[1].rovereto,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[2].rovereto]
+                },
+                {
+                source: [
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[0].trento,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[1].trento,
+                    {{ chart_comuni_box_cluster_pressione_netta_series | safe }}[2].trento]
+                },
+                {
+                fromDatasetIndex: 0,
+                transform: {
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
+                },
+                {
+                fromDatasetIndex: 1,
+                transform: {
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
+                },
+                {
+                fromDatasetIndex: 2,
+                transform: {
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
+                },
+                {
+                fromDatasetIndex: 3,
+                transform: {
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
+                },
+                {
+                fromDatasetIndex: 4,
+                transform: {
+                    type: 'boxplot',
+                    config: { itemNameFormatter: function (params) {return mpe_labels[params.value];} }}
+                }
+            ],
+            series: [{
+                name: 'Cluster 130 comuni',
+                type: 'boxplot',
+                datasetIndex: 5},{
+                name: 'Cluster 31 comuni',
+                type: 'boxplot',
+                datasetIndex: 6},{
+                name: 'Cluster 3 comuni',
+                type: 'boxplot',
+                datasetIndex: 7},{
+                name: 'Rovereto',
+                type: 'boxplot',
+                datasetIndex: 8},{
+                name: 'Trento',
+                type: 'boxplot',
+                datasetIndex: 9}],
+            color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+            grid: {
+                left: '10%',
+                right: '10%',
+                top: '15%',
+                bottom: '15%'},
+            tooltip: {
+                backgroundColor: 'rgba(255,255,255,0.7)',
+                trigger: 'item',
+                axisPointer: {
+                    type: 'shadow'},
+                formatter: function (param) {
+                    var value = param.value;
+                    return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 12px">'
+                            + 'max: ' + value[5].toFixed(3) + '<br>'
+                            + 'Q3: ' + value[4].toFixed(3) + '<br>'
+                            + 'mediana: ' + value[3].toFixed(3) + '<br>'
+                            + 'Q1: ' + value[2].toFixed(3) + '<br>'
+                            + 'min: ' + value[1].toFixed(3) + '<br>'
+                            + '</div>';}},
+            toolbox: {
+                show: true,
+                feature: {
+                    restore: {},
+                    saveAsImage: {}}}};
+
+        myChart.setOption(option);
+        window.addEventListener('resize', myChart.resize);
+    </script>
+</div>
+<br>

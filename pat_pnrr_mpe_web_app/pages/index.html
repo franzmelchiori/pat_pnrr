@@ -3,24 +3,27 @@
     <div class="container">
         <form action="{{url_for('index')}}">
             <div class="btn-group btn-group-sm" role="group" aria-label="mpe radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio_mpe" value="btnradio_mpe_2024Q3_4" id="btnradio_mpe_2024Q3_4" autocomplete="off" disabled>
+                <label class="btn btn-outline-primary" for="btnradio_mpe_2024Q3_4">2024Q3-4</label>
+
                 <!-- TODO: onchange="this.form.submit();" is a bad practice, on* attributes make code hard to debug and maintain: use JavaScript instead!  -->
                 <input type="radio" class="btn-check" name="btnradio_mpe" value="btnradio_mpe_2024Q1_2" id="btnradio_mpe_2024Q1_2" autocomplete="off" onchange="this.form.submit();"
                 {% if btnradio_mpe == 'btnradio_mpe_2024Q1_2' %} checked> {% else %} > {% endif %}
                 <label class="btn btn-outline-primary" for="btnradio_mpe_2024Q1_2">2024Q1-2 <span class="badge text-bg-secondary">Nuovo</span></label>
-            
+
                 <input type="radio" class="btn-check" name="btnradio_mpe" value="btnradio_mpe_2023Q3_4" id="btnradio_mpe_2023Q3_4" autocomplete="off" onchange="this.form.submit();"
                 {% if btnradio_mpe == 'btnradio_mpe_2023Q3_4' %} checked> {% else %} > {% endif %}
                 <label class="btn btn-outline-primary" for="btnradio_mpe_2023Q3_4">2023Q3-4</label>
-            
+
                 <input type="radio" class="btn-check" name="btnradio_mpe" value="btnradio_mpe_2023Q1_2" id="btnradio_mpe_2023Q1_2" autocomplete="off" disabled>
                 <label class="btn btn-outline-primary" for="btnradio_mpe_2023Q1_2">2023Q1-2</label>
-            
+
                 <input type="radio" class="btn-check" name="btnradio_mpe" value="btnradio_mpe_2022Q3_4" id="btnradio_mpe_2022Q3_4" autocomplete="off" disabled>
                 <label class="btn btn-outline-primary" for="btnradio_mpe_2022Q3_4">2022Q3-4</label>
-            
+
                 <input type="radio" class="btn-check" name="btnradio_mpe" value="btnradio_mpe_2022Q1_2" id="btnradio_mpe_2022Q1_2" autocomplete="off" disabled>
                 <label class="btn btn-outline-primary" for="btnradio_mpe_2022Q1_2">2022Q1-2</label>
-            
+
                 <input type="radio" class="btn-check" name="btnradio_mpe" value="btnradio_mpe_2021Q3_4" id="btnradio_mpe_2021Q3_4" autocomplete="off" disabled>
                 <label class="btn btn-outline-primary" for="btnradio_mpe_2021Q3_4">2021Q3-4</label>
             </div>
@@ -51,18 +54,21 @@
         </div>
     </div>
 
-    {# chart | comuni | scatter | cluster pop | pressione [idx] pdc pds | mpe 1-6 (static) #}
-    {# {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_pdc_pds.html' %} #}
-    {# chart | comuni | scatter | cluster pop | pressione [idx] pdc pds | mpe 1-6 (timelapse)  #}
+    {# chart | comuni | scatter | cluster pop | pressione (lorda/netta) [idx] pdc pds | mpe 1-6 (timelapse)  #}
     {% if durata_netta == 'True' %}
         {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_timelapse.html' %}
     {% else %}
         {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_pdc_pds_timelapse.html' %}
     {% endif %}
-    {# chart | comuni | area | distro | pressione [idx] | mpe 1-6 #}
-    {% include 'charts/chart_comuni_box_cluster_pressione.html' %}  <!-- TODO -->
-    {# chart | provincia | gauge | mean | pressione [idx] | mpe 1-6 (timelapse)  #}
-    {# chart | comuni | pie | pop | pressione [idx] | mpe 1-6 (timelapse?)  #}
+    {# chart | comuni | area | distro | pressione (lorda/netta) [idx] | mpe 1-6 #}
+    {% if durata_netta == 'True' %}
+        {% include 'charts/chart_comuni_box_cluster_pressione_netta.html' %}
+    {% else %}
+        {% include 'charts/chart_comuni_box_cluster_pressione.html' %}
+    {% endif %}
+    {# chart | provincia | gauge | mean | pressione (lorda/netta) [idx] | mpe 1-6 (timelapse)  #}
+    {% include 'charts/chart_provincia_gauge_pressione_timelapse.html' %}
+    {# chart | comuni | pie | pop | pressione (lorda/netta) [idx] | mpe 1-6 (timelapse)  #}
 
     {# chart | comuni | scatter | cluster | pressione [idx]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
     {# chart | comuni | scatter | cluster | avviato [nr]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
