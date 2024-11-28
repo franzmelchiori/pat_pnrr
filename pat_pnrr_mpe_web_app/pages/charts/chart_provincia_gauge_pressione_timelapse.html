@@ -25,10 +25,70 @@
                     max: 10,
                     progress: {
                         show: true},
+                    axisLine: {
+                        lineStyle: {
+                            width: 21,
+                            color: [
+                                // 1x durata/norma 10% arretrato/avviato: pressione 1.421 verde
+                                // 2x durata/norma 20% arretrato/avviato: pressione 2.842 giallo
+                                // 3x durata/norma 30% arretrato/avviato: pressione 4.264 giallo
+                                // 4x durata/norma 40% arretrato/avviato: pressione 5.685 rosso
+                                // 5x durata/norma 50% arretrato/avviato: pressione 7.106 rosso
+                                // 6x durata/norma 60% arretrato/avviato: pressione 8.528 nero
+                                // 7x durata/norma 70% arretrato/avviato: pressione 9.949 nero
+                                [0.142, '#80ff51'],
+                                [0.426, '#ffee51'],
+                                [0.711, '#ff715e'],
+                                [1.000, '#715c87']]}},
+                    axisTick: {
+                        distance: 7,
+                        splitNumber: 4,
+                        lineStyle: {
+                            width: 1,
+                            color: '#999'}},
+                    splitLine: {
+                        distance: 7,
+                        length: 14,
+                        lineStyle: {
+                            width: 2,
+                            color: '#999'}},
+                    axisLabel: {
+                        distance: 29,
+                        color: '#999',
+                        fontSize: 16},
+                    anchor: {
+                        show: true,
+                        size: 40,
+                        offsetCenter: [0, -35],
+                        icon: 'image://{{url_for('static', filename='pat_logo_black_squared.png')}}'},
                     detail: {
+                        fontSize: 16,
                         valueAnimation: true,
-                        formatter: function (value) {return value.toFixed(3);}},
-                    data: [{{ chart_provincia_gauge_pressione_timelapse_series | safe }}[0]]}],
+                        formatter: function (value) {return 'Edilizia\n' + value.toFixed(3);}},
+                    data: [{{ chart_provincia_gauge_pressione_timelapse_series | safe }}[0]]},
+                    {
+                    type: 'gauge',
+                    min: 0,
+                    max: 10,
+                    axisLine: {
+                        show: false},
+                    axisTick: {
+                        show: false},
+                    splitLine: {
+                        show: false},
+                    axisLabel: {
+                        distance: -40,
+                        fontSize: 12,
+                        color: '#999',
+                        rotate: 'tangential',
+                        formatter: function (value) {
+                            if (value === 1) {
+                                return '1x normativa\n10% arretrato';
+                            } else if (value === 4) {
+                                return '3x normativa\n30% arretrato';
+                            } else if (value === 7) {
+                                return '5x normativa\n50% arretrato';
+                            } return '';}}}],
                 tooltip: {
                     show: true},
                 toolbox: {
