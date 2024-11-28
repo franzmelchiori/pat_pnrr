@@ -376,6 +376,10 @@ chart_provincia_gauge_pressione_timelapse_series = [
     str(scatter_pressione_data_2022q3_2023q2.score.mean()),
     str(scatter_pressione_data_2023.score.mean()),
     str(scatter_pressione_data_2023q3_2024q2.score.mean())]
+chart_provincia_gauge_pressione_netta_timelapse_series = [
+    str(scatter_pressione_netta_data_2022q3_2023q2.net_score.mean()),
+    str(scatter_pressione_netta_data_2023.net_score.mean()),
+    str(scatter_pressione_netta_data_2023q3_2024q2.net_score.mean())]
 
 
 @app.route('/')
@@ -414,7 +418,8 @@ def index():
             chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
             chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
-            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series)
+            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
+            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_5a_misurazione.get_comuni_measure(
             pat_pnrr_5a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -445,7 +450,8 @@ def index():
             chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
             chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
-            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series)
+            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
+            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series)
 
 @app.route('/misure')
 def misure():

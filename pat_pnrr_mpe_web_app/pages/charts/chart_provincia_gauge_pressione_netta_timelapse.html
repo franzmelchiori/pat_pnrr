@@ -1,0 +1,129 @@
+<div class="container">
+    <div id="chart_provincia_gauge_pressione_netta_timelapse" style="height:360px;"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById('chart_provincia_gauge_pressione_netta_timelapse');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false});
+        var app = {};
+
+        var timeline = [
+            '2023Q1-2',
+            '2023Q3-4',
+            '2024Q1-2']
+
+        var option = {
+            baseOption: {
+                title: {
+                    text: 'Pressione netta'},
+                series: [{
+                    name: 'Pressione netta',
+                    type: 'gauge',
+                    min: 0,
+                    max: 10,
+                    progress: {
+                        show: true},
+                    axisLine: {
+                        lineStyle: {
+                            width: 21,
+                            color: [
+                                // 1x durata/norma 10% arretrato/avviato: pressione 1.421 verde
+                                // 2x durata/norma 20% arretrato/avviato: pressione 2.842 giallo
+                                // 3x durata/norma 30% arretrato/avviato: pressione 4.264 giallo
+                                // 4x durata/norma 40% arretrato/avviato: pressione 5.685 rosso
+                                // 5x durata/norma 50% arretrato/avviato: pressione 7.106 rosso
+                                // 6x durata/norma 60% arretrato/avviato: pressione 8.528 nero
+                                // 7x durata/norma 70% arretrato/avviato: pressione 9.949 nero
+                                [0.142, '#80ff51'],
+                                [0.426, '#ffee51'],
+                                [0.711, '#ff715e'],
+                                [1.000, '#715c87']]}},
+                    axisTick: {
+                        distance: 7,
+                        splitNumber: 4,
+                        lineStyle: {
+                            width: 1,
+                            color: '#999'}},
+                    splitLine: {
+                        distance: 7,
+                        length: 14,
+                        lineStyle: {
+                            width: 2,
+                            color: '#999'}},
+                    axisLabel: {
+                        distance: 29,
+                        color: '#999',
+                        fontSize: 16},
+                    anchor: {
+                        show: true,
+                        size: 40,
+                        offsetCenter: [0, -35],
+                        icon: 'image://{{url_for('static', filename='pat_logo_black_squared.png')}}'},
+                    detail: {
+                        fontSize: 16,
+                        valueAnimation: true,
+                        formatter: function (value) {return 'Edilizia\n' + value.toFixed(3);}},
+                    data: [{{ chart_provincia_gauge_pressione_netta_timelapse_series | safe }}[0]]},
+                    {
+                    type: 'gauge',
+                    min: 0,
+                    max: 10,
+                    axisLine: {
+                        show: false},
+                    axisTick: {
+                        show: false},
+                    splitLine: {
+                        show: false},
+                    axisLabel: {
+                        distance: -40,
+                        fontSize: 12,
+                        color: '#999',
+                        rotate: 'tangential',
+                        formatter: function (value) {
+                            if (value === 1) {
+                                return '1x normativa\n10% arretrato';
+                            } else if (value === 4) {
+                                return '3x normativa\n30% arretrato';
+                            } else if (value === 7) {
+                                return '5x normativa\n50% arretrato';
+                            } return '';}}}],
+                tooltip: {
+                    show: true},
+                toolbox: {
+                    show: true,
+                    feature: {
+                        saveAsImage: {}}},
+                timeline: {
+                    axisType: 'category',
+                    orient: 'vertical',
+                    autoPlay: true,
+                    inverse: true,
+                    playInterval: 1000,
+                    left: null,
+                    right: 0,
+                    top: 75,
+                    bottom: 75,
+                    width: 85,
+                    height: null,
+                    symbol: 'none',
+                    checkpointStyle: {
+                        borderWidth: 2},
+                    controlStyle: {
+                        showNextBtn: false,
+                        showPrevBtn: false},
+                    data: []},
+                animationDurationUpdate: 1000,
+                animationEasingUpdate: 'quinticInOut'},
+            options: []};
+
+        for (var n = 0; n < timeline.length; n++) {
+            option.baseOption.timeline.data.push(timeline[n]);
+            option.options.push({
+                series: [{
+                    data: [{{ chart_provincia_gauge_pressione_netta_timelapse_series | safe }}[n]]}]})}
+
+        myChart.setOption(option);
+        window.addEventListener('resize', myChart.resize);
+    </script>
+</div>
+<br>
