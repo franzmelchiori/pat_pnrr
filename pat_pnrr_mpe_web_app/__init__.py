@@ -380,6 +380,20 @@ chart_provincia_gauge_pressione_netta_timelapse_series = [
     str(scatter_pressione_netta_data_2022q3_2023q2.net_score.mean()),
     str(scatter_pressione_netta_data_2023.net_score.mean()),
     str(scatter_pressione_netta_data_2023q3_2024q2.net_score.mean())]
+rank_pressione_index_2021q3_2022q2 = scatter_pressione_data_2021q3_2022q2.score.sort_values().index
+rank_pressione_index_2022 = scatter_pressione_data_2022.score.sort_values().index
+rank_pressione_index_2022q3_2023q2 = scatter_pressione_data_2022q3_2023q2.score.sort_values().index
+rank_pressione_index_2023 = scatter_pressione_data_2023.score.sort_values().index
+rank_pressione_index_2023q3_2024q2 = scatter_pressione_data_2023q3_2024q2.score.sort_values().index
+chart_comuni_rank_time_pressione_series = [[
+    comune,
+    [str(np.array(range(1, 167))[rank_pressione_index_2021q3_2022q2 == comune][0]),
+     str(np.array(range(1, 167))[rank_pressione_index_2022 == comune][0]),
+     str(np.array(range(1, 167))[rank_pressione_index_2022q3_2023q2 == comune][0]),
+     str(np.array(range(1, 167))[rank_pressione_index_2023 == comune][0]),
+     str(np.array(range(1, 167))[rank_pressione_index_2023q3_2024q2 == comune][0])],
+    str(scatter_pressione_data_2023q3_2024q2.loc[comune].score)]
+    for comune in pat_comuni_dataframe.index]
 
 
 @app.route('/')
@@ -419,7 +433,8 @@ def index():
             chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
             chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
-            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series)
+            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
+            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_5a_misurazione.get_comuni_measure(
             pat_pnrr_5a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -451,7 +466,8 @@ def index():
             chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
             chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
-            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series)
+            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
+            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series)
 
 @app.route('/misure')
 def misure():

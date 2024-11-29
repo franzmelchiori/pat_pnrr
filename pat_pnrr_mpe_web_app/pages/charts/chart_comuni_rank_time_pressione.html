@@ -1,0 +1,94 @@
+<div class="container">
+    <div id="chart_comuni_rank_time_pressione" style="height:720px;"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById('chart_comuni_rank_time_pressione');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false});
+        var app = {};
+
+        const colorRankingData = (score) => {
+            if (score < 1.421) {
+                return '#80ff51';
+            } else if (score < 4.264) {
+                return '#ffee51';
+            } else if (score < 7.106) {
+                return '#ff715e';
+            } return '#715c87';};
+
+        const generateSeriesList = () => {
+            const seriesList = [];
+            const rankingMap = {{chart_comuni_rank_time_pressione_series | safe}}
+            rankingMap.forEach(([name, data, score]) => {
+                const series = {
+                    name,
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: 20,
+                    lineStyle: {
+                        color: colorRankingData(score),
+                        width: 4},
+                    itemStyle: {
+                        color: colorRankingData(score),
+                        width: 4},
+                    endLabel: {
+                        show: true,
+                        formatter: '{a}',
+                        distance: 20},
+                    emphasis: {
+                        focus: 'series'},
+                    data};
+                seriesList.push(series);
+            });
+            return seriesList;};
+
+        var option = {
+            title: {
+                text: 'Pressione'},
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    margin: 30,
+                    fontSize: 16},
+                data: ['2022Q1-2','2022Q3-4','2023Q1-2','2023Q3-4','2024Q1-2']},
+            yAxis: {
+                type: 'value',
+                interval: 1,
+                min: 1,
+                max: 166,
+                axisLabel: {
+                    margin: 30,
+                    fontSize: 16,
+                    formatter: function (value) {
+                        return value.toFixed(0);}},
+                inverse: false},
+            grid: {
+                left: '10%',
+                right: 230,
+                top: '15%',
+                bottom: '15%'},
+            dataZoom: [{
+                type: 'slider',
+                yAxisIndex: 0,
+                right: 30,
+                width: 30,
+                top: '15%',
+                bottom: '15%',
+                startValue: 166,
+                endValue: 136,
+                labelPrecision: 0,
+                showDataShadow: false}],
+            tooltip: {
+                trigger: 'item'},
+            toolbox: {
+                show: true,
+                feature: {
+                    saveAsImage: {}}},
+            series: generateSeriesList()};
+
+            myChart.setOption(option);
+            window.addEventListener('resize', myChart.resize);
+    </script>
+</div>
+<br>
