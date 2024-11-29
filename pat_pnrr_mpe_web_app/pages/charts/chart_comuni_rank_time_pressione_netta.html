@@ -1,35 +1,35 @@
 <div class="container">
-    <div id="chart_comuni_rank_time_pressione" style="height:720px;"></div>
+    <div id="chart_comuni_rank_time_pressione_netta" style="height:720px;"></div>
     <script type="text/javascript">
-        var dom = document.getElementById('chart_comuni_rank_time_pressione');
+        var dom = document.getElementById('chart_comuni_rank_time_pressione_netta');
         var myChart = echarts.init(dom, null, {
             renderer: 'canvas',
             useDirtyRect: false});
         var app = {};
 
-        const colorRankingData = (score) => {
-            if (score < 1.421) {
+        const colorRankingData = (net_score) => {
+            if (net_score < 1.421) {
                 return '#80ff51';
-            } else if (score < 4.264) {
+            } else if (net_score < 4.264) {
                 return '#ffee51';
-            } else if (score < 7.106) {
+            } else if (net_score < 7.106) {
                 return '#ff715e';
             } return '#715c87';};
 
         const generateSeriesList = () => {
             const seriesList = [];
-            const rankingMap = {{chart_comuni_rank_time_pressione_series | safe}}
-            rankingMap.forEach(([name, data, score]) => {
+            const rankingMap = {{chart_comuni_rank_time_pressione_netta_series | safe}}
+            rankingMap.forEach(([name, data, net_score]) => {
                 const series = {
                     name,
                     type: 'line',
                     smooth: true,
                     symbolSize: 20,
                     lineStyle: {
-                        color: colorRankingData(score),
+                        color: colorRankingData(net_score),
                         width: 4},
                     itemStyle: {
-                        color: colorRankingData(score),
+                        color: colorRankingData(net_score),
                         width: 4},
                     endLabel: {
                         show: true,
@@ -44,14 +44,14 @@
 
         var option = {
             title: {
-                text: 'Pressione'},
+                text: 'Pressione netta'},
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
                 axisLabel: {
                     margin: 30,
                     fontSize: 16},
-                data: ['2022Q1-2','2022Q3-4','2023Q1-2','2023Q3-4','2024Q1-2']},
+                data: ['2023Q1-2','2023Q3-4','2024Q1-2']},
             yAxis: {
                 type: 'value',
                 name: 'classifica',

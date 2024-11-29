@@ -394,6 +394,16 @@ chart_comuni_rank_time_pressione_series = [[
      str(np.array(range(1, 167))[rank_pressione_index_2023q3_2024q2 == comune][0])],
     str(scatter_pressione_data_2023q3_2024q2.loc[comune].score)]
     for comune in pat_comuni_dataframe.index]
+rank_pressione_netta_index_2022q3_2023q2 = scatter_pressione_netta_data_2022q3_2023q2.net_score.sort_values().index
+rank_pressione_netta_index_2023 = scatter_pressione_netta_data_2023.net_score.sort_values().index
+rank_pressione_netta_index_2023q3_2024q2 = scatter_pressione_netta_data_2023q3_2024q2.net_score.sort_values().index
+chart_comuni_rank_time_pressione_netta_series = [[
+    comune,
+    [str(np.array(range(1, 167))[rank_pressione_netta_index_2022q3_2023q2 == comune][0]),
+     str(np.array(range(1, 167))[rank_pressione_netta_index_2023 == comune][0]),
+     str(np.array(range(1, 167))[rank_pressione_netta_index_2023q3_2024q2 == comune][0])],
+    str(scatter_pressione_netta_data_2023q3_2024q2.loc[comune].net_score)]
+    for comune in pat_comuni_dataframe.index]
 
 
 @app.route('/')
@@ -434,7 +444,8 @@ def index():
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
             chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
             chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
-            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series)
+            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
+            chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_5a_misurazione.get_comuni_measure(
             pat_pnrr_5a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -467,7 +478,8 @@ def index():
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
             chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
             chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
-            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series)
+            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
+            chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series)
 
 @app.route('/misure')
 def misure():

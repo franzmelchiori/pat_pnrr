@@ -73,8 +73,11 @@
         {% include 'charts/chart_provincia_gauge_pressione_timelapse.html' %}
     {% endif %}
     {# chart | comuni | rank | time | pressione (lorda/netta) [idx] | mpe 1-6 (time)  #}
-    {% include 'charts/chart_comuni_rank_time_pressione.html' %}  <!-- TODO -->
-    {# chart | comuni | bar | rank | pressione (lorda/netta) [idx] | mpe 1-6 (timelapse)  #}
+    {% if durata_netta == 'True' %}
+        {% include 'charts/chart_comuni_rank_time_pressione_netta.html' %}
+    {% else %}
+        {% include 'charts/chart_comuni_rank_time_pressione.html' %}
+    {% endif %}
     
     {# chart | comuni | pie | rank pop | pressione (lorda/netta) [idx] | mpe 1-6 (timelapse)  #}
 
