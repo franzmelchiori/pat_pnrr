@@ -7,13 +7,15 @@
             useDirtyRect: false});
         var app = {};
 
-        var timeline = [
-            '2022Q1-2',
-            '2022Q3-4']  //,
-            // '2023Q1-2',
-            // '2023Q3-4',
-            // '2024Q1-2']
-    
+        // const colorRankingData = (score) => {
+        //     if (score < 1.421) {
+        //         return '#80ff51';
+        //     } else if (score < 4.264) {
+        //         return '#ffee51';
+        //     } else if (score < 7.106) {
+        //         return '#ff715e';
+        //     } return '#715c87';};
+
         var option = {
             baseOption: {
                 title: {
@@ -31,10 +33,10 @@
                         borderRadius: 5,
                         borderColor: 'white'},
                     data: [
-                        { value: 30, name: 'bla1', itemStyle: {color: '#80ff51'} },
-                        { value: 20, name: 'bla2', itemStyle: {color: '#ffee51'} },
-                        { value: 10, name: 'bla3', itemStyle: {color: '#ff715e'} },
-                        { value:  5, name: 'bla4', itemStyle: {color: '#715c87'} }]}],
+                        { value: 1, name: 'bla1', itemStyle: {color: colorRankingData(1)} },
+                        { value: 4, name: 'bla2', itemStyle: {color: colorRankingData(4)} },
+                        { value: 6, name: 'bla3', itemStyle: {color: colorRankingData(6)} },
+                        { value: 8, name: 'bla4', itemStyle: {color: colorRankingData(8)} }]}],
                 toolbox: {
                     show: true,
                     feature: {
@@ -57,7 +59,7 @@
                     controlStyle: {
                         showNextBtn: false,
                         showPrevBtn: false},
-                    data: timeline},
+                    data: ['2022Q1-2', '2022Q3-4', '2023Q1-2', '2023Q3-4', '2024Q1-2']},
                 animationDurationUpdate: 1000,
                 animationEasingUpdate: 'quinticInOut'},
             options: [{
@@ -72,10 +74,10 @@
                         borderRadius: 5,
                         borderColor: 'white'},
                     data: [
-                        { value: 30, name: 'bla1', itemStyle: {color: '#80ff51'} },
-                        { value: 20, name: 'bla2', itemStyle: {color: '#ffee51'} },
-                        { value: 10, name: 'bla3', itemStyle: {color: '#ff715e'} },
-                        { value:  5, name: 'bla4', itemStyle: {color: '#715c87'} }]}]},{
+                        { value: 1, name: 'bla1', itemStyle: {color: colorRankingData(1)} },
+                        { value: 4, name: 'bla2', itemStyle: {color: colorRankingData(4)} },
+                        { value: 6, name: 'bla3', itemStyle: {color: colorRankingData(6)} },
+                        { value: 8, name: 'bla4', itemStyle: {color: colorRankingData(8)} }]}]},{
                 series: [{
                     type: 'pie',
                     center: ['50%', '60%'],
@@ -87,10 +89,10 @@
                         borderRadius: 5,
                         borderColor: 'white'},
                     data: [
-                        { value: 20, name: 'bla2', itemStyle: {color: '#80ff51'} },
-                        { value: 30, name: 'bla1', itemStyle: {color: '#ffee51'} },
-                        { value: 10, name: 'bla3', itemStyle: {color: '#ff715e'} },
-                        { value:  5, name: 'bla4', itemStyle: {color: '#715c87'} }]}]}]};
+                        { value: 4, name: 'bla2', itemStyle: {color: colorRankingData(1)} },
+                        { value: 1, name: 'bla1', itemStyle: {color: colorRankingData(4)} },
+                        { value: 6, name: 'bla3', itemStyle: {color: colorRankingData(6)} },
+                        { value: 8, name: 'bla4', itemStyle: {color: colorRankingData(8)} }]}]}]};
 
         myChart.setOption(option);
         window.addEventListener('resize', myChart.resize);
