@@ -1,0 +1,99 @@
+<div class="container">
+    <div id="chart_comuni_pie_rank_pop_pressione_timelapse" style="height:720px;"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById('chart_comuni_pie_rank_pop_pressione_timelapse');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false});
+        var app = {};
+
+        var timeline = [
+            '2022Q1-2',
+            '2022Q3-4']  //,
+            // '2023Q1-2',
+            // '2023Q3-4',
+            // '2024Q1-2']
+    
+        var option = {
+            baseOption: {
+                title: {
+                    text: 'Pressione'},
+                tooltip: {
+                    trigger: 'item'},
+                series: [{
+                    type: 'pie',
+                    center: ['50%', '60%'],
+                    radius: ['70%', '100%'],
+                    startAngle: 225,
+                    endAngle: -45,
+                    itemStyle: {
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        borderColor: 'white'},
+                    data: [
+                        { value: 30, name: 'bla1', itemStyle: {color: '#80ff51'} },
+                        { value: 20, name: 'bla2', itemStyle: {color: '#ffee51'} },
+                        { value: 10, name: 'bla3', itemStyle: {color: '#ff715e'} },
+                        { value:  5, name: 'bla4', itemStyle: {color: '#715c87'} }]}],
+                toolbox: {
+                    show: true,
+                    feature: {
+                        saveAsImage: {}}},
+                timeline: {
+                    axisType: 'category',
+                    orient: 'vertical',
+                    autoPlay: true,
+                    inverse: true,
+                    playInterval: 1000,
+                    left: null,
+                    right: 0,
+                    top: 75,
+                    bottom: 75,
+                    width: 85,
+                    height: null,
+                    symbol: 'none',
+                    checkpointStyle: {
+                        borderWidth: 2},
+                    controlStyle: {
+                        showNextBtn: false,
+                        showPrevBtn: false},
+                    data: timeline},
+                animationDurationUpdate: 1000,
+                animationEasingUpdate: 'quinticInOut'},
+            options: [{
+                series: [{
+                    type: 'pie',
+                    center: ['50%', '60%'],
+                    radius: ['70%', '100%'],
+                    startAngle: 225,
+                    endAngle: -45,
+                    itemStyle: {
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        borderColor: 'white'},
+                    data: [
+                        { value: 30, name: 'bla1', itemStyle: {color: '#80ff51'} },
+                        { value: 20, name: 'bla2', itemStyle: {color: '#ffee51'} },
+                        { value: 10, name: 'bla3', itemStyle: {color: '#ff715e'} },
+                        { value:  5, name: 'bla4', itemStyle: {color: '#715c87'} }]}]},{
+                series: [{
+                    type: 'pie',
+                    center: ['50%', '60%'],
+                    radius: ['70%', '100%'],
+                    startAngle: 225,
+                    endAngle: -45,
+                    itemStyle: {
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        borderColor: 'white'},
+                    data: [
+                        { value: 20, name: 'bla2', itemStyle: {color: '#80ff51'} },
+                        { value: 30, name: 'bla1', itemStyle: {color: '#ffee51'} },
+                        { value: 10, name: 'bla3', itemStyle: {color: '#ff715e'} },
+                        { value:  5, name: 'bla4', itemStyle: {color: '#715c87'} }]}]}]};
+
+        myChart.setOption(option);
+        window.addEventListener('resize', myChart.resize);
+    </script>
+</div>
+<br>
