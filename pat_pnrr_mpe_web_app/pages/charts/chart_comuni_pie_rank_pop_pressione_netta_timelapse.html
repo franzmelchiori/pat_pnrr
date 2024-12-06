@@ -1,7 +1,7 @@
 <div class="container">
-    <div id="chart_comuni_pie_rank_pop_pressione_timelapse" style="height:720px;"></div>
+    <div id="chart_comuni_pie_rank_pop_pressione_netta_timelapse" style="height:720px;"></div>
     <script type="text/javascript">
-        var dom = document.getElementById('chart_comuni_pie_rank_pop_pressione_timelapse');
+        var dom = document.getElementById('chart_comuni_pie_rank_pop_pressione_netta_timelapse');
         var myChart = echarts.init(dom, null, {
             renderer: 'canvas',
             useDirtyRect: false});
@@ -18,7 +18,7 @@
 
         const generateSeriesList_pieRankPopPressione = () => {
             const seriesList = [];
-            const rankingMap = {{chart_comuni_pie_rank_pop_pressione_timelapse_series | safe}}
+            const rankingMap = {{chart_comuni_pie_rank_pop_pressione_netta_timelapse_series | safe}}
             rankingMap.forEach((comuniRankPopPressioneData) => {
                 const series = {
                     series: {
@@ -58,7 +58,7 @@
         var option = {
             baseOption: {
                 title: {
-                    text: 'Pressione',
+                    text: 'Pressione netta',
                     subtext: '∝ popolazione'},
                 tooltip: {
                     trigger: 'item'},
@@ -85,7 +85,7 @@
                     controlStyle: {
                         showNextBtn: false,
                         showPrevBtn: false},
-                    data: ['2022Q1-2', '2022Q3-4', '2023Q1-2', '2023Q3-4', '2024Q1-2']},
+                    data: ['2023Q1-2', '2023Q3-4', '2024Q1-2']},
                 animationDurationUpdate: 1000,
                 animationEasingUpdate: 'quinticInOut'},
             options: generateSeriesList_pieRankPopPressione()};
