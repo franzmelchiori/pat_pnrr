@@ -1,4 +1,5 @@
 import json
+import math
 import numpy as np
 import pandas as pd
 from flask import render_template, url_for, request
@@ -14,11 +15,23 @@ from pat_pnrr.pat_pnrr_mpe import pat_pnrr_6a_misurazione
 pd.options.mode.copy_on_write = True
 
 
+baseline = {
+    'pdc_ov_durata': 121,
+    'pdc_ov_arretrati': 381,
+    'pds_durata': 144,
+    'pds_arretrati': 353}
+
+target_perc = {
+    'pdc_ov_durata': -0.05,
+    'pdc_ov_arretrati': -0.3,
+    'pds_durata': -0.05,
+    'pds_arretrati': -0.3}
+
 target = {
-    'pdc_ov_durata': 109,
-    'pdc_ov_arretrati': 324,
-    'pds_durata': 130,
-    'pds_arretrati': 300}
+    'pdc_ov_durata': math.ceil(baseline['pdc_ov_durata'] * (1 + target_perc['pdc_ov_durata'])),
+    'pdc_ov_arretrati': math.ceil(baseline['pdc_ov_arretrati'] * (1 + target_perc['pdc_ov_arretrati'])),
+    'pds_durata': math.ceil(baseline['pds_durata'] * (1 + target_perc['pds_durata'])),
+    'pds_arretrati': math.ceil(baseline['pds_arretrati'] * (1 + target_perc['pds_arretrati']))}
 
 pat_comuni_dataframe = get_pat_comuni_dataframe()
 comuni_popolazione = pat_comuni_dataframe.pat_comuni_popolazione
