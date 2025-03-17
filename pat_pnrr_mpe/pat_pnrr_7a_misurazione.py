@@ -1706,7 +1706,7 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    load = True
+    # load = True
     # comuni_dataframe_org_05 = get_comuni_dataframe(
     #     comuni_excel_map, 'ORGANICO', FOLDER_COMUNI_EXCEL,
     #     load=load)
@@ -1723,9 +1723,11 @@ if __name__ == '__main__':
     # comuni_measure_dataframe_org = get_comuni_measure_dataframe(
     #     comuni_excel_map, 'ORGANICO', FOLDER_COMUNI_EXCEL,
     #     load=load)
-    comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        type_pdc_ov=True, load=load)
+    # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
+    #     type_pdc_ov=True, load=load)
+    # comuni_measure_dataframe_pdc_ov.loc[:, 'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2024q3-4'].sort_values(ascending=False)
+
     # comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
     #     type_pdc_ov=False, load=load)
