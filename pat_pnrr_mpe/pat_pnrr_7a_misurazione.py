@@ -17,8 +17,8 @@ import warnings
 from .pat_pnrr_comuni_excel_mapping import *
 
 
-DATA_INIZIO_MONITORAGGIO = '2025' + '-01-01'  # '-07-01'
-DATA_FINE_MONITORAGGIO = '2025' + '-06-30'  # '-12-31'
+DATA_INIZIO_MONITORAGGIO = '2024' + '-07-01'  # '-01-01'
+DATA_FINE_MONITORAGGIO = '2024' + '-12-31'  # '-06-30'
 PERIODO_MONITORAGGIO = '2024q3-4'
 FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'
 INDEX_COMUNI_EXCEL_MAP = 5
@@ -590,6 +590,9 @@ class ComuneExcel:
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ORDINANZA DI MESSA IN PRISTINO', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('ANOMALA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
@@ -1688,8 +1691,8 @@ if __name__ == '__main__':
     #     print(comune)
 
 
-    # comune_name = 'San Giovanni di Fassa'
-    # name_excel_file = '250_San Giovanni di Fassa-Sèn Jan_Edilizia_VII.xlsx'
+    # comune_name = 'Dro'
+    # name_excel_file = '079_Dro.xlsx'
     # path_to_excel_files = FOLDER_COMUNI_EXCEL
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
@@ -1700,7 +1703,7 @@ if __name__ == '__main__':
     # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
     # comune_dataframe_pds = comune.get_comune_dataframe('Prov di sanatoria')
     # comune_dataframe_cila = comune.get_comune_dataframe('Controllo CILA')
-    # 
+    
     # comune_measure_series_pdc = comune.get_comune_measure_series('Permessi di Costruire')
     # comune_measure_series_pds = comune.get_comune_measure_series('Prov di sanatoria')
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
