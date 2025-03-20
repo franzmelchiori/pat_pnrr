@@ -328,6 +328,7 @@ def get_comuni_measure(comuni_excel_map, sheet_name, type_name=False, type_pdc_o
     comuni_measure.append(comuni_measure_dataframe.loc[:, measure_labels[7]].sum())
 
     comuni_measure = pd.Series(comuni_measure, index=measure_labels)
+    comuni_monitored = comuni_measure_dataframe.__len__()
     message = 'Misurazione | ' + sheet_name
     if type_name:
         message += ' | ' + type_name
@@ -340,18 +341,18 @@ def get_comuni_measure(comuni_excel_map, sheet_name, type_name=False, type_pdc_o
     print('{0}/166 comuni'.format(comuni_measure_dataframe.__len__()))
     print()
 
-    return comuni_measure
+    return comuni_measure, comuni_monitored
 
 
 def get_comuni_measures(comuni_excel_map, save_tex=False):
 
-    comuni_pdc_measure = get_comuni_measure(
+    comuni_pdc_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire', type_pdc_ov=False)
-    comuni_pdc_ov_measure = get_comuni_measure(
+    comuni_pdc_ov_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire')
-    comuni_pds_measure = get_comuni_measure(
+    comuni_pds_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Prov di sanatoria')
-    comuni_cila_measure = get_comuni_measure(
+    comuni_cila_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Controllo CILA')
 
     if save_tex:
@@ -1240,7 +1241,7 @@ if __name__ == '__main__':
     # get_comuni_measure(comuni_excel_map, 'Controllo CILA', 'CILA con sanzione', load=False)
 
 
-    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures_dataframe(comuni_excel_map, load=True)
     get_comuni_measures(comuni_excel_map)
 
     # load = True
