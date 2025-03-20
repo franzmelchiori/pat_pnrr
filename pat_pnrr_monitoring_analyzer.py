@@ -2309,7 +2309,7 @@ if __name__ == '__main__':
 
     # PRINT MEASUREMENT 07
     # pat_pnrr_7a.get_comuni_measures_dataframe(comuni_excel_map, load=True)
-    # pat_pnrr_7a.get_comuni_measures(comuni_excel_map, save_tex=True)
+    # pat_pnrr_7a.get_comuni_measures(comuni_excel_map, save_tex=False)
 
 
     # CLUSTER BASELINE
