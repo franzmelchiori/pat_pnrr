@@ -20,7 +20,7 @@ from .pat_pnrr_comuni_excel_mapping import *
 DATA_INIZIO_MONITORAGGIO = '2024' + '-07-01'  # '-01-01'
 DATA_FINE_MONITORAGGIO = '2024' + '-12-31'  # '-06-30'
 PERIODO_MONITORAGGIO = '2024q3-4'
-FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'
+FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # download-20250321\\'
 INDEX_COMUNI_EXCEL_MAP = 5
 
 
@@ -374,6 +374,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
                     'string').str.contains('10/6/0204', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '10/06/2024'
+                change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
+                    'string').str.contains('12/112024', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '12/11/2024'
             try:
                 comune_dataframe['data_inizio_pratica'] = pd.to_datetime(
                     comune_dataframe['data_inizio_pratica'],
@@ -751,6 +754,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('07/02/204', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '07/02/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('07/08/204', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '07/08/2024'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
