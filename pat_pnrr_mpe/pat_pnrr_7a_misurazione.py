@@ -1210,7 +1210,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             comuni_dataframe.loc[
                 (filter_mask & \
                  filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma)].to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
                     '_pratiche_non_concluse_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_01' + '.csv')
 
@@ -1245,7 +1245,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             comuni_dataframe.loc[
                 (filter_mask & \
                  filtro_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma)].to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
                     '_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_01' + '.csv')
 
@@ -1280,7 +1280,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             comuni_dataframe.loc[
                 (filter_mask & \
                  filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma)].to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
                     '_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_01' + '.csv')
 
@@ -1306,7 +1306,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             totali_pratiche_avviate_sospensioni_nulle_fuori_norma\
                 .sum(axis=1).sort_values(ascending=False)\
                 .to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
                     '_comuni_per_pdc_avviati_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_01' + '.csv')
 
@@ -1332,7 +1332,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             comuni_dataframe.loc[
                 (filter_mask & \
                  filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma)].to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
                     '_pratiche_non_concluse_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_02' + '.csv')
 
@@ -1363,7 +1363,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             comuni_dataframe.loc[
                 (filter_mask & \
                  filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma)].to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
                     '_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_02' + '.csv')
 
@@ -1388,7 +1388,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             totali_pratiche_avviate_sospensioni_nulle_fuori_norma\
                 .sum(axis=1).sort_values(ascending=False)\
                 .to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_05' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
                     '_comuni_per_pds_avviati_sospensioni_nulle_fuori_norma' + \
                     '_request_20240527_02' + '.csv')
     return comuni_dataframe
@@ -1655,7 +1655,7 @@ def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
         FOLDER_COMUNI_EXCEL)
 
     if save_tex:
-        measurement_05_pratiche_header = [
+        measurement_07_pratiche_header = [
             'Concluse con SA',
             'Concluse',
             'con sospensioni',
@@ -1664,29 +1664,29 @@ def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
             'Termine [gg]',
             'Avviate',
             'Arretrate']
-        tex_file_header = measurement_05_pratiche_header
+        tex_file_header = measurement_07_pratiche_header
 
-        comuni_pdc_measure.index = measurement_05_pratiche_header
-        comuni_pdc_ov_measure.index = measurement_05_pratiche_header
-        comuni_pds_measure.index = measurement_05_pratiche_header
-        comuni_cila_measure.index = measurement_05_pratiche_header
+        comuni_pdc_measure.index = measurement_07_pratiche_header
+        comuni_pdc_ov_measure.index = measurement_07_pratiche_header
+        comuni_pds_measure.index = measurement_07_pratiche_header
+        comuni_cila_measure.index = measurement_07_pratiche_header
 
-        measurement_05_series = {
+        measurement_07_series = {
             'Permesso di Costruire OV': comuni_pdc_ov_measure.apply(np.rint).astype(int),
             'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int)}
-        measurement_05 = pd.DataFrame(measurement_05_series).T
+        measurement_07 = pd.DataFrame(measurement_07_series).T
 
-        measurement_05b_series = {
+        measurement_07b_series = {
             'Permesso di Costruire': comuni_pdc_measure.apply(np.rint).astype(int),
             'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int),
             'Controllo della CILA': comuni_cila_measure.apply(np.rint).astype(int)}
-        measurement_05b = pd.DataFrame(measurement_05b_series).T
+        measurement_07b = pd.DataFrame(measurement_07b_series).T
 
         tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
                          'pat-pnrr_mpe_' + PERIODO_MONITORAGGIO + '.tex')
         with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
-            measurement_05.columns = tex_file_header
-            baseline_styler = measurement_05.style
+            measurement_07.columns = tex_file_header
+            baseline_styler = measurement_07.style
             baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
             caption = 'PAT-PNRR | Procedimenti Edilizi | Misurazione ' + PERIODO_MONITORAGGIO
             if temp_tex:
@@ -1699,8 +1699,8 @@ def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
         tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
                          'pat-pnrr_mpe_' + PERIODO_MONITORAGGIO + 'b.tex')
         with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
-            measurement_05b.columns = tex_file_header
-            baseline_styler = measurement_05b.style
+            measurement_07b.columns = tex_file_header
+            baseline_styler = measurement_07b.style
             baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
             caption='PAT-PNRR | Procedimenti Edilizi | Misurazione ' + PERIODO_MONITORAGGIO + 'b'
             if temp_tex:
@@ -1746,16 +1746,16 @@ if __name__ == '__main__':
 
 
     # load = True
-    # comuni_dataframe_org_05 = get_comuni_dataframe(
+    # comuni_dataframe_org_07 = get_comuni_dataframe(
     #     comuni_excel_map, 'ORGANICO', FOLDER_COMUNI_EXCEL,
     #     load=load)
-    # comuni_dataframe_pdc_05 = get_comuni_dataframe(
+    # comuni_dataframe_pdc_07 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-    #     load=load, pf='l_02')
-    # comuni_dataframe_pds_05 = get_comuni_dataframe(
+    #     load=load)
+    # comuni_dataframe_pds_07 = get_comuni_dataframe(
     #     comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
     #     load=load, pf='l_02')
-    # comuni_dataframe_cila_05 = get_comuni_dataframe(
+    # comuni_dataframe_cila_07 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', FOLDER_COMUNI_EXCEL,
     #     load=load)
 
@@ -1806,9 +1806,9 @@ if __name__ == '__main__':
 
 
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
-    # get_comuni_dataframes(comuni_excel_map, load=False)
+    # get_comuni_dataframes(comuni_excel_map, load=True)
     # check_comuni_dataframes(comuni_excel_map)
-    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures_dataframe(comuni_excel_map, load=True)
     get_comuni_measures(comuni_excel_map, save_tex=False)
 
     # load = True
