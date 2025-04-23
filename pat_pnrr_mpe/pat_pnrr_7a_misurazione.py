@@ -20,7 +20,7 @@ from .pat_pnrr_comuni_excel_mapping import *
 DATA_INIZIO_MONITORAGGIO = '2024' + '-07-01'  # '-01-01'
 DATA_FINE_MONITORAGGIO = '2024' + '-12-31'  # '-06-30'
 PERIODO_MONITORAGGIO = '2024q3-4'
-FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download-20250414\\'
+FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download-20250423\\'
 INDEX_COMUNI_EXCEL_MAP = 5
 
 
@@ -445,6 +445,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('da archiviare', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('decaduta', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
                     comune_dataframe['data_fine_pratica'],
@@ -606,6 +609,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('9/10/204', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '09/10/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('2/102024', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '02/10/2024'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
@@ -1808,7 +1814,7 @@ if __name__ == '__main__':
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
     # get_comuni_dataframes(comuni_excel_map, load=True)
     # check_comuni_dataframes(comuni_excel_map)
-    get_comuni_measures_dataframe(comuni_excel_map, load=True)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
     get_comuni_measures(comuni_excel_map, save_tex=False)
 
     # load = True
