@@ -1120,7 +1120,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
     if pf == 'l_01':
         if sheet_name=='Permessi di Costruire':
             # REQUEST 20240513_01 | pdc-ov non conclusi durata netta > 120 gg
-            # - pdc-ov, non conclusi, mpe 05
+            # - pdc-ov, non conclusi, mpe corrente
             #   - data fine semestre (31/12/2023) - data inizio pratica - sospensione (se c'e')
             #     - quante pratiche risultanti > 120 gg? quante di queste con sospensioni nulle?
             #     - conteggi con Trento e senza
@@ -1147,14 +1147,14 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             
             numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
                 filtro_non_concluse_giorni_sospensioni_nulli.sum()
-            print('numero pdc-ov mpe-05 non conclusi con giorni sospensioni nulli = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' non conclusi con giorni sospensioni nulli = ' + \
                 str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
             
             sheet_suffix += '_ov'
 
         if sheet_name=='Prov di sanatoria':
             # REQUEST 20240515_01 | pds non conclusi durata netta > 120 gg
-            # - pdc-ov, non conclusi, mpe 05
+            # - pdc-ov, non conclusi, mpe corrente
             #   - data fine semestre (31/12/2023) - data inizio pratica - sospensione (se c'e')
             #     - quante pratiche risultanti > 120 gg? quante di queste con sospensioni nulle?
             #     - conteggi con Trento e senza
@@ -1175,7 +1175,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             
             numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
                 filtro_non_concluse_giorni_sospensioni_nulli.sum()
-            print('numero pds mpe-05 non conclusi con giorni sospensioni nulli = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' non conclusi con giorni sospensioni nulli = ' + \
                 str(numero_pratiche_non_concluse_giorni_sospensioni_nulli))
         
         comuni_dataframe.drop(
@@ -1224,7 +1224,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_non_concluse_sospensioni_nulle_fuori_norma' + \
                     '_' + CODICE_RICHIESTA + '.csv')
 
-            print('numero pdc-ov ' + CODICE_MONITORAGGIO + ' non conclusi fuori norma senza sospensioni = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' non conclusi fuori norma senza sospensioni = ' + \
                 str(sum(filter_mask & filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma)))
 
             nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[INDEX_COMUNI_EXCEL_MAP] is not None]
@@ -1263,7 +1263,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma' + \
                     '_' + CODICE_RICHIESTA + '.csv')
 
-            print('numero pdc-ov ' + CODICE_MONITORAGGIO + ' conclusi con silenzio assenso fuori norma senza sospensioni = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' conclusi con silenzio assenso fuori norma senza sospensioni = ' + \
                 str(sum(filter_mask & filtro_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma)))
 
             nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[INDEX_COMUNI_EXCEL_MAP] is not None]
@@ -1302,7 +1302,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma' + \
                     '_' + CODICE_RICHIESTA + '.csv')
 
-            print('numero pdc-ov ' + CODICE_MONITORAGGIO + ' conclusi con espressione fuori norma senza sospensioni = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' conclusi con espressione fuori norma senza sospensioni = ' + \
                 str(sum(filter_mask & filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma)))
 
             nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[INDEX_COMUNI_EXCEL_MAP] is not None]
@@ -1335,7 +1335,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
         if sheet_name=='Prov di sanatoria':
             # REQUEST 20240527_02 | 20250423_06 | pds avviati, fuori norma, senza sospensioni
             # - lista ordinata di comuni per pratiche del tipo seguente
-            #   - pds avviati, mpe-07
+            #   - pds avviati, mpe corrente
             #     - fuori norma (durata netta > termine normativo, pratica per pratica)
             #     - senza sospensioni (0gg)
             #       - valore % sulle pratiche fuori norma
@@ -1361,7 +1361,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_non_concluse_sospensioni_nulle_fuori_norma' + \
                     '_' + CODICE_RICHIESTA + '.csv')
 
-            print('numero pds ' + CODICE_MONITORAGGIO + ' non conclusi fuori norma senza sospensioni = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' non conclusi fuori norma senza sospensioni = ' + \
                 str(sum(filter_mask & filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma)))
 
             nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[INDEX_COMUNI_EXCEL_MAP] is not None]
@@ -1376,7 +1376,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma = \
                 pd.Series(totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma, \
                           index=nomi_comuni,
-                          name='pds_non_conclusi_sospensioni_nulle_fuori_norma')
+                          name=sheet_suffix.lstrip('_') + '_non_conclusi_sospensioni_nulle_fuori_norma')
             
             filter_mask = (
                 comuni_dataframe.loc[:, 'data_fine_pratica'].isna() == False)
@@ -1396,7 +1396,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                     '_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma' + \
                     '_' + CODICE_RICHIESTA + '.csv')
 
-            print('numero pds ' + CODICE_MONITORAGGIO + ' conclusi con espressione fuori norma senza sospensioni = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' conclusi con espressione fuori norma senza sospensioni = ' + \
                 str(sum(filter_mask & filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma)))
 
             nomi_comuni = [comune[0] for comune in comuni_excel_map if comune[INDEX_COMUNI_EXCEL_MAP] is not None]
@@ -1411,7 +1411,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = \
                 pd.Series(totali_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma, \
                           index=nomi_comuni,
-                          name='pds_conclusi_con_espressione_sospensioni_nulle_fuori_norma')
+                          name=sheet_suffix.lstrip('_') + '_conclusi_con_espressione_sospensioni_nulle_fuori_norma')
             
             totali_pratiche_avviate_sospensioni_nulle_fuori_norma = pd.concat([
                 totali_pratiche_non_concluse_sospensioni_nulle_fuori_norma,
@@ -1422,7 +1422,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                 .to_csv(
                     path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + \
                     '_' + CODICE_MONITORAGGIO + \
-                    '_comuni_per_pds_avviati_sospensioni_nulle_fuori_norma' + \
+                    '_comuni_per' + sheet_suffix + '_avviati_sospensioni_nulle_fuori_norma' + \
                     '_' + CODICE_RICHIESTA + '.csv')
 
     elif pf == 'l_03':
@@ -1430,6 +1430,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             # REQUEST 20250423_01 [!]
             # PdC-OV conclusi e non conclusi
             # escludere determinate sospensioni
+            CODICE_RICHIESTA = 'request_20250423_01'
 
             sospensioni_da_escludere = [
                 'ELIMINATA DA PRECEDENTE MONITORAGGIO',
@@ -1451,18 +1452,21 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             pratiche_sospensioni_da_escludere = comuni_dataframe[
                 filter_type & filter_sospensioni_da_escludere]
             pratiche_sospensioni_da_escludere.to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + \
+                    '_' + CODICE_MONITORAGGIO + \
                     '_pratiche_sospensioni_da_escludere' + \
-                    '_request_20250423_01' + '.csv')
+                    '_' + CODICE_RICHIESTA + '.csv')
 
             numero_pratiche_sospensioni_da_escludere = \
                 pratiche_sospensioni_da_escludere.__len__()
-            print('numero pdc-ov mpe-07 con sospensioni da escludere = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' con sospensioni da escludere = ' + \
                 str(numero_pratiche_sospensioni_da_escludere))
             
             # REQUEST 20250423_02
             # PdC-OV non conclusi
             # escludere determinate sospensioni
+            CODICE_RICHIESTA = 'request_20250423_02'
+
             filter_mask = \
                 comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna()
             filter_mask = filter_mask & (
@@ -1471,23 +1475,21 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             pratiche_non_concluse_sospensioni_da_escludere = comuni_dataframe[
                 filter_type & filter_mask & filter_sospensioni_da_escludere]
             pratiche_non_concluse_sospensioni_da_escludere.to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + \
+                    '_' + CODICE_MONITORAGGIO + \
                     '_pratiche_non_concluse_sospensioni_da_escludere' + \
-                    '_request_20250423_02' + '.csv')
+                    '_' + CODICE_RICHIESTA + '.csv')
 
             numero_pratiche_non_concluse_sospensioni_da_escludere = \
                 pratiche_non_concluse_sospensioni_da_escludere.__len__()
-            print('numero pdc-ov mpe-07 non conclusi con sospensioni da escludere = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' non conclusi con sospensioni da escludere = ' + \
                 str(numero_pratiche_non_concluse_sospensioni_da_escludere))
-
-            # REQUEST 20250423_07
-            # PdC-OV conclusi e non conclusi
-            # durata oltre i 600 gg
 
         if sheet_name=='Prov di sanatoria':
             # REQUEST 20250423_03 [!]
             # PdS conclusi e non conclusi
             # escludere determinate sospensioni
+            CODICE_RICHIESTA = 'request_20250423_03'
 
             sospensioni_da_escludere = [
                 'IN ATTESA DI PAGAMENTO ONERI/SANZIONI DA OLTRE 30 GIORNI',
@@ -1501,36 +1503,157 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             pratiche_sospensioni_da_escludere = comuni_dataframe[
                 filter_sospensioni_da_escludere]
             pratiche_sospensioni_da_escludere.to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + \
+                    '_' + CODICE_MONITORAGGIO + \
                     '_pratiche_sospensioni_da_escludere' + \
-                    '_request_20250423_03' + '.csv')
+                    '_' + CODICE_RICHIESTA + '.csv')
 
             numero_pratiche_sospensioni_da_escludere = \
                 pratiche_sospensioni_da_escludere.__len__()
-            print('numero pds mpe-07 con sospensioni da escludere = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' con sospensioni da escludere = ' + \
                 str(numero_pratiche_sospensioni_da_escludere))
             
             # REQUEST 20250423_04
             # PdS non conclusi
             # escludere determinate sospensioni
+            CODICE_RICHIESTA = 'request_20250423_04'
+
             filter_mask = \
                 comuni_dataframe.loc[:, 'data_fine_pratica'].isna()
             
             pratiche_non_concluse_sospensioni_da_escludere = comuni_dataframe[
                 filter_mask & filter_sospensioni_da_escludere]
             pratiche_non_concluse_sospensioni_da_escludere.to_csv(
-                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + \
+                    '_' + CODICE_MONITORAGGIO + \
                     '_pratiche_non_concluse_sospensioni_da_escludere' + \
-                    '_request_20250423_04' + '.csv')
+                    '_' + CODICE_RICHIESTA + '.csv')
 
             numero_pratiche_non_concluse_sospensioni_da_escludere = \
                 pratiche_non_concluse_sospensioni_da_escludere.__len__()
-            print('numero pds mpe-07 non conclusi con sospensioni da escludere = ' + \
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' non conclusi con sospensioni da escludere = ' + \
                 str(numero_pratiche_non_concluse_sospensioni_da_escludere))
 
-            # REQUEST 20250423_08
-            # PdS conclusi e non conclusi
-            # durata oltre i 600 gg
+    elif pf == 'l_04':
+        if sheet_name=='Permessi di Costruire':
+            # REQUEST 20240513_02 | 20250423_07 | pdc-ov avviati durata lorda > 600 gg
+            # - pdc-ov, avviati, mpe corrente
+            #   - pdc conclusi (con espressione o silenzio-assenso)
+            #     - data fine pratica - data inizio
+            #       - > 600 gg? 
+            #   - pdc non conclusi
+            #     - data fine semestre (31/12/2023) - data inizio pratica
+            #       - > 600 gg?
+            CODICE_RICHIESTA = 'request_20250423_07'
+
+            giorni_soglia_alta = 600
+            measure_end_date = pd.Timestamp(DATA_FINE_MONITORAGGIO)
+
+            filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                              'PdC ordinario') | \
+                          (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
+                              'PdC in variante')
+            sheet_suffix += '_ov'
+            filter_mask_concluse_espressione = (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna() == False)
+            filter_mask_concluse_silenzio_assenso = (
+                comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False)
+            filter_mask_concluse = filter_mask_concluse_espressione | \
+                filter_mask_concluse_silenzio_assenso
+            filter_mask_non_concluse = ~filter_mask_concluse
+            
+            filter_mask_pdc_ov_concluse_espressione = filter_type & \
+                filter_mask_concluse_espressione
+            filter_mask_pdc_ov_concluse_espressione_sopra_soglia = (\
+                comuni_dataframe.loc[filter_mask_pdc_ov_concluse_espressione,
+                    'data_fine_pratica'] - \
+                comuni_dataframe.loc[filter_mask_pdc_ov_concluse_espressione,
+                    'data_inizio_pratica']) > \
+                    pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
+            
+            filter_mask_pdc_ov_concluse_silenzio_assenso = filter_type & \
+                filter_mask_concluse_silenzio_assenso
+            filter_mask_pdc_ov_concluse_silenzio_assenso_sopra_soglia = (\
+                comuni_dataframe.loc[filter_mask_pdc_ov_concluse_silenzio_assenso,
+                    'data_fine_pratica_silenzio-assenso'] - \
+                comuni_dataframe.loc[filter_mask_pdc_ov_concluse_silenzio_assenso,
+                    'data_inizio_pratica']) > \
+                    pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
+            
+            filter_mask_pdc_ov_non_concluse = filter_type & \
+                filter_mask_non_concluse
+            filter_mask_pdc_ov_non_concluse_sopra_soglia = (\
+                measure_end_date - \
+                comuni_dataframe.loc[filter_mask_pdc_ov_non_concluse,
+                    'data_inizio_pratica']) > \
+                    pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
+            
+            pratiche_avviate_sopra_soglia = pd.concat(
+                [comuni_dataframe.loc[filter_mask_pdc_ov_concluse_espressione]
+                    [filter_mask_pdc_ov_concluse_espressione_sopra_soglia],
+                 comuni_dataframe.loc[filter_mask_pdc_ov_concluse_silenzio_assenso]
+                    [filter_mask_pdc_ov_concluse_silenzio_assenso_sopra_soglia],
+                 comuni_dataframe.loc[filter_mask_pdc_ov_non_concluse]
+                    [filter_mask_pdc_ov_non_concluse_sopra_soglia]],
+                axis='rows', join='outer')
+            numero_pratiche_avviate_sopra_soglia = len(pratiche_avviate_sopra_soglia)
+            pratiche_avviate_sopra_soglia.to_csv(
+                path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + \
+                '_' + CODICE_MONITORAGGIO + \
+                '_pratiche_avviate_sopra_600_gg' + \
+                '_' + CODICE_RICHIESTA + '.csv')
+            
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' avviati sopra ' + \
+                str(giorni_soglia_alta) + ' gg = ' + \
+                str(numero_pratiche_avviate_sopra_soglia))
+        
+        if sheet_name=='Prov di sanatoria':
+            # REQUEST 20240515_02 | 20250423_08 | pds avviati durata lorda > 600 gg
+            # - pds, avviati, mpe corrente
+            #   - pds conclusi
+            #     - data fine pratica - data inizio
+            #       - > 600 gg? 
+            #   - pds non conclusi
+            #     - data fine semestre (31/12/2023) - data inizio pratica
+            #       - > 600 gg?
+            CODICE_RICHIESTA = 'request_20250423_08'
+            
+            giorni_soglia_alta = 600
+            measure_end_date = pd.Timestamp(DATA_FINE_MONITORAGGIO)
+
+            filter_mask_concluse = (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna() == False)
+            filter_mask_non_concluse = ~filter_mask_concluse
+            
+            filter_mask_pds_concluse_sopra_soglia = (\
+                comuni_dataframe.loc[filter_mask_concluse,
+                    'data_fine_pratica'] - \
+                comuni_dataframe.loc[filter_mask_concluse,
+                    'data_inizio_pratica']) > \
+                    pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
+            
+            filter_mask_pds_non_concluse_sopra_soglia = (\
+                measure_end_date - \
+                comuni_dataframe.loc[filter_mask_non_concluse,
+                    'data_inizio_pratica']) > \
+                    pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
+            
+            pratiche_avviate_sopra_soglia = pd.concat(
+                [comuni_dataframe.loc[filter_mask_concluse]
+                    [filter_mask_pds_concluse_sopra_soglia],
+                 comuni_dataframe.loc[filter_mask_non_concluse]
+                    [filter_mask_pds_non_concluse_sopra_soglia]],
+                axis='rows', join='outer')
+            numero_pratiche_avviate_sopra_soglia = len(pratiche_avviate_sopra_soglia)
+            pratiche_avviate_sopra_soglia.to_csv(
+                path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + \
+                '_' + CODICE_MONITORAGGIO + \
+                '_pratiche_avviate_sopra_600_gg' + \
+                '_' + CODICE_RICHIESTA + '.csv')
+            
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' avviati sopra ' + \
+                str(giorni_soglia_alta) + ' gg = ' + \
+                str(numero_pratiche_avviate_sopra_soglia))
 
     return comuni_dataframe
 
@@ -1896,6 +2019,18 @@ if __name__ == '__main__':
     comuni_dataframe_pds_07 = get_comuni_dataframe(
         comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
         load=True, pf='l_02')
+    comuni_dataframe_pdc_07 = get_comuni_dataframe(
+        comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
+        load=True, pf='l_03')
+    comuni_dataframe_pds_07 = get_comuni_dataframe(
+        comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
+        load=True, pf='l_03')
+    comuni_dataframe_pdc_07 = get_comuni_dataframe(
+        comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
+        load=True, pf='l_04')
+    comuni_dataframe_pds_07 = get_comuni_dataframe(
+        comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
+        load=True, pf='l_04')
     # comuni_dataframe_cila_07 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', FOLDER_COMUNI_EXCEL,
     #     load=load)
