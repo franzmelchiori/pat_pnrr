@@ -20,7 +20,7 @@ from .pat_pnrr_comuni_excel_mapping import *
 DATA_INIZIO_MONITORAGGIO = '2024' + '-07-01'  # '-01-01'
 DATA_FINE_MONITORAGGIO = '2024' + '-12-31'  # '-06-30'
 PERIODO_MONITORAGGIO = '2024q3-4'
-FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download-20250423\\'
+FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download-20250424\\'
 INDEX_COMUNI_EXCEL_MAP = 5
 
 
@@ -1401,10 +1401,10 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
     elif pf == 'l_03':
         if sheet_name=='Permessi di Costruire':
             # REQUEST 20250423_01 [!]
-            # filtrare determinate tipologie di sospensioni (che hanno contribuito alla massima sospensione)
-            # PdC-OV concluse e non concluse
+            # PdC-OV conclusi e non conclusi
+            # escludere determinate sospensioni
 
-            tipologia_sospensione_massima_da_escludere = [
+            sospensioni_da_escludere = [
                 'ELIMINATA DA PRECEDENTE MONITORAGGIO',
                 'SOSPESA PER CONTROVERSIE LEGALI',
                 'PRATICA ARCHIVIATA O IN FASE DI ARCHIVIAZIONE PER INERZIA DEL RICHIEDENTE',
@@ -1412,57 +1412,108 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                 'IN ATTESA DI PAGAMENTO ONERI/SANZIONI DA OLTRE 30 GIORNI',
                 "SOSPESA PER MANCATA CONFORMITA' PRG IN REGIME DI SALVAGUARDIA"]
             
-            measure_end_date = pd.Timestamp(DATA_FINE_MONITORAGGIO)
             filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
                             'PdC ordinario') ^ \
                           (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
                             'PdC in variante')
-            filter_tipologia_sospensione_massima_da_escludere = filter_type & (
-                comuni_dataframe['tipologia_massima_sospensione'].isin(tipologia_sospensione_massima_da_escludere))
+            sheet_suffix += '_ov'
+            filter_sospensioni_da_escludere = \
+                comuni_dataframe['tipologia_massima_sospensione'].isin(\
+                    sospensioni_da_escludere)
             
-            numero_pratiche_tipologia_sospensione_massima_da_escludere = \
-                filter_tipologia_sospensione_massima_da_escludere.sum()
-            print('numero pdc-ov mpe-07 con tipologia sospensione massima da escludere = ' + \
-                str(numero_pratiche_tipologia_sospensione_massima_da_escludere))
+            pratiche_sospensioni_da_escludere = comuni_dataframe[
+                filter_type & filter_sospensioni_da_escludere]
+            pratiche_sospensioni_da_escludere.to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
+                    '_pratiche_sospensioni_da_escludere' + \
+                    '_request_20250423_01' + '.csv')
+
+            numero_pratiche_sospensioni_da_escludere = \
+                pratiche_sospensioni_da_escludere.__len__()
+            print('numero pdc-ov mpe-07 con sospensioni da escludere = ' + \
+                str(numero_pratiche_sospensioni_da_escludere))
             
             # REQUEST 20250423_02
-            # filtrare determinate tipologie di sospensioni (che hanno contribuito alla massima sospensione)
-            # PdC-OV solo non concluse
+            # PdC-OV non conclusi
+            # escludere determinate sospensioni
+            filter_mask = \
+                comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna()
+            filter_mask = filter_mask & (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
+            
+            pratiche_non_concluse_sospensioni_da_escludere = comuni_dataframe[
+                filter_type & filter_mask & filter_sospensioni_da_escludere]
+            pratiche_non_concluse_sospensioni_da_escludere.to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
+                    '_pratiche_non_concluse_sospensioni_da_escludere' + \
+                    '_request_20250423_02' + '.csv')
+
+            numero_pratiche_non_concluse_sospensioni_da_escludere = \
+                pratiche_non_concluse_sospensioni_da_escludere.__len__()
+            print('numero pdc-ov mpe-07 non conclusi con sospensioni da escludere = ' + \
+                str(numero_pratiche_non_concluse_sospensioni_da_escludere))
 
             # REQUEST 20250423_05
-            # PdC-OV non concluse, oltre i termini (rispetto alla norma pratica per pratica), durata sospensioni zero
+            # PdC-OV non conclusi
+            # oltre i termini normativi
+            # durata sospensioni nulla
 
             # REQUEST 20250423_07
-            # PdC-OV concluse e non concluse, oltre i 600 gg
+            # PdC-OV conclusi e non conclusi
+            # durata oltre i 600 gg
 
         if sheet_name=='Prov di sanatoria':
             # REQUEST 20250423_03 [!]
-            # filtrare determinate tipologie di sospensioni (che hanno contribuito alla massima sospensione)
-            # PdS concluse e non concluse
+            # PdS conclusi e non conclusi
+            # escludere determinate sospensioni
 
-            tipologia_sospensione_massima_da_escludere = [
+            sospensioni_da_escludere = [
                 'IN ATTESA DI PAGAMENTO ONERI/SANZIONI DA OLTRE 30 GIORNI',
                 'SOSPESA PER CONTROVERSIE LEGALI',
                 "SOSPESA PER MANCATA CONFORMITA' PRG IN REGIME DI SALVAGUARDIA"]
             
-            measure_end_date = pd.Timestamp(DATA_FINE_MONITORAGGIO)
-            filter_tipologia_sospensione_massima_da_escludere = \
-                comuni_dataframe['tipologia_massima_sospensione'].isin(tipologia_sospensione_massima_da_escludere)
+            filter_sospensioni_da_escludere = \
+                comuni_dataframe['tipologia_massima_sospensione'].isin(\
+                    sospensioni_da_escludere)
             
-            numero_pratiche_tipologia_sospensione_massima_da_escludere = \
-                filter_tipologia_sospensione_massima_da_escludere.sum()
-            print('numero pds mpe-07 con tipologia sospensione massima da escludere = ' + \
-                str(numero_pratiche_tipologia_sospensione_massima_da_escludere))
+            pratiche_sospensioni_da_escludere = comuni_dataframe[
+                filter_sospensioni_da_escludere]
+            pratiche_sospensioni_da_escludere.to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
+                    '_pratiche_sospensioni_da_escludere' + \
+                    '_request_20250423_03' + '.csv')
+
+            numero_pratiche_sospensioni_da_escludere = \
+                pratiche_sospensioni_da_escludere.__len__()
+            print('numero pds mpe-07 con sospensioni da escludere = ' + \
+                str(numero_pratiche_sospensioni_da_escludere))
             
             # REQUEST 20250423_04
-            # filtrare determinate tipologie di sospensioni (che hanno contribuito alla massima sospensione)
-            # PdS solo non concluse
+            # PdS non conclusi
+            # escludere determinate sospensioni
+            filter_mask = \
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna()
+            
+            pratiche_non_concluse_sospensioni_da_escludere = comuni_dataframe[
+                filter_mask & filter_sospensioni_da_escludere]
+            pratiche_non_concluse_sospensioni_da_escludere.to_csv(
+                    path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + '_mpe_07' + \
+                    '_pratiche_non_concluse_sospensioni_da_escludere' + \
+                    '_request_20250423_04' + '.csv')
+
+            numero_pratiche_non_concluse_sospensioni_da_escludere = \
+                pratiche_non_concluse_sospensioni_da_escludere.__len__()
+            print('numero pds mpe-07 non conclusi con sospensioni da escludere = ' + \
+                str(numero_pratiche_non_concluse_sospensioni_da_escludere))
 
             # REQUEST 20250423_06
-            # PdS non concluse, oltre i termini (rispetto alla norma pratica per pratica), durata sospensioni zero
+            # PdS non conclusi
+            # oltre i termini normativi
+            # durata sospensioni nulla
 
             # REQUEST 20250423_08
-            # PdS concluse e non concluse, oltre i 600 gg
+            # PdS conclusi e non conclusi
+            # durata oltre i 600 gg
 
     return comuni_dataframe
 
@@ -1818,16 +1869,16 @@ if __name__ == '__main__':
     # comune_measure_series_cila = comune.get_comune_measure_series('Controllo CILA')
 
 
-    load = True
+    # load = True
     # comuni_dataframe_org_07 = get_comuni_dataframe(
     #     comuni_excel_map, 'ORGANICO', FOLDER_COMUNI_EXCEL,
     #     load=load)
-    comuni_dataframe_pdc_07 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        load=load, pf='l_03')
-    comuni_dataframe_pds_07 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
-        load=load, pf='l_03')
+    # comuni_dataframe_pdc_07 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
+    #     load=load, pf='l_03')
+    # comuni_dataframe_pds_07 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
+    #     load=load, pf='l_03')
     # comuni_dataframe_cila_07 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', FOLDER_COMUNI_EXCEL,
     #     load=load)
@@ -1881,8 +1932,8 @@ if __name__ == '__main__':
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
     # get_comuni_dataframes(comuni_excel_map, load=True)
     # check_comuni_dataframes(comuni_excel_map)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=True)
-    # get_comuni_measures(comuni_excel_map, save_tex=False)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
+    get_comuni_measures(comuni_excel_map, save_tex=False)
 
     # load = True
     # lpf = True
