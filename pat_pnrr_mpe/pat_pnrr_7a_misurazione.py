@@ -21,8 +21,20 @@ DATA_INIZIO_MONITORAGGIO = '2024' + '-07-01'  # '-01-01'
 DATA_FINE_MONITORAGGIO = '2024' + '-12-31'  # '-06-30'
 PERIODO_MONITORAGGIO = '2024q3-4'
 CODICE_MONITORAGGIO = 'mpe_07'
-FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download-20250424\\'
+FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download-20250428\\'
 INDEX_COMUNI_EXCEL_MAP = 5
+
+SOSPENSIONI_DA_ESCLUDERE_PDC = [
+    'ELIMINATA DA PRECEDENTE MONITORAGGIO',
+    'SOSPESA PER CONTROVERSIE LEGALI',
+    'PRATICA ARCHIVIATA O IN FASE DI ARCHIVIAZIONE PER INERZIA DEL RICHIEDENTE',
+    "SI E' FORMATO IL SILENZIO ASSENSO",
+    'IN ATTESA DI PAGAMENTO ONERI/SANZIONI DA OLTRE 30 GIORNI',
+    "SOSPESA PER MANCATA CONFORMITA' PRG IN REGIME DI SALVAGUARDIA"]
+SOSPENSIONI_DA_ESCLUDERE_PDS = [
+    'IN ATTESA DI PAGAMENTO ONERI/SANZIONI DA OLTRE 30 GIORNI',
+    'SOSPESA PER CONTROVERSIE LEGALI',
+    "SOSPESA PER MANCATA CONFORMITA' PRG IN REGIME DI SALVAGUARDIA"]
 
 
 def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, droprows,
@@ -774,10 +786,25 @@ class ComuneExcel:
                     'string').str.contains('07/08/204', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '07/08/2024'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('1/1172024', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '01/11/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('16/1172024', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '16/11/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('10/1272024', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '10/12/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('14/1272024', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '14/12/2024'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARICHIVIATA 6/11/2024', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('RESPINTA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
@@ -1432,13 +1459,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             # escludere determinate sospensioni
             CODICE_RICHIESTA = 'request_20250423_01'
 
-            sospensioni_da_escludere = [
-                'ELIMINATA DA PRECEDENTE MONITORAGGIO',
-                'SOSPESA PER CONTROVERSIE LEGALI',
-                'PRATICA ARCHIVIATA O IN FASE DI ARCHIVIAZIONE PER INERZIA DEL RICHIEDENTE',
-                "SI E' FORMATO IL SILENZIO ASSENSO",
-                'IN ATTESA DI PAGAMENTO ONERI/SANZIONI DA OLTRE 30 GIORNI',
-                "SOSPESA PER MANCATA CONFORMITA' PRG IN REGIME DI SALVAGUARDIA"]
+            sospensioni_da_escludere = SOSPENSIONI_DA_ESCLUDERE_PDC
             
             filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
                             'PdC ordinario') ^ \
@@ -1491,10 +1512,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             # escludere determinate sospensioni
             CODICE_RICHIESTA = 'request_20250423_03'
 
-            sospensioni_da_escludere = [
-                'IN ATTESA DI PAGAMENTO ONERI/SANZIONI DA OLTRE 30 GIORNI',
-                'SOSPESA PER CONTROVERSIE LEGALI',
-                "SOSPESA PER MANCATA CONFORMITA' PRG IN REGIME DI SALVAGUARDIA"]
+            sospensioni_da_escludere = SOSPENSIONI_DA_ESCLUDERE_PDS
             
             filter_sospensioni_da_escludere = \
                 comuni_dataframe['tipologia_massima_sospensione'].isin(\
@@ -1697,7 +1715,7 @@ def check_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, pa
 
 def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_files,
                                  type_name=False, type_pdc_ov=True, load=True, path_to_mpe=None,
-                                 lpf=False):
+                                 lpf=False, type_sosp_lpf=False):
     if not path_to_mpe:
         path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
     path_shelve = path_to_mpe + path_to_excel_files
@@ -1752,6 +1770,9 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
         comuni_measure_dataframe.to_csv(path_shelve + 'pat-pnrr_edilizia_misure' + \
                                         sheet_suffix + '_' + PERIODO_MONITORAGGIO + '.csv')
 
+    if type_sosp_lpf:
+        pass
+
     return comuni_measure_dataframe
 
 
@@ -1783,20 +1804,20 @@ def check_comuni_dataframes(comuni_excel_map):
     return True
 
 
-def get_comuni_measures_dataframe(comuni_excel_map, load=True):
+def get_comuni_measures_dataframe(comuni_excel_map, load=True, type_sosp_lpf=False):
 
     comuni_measure_dataframe_org = get_comuni_measure_dataframe(comuni_excel_map,
         'ORGANICO', FOLDER_COMUNI_EXCEL,
         load=load)
     comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(comuni_excel_map,
         'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        type_pdc_ov=True, load=load)
+        type_pdc_ov=True, load=load, type_sosp_lpf=type_sosp_lpf)
     comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(comuni_excel_map,
         'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        type_pdc_ov=False, load=load)
+        type_pdc_ov=False, load=load, type_sosp_lpf=type_sosp_lpf)
     comuni_measure_dataframe_pds = get_comuni_measure_dataframe(comuni_excel_map,
         'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
-        load=load)
+        load=load, type_sosp_lpf=type_sosp_lpf)
     comuni_measure_dataframe_cila = get_comuni_measure_dataframe(comuni_excel_map,
         'Controllo CILA', FOLDER_COMUNI_EXCEL,
         load=load)
@@ -1813,8 +1834,8 @@ def get_comuni_measures_dataframe(comuni_excel_map, load=True):
 
 
 def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_name=False,
-                       type_pdc_ov=True, measure_period=PERIODO_MONITORAGGIO, load=True, path_to_mpe=None,
-                       lpf=False):
+                       type_pdc_ov=True, measure_period=PERIODO_MONITORAGGIO,
+                       load=True, path_to_mpe=None, lpf=False):
     if not path_to_mpe:
         path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
 
@@ -2013,24 +2034,24 @@ if __name__ == '__main__':
     # comuni_dataframe_org_07 = get_comuni_dataframe(
     #     comuni_excel_map, 'ORGANICO', FOLDER_COMUNI_EXCEL,
     #     load=load)
-    comuni_dataframe_pdc_07 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        load=True, pf='l_02')
-    comuni_dataframe_pds_07 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
-        load=True, pf='l_02')
-    comuni_dataframe_pdc_07 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        load=True, pf='l_03')
-    comuni_dataframe_pds_07 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
-        load=True, pf='l_03')
-    comuni_dataframe_pdc_07 = get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        load=True, pf='l_04')
-    comuni_dataframe_pds_07 = get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
-        load=True, pf='l_04')
+    # comuni_dataframe_pdc_07 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
+    #     load=True, pf='l_02')
+    # comuni_dataframe_pds_07 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
+    #     load=True, pf='l_02')
+    # comuni_dataframe_pdc_07 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
+    #     load=True, pf='l_03')
+    # comuni_dataframe_pds_07 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
+    #     load=True, pf='l_03')
+    # comuni_dataframe_pdc_07 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
+    #     load=True, pf='l_04')
+    # comuni_dataframe_pds_07 = get_comuni_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
+    #     load=True, pf='l_04')
     # comuni_dataframe_cila_07 = get_comuni_dataframe(
     #     comuni_excel_map, 'Controllo CILA', FOLDER_COMUNI_EXCEL,
     #     load=load)
@@ -2084,8 +2105,8 @@ if __name__ == '__main__':
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
     # get_comuni_dataframes(comuni_excel_map, load=True)
     # check_comuni_dataframes(comuni_excel_map)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    # get_comuni_measures(comuni_excel_map, save_tex=False)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False, type_sosp_lpf=True)
+    get_comuni_measures(comuni_excel_map, save_tex=False)
 
     # load = True
     # lpf = True
