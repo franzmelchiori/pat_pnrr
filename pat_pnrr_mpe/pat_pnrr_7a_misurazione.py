@@ -1715,7 +1715,7 @@ def check_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, pa
 
 def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_files,
                                  type_name=False, type_pdc_ov=True, load=True, path_to_mpe=None,
-                                 lpf=False, type_sosp_lpf=False):
+                                 lpf=False):
     if not path_to_mpe:
         path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
     path_shelve = path_to_mpe + path_to_excel_files
@@ -1770,9 +1770,6 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
         comuni_measure_dataframe.to_csv(path_shelve + 'pat-pnrr_edilizia_misure' + \
                                         sheet_suffix + '_' + PERIODO_MONITORAGGIO + '.csv')
 
-    if type_sosp_lpf:
-        pass
-
     return comuni_measure_dataframe
 
 
@@ -1804,20 +1801,20 @@ def check_comuni_dataframes(comuni_excel_map):
     return True
 
 
-def get_comuni_measures_dataframe(comuni_excel_map, load=True, type_sosp_lpf=False):
+def get_comuni_measures_dataframe(comuni_excel_map, load=True):
 
     comuni_measure_dataframe_org = get_comuni_measure_dataframe(comuni_excel_map,
         'ORGANICO', FOLDER_COMUNI_EXCEL,
         load=load)
     comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(comuni_excel_map,
         'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        type_pdc_ov=True, load=load, type_sosp_lpf=type_sosp_lpf)
+        type_pdc_ov=True, load=load)
     comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(comuni_excel_map,
         'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        type_pdc_ov=False, load=load, type_sosp_lpf=type_sosp_lpf)
+        type_pdc_ov=False, load=load)
     comuni_measure_dataframe_pds = get_comuni_measure_dataframe(comuni_excel_map,
         'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
-        load=load, type_sosp_lpf=type_sosp_lpf)
+        load=load)
     comuni_measure_dataframe_cila = get_comuni_measure_dataframe(comuni_excel_map,
         'Controllo CILA', FOLDER_COMUNI_EXCEL,
         load=load)
@@ -2105,7 +2102,7 @@ if __name__ == '__main__':
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
     # get_comuni_dataframes(comuni_excel_map, load=True)
     # check_comuni_dataframes(comuni_excel_map)
-    get_comuni_measures_dataframe(comuni_excel_map, load=False, type_sosp_lpf=True)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
     get_comuni_measures(comuni_excel_map, save_tex=False)
 
     # load = True
