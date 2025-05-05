@@ -21,7 +21,7 @@ DATA_INIZIO_MONITORAGGIO = '2024' + '-07-01'  # '-01-01'
 DATA_FINE_MONITORAGGIO = '2024' + '-12-31'  # '-06-30'
 PERIODO_MONITORAGGIO = '2024q3-4'
 CODICE_MONITORAGGIO = 'mpe_07'
-FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download-20250428\\'
+FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download\\'
 INDEX_COMUNI_EXCEL_MAP = 5
 
 SOSPENSIONI_DA_ESCLUDERE_PDC = [
@@ -2100,10 +2100,12 @@ if __name__ == '__main__':
 
 
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
-    # get_comuni_dataframes(comuni_excel_map, load=True)
+    get_comuni_dataframes(comuni_excel_map, load=True)
     # check_comuni_dataframes(comuni_excel_map)
-    get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    get_comuni_measures(comuni_excel_map, save_tex=False)
+    
+    get_comuni_measures_dataframe(comuni_excel_map, load=True)
+    get_comuni_measures(comuni_excel_map)
+
 
     # load = True
     # lpf = True
