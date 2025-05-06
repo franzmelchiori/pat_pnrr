@@ -2100,10 +2100,10 @@ if __name__ == '__main__':
 
 
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
-    get_comuni_dataframes(comuni_excel_map, load=True)
+    # get_comuni_dataframes(comuni_excel_map, load=True)
     # check_comuni_dataframes(comuni_excel_map)
     
-    get_comuni_measures_dataframe(comuni_excel_map, load=True)
+    get_comuni_measures_dataframe(comuni_excel_map, load=False)
     get_comuni_measures(comuni_excel_map)
 
 
