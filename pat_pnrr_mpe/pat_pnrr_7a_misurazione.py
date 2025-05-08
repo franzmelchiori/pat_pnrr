@@ -17,11 +17,12 @@ import warnings
 from .pat_pnrr_comuni_excel_mapping import *
 
 
+PATH_MPE = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download\\'
 DATA_INIZIO_MONITORAGGIO = '2024' + '-07-01'  # '-01-01'
 DATA_FINE_MONITORAGGIO = '2024' + '-12-31'  # '-06-30'
 PERIODO_MONITORAGGIO = '2024q3-4'
 CODICE_MONITORAGGIO = 'mpe_07'
-FOLDER_COMUNI_EXCEL = 'pat_pnrr_7a_misurazione_tabelle_comunali\\'  # drive-download\\'
 INDEX_COMUNI_EXCEL_MAP = 5
 
 SOSPENSIONI_DA_ESCLUDERE_PDC = [
@@ -61,7 +62,7 @@ def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, d
 
 def get_list_excel(path_to_excel_files, path_to_mpe=None, missing=False):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = PATH_MPE
 
     list_xls = []
     for file in os.listdir(path_to_mpe + path_to_excel_files):
@@ -82,7 +83,7 @@ class ComuneExcel:
 
     def __init__(self, name_excel_file, path_to_excel_files, comune_name='Test', path_to_mpe=None):
         if not path_to_mpe:
-            path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'    
+            path_to_mpe = PATH_MPE    
         self.path_base = path_to_mpe + path_to_excel_files
         self.path_file = name_excel_file
         self.excel_path = self.path_base + self.path_file
@@ -885,26 +886,32 @@ class ComuneExcel:
         return comune_dataframe
 
     def get_comune_measure_series(self, sheet_name, type_name=False, type_pdc_ov=True,
-                                  measure_period=PERIODO_MONITORAGGIO, lpf=False):
+                                  measure_period=PERIODO_MONITORAGGIO, lpf=False, tsf=False):
+        path_to_mpe = PATH_MPE
+        path_to_excel_files = FOLDER_COMUNI_EXCEL
+        path_shelve = path_to_mpe + path_to_excel_files
+
+        sheet_suffix = ''
+        if sheet_name == 'ORGANICO':
+            sheet_suffix += '_org'
+        if sheet_name == 'Permessi di Costruire':
+            sheet_suffix += '_pdc'
+        if sheet_name == 'Prov di sanatoria':
+            sheet_suffix += '_pds'
+        if sheet_name == 'Controllo CILA':
+            sheet_suffix += '_cila'
+        shelve_suffix = ''
+        if tsf:
+            shelve_suffix += '_tsf'
         if lpf:
-            path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
-            path_to_excel_files = FOLDER_COMUNI_EXCEL
-            path_shelve = path_to_mpe + path_to_excel_files
+            shelve_suffix += '_lpf'
 
-            sheet_suffix = ''
-            if sheet_name == 'Permessi di Costruire':
-                sheet_suffix += '_pdc_ov'
-            if sheet_name == 'Prov di sanatoria':
-                sheet_suffix += '_pds'
+        comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + \
+                                              sheet_suffix + shelve_suffix)
+        comuni_dataframe = comuni_dataframe_shelve['comuni_dataframe']
+        comuni_dataframe_shelve.close()
 
-            comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + \
-                                                  sheet_suffix + '_lpf')
-            comuni_dataframe = comuni_dataframe_shelve['comuni_dataframe']
-            comuni_dataframe_shelve.close()
-
-            comune_dataframe = comuni_dataframe[comuni_dataframe.comune == self.comune_name]
-        else:
-            comune_dataframe = self.get_comune_dataframe(sheet_name=sheet_name)
+        comune_dataframe = comuni_dataframe[comuni_dataframe.comune == self.comune_name]
 
         if sheet_name == 'ORGANICO':
             measure_labels = [
@@ -1088,7 +1095,7 @@ class ComuneExcel:
 
 def check_comuni_excel(path_to_excel_files, path_to_mpe=None):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = PATH_MPE
     
     list_excel, list_xls = get_list_excel(path_to_excel_files, path_to_mpe)
     for name_excel_file, name_comune in list_excel:
@@ -1101,9 +1108,9 @@ def check_comuni_excel(path_to_excel_files, path_to_mpe=None):
 
 
 def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load=True,
-                         path_to_mpe=None, pf=''):
+                         path_to_mpe=None, pf='', sf=''):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = PATH_MPE
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
@@ -1144,6 +1151,34 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
         comuni_dataframe.to_csv(path_shelve + 'pat-pnrr_edilizia' + row_type_name + \
                                 sheet_suffix + '_' + PERIODO_MONITORAGGIO + '.csv')
     
+    shelve_suffix = ''
+    if sf != '':
+        shelve_suffix += '_tsf'
+
+    # FILTRO TIPOLOGIA SOSPENSIONI
+    # (Typology) Suspension Filter
+    if sf == 't_01':
+        if sheet_name=='Permessi di Costruire':
+            typology_suspension_filter = \
+                comuni_dataframe['tipologia_massima_sospensione'].isin(
+                    SOSPENSIONI_DA_ESCLUDERE_PDC)
+            
+        if sheet_name=='Prov di sanatoria':
+            typology_suspension_filter = \
+                comuni_dataframe['tipologia_massima_sospensione'].isin(
+                    SOSPENSIONI_DA_ESCLUDERE_PDS)
+        
+        comuni_dataframe.drop(
+            comuni_dataframe[typology_suspension_filter].index, inplace=True)
+
+    comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + \
+                                            sheet_suffix + shelve_suffix)
+    comuni_dataframe_shelve['comuni_dataframe'] = comuni_dataframe
+    comuni_dataframe_shelve.close()
+
+    if pf != '':
+        shelve_suffix += '_lpf'
+
     if pf == 'l_01':
         if sheet_name=='Permessi di Costruire':
             # REQUEST 20240513_01 | pdc-ov non conclusi durata netta > 120 gg
@@ -1208,11 +1243,6 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
         comuni_dataframe.drop(
             comuni_dataframe[filter_mask & filtro_non_concluse_giorni_sospensioni_nulli].index,
             inplace=True)
-
-        comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + \
-                                              sheet_suffix + '_lpf')
-        comuni_dataframe_shelve['comuni_dataframe'] = comuni_dataframe
-        comuni_dataframe_shelve.close()
 
     elif pf == 'l_02':
         if sheet_name=='Permessi di Costruire':
@@ -1673,12 +1703,17 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                 str(giorni_soglia_alta) + ' gg = ' + \
                 str(numero_pratiche_avviate_sopra_soglia))
 
+    comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + \
+                                          sheet_suffix + shelve_suffix)
+    comuni_dataframe_shelve['comuni_dataframe'] = comuni_dataframe
+    comuni_dataframe_shelve.close()
+
     return comuni_dataframe
 
 
 def check_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, path_to_mpe=None):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = PATH_MPE
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
@@ -1715,28 +1750,31 @@ def check_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, pa
 
 def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_files,
                                  type_name=False, type_pdc_ov=True, load=True, path_to_mpe=None,
-                                 lpf=False):
+                                 lpf=False, tsf=False):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = PATH_MPE
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
     if sheet_name == 'ORGANICO':
         sheet_suffix += '_org'
     if sheet_name == 'Permessi di Costruire':
+        sheet_suffix += '_pdc'
         if type_pdc_ov:
-            sheet_suffix += '_pdc_ov'
-        else:
-            sheet_suffix += '_pdc'
+            sheet_suffix += '_ov'
     if sheet_name == 'Prov di sanatoria':
         sheet_suffix += '_pds'
     if sheet_name == 'Controllo CILA':
         sheet_suffix += '_cila'
+    
+    shelve_suffix = ''
+    if tsf:
+        shelve_suffix += '_tsf'
+    if lpf:
+        shelve_suffix += '_lpf'
 
     if load:
-        path_shelve_file = path_shelve + 'comuni_measure_dataframe' + sheet_suffix
-        if lpf:
-            path_shelve_file += '_lpf'
+        path_shelve_file = path_shelve + 'comuni_measure_dataframe' + sheet_suffix + shelve_suffix
         comuni_measure_dataframe_shelve = shelve.open(path_shelve_file)
         comuni_measure_dataframe = comuni_measure_dataframe_shelve['comuni_measure_dataframe']
         comuni_measure_dataframe_shelve.close()
@@ -1753,34 +1791,33 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
                 if type_pdc_ov:
                     message += ' | ' + 'Ordinari e in Variante'
             print(message)
-            comune_excel = ComuneExcel(name_excel_file, path_to_excel_files, name_comune,
-                                       path_to_mpe)
-            comune_measure_series = comune_excel.get_comune_measure_series(sheet_name, type_name,
-                                                                           type_pdc_ov, lpf=lpf)
+            comune_excel = ComuneExcel(
+                name_excel_file, path_to_excel_files, name_comune, path_to_mpe)
+            comune_measure_series = comune_excel.get_comune_measure_series(
+                sheet_name, type_name, type_pdc_ov, lpf=lpf, tsf=tsf)
             comuni_measure_dataframe.append(comune_measure_series)
         comuni_measure_dataframe = pd.DataFrame(comuni_measure_dataframe, index=comuni_names)
 
-        path_shelve_file = path_shelve + 'comuni_measure_dataframe' + sheet_suffix
-        if lpf:
-            path_shelve_file += '_lpf'
+        path_shelve_file = path_shelve + 'comuni_measure_dataframe' + sheet_suffix + shelve_suffix
         comuni_measure_dataframe_shelve = shelve.open(path_shelve_file)
         comuni_measure_dataframe_shelve['comuni_measure_dataframe'] = comuni_measure_dataframe
         comuni_measure_dataframe_shelve.close()
 
         comuni_measure_dataframe.to_csv(path_shelve + 'pat-pnrr_edilizia_misure' + \
-                                        sheet_suffix + '_' + PERIODO_MONITORAGGIO + '.csv')
+                                        sheet_suffix + shelve_suffix + \
+                                        '_' + PERIODO_MONITORAGGIO + '.csv')
 
     return comuni_measure_dataframe
 
 
-def get_comuni_dataframes(comuni_excel_map, load=True):
+def get_comuni_dataframes(comuni_excel_map, load=True, sf=''):
 
     get_comuni_dataframe(comuni_excel_map, 'ORGANICO',
                          FOLDER_COMUNI_EXCEL, load=load)
     get_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire',
-                         FOLDER_COMUNI_EXCEL, load=load)
+                         FOLDER_COMUNI_EXCEL, load=load, sf=sf)
     get_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria',
-                         FOLDER_COMUNI_EXCEL, load=load)
+                         FOLDER_COMUNI_EXCEL, load=load, sf=sf)
     get_comuni_dataframe(comuni_excel_map, 'Controllo CILA',
                          FOLDER_COMUNI_EXCEL, load=load)
 
@@ -1801,20 +1838,20 @@ def check_comuni_dataframes(comuni_excel_map):
     return True
 
 
-def get_comuni_measures_dataframe(comuni_excel_map, load=True):
+def get_comuni_measures_dataframe(comuni_excel_map, load=True, tsf=True):
 
     comuni_measure_dataframe_org = get_comuni_measure_dataframe(comuni_excel_map,
         'ORGANICO', FOLDER_COMUNI_EXCEL,
         load=load)
     comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(comuni_excel_map,
         'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        type_pdc_ov=True, load=load)
+        type_pdc_ov=True, load=load, tsf=tsf)
     comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(comuni_excel_map,
         'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        type_pdc_ov=False, load=load)
+        type_pdc_ov=False, load=load, tsf=tsf)
     comuni_measure_dataframe_pds = get_comuni_measure_dataframe(comuni_excel_map,
         'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
-        load=load)
+        load=load, tsf=tsf)
     comuni_measure_dataframe_cila = get_comuni_measure_dataframe(comuni_excel_map,
         'Controllo CILA', FOLDER_COMUNI_EXCEL,
         load=load)
@@ -1832,14 +1869,14 @@ def get_comuni_measures_dataframe(comuni_excel_map, load=True):
 
 def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_name=False,
                        type_pdc_ov=True, measure_period=PERIODO_MONITORAGGIO,
-                       load=True, path_to_mpe=None, lpf=False):
+                       load=True, path_to_mpe=None, lpf=False, tsf=False):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = PATH_MPE
 
     comuni_measure_dataframe = get_comuni_measure_dataframe(
         comuni_excel_map=comuni_excel_map, sheet_name=sheet_name,
         path_to_excel_files=path_to_excel_files, type_name=type_name, type_pdc_ov=type_pdc_ov,
-        load=load, path_to_mpe=path_to_mpe, lpf=lpf)
+        load=load, path_to_mpe=path_to_mpe, lpf=lpf, tsf=tsf)
 
     if sheet_name == 'Permessi di Costruire':
         if type_pdc_ov:
@@ -1912,6 +1949,10 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
     if sheet_name == 'Permessi di Costruire':
         if type_pdc_ov:
             message += ' | ' + 'Ordinari e in Variante'
+    if tsf:
+        message += ' | ' + 'TSF'
+    if lpf:
+        message += ' | ' + 'LPF'
     print()
     print(message)
     print(comuni_measure)
@@ -1921,17 +1962,17 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
     return comuni_measure, comuni_monitored
 
 
-def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
+def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False, tsf=True):
 
     comuni_pdc_ov_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire',
-        FOLDER_COMUNI_EXCEL)
+        FOLDER_COMUNI_EXCEL, tsf=tsf)
     comuni_pds_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Prov di sanatoria',
-        FOLDER_COMUNI_EXCEL)
+        FOLDER_COMUNI_EXCEL, tsf=tsf)
     comuni_pdc_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire',
-        FOLDER_COMUNI_EXCEL, type_pdc_ov=False)
+        FOLDER_COMUNI_EXCEL, type_pdc_ov=False, tsf=tsf)
     comuni_cila_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Controllo CILA',
         FOLDER_COMUNI_EXCEL)
@@ -2100,11 +2141,14 @@ if __name__ == '__main__':
 
 
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
-    # get_comuni_dataframes(comuni_excel_map, load=True)
+    # get_comuni_dataframes(comuni_excel_map, load=False)
     # check_comuni_dataframes(comuni_excel_map)
+    # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)
+    # get_comuni_measures(comuni_excel_map, tsf=False)
     
-    get_comuni_measures_dataframe(comuni_excel_map, load=False)
-    get_comuni_measures(comuni_excel_map)
+    get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
+    get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
+    get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
 
 
     # load = True
