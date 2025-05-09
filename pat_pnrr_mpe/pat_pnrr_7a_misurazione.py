@@ -2141,9 +2141,9 @@ if __name__ == '__main__':
 
 
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
-    # get_comuni_dataframes(comuni_excel_map, load=False)
+    # get_comuni_dataframes(comuni_excel_map, load=True)
     # check_comuni_dataframes(comuni_excel_map)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)
+    # get_comuni_measures_dataframe(comuni_excel_map, load=True, tsf=False)
     # get_comuni_measures(comuni_excel_map, tsf=False)
     
     get_comuni_dataframes(comuni_excel_map, load=True, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
