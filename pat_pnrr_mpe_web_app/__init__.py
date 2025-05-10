@@ -546,9 +546,15 @@ def index():
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_7a_misurazione.get_comuni_measure(
             pat_pnrr_7a_misurazione.comuni_excel_map, 'Permessi di Costruire',
             'pat_pnrr_7a_misurazione_tabelle_comunali\\')
+        comuni_pdc_ov_tsf_measure, comuni_monitored = pat_pnrr_7a_misurazione.get_comuni_measure(
+            pat_pnrr_7a_misurazione.comuni_excel_map, 'Permessi di Costruire',
+            'pat_pnrr_7a_misurazione_tabelle_comunali\\', tsf=True)
         comuni_pds_measure, comuni_monitored = pat_pnrr_7a_misurazione.get_comuni_measure(
             pat_pnrr_7a_misurazione.comuni_excel_map, 'Prov di sanatoria',
             'pat_pnrr_7a_misurazione_tabelle_comunali\\')
+        comuni_pds_tsf_measure, comuni_monitored = pat_pnrr_7a_misurazione.get_comuni_measure(
+            pat_pnrr_7a_misurazione.comuni_excel_map, 'Prov di sanatoria',
+            'pat_pnrr_7a_misurazione_tabelle_comunali\\', tsf=True)
         comuni_pdc_measure, comuni_monitored = pat_pnrr_7a_misurazione.get_comuni_measure(
             pat_pnrr_7a_misurazione.comuni_excel_map, 'Permessi di Costruire',
             'pat_pnrr_7a_misurazione_tabelle_comunali\\', type_pdc_ov=False)
@@ -557,7 +563,9 @@ def index():
             'pat_pnrr_7a_misurazione_tabelle_comunali\\')
         return render_template('index.html',
             pdc_ov = np.ceil(comuni_pdc_ov_measure.values).astype(int),
+            pdc_ov_tsf = np.ceil(comuni_pdc_ov_tsf_measure.values).astype(int),
             pds = np.ceil(comuni_pds_measure.values).astype(int),
+            pds_tsf = np.ceil(comuni_pds_tsf_measure.values).astype(int),
             pdc = np.ceil(comuni_pdc_measure.values).astype(int),
             cila = np.ceil(comuni_cila_measure.values).astype(int),
             comuni = comuni_monitored,
