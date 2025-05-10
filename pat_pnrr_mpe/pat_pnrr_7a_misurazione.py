@@ -665,12 +665,13 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
                     'string').str.contains('60 gg', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
+                # TODO: come gestire l'assenza di termine normativo?
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
                     'string').str.contains('senza termine', case=False, na=False, regex=False)
-                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 0
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60  # andrebbe inserito 0? ma non e' gestito dagli indici di pressione!
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
                     'string').str.contains('-', case=False, na=False, regex=False)
-                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 0
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60  # andrebbe inserito 0? ma non e' gestito dagli indici di pressione!
             if comune_dataframe.loc[:, 'giorni_termine_normativo'].dtype.str[1] in ['i', 'f']:
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'] == 0
                 comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
@@ -2050,8 +2051,8 @@ if __name__ == '__main__':
     #     print(comune)
 
 
-    # comune_name = 'Dro'
-    # name_excel_file = '079_Dro.xlsx'
+    # comune_name = 'Cinte Tesino'
+    # name_excel_file = 'CinteTesino_Edilizia_VII.XLSX'
     # path_to_excel_files = FOLDER_COMUNI_EXCEL
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
@@ -2146,8 +2147,8 @@ if __name__ == '__main__':
     # get_comuni_measures_dataframe(comuni_excel_map, load=True, tsf=False)
     # get_comuni_measures(comuni_excel_map, tsf=False)
     
-    get_comuni_dataframes(comuni_excel_map, load=True, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
-    get_comuni_measures_dataframe(comuni_excel_map, load=True, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
+    get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
+    get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
     get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
 
 
