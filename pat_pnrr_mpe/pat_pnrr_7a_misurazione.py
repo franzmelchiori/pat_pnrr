@@ -351,7 +351,7 @@ class ComuneExcel:
                 print('percentuale_ore_comune_considerato is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'])
 
-            # TODO: se il comune ha indicato "numero" ore e "numero" percentuale ore edilizia privata e "0" nella percentuale ore comune, io sostituirei lo "0" con "1"
+            # se il comune ha indicato "numero" ore e "numero" percentuale ore edilizia privata e "0" nella percentuale ore comune, io sostituirei lo "0" con "1"
             for index_dipendente in comune_dataframe.index:
                 if (comune_dataframe.loc[index_dipendente, 'ore_settimana'] > 0) & \
                    (comune_dataframe.loc[index_dipendente, 'percentuale_ore_edilizia_privata'] > 0) & \
@@ -665,13 +665,12 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
                     'string').str.contains('60 gg', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
-                # TODO: come gestire l'assenza di termine normativo?
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
                     'string').str.contains('senza termine', case=False, na=False, regex=False)
-                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60  # andrebbe inserito 0? ma non e' gestito dagli indici di pressione!
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'].astype(
                     'string').str.contains('-', case=False, na=False, regex=False)
-                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60  # andrebbe inserito 0? ma non e' gestito dagli indici di pressione!
+                comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
             if comune_dataframe.loc[:, 'giorni_termine_normativo'].dtype.str[1] in ['i', 'f']:
                 change_mask = comune_dataframe.loc[:, 'giorni_termine_normativo'] == 0
                 comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = 60
@@ -1173,7 +1172,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             comuni_dataframe[typology_suspension_filter].index, inplace=True)
 
     comuni_dataframe_shelve = shelve.open(path_shelve + 'comuni_dataframe' + \
-                                            sheet_suffix + shelve_suffix)
+                                          sheet_suffix + shelve_suffix)
     comuni_dataframe_shelve['comuni_dataframe'] = comuni_dataframe
     comuni_dataframe_shelve.close()
 
@@ -1491,15 +1490,12 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             CODICE_RICHIESTA = 'request_20250423_01'
 
             sospensioni_da_escludere = SOSPENSIONI_DA_ESCLUDERE_PDC
-            
-            filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
-                            'PdC ordinario') ^ \
-                          (comuni_dataframe.loc[:, 'tipologia_pratica'] ==
-                            'PdC in variante')
+
+            filter_type = (comuni_dataframe.loc[:, 'tipologia_pratica'] == 'PdC ordinario') ^ \
+                          (comuni_dataframe.loc[:, 'tipologia_pratica'] == 'PdC in variante')
             sheet_suffix += '_ov'
             filter_sospensioni_da_escludere = \
-                comuni_dataframe['tipologia_massima_sospensione'].isin(\
-                    sospensioni_da_escludere)
+                comuni_dataframe['tipologia_massima_sospensione'].isin(sospensioni_da_escludere)
             
             pratiche_sospensioni_da_escludere = comuni_dataframe[
                 filter_type & filter_sospensioni_da_escludere]
@@ -1511,21 +1507,29 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
 
             numero_pratiche_sospensioni_da_escludere = \
                 pratiche_sospensioni_da_escludere.__len__()
-            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' con sospensioni da escludere = ' + \
-                str(numero_pratiche_sospensioni_da_escludere))
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + \
+                  ' con sospensioni da escludere = ' + \
+                  str(numero_pratiche_sospensioni_da_escludere))
             
             # REQUEST 20250423_02
             # PdC-OV non conclusi
             # escludere determinate sospensioni
             CODICE_RICHIESTA = 'request_20250423_02'
 
-            filter_mask = \
-                comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna()
+            measure_end_date = pd.Timestamp(DATA_FINE_MONITORAGGIO)
+
+            filter_mask = filter_type & (
+                comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna())
             filter_mask = filter_mask & (
                 comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
+            filtro_pratiche_non_concluse = (\
+                measure_end_date - \
+                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica'] - \
+                comuni_dataframe.loc[filter_mask, 'giorni_sospensioni']) > \
+                comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
             
             pratiche_non_concluse_sospensioni_da_escludere = comuni_dataframe[
-                filter_type & filter_mask & filter_sospensioni_da_escludere]
+                filter_mask & filtro_pratiche_non_concluse & filter_sospensioni_da_escludere]
             pratiche_non_concluse_sospensioni_da_escludere.to_csv(
                     path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + \
                     '_' + CODICE_MONITORAGGIO + \
@@ -1534,8 +1538,9 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
 
             numero_pratiche_non_concluse_sospensioni_da_escludere = \
                 pratiche_non_concluse_sospensioni_da_escludere.__len__()
-            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' non conclusi con sospensioni da escludere = ' + \
-                str(numero_pratiche_non_concluse_sospensioni_da_escludere))
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + \
+                  ' non conclusi con sospensioni da escludere = ' + \
+                  str(numero_pratiche_non_concluse_sospensioni_da_escludere))
 
         if sheet_name=='Prov di sanatoria':
             # REQUEST 20250423_03 [!]
@@ -1559,19 +1564,27 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
 
             numero_pratiche_sospensioni_da_escludere = \
                 pratiche_sospensioni_da_escludere.__len__()
-            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' con sospensioni da escludere = ' + \
-                str(numero_pratiche_sospensioni_da_escludere))
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + \
+                  ' con sospensioni da escludere = ' + \
+                  str(numero_pratiche_sospensioni_da_escludere))
             
             # REQUEST 20250423_04
             # PdS non conclusi
             # escludere determinate sospensioni
             CODICE_RICHIESTA = 'request_20250423_04'
 
-            filter_mask = \
-                comuni_dataframe.loc[:, 'data_fine_pratica'].isna()
+            measure_end_date = pd.Timestamp(DATA_FINE_MONITORAGGIO)
+
+            filter_mask = (
+                comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
+            filtro_pratiche_non_concluse = (\
+                measure_end_date - \
+                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica'] - \
+                comuni_dataframe.loc[filter_mask, 'giorni_sospensioni']) > \
+                comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
             
             pratiche_non_concluse_sospensioni_da_escludere = comuni_dataframe[
-                filter_mask & filter_sospensioni_da_escludere]
+                filter_mask & filtro_pratiche_non_concluse & filter_sospensioni_da_escludere]
             pratiche_non_concluse_sospensioni_da_escludere.to_csv(
                     path_shelve + 'pat-pnrr_edilizia_misure' + sheet_suffix + \
                     '_' + CODICE_MONITORAGGIO + \
@@ -1580,8 +1593,9 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
 
             numero_pratiche_non_concluse_sospensioni_da_escludere = \
                 pratiche_non_concluse_sospensioni_da_escludere.__len__()
-            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + ' non conclusi con sospensioni da escludere = ' + \
-                str(numero_pratiche_non_concluse_sospensioni_da_escludere))
+            print('numero ' + sheet_suffix.lstrip('_') + ' ' + CODICE_MONITORAGGIO + \
+                  ' non conclusi con sospensioni da escludere = ' + \
+                  str(numero_pratiche_non_concluse_sospensioni_da_escludere))
 
     elif pf == 'l_04':
         if sheet_name=='Permessi di Costruire':
@@ -2142,14 +2156,14 @@ if __name__ == '__main__':
 
 
     # check_comuni_excel(FOLDER_COMUNI_EXCEL)
-    # get_comuni_dataframes(comuni_excel_map, load=True)
+    get_comuni_dataframes(comuni_excel_map, load=True)
     # check_comuni_dataframes(comuni_excel_map)
-    # get_comuni_measures_dataframe(comuni_excel_map, load=True, tsf=False)
-    # get_comuni_measures(comuni_excel_map, tsf=False)
+    get_comuni_measures_dataframe(comuni_excel_map, load=True, tsf=False)
+    get_comuni_measures(comuni_excel_map, tsf=False)
     
-    get_comuni_dataframes(comuni_excel_map, load=True, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
-    get_comuni_measures_dataframe(comuni_excel_map, load=True, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
-    get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
+    # get_comuni_dataframes(comuni_excel_map, load=True, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
+    # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
+    # get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
 
 
     # load = True
