@@ -2113,8 +2113,9 @@ if __name__ == '__main__':
     #     comuni_excel_map, 'ORGANICO', FOLDER_COMUNI_EXCEL,
     #     load=load)
     # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
-        # comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-        # type_pdc_ov=True, load=load)
+    #     comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
+    #     type_pdc_ov=True, load=True)
+    # print(comuni_measure_dataframe_pdc_ov.loc['Trento', :])
     # comuni_measure_dataframe_pdc_ov.loc[:, 'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2024q3-4'].sort_values(ascending=False)
 
     # comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
@@ -2159,11 +2160,11 @@ if __name__ == '__main__':
     # get_comuni_dataframes(comuni_excel_map, load=False)
     # check_comuni_dataframes(comuni_excel_map)
     # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)
-    get_comuni_measures(comuni_excel_map, tsf=False)
+    # get_comuni_measures(comuni_excel_map, tsf=False)
     
     # get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
     # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
-    get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
+    # get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
 
 
     # load = True

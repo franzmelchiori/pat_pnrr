@@ -61,54 +61,56 @@
                     {% endif %}
                 </td>
             </tr>
-            {% if btnradio_mpe == 'btnradio_mpe_2024Q3_4' %}
-                <tr>
-                    <th scope="row">└── con FTS</th>
-                    <td>{{ pdc_ov_tsf[0] | int }}</td>
-                    <td>{{ pdc_ov_tsf[1] | int }}</td>
-                    <td>{{ pdc_ov_tsf[2] | int }}</td>
-                    <td>{{ pdc_ov_tsf[3] | int }}</td>
-                    <td><strong>{{ pdc_ov_tsf[4] | int }}</strong>
-                        <br>
-                        {% if pdc_ov_tsf[4] > target.pdc_ov_durata %}
-                            <div class="progress-stacked">
-                                <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pdc_ov_durata/pdc_ov_tsf[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pdc_ov_durata/pdc_ov_tsf[4]*100 }}%">
-                                    <div class="progress-bar bg-warning"></div>
+            {% if btnradio_mpe == 'btnradio_mpe_2024Q3_4'%}
+                {% if fts == 'True' %}
+                    <tr>
+                        <th scope="row">└── con FTS</th>
+                        <td>{{ pdc_ov_tsf[0] | int }}</td>
+                        <td>{{ pdc_ov_tsf[1] | int }}</td>
+                        <td>{{ pdc_ov_tsf[2] | int }}</td>
+                        <td>{{ pdc_ov_tsf[3] | int }}</td>
+                        <td><strong>{{ pdc_ov_tsf[4] | int }}</strong>
+                            <br>
+                            {% if pdc_ov_tsf[4] > target.pdc_ov_durata %}
+                                <div class="progress-stacked">
+                                    <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pdc_ov_durata/pdc_ov_tsf[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pdc_ov_durata/pdc_ov_tsf[4]*100 }}%">
+                                        <div class="progress-bar bg-warning"></div>
+                                    </div>
+                                    <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pdc_ov_durata/pdc_ov_tsf[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pdc_ov_durata/pdc_ov_tsf[4]*100 }}%">
+                                        <div class="progress-bar bg-danger">{{ pdc_ov_tsf[4]-target.pdc_ov_durata }}</div>
+                                    </div>
                                 </div>
-                                <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pdc_ov_durata/pdc_ov_tsf[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pdc_ov_durata/pdc_ov_tsf[4]*100 }}%">
-                                    <div class="progress-bar bg-danger">{{ pdc_ov_tsf[4]-target.pdc_ov_durata }}</div>
+                            {% else %}
+                                <div class="progress-stacked">
+                                    <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pdc_ov_tsf[4]/target.pdc_ov_durata*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pdc_ov_tsf[4]/target.pdc_ov_durata*100 }}%">
+                                        <div class="progress-bar bg-success"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        {% else %}
-                            <div class="progress-stacked">
-                                <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pdc_ov_tsf[4]/target.pdc_ov_durata*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pdc_ov_tsf[4]/target.pdc_ov_durata*100 }}%">
-                                    <div class="progress-bar bg-success"></div>
+                            {% endif %}
+                        </td>
+                        <td>{{ pdc_ov_tsf[5] | int }}</td>
+                        <td>{{ pdc_ov_tsf[6] | int }}</td>
+                        <td><strong>{{ pdc_ov_tsf[7] | int }}</strong>
+                            <br>
+                            {% if pdc_ov_tsf[7] > target.pdc_ov_arretrati %}
+                                <div class="progress-stacked">
+                                    <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pdc_ov_arretrati/pdc_ov_tsf[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pdc_ov_arretrati/pdc_ov_tsf[7]*100 }}%">
+                                        <div class="progress-bar bg-warning"></div>
+                                    </div>
+                                    <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pdc_ov_arretrati/pdc_ov_tsf[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pdc_ov_arretrati/pdc_ov_tsf[7]*100 }}%">
+                                        <div class="progress-bar bg-danger">{{ pdc_ov_tsf[7]-target.pdc_ov_arretrati }}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                    </td>
-                    <td>{{ pdc_ov_tsf[5] | int }}</td>
-                    <td>{{ pdc_ov_tsf[6] | int }}</td>
-                    <td><strong>{{ pdc_ov_tsf[7] | int }}</strong>
-                        <br>
-                        {% if pdc_ov_tsf[7] > target.pdc_ov_arretrati %}
-                            <div class="progress-stacked">
-                                <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pdc_ov_arretrati/pdc_ov_tsf[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pdc_ov_arretrati/pdc_ov_tsf[7]*100 }}%">
-                                    <div class="progress-bar bg-warning"></div>
+                            {% else %}
+                                <div class="progress-stacked">
+                                    <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pdc_ov_tsf[7]/target.pdc_ov_arretrati*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pdc_ov_tsf[7]/target.pdc_ov_arretrati*100 }}%">
+                                        <div class="progress-bar bg-success"></div>
+                                    </div>
                                 </div>
-                                <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pdc_ov_arretrati/pdc_ov_tsf[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pdc_ov_arretrati/pdc_ov_tsf[7]*100 }}%">
-                                    <div class="progress-bar bg-danger">{{ pdc_ov_tsf[7]-target.pdc_ov_arretrati }}</div>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="progress-stacked">
-                                <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pdc_ov_tsf[7]/target.pdc_ov_arretrati*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pdc_ov_tsf[7]/target.pdc_ov_arretrati*100 }}%">
-                                    <div class="progress-bar bg-success"></div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </td>
-                </tr>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
             {% endif %}
             <tr>
                 <th scope="row">Provvedimento di Sanatoria</th>
@@ -160,55 +162,57 @@
                 </td>
             </tr>
             {% if btnradio_mpe == 'btnradio_mpe_2024Q3_4' %}
-                <tr>
-                    <th scope="row">└── con FTS</th>
-                    <td>{{ pds_tsf[0] | int }}</td>
-                    <td>{{ pds_tsf[1] | int }}</td>
-                    <td>{{ pds_tsf[2] | int }}</td>
-                    <td>{{ pds_tsf[3] | int }}</td>
-                    <td><strong>{{ pds_tsf[4] | int }}</strong>
-                        <br>
-                        {% if pds_tsf[4] > target.pds_durata %}
-                            <div class="progress-stacked">
-                                <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pds_durata/pds_tsf[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pds_durata/pds_tsf[4]*100 }}%">
-                                    <div class="progress-bar bg-warning"></div>
+                {% if fts == 'True' %}
+                    <tr>
+                        <th scope="row">└── con FTS</th>
+                        <td>{{ pds_tsf[0] | int }}</td>
+                        <td>{{ pds_tsf[1] | int }}</td>
+                        <td>{{ pds_tsf[2] | int }}</td>
+                        <td>{{ pds_tsf[3] | int }}</td>
+                        <td><strong>{{ pds_tsf[4] | int }}</strong>
+                            <br>
+                            {% if pds_tsf[4] > target.pds_durata %}
+                                <div class="progress-stacked">
+                                    <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pds_durata/pds_tsf[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pds_durata/pds_tsf[4]*100 }}%">
+                                        <div class="progress-bar bg-warning"></div>
+                                    </div>
+                                    <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pds_durata/pds_tsf[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pds_durata/pds_tsf[4]*100 }}%">
+                                        <div class="progress-bar bg-danger">{{ pds_tsf[4]-target.pds_durata }}</div>
+                                    </div>
                                 </div>
-                                <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pds_durata/pds_tsf[4]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pds_durata/pds_tsf[4]*100 }}%">
-                                    <div class="progress-bar bg-danger">{{ pds_tsf[4]-target.pds_durata }}</div>
+                            {% else %}
+                                <div class="progress-stacked">
+                                    <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pds_tsf[4]/target.pds_durata*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pds_tsf[4]/target.pds_durata*100 }}%">
+                                        <div class="progress-bar bg-success"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        {% else %}
-                            <div class="progress-stacked">
-                                <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pds_tsf[4]/target.pds_durata*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pds_tsf[4]/target.pds_durata*100 }}%">
-                                    <div class="progress-bar bg-success"></div>
+                            {% endif %}
+                        </td>
+                        </td>
+                        <td>{{ pds_tsf[5] | int }}</td>
+                        <td>{{ pds_tsf[6] | int }}</td>
+                        <td><strong>{{ pds_tsf[7] | int }}</strong>
+                            <br>
+                            {% if pds_tsf[7] > target.pds_arretrati %}
+                                <div class="progress-stacked">
+                                    <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pds_arretrati/pds_tsf[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pds_arretrati/pds_tsf[7]*100 }}%">
+                                        <div class="progress-bar bg-warning"></div>
+                                    </div>
+                                    <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pds_arretrati/pds_tsf[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pds_arretrati/pds_tsf[7]*100 }}%">
+                                        <div class="progress-bar bg-danger">{{ pds_tsf[7]-target.pds_arretrati }}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                    </td>
-                    </td>
-                    <td>{{ pds_tsf[5] | int }}</td>
-                    <td>{{ pds_tsf[6] | int }}</td>
-                    <td><strong>{{ pds_tsf[7] | int }}</strong>
-                        <br>
-                        {% if pds_tsf[7] > target.pds_arretrati %}
-                            <div class="progress-stacked">
-                                <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ target.pds_arretrati/pds_tsf[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ target.pds_arretrati/pds_tsf[7]*100 }}%">
-                                    <div class="progress-bar bg-warning"></div>
+                            {% else %}
+                                <div class="progress-stacked">
+                                    <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pds_tsf[7]/target.pds_arretrati*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pds_tsf[7]/target.pds_arretrati*100 }}%">
+                                        <div class="progress-bar bg-success"></div>
+                                    </div>
                                 </div>
-                                <div class="progress" role="progressbar" aria-label="out target" aria-valuenow="{{ 100-target.pds_arretrati/pds_tsf[7]*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100-target.pds_arretrati/pds_tsf[7]*100 }}%">
-                                    <div class="progress-bar bg-danger">{{ pds_tsf[7]-target.pds_arretrati }}</div>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="progress-stacked">
-                                <div class="progress" role="progressbar" aria-label="in target" aria-valuenow="{{ pds_tsf[7]/target.pds_arretrati*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pds_tsf[7]/target.pds_arretrati*100 }}%">
-                                    <div class="progress-bar bg-success"></div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </td>
-                    </td>
-                </tr>
+                            {% endif %}
+                        </td>
+                        </td>
+                    </tr>
+                {% endif %}
             {% endif %}
         </tbody>
         <tbody class="table-group-divider">

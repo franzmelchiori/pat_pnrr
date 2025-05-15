@@ -2401,3 +2401,20 @@ if __name__ == '__main__':
     #     - cercare di tracciarle fino alla 3a misurazione
 
     # TODO: controllo progressione crescente delle sospensioni pratica per pratica dalla 3a alla 5a misurazione
+
+    # REQUEST 20250515_02 | trento | mpe3-7
+    # print(pat_pnrr_3a.get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\',
+    #     type_pdc_ov=True, load=True).loc['Trento', :])
+    # print(pat_pnrr_4a.get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_mpe\\pat_pnrr_4a_misurazione_tabelle_comunali\\',
+    #     type_pdc_ov=True, load=True).loc['Trento', :])
+    # print(pat_pnrr_5a.get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     type_pdc_ov=True, load=True).loc['Trento', :])
+    # print(pat_pnrr_6a.get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     type_pdc_ov=True, load=True).loc['Trento', :])
+    # print(pat_pnrr_7a.get_comuni_measure_dataframe(
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_7a_misurazione_tabelle_comunali\\',
+    #     type_pdc_ov=True, load=True).loc['Trento', :])

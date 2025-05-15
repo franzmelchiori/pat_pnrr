@@ -35,7 +35,12 @@
                 {% if durata_netta == 'True' %} checked> {% else %} > {% endif %}
                 <label class="form-check-label" for="durata_netta">Durata netta</label>
             </div>
-            <!-- <input type="submit" class="btn btn-primary btn-sm" value="Invia"> -->
+            <div class="form-check form-switch">
+                <input type="checkbox" role="switch" class="form-check-input" name="fts" value="True" id="fts" onchange="this.form.submit();"
+                {% if fts == 'True' %} checked> {% else %} > {% endif %}
+                <label class="form-check-label" for="fts">FTS</label>
+            </div>
+            {# <input type="submit" class="btn btn-primary btn-sm" value="Invia"> #}
         </form>
     </div>
     <br>

@@ -542,6 +542,7 @@ def index():
     if not btnradio_mpe:
         btnradio_mpe = 'btnradio_mpe_2024Q3_4'
     durata_netta = request.args.get('durata_netta')
+    fts = request.args.get('fts')
     if btnradio_mpe == 'btnradio_mpe_2024Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_7a_misurazione.get_comuni_measure(
             pat_pnrr_7a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -572,6 +573,7 @@ def index():
             target = target,
             btnradio_mpe = btnradio_mpe,
             durata_netta = durata_netta,
+            fts = fts,
             chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
@@ -608,6 +610,7 @@ def index():
             target = target,
             btnradio_mpe = btnradio_mpe,
             durata_netta = durata_netta,
+            fts = fts,
             chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
@@ -644,6 +647,7 @@ def index():
             target = target,
             btnradio_mpe = btnradio_mpe,
             durata_netta = durata_netta,
+            fts = fts,
             chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
@@ -680,6 +684,7 @@ def index():
             target = target,
             btnradio_mpe = btnradio_mpe,
             durata_netta = durata_netta,
+            fts = fts,
             chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
@@ -716,6 +721,7 @@ def index():
             target = target,
             btnradio_mpe = btnradio_mpe,
             durata_netta = durata_netta,
+            fts = fts,
             chart_provincia_area_time_avviato_pdc_pds_series = chart_provincia_area_time_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
