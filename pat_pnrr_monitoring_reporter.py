@@ -1540,6 +1540,3 @@ if __name__ == '__main__':
     # print_comuni_pressure_list(comuni_performance_trends)
 
     # TODO: graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
-
-    # TODO: andamento posizione nella lista di comuni per pressione complessiva
-    # TODO: mappa 166 comuni: localizzazione pressione

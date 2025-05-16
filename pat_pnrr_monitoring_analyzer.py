@@ -2400,8 +2400,6 @@ if __name__ == '__main__':
     #         - incidenza sulla durata media e sull'arretrato nella 5a misurazione
     #     - cercare di tracciarle fino alla 3a misurazione
 
-    # TODO: controllo progressione crescente delle sospensioni pratica per pratica dalla 3a alla 5a misurazione
-
     # REQUEST 20250515_02 | trento | mpe3-7
     # print(pat_pnrr_3a.get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\',
@@ -2418,3 +2416,5 @@ if __name__ == '__main__':
     # print(pat_pnrr_7a.get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_7a_misurazione_tabelle_comunali\\',
     #     type_pdc_ov=True, load=True).loc['Trento', :])
+
+    # TODO: REQUEST 20240515_02 | andamento dell'organico | mpe4-7
