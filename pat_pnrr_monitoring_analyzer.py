@@ -2370,6 +2370,8 @@ if __name__ == '__main__':
     #         - segnalare quelle con sospensioni totali decrescenti
     #     - dati disaggregati di tutte le pratiche pdc e pds dalla 3a alla 5a misurazione
     #         - segnalare quelle con cambio di tipologia
+    
+    
     # REQUEST 20240503 | pratiche concluse ma transitate
     #     - id pratica inaffidabile occorrerebbe controllo manuale e diretto sul comune
     #     - data inizio e fine pratica unici indicatori potenzialmente affidabili
@@ -2391,8 +2393,7 @@ if __name__ == '__main__':
     #         - son sempre alcuni comuni che non tracciano le sospensioni
     #         - quanti comuni coinvolti
     #     - cercare di tracciarle fino alla 3a misurazione
-
-
+    #
     # REQUEST 20240515_02 | 20240513_02 | pdc-ov avviati durata lorda > 600 gg
     #     * tutta l'analisi anche per i pds | DONE
     #     - analisi
@@ -2400,7 +2401,8 @@ if __name__ == '__main__':
     #         - incidenza sulla durata media e sull'arretrato nella 5a misurazione
     #     - cercare di tracciarle fino alla 3a misurazione
 
-    # REQUEST 20250515_02 | trento | mpe3-7
+
+    # REQUEST 20250515 | trento | mpe3-7
     # print(pat_pnrr_3a.get_comuni_measure_dataframe(
     #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\',
     #     type_pdc_ov=True, load=True).loc['Trento', :])
@@ -2417,4 +2419,36 @@ if __name__ == '__main__':
     #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_7a_misurazione_tabelle_comunali\\',
     #     type_pdc_ov=True, load=True).loc['Trento', :])
 
-    # TODO: REQUEST 20240515_02 | andamento dell'organico | mpe4-7
+
+    # REQUEST 20240516_01 | andamento provinciale dell'organico | mpe5-7
+    # ore_tecnici_settimana_labels = [
+    #     'ore_tecnici_settimana_2023q3-4',
+    #     'ore_tecnici_settimana_2024q1-2',
+    #     'ore_tecnici_settimana_2024q3-4']
+    # ore_tecnici_settimana = pat_comuni_dataframe.loc[:, ore_tecnici_settimana_labels]
+    # print("Andamento provinciale, da MPE-5 a MPE-7,  delle ore tecniche a settimana per l'edilizia")
+    # print(ore_tecnici_settimana.sum())
+    #
+    # REQUEST 20240516_02 | variazione comunale dell'organico | mpe6-7
+    # ore_tecnici_settimana = ore_tecnici_settimana.bfill(axis='columns').ffill(axis='columns')
+    # ore_tecnici_settimana_variazione_annuale = \
+    #     ore_tecnici_settimana.iloc[:, -1] - ore_tecnici_settimana.iloc[:, -2]
+    # ore_tecnici_settimana_variazione_significativa = \
+    #     (ore_tecnici_settimana_variazione_annuale!=0) & \
+    #     (~ore_tecnici_settimana_variazione_annuale.isna())
+    # print("Variazione comunale, significativa, da MPE-6 a MPE-7, delle ore tecniche a settimana per l'edilizia")
+    # print(ore_tecnici_settimana_variazione_annuale[ore_tecnici_settimana_variazione_significativa].\
+    #     sort_values(ascending=False))
+    # ore_tecnici_settimana_variazione_annuale[ore_tecnici_settimana_variazione_significativa].\
+    #     sort_values(ascending=False).to_csv('pat-pnrr_edilizia_mpe6-7_variazione_organico.csv')
+    # ore_tecnici_settimana_variazione_annuale_percentuale = \
+    #     (ore_tecnici_settimana_variazione_annuale) * \
+    #     (100 / ore_tecnici_settimana.iloc[:, -2])
+    # ore_tecnici_settimana_variazione_percentuale_significativa = \
+    #     (ore_tecnici_settimana_variazione_annuale_percentuale!=0) & \
+    #     (~ore_tecnici_settimana_variazione_annuale_percentuale.isna())
+    # print("Variazione comunale, significativa e percentuale, da MPE-6 a MPE-7, delle ore tecniche a settimana per l'edilizia")
+    # print(ore_tecnici_settimana_variazione_annuale_percentuale[ore_tecnici_settimana_variazione_percentuale_significativa].\
+    #     sort_values(ascending=False))
+    # ore_tecnici_settimana_variazione_annuale_percentuale[ore_tecnici_settimana_variazione_percentuale_significativa].\
+    #     sort_values(ascending=False).to_csv('pat-pnrr_edilizia_mpe6-7_variazione_percentuale_organico.csv')
