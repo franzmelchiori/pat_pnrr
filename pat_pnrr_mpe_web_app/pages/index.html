@@ -3,7 +3,7 @@
     <div class="container">
         <form action="{{url_for('index')}}">
             <div class="btn-group btn-group-sm" role="group" aria-label="mpe radio toggle button group">
-                <!-- TODO: onchange="this.form.submit();" is a bad practice, on* attributes make code hard to debug and maintain: use JavaScript instead!  -->
+                {# TODO: onchange="this.form.submit();" is a bad practice, on* attributes make code hard to debug and maintain: use JavaScript instead! #}
                 <input type="radio" class="btn-check" name="btnradio_mpe" value="btnradio_mpe_2024Q3_4" id="btnradio_mpe_2024Q3_4" autocomplete="off" onchange="this.form.submit();"
                 {% if btnradio_mpe == 'btnradio_mpe_2024Q3_4' %} checked> {% else %} > {% endif %}
                 <label class="btn btn-outline-primary" for="btnradio_mpe_2024Q3_4">2024Q3-4 <span class="badge text-bg-secondary">Nuovo</span></label>
@@ -35,11 +35,13 @@
                 {% if durata_netta == 'True' %} checked> {% else %} > {% endif %}
                 <label class="form-check-label" for="durata_netta">Durata netta</label>
             </div>
+            {#
             <div class="form-check form-switch">
                 <input type="checkbox" role="switch" class="form-check-input" name="fts" value="True" id="fts" onchange="this.form.submit();"
                 {% if fts == 'True' %} checked> {% else %} > {% endif %}
                 <label class="form-check-label" for="fts">FTS</label>
             </div>
+            #}
             {# <input type="submit" class="btn btn-primary btn-sm" value="Invia"> #}
         </form>
     </div>
