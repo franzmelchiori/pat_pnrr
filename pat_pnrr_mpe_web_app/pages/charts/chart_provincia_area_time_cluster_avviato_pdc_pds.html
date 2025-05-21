@@ -1,0 +1,210 @@
+<div class="container">
+    <div id="chart_provincia_area_time_cluster_avviato_pdc_pds" style="height:360px;"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById('chart_provincia_area_time_cluster_avviato_pdc_pds');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false});
+        var app = {};
+
+        var option = {
+            title: {
+                text: 'Avviati'},
+            legend: {
+                data: ['PdC-C130', 'PdC-C31', 'PdC-C3', 'PdC-CR', 'PdC-CT', 'PdS-C130', 'PdS-C31', 'PdS-C3', 'PdS-CR', 'PdS-CT']},
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                data: ['2021Q3-4', '2022Q1-2', '2022Q3-4', '2023Q1-2', '2023Q3-4', '2024Q1-2', '2024Q3-4']}],
+            yAxis: [{
+                type: 'value'}],
+            series: [
+                {
+                    name: 'PdC-C130',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(128, 255, 165)'},
+                            {offset: 1,color: 'rgb(1, 191, 236)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pdc_avviato_cluster_1 | safe}}
+                },
+                {
+                    name: 'PdC-C31',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(128, 255, 165)'},
+                            {offset: 1,color: 'rgb(1, 191, 236)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pdc_avviato_cluster_2 | safe}}
+                },
+                {
+                    name: 'PdC-C3',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(128, 255, 165)'},
+                            {offset: 1,color: 'rgb(1, 191, 236)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pdc_avviato_cluster_3 | safe}}
+                },
+                {
+                    name: 'PdC-CR',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(128, 255, 165)'},
+                            {offset: 1,color: 'rgb(1, 191, 236)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pdc_avviato_cluster_4 | safe}}
+                },
+                {
+                    name: 'PdC-CT',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(128, 255, 165)'},
+                            {offset: 1,color: 'rgb(1, 191, 236)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pdc_avviato_cluster_5 | safe}}
+                },
+                {
+                    name: 'PdS-C130',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(0, 221, 255)'},
+                            {offset: 1,color: 'rgb(77, 119, 255)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_1 | safe}}
+                },
+                {
+                    name: 'PdS-C31',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(0, 221, 255)'},
+                            {offset: 1,color: 'rgb(77, 119, 255)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_2 | safe}}
+                },
+                {
+                    name: 'PdS-C3',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(0, 221, 255)'},
+                            {offset: 1,color: 'rgb(77, 119, 255)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_3 | safe}}
+                },
+                {
+                    name: 'PdS-CR',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(0, 221, 255)'},
+                            {offset: 1,color: 'rgb(77, 119, 255)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_4 | safe}}
+                },
+                {
+                    name: 'PdS-CT',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(0, 221, 255)'},
+                            {offset: 1,color: 'rgb(77, 119, 255)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_5 | safe}}
+                }],
+            color: ['#80FFA5', '#80FFA5', '#80FFA5', '#80FFA5', '#80FFA5', '#00DDFF', '#00DDFF', '#00DDFF', '#00DDFF', '#00DDFF'],
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true},
+            tooltip: {
+                trigger: 'axis'},
+            toolbox: {
+                feature: {
+                    restore: {},
+                    saveAsImage: {}}}
+        };
+
+        myChart.setOption(option);
+        window.addEventListener('resize', myChart.resize);
+    </script>
+</div>
+<br>
