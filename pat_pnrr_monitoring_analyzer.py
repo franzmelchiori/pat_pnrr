@@ -2452,3 +2452,6 @@ if __name__ == '__main__':
     #     sort_values(ascending=False))
     # ore_tecnici_settimana_variazione_annuale_percentuale[ore_tecnici_settimana_variazione_percentuale_significativa].\
     #     sort_values(ascending=False).to_csv('pat-pnrr_edilizia_mpe6-7_variazione_percentuale_organico.csv')
+
+
+    # TODO: REQUEST 20250521 | durata media lorda | pdc conclusi (no silenzio assenso) 2024
