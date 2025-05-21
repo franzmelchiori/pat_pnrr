@@ -50,10 +50,23 @@
     {% include 'table.html' %}
 
     {# chart | provincia | area | time | avviato [nr] pdc_pds | mpe 1-6 (time)  #}
-    {# {% include 'charts/chart_provincia_area_time_avviato_pdc_pds.html' %} #}
+    {% include 'charts/chart_provincia_area_time_avviato_pdc_pds.html' %}
 
-    {# TODO: chart | provincia | area | time | cluster | avviato [nr] pdc_pds | mpe 1-6 (time)  #}
-    {% include 'charts/chart_provincia_area_time_cluster_avviato_pdc_pds.html' %}
+    {# chart | provincia | area | time | cluster | avviato [nr] pdc_pds | mpe 1-6 (time)  #}
+    {# {% include 'charts/chart_provincia_area_time_cluster_avviato_pdc_pds.html' %} #}
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-6">
+                {# chart | provincia | line | time | cluster | avviato [nr] pdc | mpe 1-6 (time)  #}
+                {% include 'charts/chart_provincia_line_time_cluster_avviato_pdc.html' %}
+            </div>
+            <div class="col-md-6">
+                {# chart | provincia | line | time | cluster | avviato [nr] pds | mpe 1-6 (time)  #}
+                {% include 'charts/chart_provincia_line_time_cluster_avviato_pds.html' %}
+            </div>
+        </div>
+    </div>
 
     <div class="container text-center">
         <div class="row">

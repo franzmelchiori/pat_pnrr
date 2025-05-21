@@ -1,0 +1,70 @@
+<div class="container">
+    <div id="chart_provincia_line_time_cluster_avviato_pds" style="height:360px;"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById('chart_provincia_line_time_cluster_avviato_pds');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false});
+        var app = {};
+
+        var option = {
+            title: {
+                text: 'Avviati PdS'},
+            legend: {
+                data: ['C130c', 'C31c', 'C3c', 'Rovereto', 'Trento']},
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                data: ['2021Q3-4', '2022Q1-2', '2022Q3-4', '2023Q1-2', '2023Q3-4', '2024Q1-2', '2024Q3-4']}],
+            yAxis: [{
+                type: 'value'}],
+            series: [
+                {
+                    name: 'C130c',
+                    type: 'line',
+                    smooth: true,
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_1 | safe}}
+                },
+                {
+                    name: 'C31c',
+                    type: 'line',
+                    smooth: true,
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_2 | safe}}
+                },
+                {
+                    name: 'C3c',
+                    type: 'line',
+                    smooth: true,
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_3 | safe}}
+                },
+                {
+                    name: 'Rovereto',
+                    type: 'line',
+                    smooth: true,
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_4 | safe}}
+                },
+                {
+                    name: 'Trento',
+                    type: 'line',
+                    smooth: true,
+                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_5 | safe}}
+                }],
+            color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true},
+            tooltip: {
+                trigger: 'axis'},
+            toolbox: {
+                feature: {
+                    restore: {},
+                    saveAsImage: {}}}
+        };
+
+        myChart.setOption(option);
+        window.addEventListener('resize', myChart.resize);
+    </script>
+</div>
+<br>
