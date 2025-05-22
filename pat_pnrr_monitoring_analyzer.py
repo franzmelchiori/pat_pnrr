@@ -2454,7 +2454,7 @@ if __name__ == '__main__':
     #     sort_values(ascending=False).to_csv('pat-pnrr_edilizia_mpe6-7_variazione_percentuale_organico.csv')
 
 
-    # REQUEST 20250521 | durata media lorda | pdc conclusi (no silenzio assenso) 2024
+    # REQUEST 20250521 | durata media lorda e netta | pdc conclusi (no silenzio assenso) 2024
     # comuni_dataframe_pdc_06 = pat_pnrr_6a.get_comuni_dataframe(comuni_excel_map, 
     #     'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
     #     load=True)
@@ -2467,7 +2467,6 @@ if __name__ == '__main__':
     #     [trento_dataframe_pdc_06,
     #      trento_dataframe_pdc_07],
     #     axis='rows', join='outer')
-    #
     # filter_mask = trento_dataframe_pdc_06_07.loc[:, 'data_fine_pratica'].isna() == False
     # trento_dataframe_pdc_06_07.to_csv('trento_dataframe_pdc_06_07.csv')
     # trento_dataframe_pdc_06_07.loc[filter_mask, :].to_csv('trento_dataframe_pdc_conclusi_06_07.csv')
@@ -2476,3 +2475,9 @@ if __name__ == '__main__':
     #     trento_dataframe_pdc_06_07.loc[filter_mask, 'data_inizio_pratica']).mean().days
     # print('Durata media (in giornate, al lordo delle sospensioni) dei PdC conclusi con provvedimento espresso da Trento nel 2024: ' + \
     #     str(giornate_durata_media_pratiche_concluse_con_provvedimento_espresso))
+    # giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso = (
+    #     trento_dataframe_pdc_06_07.loc[filter_mask, 'data_fine_pratica'] -
+    #     trento_dataframe_pdc_06_07.loc[filter_mask, 'data_inizio_pratica'] -
+    #     trento_dataframe_pdc_06_07.loc[filter_mask, 'giorni_sospensioni']).mean().days
+    # print('Durata media (in giornate, al netto delle sospensioni) dei PdC conclusi con provvedimento espresso da Trento nel 2024: ' + \
+    #     str(giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso))
