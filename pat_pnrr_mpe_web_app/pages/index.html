@@ -52,14 +52,14 @@
     <div class="container text-center">
         <div class="row">
             <div class="col-md-6">
-                {# chart | provincia | area | time | avviato [nr] pdc_pds | mpe 1-6 (time)  #}
+                {# chart | provincia | area | time | avviato [nr] pdc_pds | mpe 1-last (time)  #}
                 {% include 'charts/chart_provincia_area_time_avviato_pdc_pds.html' %}
 
-                {# chart | provincia | area | time | cluster | avviato [nr] pdc_pds | mpe 1-6 (time)  #}
+                {# chart | provincia | area | time | cluster | avviato [nr] pdc_pds | mpe 1-last (time)  #}
                 {# {% include 'charts/chart_provincia_area_time_cluster_avviato_pdc_pds.html' %} #}
             </div>
             <div class="col-md-6">
-                {# chart | provincia | line | time | avviato [nr] pdc_pds | mpe 1-6 (time)  #}
+                {# chart | provincia | line | time | avviato [nr] pdc_pds | mpe 1-last (time)  #}
                 {% include 'charts/chart_provincia_line_time_avviato_pdc_pds.html' %}
             </div>
         </div>
@@ -68,11 +68,11 @@
     <div class="container text-center">
         <div class="row">
             <div class="col-md-6">
-                {# chart | provincia | line | time | cluster | avviato [nr] pdc | mpe 1-6 (time)  #}
+                {# chart | provincia | line | time | cluster | avviato [nr] pdc | mpe 1-last (time)  #}
                 {% include 'charts/chart_provincia_line_time_cluster_avviato_pdc.html' %}
             </div>
             <div class="col-md-6">
-                {# chart | provincia | line | time | cluster | avviato [nr] pds | mpe 1-6 (time)  #}
+                {# chart | provincia | line | time | cluster | avviato [nr] pds | mpe 1-last (time)  #}
                 {% include 'charts/chart_provincia_line_time_cluster_avviato_pds.html' %}
             </div>
         </div>
@@ -81,56 +81,58 @@
     <div class="container text-center">
         <div class="row">
             <div class="col-md-6">
-                {# chart | provincia | line | time | durata [gg] pdc_pds | mpe 1-6 (time)  #}
+                {# chart | provincia | line | time | durata [gg] pdc_pds | mpe 1-last (time)  #}
                 {% include 'charts/chart_provincia_line_time_durata_pdc_pds.html' %}
             </div>
             <div class="col-md-6">
-                {# chart | provincia | area | time | arretrato [nr] pdc_pds | mpe 1-6 (time)  #}
+                {# chart | provincia | area | time | arretrato [nr] pdc_pds | mpe 1-last (time)  #}
                 {% include 'charts/chart_provincia_area_time_arretrato_pdc_pds.html' %}
 
-                {# TODO: chart | provincia | area | time | cluster | arretrato [nr] pdc_pds | mpe 1-6 (time)  #}
+                {# TODO: chart | provincia | line | time | cluster | arretrato [nr] pdc | mpe 1-last (time)  #}
+                {# TODO: chart | provincia | line | time | cluster | arretrato [nr] pds | mpe 1-last (time)  #}
             </div>
         </div>
     </div>
 
-    {# chart | comuni | scatter | cluster pop | pressione (lorda/netta) [idx] pdc pds | mpe 1-6 (timelapse)  #}
+    {# chart | comuni | scatter | cluster pop | pressione (lorda/netta) [idx] pdc pds | mpe 1-last (timelapse)  #}
     {% if durata_netta == 'True' %}
         {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_timelapse.html' %}
     {% else %}
         {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_pdc_pds_timelapse.html' %}
     {% endif %}
-    {# chart | comuni | box | cluster | pressione (lorda/netta) [idx] | mpe 1-6 #}
+    {# chart | comuni | box | cluster | pressione (lorda/netta) [idx] | mpe 1-last #}
     {% if durata_netta == 'True' %}
         {% include 'charts/chart_comuni_box_cluster_pressione_netta.html' %}
     {% else %}
         {% include 'charts/chart_comuni_box_cluster_pressione.html' %}
     {% endif %}
-    {# chart | provincia | gauge | mean | pressione (lorda/netta) [idx] | mpe 1-6 (timelapse)  #}
+    {# chart | provincia | gauge | mean | pressione (lorda/netta) [idx] | mpe 1-last (timelapse)  #}
     {% if durata_netta == 'True' %}
         {% include 'charts/chart_provincia_gauge_pressione_netta_timelapse.html' %}
     {% else %}
         {% include 'charts/chart_provincia_gauge_pressione_timelapse.html' %}
     {% endif %}
-    {# chart | comuni | pie | rank pop | pressione (lorda/netta) [idx] | mpe 1-6 (timelapse)  #}
+    {# chart | comuni | pie | rank pop | pressione (lorda/netta) [idx] | mpe 1-last (timelapse)  #}
     {% if durata_netta == 'True' %}
         {% include 'charts/chart_comuni_pie_rank_pop_pressione_netta_timelapse.html' %}
     {% else %}
         {% include 'charts/chart_comuni_pie_rank_pop_pressione_timelapse.html' %}
     {% endif %}
-    {# chart | comuni | rank | time | pressione (lorda/netta) [idx] | mpe 1-6 (time)  #}
+    {# chart | comuni | rank | time | pressione (lorda/netta) [idx] | mpe 1-last (time)  #}
     {% if durata_netta == 'True' %}
         {% include 'charts/chart_comuni_rank_time_pressione_netta.html' %}
     {% else %}
         {% include 'charts/chart_comuni_rank_time_pressione.html' %}
     {% endif %}
 
-    {# TODO: chart | comuni | scatter | cluster | pressione [idx]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
-    {# TODO: chart | comuni | scatter | cluster | avviato [nr]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
-    {# TODO: chart | comuni | scatter | cluster | durata [gg]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
-    {# TODO: chart | comuni | scatter | cluster | arretrato [nr]-elaborazione [ore/sett] pdc_pds | mpe 1-6 (timelapse)  #}
+    {# TODO: chart | comuni | scatter | cluster | pressione [idx]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
+    
+    {# TODO: chart | comuni | scatter | cluster | avviato [nr]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
+    {# TODO: chart | comuni | scatter | cluster | durata [gg]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
+    {# TODO: chart | comuni | scatter | cluster | arretrato [nr]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
 
-    {# TODO: chart | provincia | map | .. | mpe 1-6 (timelapse?)  #}
+    {# TODO: chart | provincia | map | .. | mpe 1-last (timelapse?)  #}
 
-    {# TODO: chart | pratiche | cal | presentato [nr] pdc_pds | mpe 1-6 (time)  #}
+    {# TODO: chart | pratiche | cal | presentato [nr] pdc_pds | mpe 1-last (time)  #}
 
 {% endblock %}

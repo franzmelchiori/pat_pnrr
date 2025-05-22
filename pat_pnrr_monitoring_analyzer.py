@@ -2481,3 +2481,7 @@ if __name__ == '__main__':
     #     trento_dataframe_pdc_06_07.loc[filter_mask, 'giorni_sospensioni']).mean().days
     # print('Durata media (in giornate, al netto delle sospensioni) dei PdC conclusi con provvedimento espresso da Trento nel 2024: ' + \
     #     str(giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso))
+
+
+    # REQUEST 20250521 | chart line | pdc avviati | mpe 1-7 di 30 comuni
+    # ['Andalo', 'Arco', 'Baselga di Pinè', 'Calceranica al Lago', 'Caldes', 'Caldonazzo', 'Campitello di Fassa', 'Canazei', 'Castello-Molina di Fiemme', 'Cavalese', 'Fai della Paganella', 'LevicoTerme', 'Mazzin', 'Molveno', 'Mezzana', 'Nago-Torbole', 'Peio', 'Pinzolo', 'Pozza di Fassa', 'Predazzo', 'Riva del Garda', 'Soraga', 'Tesero', 'Vermiglio', 'Vigo di Fassa', 'Ziano di Fiemme', 'Comano Terme', 'Ledro', 'Dimaro Folgarida', 'Primiero San Martino di Castrozza']
