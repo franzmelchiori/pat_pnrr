@@ -11,17 +11,17 @@ PAT MPE espone un'interfaccia web (navigabile tramite browser) per la visualizza
 Grafici attuali
 ---------------
 
-* chart | provincia | area | time | avviato [nr] pdc_pds | mpe 1-last (time)
-* chart | provincia | line | time | avviato [nr] pdc_pds | mpe 1-last (time)
-* chart | provincia | line | time | cluster | avviato [nr] pdc | mpe 1-last (time)
-* chart | provincia | line | time | cluster | avviato [nr] pds | mpe 1-last (time)
-* chart | provincia | line | time | durata [gg] pdc_pds | mpe 1-last (time)
-* chart | provincia | area | time | arretrato [nr] pdc_pds | mpe 1-last (time)
-* chart | comuni | scatter | cluster pop | pressione (lorda/netta) [idx] pdc pds | mpe 1-last (timelapse)
-* chart | comuni | box | cluster | pressione (lorda/netta) [idx] | mpe 1-last
-* chart | provincia | gauge | mean | pressione (lorda/netta) [idx] | mpe 1-last (timelapse)
-* chart | comuni | pie | rank pop | pressione (lorda/netta) [idx] | mpe 1-last (timelapse)
-* chart | comuni | rank | time | pressione (lorda/netta) [idx] | mpe 1-last (time)
+* grafico provinciale ad aree con il cumulo di pratiche PdC e PdS avviate nei vari monitoraggi
+* grafico provinciale a linee con il numero di pratiche PdC e PdS avviate nei vari monitoraggi
+* grafico provinciale a linee con il numero di pratiche PdC avviate per i vari cluster comunali nei vari monitoraggi
+* grafico provinciale a linee con il numero di pratiche PdS avviate per i vari cluster comunali nei vari monitoraggi
+* grafico provinciale a linee con la durata delle pratiche PdC e PdS concluse nei vari monitoraggi
+* grafico provinciale ad aree con il numero di pratiche PdC e PdS arretrate nei vari monitoraggi
+* grafico comunale a nuvola animata di punti con l'indice di pressione (lorda e netta) di pratiche PdC e PdS nei vari monitoraggi
+* grafico comunale a scatole percentili con l'indice di pressione (lorda e netta) di pratiche PdC e PdS per i vari cluster comunali nei vari monitoraggi
+* grafico provinciale a barometro animato con l'indice di pressione (lorda e netta) nei vari monitoraggi
+* grafico comunale a torta animata con fette (proporzionali alla popolazione) ordinate per indice di pressione (lorda e netta) dei vari comuni nei vari monitoraggi
+* grafico comunale a linee ordinate per indice di pressione (lorda e netta) dei vari comuni nei vari monitoraggi
 
 
 Prossimi sviluppi
@@ -29,14 +29,14 @@ Prossimi sviluppi
 
 1. Grafici
     1. Sviluppare e visualizzare nella web app i seguenti grafici e mappe:
-        * chart | provincia | line | time | cluster | arretrato [nr] pdc | mpe 1-last (time)
-        * chart | provincia | line | time | cluster | arretrato [nr] pds | mpe 1-last (time)
-        * chart | comuni | scatter | cluster | pressione [idx]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)
-        * chart | comuni | scatter | cluster | avviato [nr]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)
-        * chart | comuni | scatter | cluster | durata [gg]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)
-        * chart | comuni | scatter | cluster | arretrato [nr]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)
-        * chart | provincia | map | pressione | mpe 1-last (timelapse?)
-        * chart | pratiche | cal | avviato [nr] pdc_pds | mpe 1-last (time)
+        * grafico provinciale a linee con il numero di pratiche PdC arretrate per i vari cluster comunali nei vari monitoraggi
+        * grafico provinciale a linee con il numero di pratiche PdS arretrate per i vari cluster comunali nei vari monitoraggi
+        * grafico comunale a nuvola animata di punti con l'indice di pressione (lorda e netta) e le ore a settimana di elaborazione tecnica nei vari monitoraggi
+        * grafico comunale a nuvola animata di punti con il numero di pratiche PdC e PdS avviate e le ore a settimana di elaborazione tecnica nei vari monitoraggi
+        * grafico comunale a nuvola animata di punti con la durata delle pratiche PdC e PdS concluse e le ore a settimana di elaborazione tecnica nei vari monitoraggi
+        * grafico comunale a nuvola animata di punti con il numero di pratiche PdC e PdS arretrate e le ore a settimana di elaborazione tecnica nei vari monitoraggi
+        * mappa provinciale con l'indice di pressione (lorda e netta) nei vari monitoraggi
+        * calendario provinciale con il numero di pratiche PdC e PdS avviate nei vari monitoraggi
 2. Analisi
     1. Sviluppare la dashboard analitica per ognuno dei 166 comuni trentini
     2. Sviluppare nuove strategie di clustering dei comuni (oltre a quello ISPAT)
@@ -47,10 +47,10 @@ Prossimi sviluppi
 Visione futura
 --------------
 
-1. Intranet PAT
+1. Pubblicazione della web app PAT MPE in Intranet PAT
     1. Integrare nella web app un modulo di autenticazione PAT
     2. Pubblicare la web app nella intranet PAT via Docker
-2. Internet
+2. Pubblicazione della web app PAT MPE in Internet
     1. Sviluppare le web API per l'accesso CRUD ai dati (pratiche e misure) su Postgres ed in particolare al tracciamento delle sospensioni: questo dovrebbe consentire e rendere opportuna l'integrazione delle web API nei gestionali trentini per l'edilizia
     2. Sviluppare il front end della web app con Vue.js
     3. Sviluppare un portale per lo scaricamento di un file Excel che predispone al monitoraggio dei procedimenti edilizi ed il caricamente dello stesso file Excel compilato per il recepimento del monitoraggio, segnalando eventuali dati mancanti o errati
