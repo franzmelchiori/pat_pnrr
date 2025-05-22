@@ -2484,4 +2484,9 @@ if __name__ == '__main__':
 
 
     # REQUEST 20250521 | chart line | pdc avviati | mpe 1-7 di 30 comuni
-    # ['Andalo', 'Arco', 'Baselga di Pinè', 'Calceranica al Lago', 'Caldes', 'Caldonazzo', 'Campitello di Fassa', 'Canazei', 'Castello-Molina di Fiemme', 'Cavalese', 'Fai della Paganella', 'LevicoTerme', 'Mazzin', 'Molveno', 'Mezzana', 'Nago-Torbole', 'Peio', 'Pinzolo', 'Pozza di Fassa', 'Predazzo', 'Riva del Garda', 'Soraga', 'Tesero', 'Vermiglio', 'Vigo di Fassa', 'Ziano di Fiemme', 'Comano Terme', 'Ledro', 'Dimaro Folgarida', 'Primiero San Martino di Castrozza']
+    # filter_comuni = ['Andalo', 'Arco', 'Baselga di Pinè', 'Calceranica al Lago', 'Caldes',
+    #     'Caldonazzo', 'Campitello di Fassa', 'Canazei', 'Castello-Molina di Fiemme', 'Cavalese',
+    #     'Fai della Paganella', 'Levico Terme', 'Mazzin', 'Molveno', 'Mezzana', 'Nago-Torbole', 'Peio',
+    #     'Pinzolo', 'Predazzo', 'Riva del Garda', 'Tesero', 'Vermiglio', 'Ziano di Fiemme',
+    #     'Comano Terme', 'Ledro', 'Dimaro Folgarida', 'Primiero San Martino di Castrozza',
+    #     'San Giovanni di Fassa']

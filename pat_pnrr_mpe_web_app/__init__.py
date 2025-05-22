@@ -297,7 +297,22 @@ chart_provincia_area_time_avviato_pdc_pds_series = {
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_avviate_2024q1-2'].sum().astype(int)),
         str(pat_comuni_dataframe.loc[:, 'numero_sanatorie_avviate_2024q3-4'].sum().astype(int))]}
 
+filter_comuni = ['Andalo', 'Arco', 'Baselga di Pinè', 'Calceranica al Lago', 'Caldes',
+    'Caldonazzo', 'Campitello di Fassa', 'Canazei', 'Castello-Molina di Fiemme', 'Cavalese',
+    'Fai della Paganella', 'Levico Terme', 'Mazzin', 'Molveno', 'Mezzana', 'Nago-Torbole', 'Peio',
+    'Pinzolo', 'Predazzo', 'Riva del Garda', 'Tesero', 'Vermiglio', 'Ziano di Fiemme',
+    'Comano Terme', 'Ledro', 'Dimaro Folgarida', 'Primiero San Martino di Castrozza',
+    'San Giovanni di Fassa']
+
 chart_provincia_area_time_cluster_avviato_pdc_pds_series = {
+    'pdc_avviato_cluster_0': [
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_permessi_costruire_2021q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_permessi_costruire_2022q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_permessi_costruire_avviati_2022q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_permessi_costruire_avviati_2023q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_permessi_costruire_avviati_2023q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_permessi_costruire_avviati_2024q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_permessi_costruire_avviati_2024q3-4'].sum().astype(int))],
     'pdc_avviato_cluster_1': [
         str(pat_comuni_dataframe[classificazione_comunale == 0].loc[:, 'numero_permessi_costruire_2021q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe[classificazione_comunale == 0].loc[:, 'numero_permessi_costruire_2022q1-2'].sum().astype(int)),
@@ -338,6 +353,14 @@ chart_provincia_area_time_cluster_avviato_pdc_pds_series = {
         str(pat_comuni_dataframe[classificazione_comunale == 4].loc[:, 'numero_permessi_costruire_avviati_2023q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe[classificazione_comunale == 4].loc[:, 'numero_permessi_costruire_avviati_2024q1-2'].sum().astype(int)),
         str(pat_comuni_dataframe[classificazione_comunale == 4].loc[:, 'numero_permessi_costruire_avviati_2024q3-4'].sum().astype(int))],
+    'pds_avviato_cluster_0': [
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_sanatorie_2021q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_sanatorie_2022q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_sanatorie_avviate_2022q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_sanatorie_avviate_2023q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_sanatorie_avviate_2023q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_sanatorie_avviate_2024q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[filter_comuni, 'numero_sanatorie_avviate_2024q3-4'].sum().astype(int))],
     'pds_avviato_cluster_1': [
         str(pat_comuni_dataframe[classificazione_comunale == 0].loc[:, 'numero_sanatorie_2021q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe[classificazione_comunale == 0].loc[:, 'numero_sanatorie_2022q1-2'].sum().astype(int)),
