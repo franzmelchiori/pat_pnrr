@@ -3,9 +3,9 @@ PAT MPE
 
 A supporto dell'attività di monitoraggio dei procedimenti edilizi (MPE) e nell'idea di strutturare tale attività in uno strumento informatico a supporto delle amministrazioni coinvolte (PAT, Comuni, Consorzio dei Comuni Trentini), si sta sviluppando (in Python, internamente al gruppo PAT PNRR Digital) la web app PAT MPE.
 
-PAT MPE consente di estrarre i dati delle pratiche edilizie dai file Excel provenienti dai comuni trentini ogni semestre, alimentando delle basi dati (in Pandas e Postgres). Da queste ultime vengono elaborate le metriche ministeriali (ed altre, a supporto dell’analisi) per ogni comune e per l’intera provincia con evidenza di numeri, grafici ed analisi.
+PAT MPE consente di estrarre i dati delle pratiche edilizie dai file Excel provenienti dai comuni trentini ogni semestre, alimentando delle basi dati (in Pandas e Postgres). Da queste ultime vengono elaborate le metriche ministeriali (ed altre, a supporto dell’analisi) per ogni comune e per l’intero territorio provinciale con evidenza di numeri, grafici ed analisi.
 
-PAT MPE espone un'interfaccia web (navigabile tramite browser) per la visualizzazione di cruscotti dati e documentazione. Infine, si prevede di sviluppare anche delle web API per l’integrazione di PAT MPE nei gestionali trentini per l’edilizia (es. GIScom, Licenze Edilizie) al fine di consentire in futuro la raccolta automatizzata dei dati (evitando il lavoro ai comuni, ma preservando il valore del monitoraggio).
+PAT MPE espone un'interfaccia web (navigabile tramite browser) per la visualizzazione di cruscotti dati e documentazione. Infine, si prevede di sviluppare anche delle web API per l’integrazione di PAT MPE nei gestionali trentini per l’edilizia (es. GIScom, Licenze Edilizie) al fine di consentire in futuro la raccolta completamente automatizzata dei dati (evitando il lavoro ai comuni, ma preservando il valore del monitoraggio).
 
 
 Grafici attuali
