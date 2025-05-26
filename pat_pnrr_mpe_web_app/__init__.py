@@ -54,10 +54,6 @@ classificazione_comunale = pat_comuni_dataframe.pat_comuni_kmeans_clustering_lab
 classificazione_comunale = classificazione_comunale.map(classificazione_comunale_map)
 
 # TODO: modulare le ore e gli scores per misurazione (es. 2023q3-2024q2, 2023)
-ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q3-4']
-ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = \
-    pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q1-2'].loc[ore_tecnici_settimana.isna()]
-ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = 0
 comuni_durata_trends, comuni_durata_netta_trends, \
 comuni_arretrato_trends, \
 comuni_performance_trends, comuni_performance_netta_trends= \
@@ -67,6 +63,8 @@ pdc_measure_labels = ['pdc_2021q3_4', 'pdc_2022q1_2']
 pds_measure_labels = ['pds_2021q3_4', 'pds_2022q1_2']
 comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
+ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2023q3-4']
+ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = 0
 scatter_pressione_data_2021q3_2022q2 = pd.concat([
     classificazione_comunale,
     comuni_pds_scores,
@@ -115,6 +113,8 @@ comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
 comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
     comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
+ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2023q3-4']
+ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = 0
 scatter_pressione_data_2022q3_2023q2 = pd.concat([
     classificazione_comunale,
     comuni_pds_scores,
@@ -158,6 +158,8 @@ comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
 comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
     comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
+ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2023q3-4']
+ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = 0
 scatter_pressione_data_2023 = pd.concat([
     classificazione_comunale,
     comuni_pds_scores,
@@ -201,6 +203,10 @@ comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
 comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
     comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
+ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q1-2']
+ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = \
+    pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2023q3-4'].loc[ore_tecnici_settimana.isna()]
+ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = 0
 scatter_pressione_data_2023q3_2024q2 = pd.concat([
     classificazione_comunale,
     comuni_pds_scores,
@@ -244,6 +250,10 @@ comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
 comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
     comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
+ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q3-4']
+ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = \
+    pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q1-2'].loc[ore_tecnici_settimana.isna()]
+ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = 0
 scatter_pressione_data_2024 = pd.concat([
     classificazione_comunale,
     comuni_pds_scores,
