@@ -29,18 +29,18 @@ Prossimi sviluppi
 
 1. Grafici
     1. Sviluppare e visualizzare nella web app i seguenti grafici e mappe:
+        * grafico comunale a nuvola animata di punti con l'indice di pressione (lorda e netta) e le ore a settimana di elaborazione tecnica nei vari monitoraggi
         * grafico provinciale a linee con il numero di pratiche PdC arretrate per i vari cluster comunali nei vari monitoraggi
         * grafico provinciale a linee con il numero di pratiche PdS arretrate per i vari cluster comunali nei vari monitoraggi
-        * grafico comunale a nuvola animata di punti con l'indice di pressione (lorda e netta) e le ore a settimana di elaborazione tecnica nei vari monitoraggi
         * grafico comunale a nuvola animata di punti con il numero di pratiche PdC e PdS avviate e le ore a settimana di elaborazione tecnica nei vari monitoraggi
         * grafico comunale a nuvola animata di punti con la durata delle pratiche PdC e PdS concluse e le ore a settimana di elaborazione tecnica nei vari monitoraggi
         * grafico comunale a nuvola animata di punti con il numero di pratiche PdC e PdS arretrate e le ore a settimana di elaborazione tecnica nei vari monitoraggi
         * mappa provinciale con l'indice di pressione (lorda e netta) nei vari monitoraggi
         * calendario provinciale con il numero di pratiche PdC e PdS avviate nei vari monitoraggi
 2. Analisi
-    1. Sviluppare la dashboard analitica per ognuno dei 166 comuni trentini
-    2. Sviluppare nuove strategie di clustering dei comuni (oltre a quello ISPAT)
-    3. Sviluppare un ottimizzatore per indicare dei percorsi verso i target finali
+    1. Sviluppare un ottimizzatore per indicare dei percorsi verso i target finali
+    2. Sviluppare la dashboard analitica per ognuno dei 166 comuni trentini
+    3. Sviluppare nuove strategie di clustering dei comuni (oltre a quello ISPAT)
     4. Sviluppare un sistema di previsione edilizia sul carico di lavoro comunale
 
 

@@ -124,8 +124,12 @@
     {% else %}
         {% include 'charts/chart_comuni_rank_time_pressione.html' %}
     {% endif %}
-
-    {# TODO: chart | comuni | scatter | cluster | pressione [idx]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
+    {# TODO: chart | comuni | scatter | cluster | pressione (lorda/netta) [idx]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
+    {% if durata_netta == 'True' %}
+        {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_timelapse.html' %}
+    {% else %}
+        {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_elaborazione_timelapse.html' %}
+    {% endif %}
     
     {# TODO: chart | comuni | scatter | cluster | avviato [nr]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
     {# TODO: chart | comuni | scatter | cluster | durata [gg]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}

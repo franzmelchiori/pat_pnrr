@@ -1,0 +1,317 @@
+<div class="container">
+    <div id="chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_timelapse" style="height:720px;"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById('chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_timelapse');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false});
+        var app = {};
+
+        var timeline = [
+            '2023Q1-2',
+            '2023Q3-4',
+            '2024Q1-2',
+            '2024Q3-4']
+
+        var option = {
+            baseOption: {
+                title: {
+                    text: 'Elaborazione/Pressione netta',
+                    subtext: '∝ popolazione'},
+                legend: {
+                    top: 10,
+                    data: [
+                        'Cluster 130 comuni',
+                        'Cluster 31 comuni',
+                        'Cluster 3 comuni',
+                        'Rovereto',
+                        'Trento'],
+                    textStyle: {
+                        fontSize: 12}},
+                xAxis: {
+                    type: 'value',
+                    min: 0,
+                    max: 800,
+                    name: 'Elaborazione',
+                    nameLocation: 'end',
+                    nameGap: 12,
+                    nameTextStyle: {
+                        fontSize: 12},
+                    splitLine: {
+                        show: false}},
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    max: 10,
+                    name: 'Pressione',
+                    nameLocation: 'end',
+                    nameGap: 12,
+                    nameTextStyle: {
+                        fontSize: 12},
+                    splitLine: {
+                        show: false}},
+                series: [
+                    {
+                        name: 'Cluster 130 comuni',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data:
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[0].comuni_piccoli
+                    },
+                    {
+                        name: 'Cluster 31 comuni',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data:
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[0].comuni_medio_piccoli
+                    },
+                    {
+                        name: 'Cluster 3 comuni',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data: 
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[0].comuni_medi
+                    },
+                    {
+                        name: 'Rovereto',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data: 
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[0].rovereto
+                    },
+                    {
+                        name: 'Trento',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data: 
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[0].trento
+                    }],
+                color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+                grid: {
+                    left: '10%',
+                    right: 150,
+                    top: '15%',
+                    bottom: '15%'},
+                tooltip: {
+                    backgroundColor: 'rgba(255,255,255,0.7)',
+                    formatter: function (param) {
+                        var value = param.value;
+                        return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 16px; padding-bottom: 7px; margin-bottom: 7px">'
+                                + 'Comune di ' + value[5]
+                                + '</div>'
+                                + 'Popolazione: ' + value[2].toFixed(0) + '<br>'
+                                + 'Elaborazione ore/sett: ' + value[0].toFixed(1) + '<br>'
+                                + 'Pressione netta: ' + value[1].toFixed(3) + '<br>'
+                                + 'Pressione netta PdS: ' + value[3].toFixed(3) + '<br>'
+                                + 'Pressione netta PdC: ' + value[4].toFixed(3) + '<br>';}},
+                toolbox: {
+                    show: true,
+                    feature: {
+                        dataZoom: {},
+                        brush: {type: ['polygon']},
+                        restore: {},
+                        saveAsImage: {}}},
+                brush: {},
+                visualMap: [
+                    {
+                        orient: 'horizontal',
+                        left: '10%',
+                        bottom: '0px',
+                        padding: [50, 10, 10, 10],
+                        {# right: '10px',
+                        top: '10%', #}
+                        dimension: 1,
+                        min: 0,
+                        max: 10,
+                        itemWidth: 25,
+                        itemHeight: 120,
+                        calculable: true,
+                        precision: 0.1,
+                        text: ['Pressione netta'],
+                        textGap: 20,
+                        inRange: {
+                            colorLightness: [0.9, 0.5],
+                            symbolSize: [10, 70]},
+                        outOfRange: {
+                            symbolSize: [10, 70],
+                            color: ['rgba(255,255,255,0.4)']},
+                        controller: {
+                            inRange: {
+                                color: ['#37A2FF']},
+                            outOfRange: {
+                                color: ['#999']}}
+                    },
+                    {
+                        orient: 'horizontal',
+                        left: '40%',
+                        bottom: '0px',
+                        padding: [50, 10, 10, 10],
+                        {# right: '10px',
+                        top: '35%', #}
+                        dimension: 0,
+                        min: 0,
+                        max: 800,
+                        itemWidth: 25,
+                        itemHeight: 120,
+                        calculable: true,
+                        precision: 0.1,
+                        text: ['Elaborazione ore/sett'],
+                        textGap: 20,
+                        inRange: {
+                            colorLightness: [0.9, 0.5],
+                            symbolSize: [10, 70]},
+                        outOfRange: {
+                            symbolSize: [10, 70],
+                            color: ['rgba(255,255,255,0.4)']},
+                        controller: {
+                            inRange: {
+                                color: ['#37A2FF']},
+                            outOfRange: {
+                                color: ['#999']}}
+                    },
+                    {
+                        orient: 'horizontal',
+                        left: '70%',
+                        bottom: '0px',
+                        padding: [50, 10, 10, 10],
+                        {# right: '10px',
+                        top: '60%', #}
+                        dimension: 2,
+                        min: 0,
+                        max: 60000,
+                        itemWidth: 25,
+                        itemHeight: 120,
+                        calculable: true,
+                        precision: 0.1,
+                        text: ['Popolazione'],
+                        textGap: 20,
+                        inRange: {
+                            colorLightness: [0.9, 0.5],
+                            symbolSize: [10, 70]},
+                        outOfRange: {
+                            symbolSize: [10, 70],
+                            color: ['rgba(255,255,255,0.4)']},
+                        controller: {
+                            inRange: {
+                                color: ['#37A2FF']},
+                            outOfRange: {
+                                color: ['#999']}}
+                    }],
+                timeline: {
+                    axisType: 'category',
+                    orient: 'vertical',
+                    autoPlay: true,
+                    inverse: true,
+                    playInterval: 1000,
+                    left: null,
+                    right: 0,
+                    top: 75,
+                    bottom: 75,
+                    width: 85,
+                    height: null,
+                    symbol: 'none',
+                    checkpointStyle: {
+                        borderWidth: 2},
+                    controlStyle: {
+                        showNextBtn: false,
+                        showPrevBtn: false},
+                    data: []},
+                animationDurationUpdate: 1000,
+                animationEasingUpdate: 'quinticInOut'},
+            options: []};
+
+        for (var n = 0; n < timeline.length; n++) {
+            option.baseOption.timeline.data.push(timeline[n]);
+            option.options.push({
+                series: [
+                    {
+                        name: 'Cluster 130 comuni',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data:
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[n].comuni_piccoli
+                    },
+                    {
+                        name: 'Cluster 31 comuni',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data:
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[n].comuni_medio_piccoli
+                    },
+                    {
+                        name: 'Cluster 3 comuni',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data: 
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[n].comuni_medi
+                    },
+                    {
+                        name: 'Rovereto',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data: 
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[n].rovereto
+                    },
+                    {
+                        name: 'Trento',
+                        type: 'scatter',
+                        itemStyle: {
+                            opacity: 0.8,
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'},
+                        data: 
+                            {{ chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series | safe }}[n].trento
+                    }]})}
+
+        myChart.setOption(option);
+        window.addEventListener('resize', myChart.resize);
+    </script>
+</div>
+<br>

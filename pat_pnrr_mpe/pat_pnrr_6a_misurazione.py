@@ -330,7 +330,6 @@ class ComuneExcel:
                 print('percentuale_ore_comune_considerato is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'percentuale_ore_comune_considerato'])
 
-            # TODO: se il comune ha indicato "numero" ore e "numero" percentuale ore edilizia privata e "0" nella percentuale ore comune, io sostituirei lo "0" con "1"
             for index_dipendente in comune_dataframe.index:
                 if (comune_dataframe.loc[index_dipendente, 'ore_settimana'] > 0) & \
                    (comune_dataframe.loc[index_dipendente, 'percentuale_ore_edilizia_privata'] > 0) & \

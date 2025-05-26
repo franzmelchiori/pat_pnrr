@@ -303,7 +303,6 @@ filter_comuni = ['Andalo', 'Arco', 'Baselga di Pinè', 'Calceranica al Lago', 'C
     'Pinzolo', 'Predazzo', 'Riva del Garda', 'Tesero', 'Vermiglio', 'Ziano di Fiemme',
     'Comano Terme', 'Ledro', 'Dimaro Folgarida', 'Primiero San Martino di Castrozza',
     'San Giovanni di Fassa']
-
 chart_provincia_area_time_cluster_avviato_pdc_pds_series = {
     'pdc_avviato_cluster_0': [
         str(pat_comuni_dataframe.loc[filter_comuni, 'numero_permessi_costruire_2021q3-4'].sum().astype(int)),
@@ -641,6 +640,67 @@ chart_comuni_rank_time_pressione_netta_series = [[
     str(scatter_pressione_netta_data_2024.loc[comune].net_score)]
     for comune in pat_comuni_dataframe.index]
 
+chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = [{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 4].iloc[:, 1:])]
+    },{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022[scatter_pressione_data_2022.cluster_comune == 4].iloc[:, 1:])]
+    },{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2022q3_2023q2[scatter_pressione_data_2022q3_2023q2.cluster_comune == 4].iloc[:, 1:])]
+    },{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023[scatter_pressione_data_2023.cluster_comune == 4].iloc[:, 1:])]
+    },{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 4].iloc[:, 1:])]
+    },{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 4].iloc[:, 1:])]}]
+chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = [{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2022q3_2023q2[scatter_pressione_netta_data_2022q3_2023q2.cluster_comune == 4].iloc[:, 1:])]
+    },{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 4].iloc[:, 1:])]
+    },{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_netta_data_2023q3_2024q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_netta_data_2023q3_2024q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_netta_data_2023q3_2024q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_netta_data_2023q3_2024q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023q3_2024q2[scatter_pressione_data_2023q3_2024q2.cluster_comune == 4].iloc[:, 1:])]
+    },{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2024[scatter_pressione_netta_data_2024.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2024[scatter_pressione_netta_data_2024.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2024[scatter_pressione_netta_data_2024.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2024[scatter_pressione_netta_data_2024.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2024[scatter_pressione_data_2024.cluster_comune == 4].iloc[:, 1:])]}]
+
 
 @app.route('/')
 def index():
@@ -691,6 +751,8 @@ def index():
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
             chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
             chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
+            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
+            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
             chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
             chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
             chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
@@ -729,6 +791,8 @@ def index():
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
             chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
             chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
+            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
+            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
             chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
             chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
             chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
@@ -767,6 +831,8 @@ def index():
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
             chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
             chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
+            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
+            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
             chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
             chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
             chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
@@ -805,6 +871,8 @@ def index():
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
             chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
             chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
+            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
+            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
             chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
             chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
             chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
@@ -843,6 +911,8 @@ def index():
             chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
             chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
             chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
+            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
+            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
             chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
             chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
             chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
