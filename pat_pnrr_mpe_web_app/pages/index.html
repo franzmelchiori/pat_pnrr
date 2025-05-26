@@ -124,7 +124,7 @@
     {% else %}
         {% include 'charts/chart_comuni_rank_time_pressione.html' %}
     {% endif %}
-    {# TODO: chart | comuni | scatter | cluster | pressione (lorda/netta) [idx]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
+    {# chart | comuni | scatter | cluster | pressione (lorda/netta) [idx]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
     {% if durata_netta == 'True' %}
         {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_timelapse.html' %}
     {% else %}
