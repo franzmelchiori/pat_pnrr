@@ -22,6 +22,7 @@ Grafici attuali
 * grafico provinciale a barometro animato con l'indice di pressione (lorda e netta) nei vari monitoraggi
 * grafico comunale a torta animata con fette (proporzionali alla popolazione) ordinate per indice di pressione (lorda e netta) dei vari comuni nei vari monitoraggi
 * grafico comunale a linee ordinate per indice di pressione (lorda e netta) dei vari comuni nei vari monitoraggi
+* grafico comunale a nuvola animata di punti con l'indice di pressione (lorda e netta) e le ore a settimana di elaborazione tecnica nei vari monitoraggi
 
 
 Prossimi sviluppi
@@ -29,7 +30,6 @@ Prossimi sviluppi
 
 1. Grafici
     1. Sviluppare e visualizzare nella web app i seguenti grafici e mappe:
-        * grafico comunale a nuvola animata di punti con l'indice di pressione (lorda e netta) e le ore a settimana di elaborazione tecnica nei vari monitoraggi
         * grafico provinciale a linee con il numero di pratiche PdC arretrate per i vari cluster comunali nei vari monitoraggi
         * grafico provinciale a linee con il numero di pratiche PdS arretrate per i vari cluster comunali nei vari monitoraggi
         * grafico comunale a nuvola animata di punti con il numero di pratiche PdC e PdS avviate e le ore a settimana di elaborazione tecnica nei vari monitoraggi
