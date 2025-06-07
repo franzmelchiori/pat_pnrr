@@ -8,7 +8,9 @@
 /pat_pnrr_bdap_mop
 /pat_pnrr_bim
 /pat_pnrr_report_monitoraggio
-/pat_pnrr_ssu
+/pat_pnrr_ssu/api
+/pat_pnrr_ssu/doc
+/pat_pnrr_ssu/xsd
 /pat_pnrr_suape_mpe
 /pat_pnrr_survey_reports
 /pictures
