@@ -4,6 +4,7 @@
 """
 
 
+import shelve
 import numpy as np
 from scipy.interpolate import make_interp_spline
 import pandas as pd
@@ -1517,6 +1518,12 @@ if __name__ == '__main__':
     comuni_scores.to_csv('pat-pnrr_edilizia_pressione_' + \
                          PERIODI_MONITORAGGIO_ULTIMO_ANNO + '.csv')
     
+    pat_comuni_shelve = shelve.open('pat_comuni_scores_' + \
+        PERIODI_MONITORAGGIO_ULTIMO_ANNO)
+    pat_comuni_shelve['pat_comuni_scores_' + \
+        PERIODI_MONITORAGGIO_ULTIMO_ANNO] = comuni_scores
+    pat_comuni_shelve.close()
+
     pdc_measure_labels = ['pdc_performance_netta_' + PERIODO_MONITORAGGIO_PRECEDENTE, 
                           'pdc_performance_netta_' + PERIODO_MONITORAGGIO_CORRENTE]
     pds_measure_labels = ['pds_performance_netta_' + PERIODO_MONITORAGGIO_PRECEDENTE, 

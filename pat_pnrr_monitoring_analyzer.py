@@ -2484,56 +2484,69 @@ if __name__ == '__main__':
 
 
     # REQUEST 20250609 | comuni ordinati decrescenti per pdc (e pds) durate medie con avviati e arretrati | mpe1-7
-    giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso = [
-        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
-        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
-        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
-        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q1-2',
-        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4']
-    numero_permessi_costruire_avviati = [
-        'numero_permessi_costruire_avviati_2022q3-4',
-        'numero_permessi_costruire_avviati_2023q1-2',
-        'numero_permessi_costruire_avviati_2023q3-4',
-        'numero_permessi_costruire_avviati_2024q1-2',
-        'numero_permessi_costruire_avviati_2024q3-4']
-    numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo = [
-        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
-        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
-        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
-        # 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2',
-        'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4']
-    giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso = [
-        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
-        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
-        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
-        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q1-2',
-        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q3-4']
-    numero_sanatorie_avviate = [
-        'numero_sanatorie_avviate_2022q3-4',
-        'numero_sanatorie_avviate_2023q1-2',
-        'numero_sanatorie_avviate_2023q3-4',
-        'numero_sanatorie_avviate_2024q1-2',
-        'numero_sanatorie_avviate_2024q3-4']
-    numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo = [
-        # 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4',
-        # 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2',
-        # 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4',
-        # 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2',
-        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4']
-    pat_comuni_dataframe_durate_avviati = pd.concat([
-        pat_comuni_dataframe[giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso].mean(axis=1),
-        pat_comuni_dataframe[numero_permessi_costruire_avviati].mean(axis=1),
-        pat_comuni_dataframe[numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo],
-        pat_comuni_dataframe[giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso].mean(axis=1),
-        pat_comuni_dataframe[numero_sanatorie_avviate].mean(axis=1),
-        pat_comuni_dataframe[numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo]],
-        axis='columns', join='outer')
-    pat_comuni_dataframe_durate_avviati.columns = [
-        'pdc durata media', 'pdc avviato medio', 'pdc arretrato ultimo',
-        'pds durata media', 'pds avviato medio', 'pds arretrato ultimo']
-    pat_comuni_dataframe_durate_avviati[
-        (pat_comuni_dataframe_durate_avviati['pdc durata media'] > 120) &
-        (pat_comuni_dataframe_durate_avviati['pdc avviato medio'] < 10)]\
-            .round(0)\
-            .sort_values(by='pdc durata media', ascending=False)\
-            .to_csv('pat-pnrr_edilizia_misure_pdc_pds_mpe3-7_durate_critiche.csv')
+    # giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso = [
+    #     'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
+    #     'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
+    #     'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
+    #     'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q1-2',
+    #     'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4']
+    # numero_permessi_costruire_avviati = [
+    #     'numero_permessi_costruire_avviati_2022q3-4',
+    #     'numero_permessi_costruire_avviati_2023q1-2',
+    #     'numero_permessi_costruire_avviati_2023q3-4',
+    #     'numero_permessi_costruire_avviati_2024q1-2',
+    #     'numero_permessi_costruire_avviati_2024q3-4']
+    # numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo = [
+    #     'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
+    #     'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
+    #     'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
+    #     'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2',
+    #     'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4']
+    # giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso = [
+    #     'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
+    #     'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
+    #     'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
+    #     'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q1-2',
+    #     'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q3-4']
+    # numero_sanatorie_avviate = [
+    #     'numero_sanatorie_avviate_2022q3-4',
+    #     'numero_sanatorie_avviate_2023q1-2',
+    #     'numero_sanatorie_avviate_2023q3-4',
+    #     'numero_sanatorie_avviate_2024q1-2',
+    #     'numero_sanatorie_avviate_2024q3-4']
+    # numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo = [
+    #     'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4',
+    #     'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2',
+    #     'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4',
+    #     'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2',
+    #     'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4']
+    # pat_comuni_shelve = shelve.open('pat_comuni_scores_2024')
+    # pat_comuni_scores = pat_comuni_shelve['pat_comuni_scores_2024']
+    # pat_comuni_shelve.close()
+    # pat_comuni_dataframe_durate_avviati = pd.concat([
+    #     pat_comuni_dataframe[giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso].mean(axis=1).round(0),
+    #     pat_comuni_dataframe[numero_permessi_costruire_avviati].mean(axis=1).round(0),
+    #     pat_comuni_dataframe[numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo[-1]],
+    #     pat_comuni_dataframe[giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso].mean(axis=1).round(0),
+    #     pat_comuni_dataframe[numero_sanatorie_avviate].mean(axis=1).round(0),
+    #     pat_comuni_dataframe[numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo[-1]],
+    #     pat_comuni_scores.round(3)],
+    #     axis='columns', join='outer')
+    # pat_comuni_dataframe_durate_avviati.columns = [
+    #     'pdc durata media', 'pdc avviato medio', 'pdc arretrato 2024q3-4',
+    #     'pds durata media', 'pds avviato medio', 'pds arretrato 2024q3-4', 'pressione 2024']
+    # pat_comuni_dataframe_durate_avviati[
+    #     (pat_comuni_dataframe_durate_avviati['pdc durata media'] > 120) &
+    #     (pat_comuni_dataframe_durate_avviati['pdc avviato medio'] < 10)]\
+    #         .sort_values(by='pdc durata media', ascending=False)\
+    #         .to_csv('pat-pnrr_edilizia_misure_pdc_pds_mpe3-7_durate_critiche.csv')
+    # pat_comuni_dataframe_arretrati = pd.concat([
+    #     pat_comuni_dataframe[numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo].mean(axis=1).round(0),
+    #     pat_comuni_dataframe[numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo].mean(axis=1).round(0)],
+    #     axis='columns', join='outer')
+    # pat_comuni_dataframe_arretrati.columns = [
+    #     'pdc arretrato medio', 'pds arretrato medio']
+    # pat_comuni_dataframe_arretrati[
+    #     (pat_comuni_dataframe_arretrati['pdc arretrato medio'] > 10)]\
+    #         .sort_values(by='pdc arretrato medio', ascending=False)\
+    #         .to_csv('pat-pnrr_edilizia_misure_pdc_pds_mpe3-7_arretrati_critici.csv')
