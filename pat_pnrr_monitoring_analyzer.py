@@ -2525,20 +2525,23 @@ if __name__ == '__main__':
     pat_comuni_shelve.close()
     pat_comuni_dataframe_durate_avviati = pd.concat([
         pat_comuni_dataframe[giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso].mean(axis=1).round(0),
+        pat_comuni_dataframe[giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso].std(axis=1).round(0),
         pat_comuni_dataframe[giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso[-1]].round(0),
         pat_comuni_dataframe[numero_permessi_costruire_avviati].mean(axis=1).round(0),
         pat_comuni_dataframe[numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo[-1]],
         pat_comuni_dataframe[giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso].mean(axis=1).round(0),
+        pat_comuni_dataframe[giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso].std(axis=1).round(0),
         pat_comuni_dataframe[giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso[-1]].round(0),
         pat_comuni_dataframe[numero_sanatorie_avviate].mean(axis=1).round(0),
         pat_comuni_dataframe[numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo[-1]],
         pat_comuni_scores.round(3)],
         axis='columns', join='outer')
     pat_comuni_dataframe_durate_avviati.columns = [
-        'pdc durata media', 'pdc durata 2024q3-4', 'pdc avviato medio', 'pdc arretrato 2024q3-4',
-        'pds durata media', 'pds durata 2024q3-4', 'pds avviato medio', 'pds arretrato 2024q3-4', 'pressione 2024']
+        'pdc durata media', 'pdc durata deviazione', 'pdc durata 2024q3-4', 'pdc avviato medio', 'pdc arretrato 2024q3-4',
+        'pds durata media', 'pds durata deviazione', 'pds durata 2024q3-4', 'pds avviato medio', 'pds arretrato 2024q3-4', 'pressione 2024']
     pat_comuni_dataframe_durate_avviati[
         (pat_comuni_dataframe_durate_avviati['pdc durata media'] > 120) &
+        (pat_comuni_dataframe_durate_avviati['pdc durata deviazione'] < 120) &
         (pat_comuni_dataframe_durate_avviati['pdc durata 2024q3-4'] > 120) &
         (pat_comuni_dataframe_durate_avviati['pdc avviato medio'] < 10)]\
             .sort_values(by='pdc durata media', ascending=False)\
