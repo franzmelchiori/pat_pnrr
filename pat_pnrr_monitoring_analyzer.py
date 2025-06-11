@@ -2496,6 +2496,12 @@ if __name__ == '__main__':
         'numero_permessi_costruire_avviati_2023q3-4',
         'numero_permessi_costruire_avviati_2024q1-2',
         'numero_permessi_costruire_avviati_2024q3-4']
+    numero_permessi_costruire_conclusi = [
+        'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
+        'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2',
+        'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
+        'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2024q1-2',
+        'numero_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4']
     numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo = [
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2',
@@ -2514,6 +2520,12 @@ if __name__ == '__main__':
         'numero_sanatorie_avviate_2023q3-4',
         'numero_sanatorie_avviate_2024q1-2',
         'numero_sanatorie_avviate_2024q3-4']
+    numero_sanatorie_concluse = [
+        'numero_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
+        'numero_sanatorie_concluse_con_provvedimento_espresso_2023q1-2',
+        'numero_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
+        'numero_sanatorie_concluse_con_provvedimento_espresso_2024q1-2',
+        'numero_sanatorie_concluse_con_provvedimento_espresso_2024q3-4']
     numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo = [
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4',
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2',
@@ -2527,34 +2539,48 @@ if __name__ == '__main__':
         pat_comuni_dataframe[giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso].mean(axis=1).round(0),
         pat_comuni_dataframe[giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso].std(axis=1).round(0),
         pat_comuni_dataframe[giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso[-1]].round(0),
-        pat_comuni_dataframe[numero_permessi_costruire_avviati].mean(axis=1).round(0),
-        pat_comuni_dataframe[numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo[-1]],
+        pat_comuni_dataframe[numero_permessi_costruire_conclusi].mean(axis=1).round(0),
+        pat_comuni_dataframe[numero_permessi_costruire_conclusi].std(axis=1).round(0),
+        pat_comuni_dataframe[numero_permessi_costruire_conclusi[-1]].round(0),
+        pat_comuni_dataframe[numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo].mean(axis=1).round(0),
+        pat_comuni_dataframe[numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo].std(axis=1).round(0),
+        pat_comuni_dataframe[numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo[-1]].round(0),
         pat_comuni_scores.round(3)],
         axis='columns', join='outer')
     pat_comuni_dataframe_durate_avviati.columns = [
-        'pdc durata media', 'pdc durata deviazione', 'pdc durata 2024q3-4', 'pdc avviato medio', 'pdc arretrato 2024q3-4', 'pressione 2024']
+        'pdc durata media', 'pdc durata deviazione', 'pdc durata 2024q3-4',
+        'pdc conclusi media', 'pdc conclusi deviazione', 'pdc conclusi 2024q3-4',
+        'pdc arretrati media', 'pdc arretrati deviazione', 'pdc arretrati 2024q3-4',
+        'pressione 2024']
     pat_comuni_dataframe_durate_avviati[
         (pat_comuni_dataframe_durate_avviati['pdc durata media'] > 120) &
         (pat_comuni_dataframe_durate_avviati['pdc durata deviazione'] < 120) &
         (pat_comuni_dataframe_durate_avviati['pdc durata 2024q3-4'] > 120) &
-        (pat_comuni_dataframe_durate_avviati['pdc avviato medio'] < 10)]\
+        (pat_comuni_dataframe_durate_avviati['pdc conclusi media'] < 10)]\
             .sort_values(by='pdc durata media', ascending=False)\
             .to_csv('pat-pnrr_edilizia_misure_pdc_mpe3-7_durate_critiche.csv')
     pat_comuni_dataframe_durate_avviati = pd.concat([
         pat_comuni_dataframe[giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso].mean(axis=1).round(0),
         pat_comuni_dataframe[giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso].std(axis=1).round(0),
         pat_comuni_dataframe[giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso[-1]].round(0),
-        pat_comuni_dataframe[numero_sanatorie_avviate].mean(axis=1).round(0),
-        pat_comuni_dataframe[numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo[-1]],
+        pat_comuni_dataframe[numero_sanatorie_concluse].mean(axis=1).round(0),
+        pat_comuni_dataframe[numero_sanatorie_concluse].std(axis=1).round(0),
+        pat_comuni_dataframe[numero_sanatorie_concluse[-1]].round(0),
+        pat_comuni_dataframe[numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo].mean(axis=1).round(0),
+        pat_comuni_dataframe[numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo].std(axis=1).round(0),
+        pat_comuni_dataframe[numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo[-1]].round(0),
         pat_comuni_scores.round(3)],
         axis='columns', join='outer')
     pat_comuni_dataframe_durate_avviati.columns = [
-        'pds durata media', 'pds durata deviazione', 'pds durata 2024q3-4', 'pds avviato medio', 'pds arretrato 2024q3-4', 'pressione 2024']
+        'pds durata media', 'pds durata deviazione', 'pds durata 2024q3-4',
+        'pds conclusi media', 'pds conclusi deviazione', 'pds conclusi 2024q3-4',
+        'pds arretrati media', 'pds arretrati deviazione', 'pds arretrati 2024q3-4',
+        'pressione 2024']
     pat_comuni_dataframe_durate_avviati[
         (pat_comuni_dataframe_durate_avviati['pds durata media'] > 120) &
         (pat_comuni_dataframe_durate_avviati['pds durata deviazione'] < 120) &
         (pat_comuni_dataframe_durate_avviati['pds durata 2024q3-4'] > 120) &
-        (pat_comuni_dataframe_durate_avviati['pds avviato medio'] < 10)]\
+        (pat_comuni_dataframe_durate_avviati['pds conclusi media'] < 10)]\
             .sort_values(by='pds durata media', ascending=False)\
             .to_csv('pat-pnrr_edilizia_misure_pds_mpe3-7_durate_critiche.csv')
     pat_comuni_dataframe_arretrati = pd.concat([
