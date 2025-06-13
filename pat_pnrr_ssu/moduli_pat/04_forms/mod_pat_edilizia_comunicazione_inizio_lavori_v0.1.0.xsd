@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:ccodelist="../commons/codelist"
+            xmlns:ctipi="../commons/tipi"
+            xmlns:canncl="../commons/xsdAnnotations"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified"
+            version="0.1.0"
+            xml:lang="it">
+            <!-- xmlns:vpergen="../01_vocabularies/persona_genere"
+            xmlns:epers="../02_entities/persona"
+            xmlns:mpecil="../04_forms/comunicazione_inizio_lavori" -->
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons/commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons/commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons/commons-xsd-annotations.xsd"/>
+    <!-- <xsd:import namespace="../01_vocabularies/persona_genere" schemaLocation="../01_vocabularies/voc_persona_genere_v1.0.0.xsd"/> -->
+    <!-- <xsd:import namespace="../02_entities/persona" schemaLocation="../02_entities/ent_persona_v1.0.0.xsd"/> -->
+
+    <xsd:complexType name="modulo_pat_edilizia_comunicazione_inizio_lavori_ctype">
+        <xsd:sequence>
+            <xsd:element name="bla" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:element name="modulo_pat_edilizia_comunicazione_inizio_lavori" type="modulo_pat_edilizia_comunicazione_inizio_lavori_ctype"/>
+    <!-- <xsd:element name="modulo_pat_edilizia_comunicazione_inizio_lavori" type="mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori_ctype"/> -->
+</xsd:schema>
