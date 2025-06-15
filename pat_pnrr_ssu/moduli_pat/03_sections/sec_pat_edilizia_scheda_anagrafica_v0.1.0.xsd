@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:speschedaanag="../03_sections/scheda_anagrafica"
+            targetNamespace="../03_sections/scheda_anagrafica"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified"
+            version="0.1.0"
+            xml:lang="it">
+
+    <xsd:complexType name="sezione_pat_edilizia_scheda_anagrafica_ctype">
+        <xsd:sequence>
+            <xsd:element name="denominazione" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="sezione_pat_edilizia_scheda_anagrafica" type="speschedaanag:sezione_pat_edilizia_scheda_anagrafica_ctype"/>
+</xsd:schema>

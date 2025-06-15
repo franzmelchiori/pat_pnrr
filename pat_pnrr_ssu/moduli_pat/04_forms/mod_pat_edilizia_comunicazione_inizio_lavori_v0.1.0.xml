@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<modulo_pat_edilizia_comunicazione_inizio_lavori
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation=".\04_forms\mod_pat_edilizia_comunicazione_inizio_lavori_v0.1.0.xsd">
-    <bla>bla</bla>
+<modulo_pat_edilizia_comunicazione_inizio_lavori>
+    <sezione_pat_edilizia_scheda_anagrafica>
+        <denominazione>pippo</denominazione>
+    </sezione_pat_edilizia_scheda_anagrafica>
 </modulo_pat_edilizia_comunicazione_inizio_lavori>
