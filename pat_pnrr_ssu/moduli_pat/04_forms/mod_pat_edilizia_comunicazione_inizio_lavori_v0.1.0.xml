@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<modulo_pat_edilizia_comunicazione_inizio_lavori>
-    <sezione_pat_edilizia_scheda_anagrafica>
-        <denominazione>pippo</denominazione>
-    </sezione_pat_edilizia_scheda_anagrafica>
-</modulo_pat_edilizia_comunicazione_inizio_lavori>
+<mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="../04_forms/mod_pat_edilizia_comunicazione_inizio_lavori_v0.1.0.xsd"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:vpepergen="../01_vocabularies/persona_genere"
+    xmlns:epepers="../02_entities/persona"
+    xmlns:speschana="../03_sections/scheda_anagrafica"
+    xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
+
+    <mpecil:sezione_pat_edilizia_scheda_anagrafica>
+        <speschana:datiDichiarante>
+            <epepers:nome>Mario</epepers:nome>
+            <epepers:cognome>Rossi</epepers:cognome>
+            <epepers:sesso>M</epepers:sesso>
+        </speschana:datiDichiarante>
+    </mpecil:sezione_pat_edilizia_scheda_anagrafica>
+</mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>

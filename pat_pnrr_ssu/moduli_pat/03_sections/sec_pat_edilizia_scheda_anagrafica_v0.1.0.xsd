@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:speschedaanag="../03_sections/scheda_anagrafica"
-            targetNamespace="../03_sections/scheda_anagrafica"
-            elementFormDefault="qualified"
-            attributeFormDefault="qualified"
-            version="0.1.0"
-            xml:lang="it">
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epepers="../02_entities/persona"
+    xmlns:speschana="../03_sections/scheda_anagrafica"
+    targetNamespace="../03_sections/scheda_anagrafica"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="0.1.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>    
+    <xsd:import namespace="../02_entities/persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v0.1.0.xsd"/>
 
     <xsd:complexType name="sezione_pat_edilizia_scheda_anagrafica_ctype">
         <xsd:sequence>
-            <xsd:element name="denominazione" type="xsd:string"/>
+            <xsd:element name="datiDichiarante" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:element name="sezione_pat_edilizia_scheda_anagrafica" type="speschedaanag:sezione_pat_edilizia_scheda_anagrafica_ctype"/>
+    <xsd:element name="sezione_pat_edilizia_scheda_anagrafica" type="speschana:sezione_pat_edilizia_scheda_anagrafica_ctype"/>
 </xsd:schema>
