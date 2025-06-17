@@ -8,6 +8,7 @@
     xmlns:canncl="../commons/xsdAnnotations"
     xmlns:vpepergen="../01_vocabularies/persona_genere"
     xmlns:epepers="../02_entities/persona"
+    xmlns:epecitt="../02_entities/cittadinanza"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
 
@@ -22,5 +23,8 @@
             <epepers:provinciaNascita>TN</epepers:provinciaNascita>
             <epepers:statoNascita>IT</epepers:statoNascita>
         </speschana:datiDichiarante>
+        <speschana:cittadinanza>
+            <epecitt:stato_cittadinanza>IT</epecitt:stato_cittadinanza>
+        </speschana:cittadinanza>
     </mpecil:sezione_pat_edilizia_scheda_anagrafica>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
