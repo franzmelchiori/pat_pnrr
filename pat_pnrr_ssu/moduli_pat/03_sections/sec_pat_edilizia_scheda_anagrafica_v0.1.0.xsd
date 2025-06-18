@@ -7,6 +7,7 @@
     xmlns:canncl="../commons/xsdAnnotations"
     xmlns:epepers="../02_entities/persona"
     xmlns:epecitt="../02_entities/cittadinanza"
+    xmlns:epedocu="../02_entities/documento"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     targetNamespace="../03_sections/scheda_anagrafica"
     elementFormDefault="qualified"
@@ -20,11 +21,22 @@
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>    
     <xsd:import namespace="../02_entities/persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v0.1.0.xsd"/>
     <xsd:import namespace="../02_entities/cittadinanza" schemaLocation="../02_entities/ent_pat_edilizia_cittadinanza_v0.1.0.xsd"/>
+    <xsd:import namespace="../02_entities/documento" schemaLocation="../02_entities/ent_pat_edilizia_documento_v0.1.0.xsd"/>
 
     <xsd:complexType name="sezione_pat_edilizia_scheda_anagrafica_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">PAT Scheda anagrafica</xsd:documentation>
+            <xsd:documentation xml:lang="it">Dati del dichiarante</xsd:documentation>
+        </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="datiDichiarante" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="cittadinanza" type="epecitt:cittadinanza_ctype" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="cittadino_non_ue" type="xsd:boolean" default="false" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">Cittadino NON UE</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="documento" type="epedocu:documento_ctype" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
 

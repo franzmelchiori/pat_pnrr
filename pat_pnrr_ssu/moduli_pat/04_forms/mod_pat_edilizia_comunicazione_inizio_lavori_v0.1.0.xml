@@ -9,9 +9,12 @@
     xmlns:vpepergen="../01_vocabularies/persona_genere"
     xmlns:epepers="../02_entities/persona"
     xmlns:epecitt="../02_entities/cittadinanza"
+    xmlns:epedocu="../02_entities/documento"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
 
+    <mpecil:persona>true</mpecil:persona>
+    <!-- <mpecil:ditta>true</mpecil:ditta> -->
     <mpecil:sezione_pat_edilizia_scheda_anagrafica>
         <speschana:datiDichiarante>
             <epepers:nome>Mario</epepers:nome>
@@ -26,5 +29,13 @@
         <speschana:cittadinanza>
             <epecitt:stato_cittadinanza>IT</epecitt:stato_cittadinanza>
         </speschana:cittadinanza>
+        <speschana:cittadino_non_ue>false</speschana:cittadino_non_ue>
+        <speschana:documento>
+            <epedocu:tipo>Passaporto</epedocu:tipo>
+            <epedocu:numero>123456</epedocu:numero>
+            <epedocu:ente_rilascio>QuesturaTrento</epedocu:ente_rilascio>
+            <epedocu:data_rilascio>2025-01-01+00:00</epedocu:data_rilascio>
+            <epedocu:data_scadenza>2035-01-01+00:00</epedocu:data_scadenza>
+        </speschana:documento>    
     </mpecil:sezione_pat_edilizia_scheda_anagrafica>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
