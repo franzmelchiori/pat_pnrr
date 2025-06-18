@@ -20,6 +20,11 @@
     <xsd:import namespace="../03_sections/scheda_anagrafica" schemaLocation="../03_sections/sec_pat_edilizia_scheda_anagrafica_v0.1.0.xsd"/>
 
     <xsd:complexType name="modulo_pat_edilizia_comunicazione_inizio_lavori_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">PAT Procedimenti Edilizi Digitali</xsd:documentation>
+            <xsd:documentation xml:lang="it">Comunicazione Inizio Lavori</xsd:documentation>
+            <xsd:documentation xml:lang="it">Articolo 83, c. 3 della legge provinciale 4 agosto 2015, n. 15</xsd:documentation>
+        </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="sezione_pat_edilizia_scheda_anagrafica" type="speschana:sezione_pat_edilizia_scheda_anagrafica_ctype"/>
         </xsd:sequence>
