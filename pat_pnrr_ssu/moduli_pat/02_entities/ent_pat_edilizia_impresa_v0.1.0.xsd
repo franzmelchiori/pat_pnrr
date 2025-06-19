@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epeindita="../02_entities/indirizzo_italiano"
+    xmlns:epeiscrea="../02_entities/iscrizione_rea"
+    xmlns:epeimpr="../02_entities/impresa"
+    targetNamespace="../02_entities/impresa"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="0.1.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+    <xsd:import namespace="../02_entities/indirizzo_italiano" schemaLocation="../02_entities/ent_pat_edilizia_indirizzo_italiano_v0.1.0.xsd"/>
+    <xsd:import namespace="../02_entities/iscrizione_rea" schemaLocation="../02_entities/ent_pat_edilizia_iscrizione_rea_v0.1.0.xsd"/>
+
+    <xsd:complexType name="opzione_ditta_rea_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">Ditta CCIAA iscritta al REA</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="rea" type="epeiscrea:entita_pat_iscrizione_rea_ctype" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="entita_pat_impresa_ctype">
+        <xsd:sequence>
+            <xsd:element name="denominazione" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="forma_giuridica" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <canncl:codeListReference>
+                            <canncl:codeListID_cl>IT:SUAP:CL:FormeGiuridiche</canncl:codeListID_cl>
+                        </canncl:codeListReference>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="codice_fiscale" type="ctipi:codice_fiscale_stype" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="partita_iva" type="ctipi:partita_iva_stype" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="indirizzo_attivita" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="telefono_cellulare" type="ctipi:telefono_mobile_stype" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="email" type="ctipi:email_stype" minOccurs="0" maxOccurs="1"/>
+            <xsd:choice>
+                <xsd:element name="selezione_rea_iscritto" type="epeimpr:opzione_ditta_rea_ctype" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="selezione_rea_non_iscritto" default="true" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="selezione_rea_solo_ri" default="true" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:element name="entita_pat_impresa" type="epeimpr:entita_pat_impresa_ctype"/>
+</xsd:schema>

@@ -26,18 +26,6 @@
             <xsd:documentation xml:lang="it">Articolo 83, c. 3 della legge provinciale 4 agosto 2015, n. 15</xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
-            <xsd:choice>
-                <xsd:element name="persona" type="xsd:boolean" default="false" minOccurs="1" maxOccurs="1">
-                    <xsd:annotation>
-                        <xsd:documentation xml:lang="it">Persona (privato)</xsd:documentation>
-                    </xsd:annotation>
-                </xsd:element>
-                <xsd:element name="ditta" type="xsd:boolean" default="false" minOccurs="1" maxOccurs="1">
-                    <xsd:annotation>
-                        <xsd:documentation xml:lang="it">Ditta/società/impresa</xsd:documentation>
-                    </xsd:annotation>
-                </xsd:element>
-            </xsd:choice>
             <xsd:element name="sezione_pat_edilizia_scheda_anagrafica" type="speschana:sezione_pat_edilizia_scheda_anagrafica_ctype"/>
         </xsd:sequence>
     </xsd:complexType>

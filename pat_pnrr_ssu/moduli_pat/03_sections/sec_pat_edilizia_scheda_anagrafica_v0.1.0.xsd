@@ -12,6 +12,8 @@
     xmlns:epeindest="../02_entities/indirizzo_estero"
     xmlns:epecont="../02_entities/contatti"
     xmlns:eperapp="../02_entities/rappresentante"
+    xmlns:epeimpr="../02_entities/impresa"
+    xmlns:epedomdig="../02_entities/domicilio_digitale"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     targetNamespace="../03_sections/scheda_anagrafica"
     elementFormDefault="qualified"
@@ -22,7 +24,7 @@
     <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
     <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
-    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>    
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
     <xsd:import namespace="../02_entities/persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v0.1.0.xsd"/>
     <xsd:import namespace="../02_entities/cittadinanza" schemaLocation="../02_entities/ent_pat_edilizia_cittadinanza_v0.1.0.xsd"/>
     <xsd:import namespace="../02_entities/documento" schemaLocation="../02_entities/ent_pat_edilizia_documento_v0.1.0.xsd"/>
@@ -30,6 +32,40 @@
     <xsd:import namespace="../02_entities/indirizzo_estero" schemaLocation="../02_entities/ent_pat_edilizia_indirizzo_estero_v0.1.0.xsd"/>
     <xsd:import namespace="../02_entities/contatti" schemaLocation="../02_entities/ent_pat_edilizia_contatti_v0.1.0.xsd"/>
     <xsd:import namespace="../02_entities/rappresentante" schemaLocation="../02_entities/ent_pat_edilizia_ruolo_rappresentante_v0.1.0.xsd"/>
+    <xsd:import namespace="../02_entities/impresa" schemaLocation="../02_entities/ent_pat_edilizia_impresa_v0.1.0.xsd"/>
+    <xsd:import namespace="../02_entities/domicilio_digitale" schemaLocation="../02_entities/ent_pat_edilizia_domicilio_digitale_v0.1.0.xsd"/>
+
+    <xsd:complexType name="opzione_persona_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">Persona (privato)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="selezione_persona" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="opzione_ditta_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">Ditta/società/impresa</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="selezione_ditta" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1"/>
+            <xsd:choice>
+                <xsd:element name="selezione_cciaa_iscritta" type="speschana:opzione_ditta_cciaa_ctype" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="selezione_cciaa_non_iscritta" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="selezione_cciaa_non_necessario" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="opzione_ditta_cciaa_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">Ditta iscritta alla CCIAA</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="ditta_cciaa" type="epeimpr:entita_pat_impresa_ctype" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
 
     <xsd:complexType name="sezione_pat_edilizia_scheda_anagrafica_ctype">
         <xsd:annotation>
@@ -37,6 +73,10 @@
             <xsd:documentation xml:lang="it">Dati del dichiarante</xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
+            <xsd:choice>
+                <xsd:element name="opzione_persona" type="speschana:opzione_persona_ctype" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="opzione_ditta" type="speschana:opzione_ditta_ctype" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
             <xsd:element name="datiDichiarante" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="cittadinanza" type="epecitt:entita_pat_edilizia_cittadinanza_ctype" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="cittadino_non_ue" type="xsd:boolean" default="false" minOccurs="1" maxOccurs="1">
@@ -50,7 +90,11 @@
                 <xsd:element name="indirizzo_estero" type="epeindest:entita_pat_edilizia_indirizzo_estero_ctype" minOccurs="1" maxOccurs="1"/>
             </xsd:choice>
             <xsd:element name="contatti" type="epecont:entita_pat_edilizia_contatti_ctype" minOccurs="1" maxOccurs="1"/>
-            <xsd:element name="rappresentante" type="eperapp:entita_pat_edilizia_rappresentante_ctype"/>
+            <xsd:element name="rappresentante" type="eperapp:entita_pat_edilizia_rappresentante_ctype" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="datiProcuratore" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="residenza_procuratore" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="contatti_procuratore" type="epecont:entita_pat_edilizia_contatti_ctype" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="domicilio_digitale" type="epedomdig:entita_pat_edilizia_domicilio_digitale_ctype" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
 

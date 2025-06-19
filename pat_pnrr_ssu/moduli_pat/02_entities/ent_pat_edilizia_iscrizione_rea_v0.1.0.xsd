@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epeiscrea="../02_entities/iscrizione_rea"
+    targetNamespace="../02_entities/iscrizione_rea"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="0.1.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+
+    <xsd:simpleType name="numero_rea_stype">
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+    
+    <xsd:complexType name="entita_pat_iscrizione_rea_ctype">
+        <xsd:sequence>
+            <xsd:element name="CCIAA" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:appinfo>                        
+                        <canncl:codeListReference>
+                            <canncl:ShortName>IT:SUAP:CL:CCIAA</canncl:ShortName>
+                        </canncl:codeListReference>                        
+                    </xsd:appinfo>                    
+                </xsd:annotation>                 
+            </xsd:element>
+            <xsd:element name="numero_rea" type="epeiscrea:numero_rea_stype" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:element name="entita_pat_iscrizione_rea" type="epeiscrea:entita_pat_iscrizione_rea_ctype"/>    
+</xsd:schema>

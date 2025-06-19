@@ -13,12 +13,49 @@
     xmlns:epeindest="../02_entities/indirizzo_estero"
     xmlns:epecont="../02_entities/contatti"
     xmlns:eperapp="../02_entities/rappresentante"
+    xmlns:epeimpr="../02_entities/impresa"
+    xmlns:epeiscrea="../02_entities/iscrizione_rea"
+    xmlns:epedomdig="../02_entities/domicilio_digitale"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
 
-    <mpecil:persona>true</mpecil:persona>
-    <!-- <mpecil:ditta>true</mpecil:ditta> -->
     <mpecil:sezione_pat_edilizia_scheda_anagrafica>
+        <!-- <speschana:opzione_persona>
+            <speschana:selezione_persona/>
+        </speschana:opzione_persona> -->
+        <speschana:opzione_ditta>
+            <speschana:selezione_ditta/>
+            <speschana:selezione_cciaa_iscritta>
+                <speschana:ditta_cciaa>
+                    <epeimpr:denominazione>XSDfacili.it</epeimpr:denominazione>
+                    <epeimpr:forma_giuridica>LIBERO PROFESSIONISTA</epeimpr:forma_giuridica>
+                    <epeimpr:codice_fiscale>RSSMRA80A01H294E</epeimpr:codice_fiscale>
+                    <epeimpr:partita_iva>01234567890</epeimpr:partita_iva>
+                    <epeimpr:indirizzo_attivita>
+                        <epeindita:comune>Trento</epeindita:comune>
+                        <epeindita:provincia>Trento</epeindita:provincia>
+                        <epeindita:stato>Italia</epeindita:stato>
+                        <epeindita:dug>Via</epeindita:dug>
+                        <epeindita:toponimo>Vannetti</epeindita:toponimo>
+                        <epeindita:numero_civico>15</epeindita:numero_civico>
+                        <epeindita:barrato></epeindita:barrato>
+                        <epeindita:cap>38122</epeindita:cap>
+                    </epeimpr:indirizzo_attivita>
+                    <epeimpr:telefono_cellulare>3481234567</epeimpr:telefono_cellulare>
+                    <epeimpr:email>mario.rossi@gmail.com</epeimpr:email>
+                    <epeimpr:selezione_rea_iscritto>
+                        <epeimpr:rea>
+                            <epeiscrea:CCIAA>94</epeiscrea:CCIAA>
+                            <epeiscrea:numero_rea>bla</epeiscrea:numero_rea>
+                        </epeimpr:rea>
+                    </epeimpr:selezione_rea_iscritto>
+                    <!-- <epeimpr:selezione_rea_non_iscritto/> -->
+                    <!-- <epeimpr:selezione_rea_solo_ri/> -->
+                </speschana:ditta_cciaa>
+            </speschana:selezione_cciaa_iscritta>
+            <!-- <speschana:selezione_cciaa_non_iscritta/> -->
+            <!-- <speschana:selezione_cciaa_non_necessario/> -->
+        </speschana:opzione_ditta>
         <speschana:datiDichiarante>
             <epepers:nome>Mario</epepers:nome>
             <epepers:cognome>Rossi</epepers:cognome>
@@ -68,5 +105,39 @@
             <eperapp:estremi_atto>bla</eperapp:estremi_atto>
             <eperapp:ruolo>Proprietario</eperapp:ruolo>
         </speschana:rappresentante>
+        <speschana:datiProcuratore>
+            <epepers:nome>Mario</epepers:nome>
+            <epepers:cognome>Rossi</epepers:cognome>
+            <epepers:codiceFiscale>RSSMRA80A01H294E</epepers:codiceFiscale>
+            <epepers:sesso>M</epepers:sesso>
+            <epepers:dataNascita>01/01/1980</epepers:dataNascita>
+            <epepers:comuneNascita>TN</epepers:comuneNascita>
+            <epepers:provinciaNascita>TN</epepers:provinciaNascita>
+            <epepers:statoNascita>IT</epepers:statoNascita>
+        </speschana:datiProcuratore>
+        <speschana:residenza_procuratore>
+            <epeindita:comune>Trento</epeindita:comune>
+            <epeindita:provincia>Trento</epeindita:provincia>
+            <epeindita:stato>Italia</epeindita:stato>
+            <epeindita:dug>Via</epeindita:dug>
+            <epeindita:toponimo>Vannetti</epeindita:toponimo>
+            <epeindita:numero_civico>15</epeindita:numero_civico>
+            <epeindita:barrato></epeindita:barrato>
+            <epeindita:cap>38122</epeindita:cap>
+        </speschana:residenza_procuratore>
+        <speschana:contatti_procuratore>
+            <epecont:telefono_fisso>0461123456</epecont:telefono_fisso>
+            <epecont:cellulare>3481234567</epecont:cellulare>
+            <epecont:domicilio_digitale>mario.rossi@pec.it</epecont:domicilio_digitale>
+            <epecont:email>mario.rossi@gmail.com</epecont:email>
+        </speschana:contatti_procuratore>
+        <speschana:domicilio_digitale>
+            <epedomdig:domicilio_inad_check>true</epedomdig:domicilio_inad_check>
+            <epedomdig:domicilio_inad_string>mario.rossi@gmail.com</epedomdig:domicilio_inad_string>
+            <epedomdig:domicilio_ini_pec_check>true</epedomdig:domicilio_ini_pec_check>
+            <epedomdig:domicilio_ini_pec_string>mario.rossi@pec.it</epedomdig:domicilio_ini_pec_string>
+            <epedomdig:elegge>true</epedomdig:elegge>
+            <epedomdig:domicilio_eletto>mario.rossi@pec.it</epedomdig:domicilio_eletto>
+        </speschana:domicilio_digitale>
     </mpecil:sezione_pat_edilizia_scheda_anagrafica>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
