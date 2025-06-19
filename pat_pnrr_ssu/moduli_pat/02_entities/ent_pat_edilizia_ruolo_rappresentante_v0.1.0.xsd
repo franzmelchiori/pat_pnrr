@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:vperuorap="../01_vocabularies/ruolo_rappresentante"
+    xmlns:eperapp="../02_entities/rappresentante"
+    targetNamespace="../02_entities/rappresentante"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="0.1.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+    <xsd:import namespace="../01_vocabularies/ruolo_rappresentante" schemaLocation="../01_vocabularies/voc_pat_edilizia_ruolo_rappresentante_v0.1.0.xsd"/>
+
+    <xsd:simpleType name="entita_pat_edilizia_ruolo_rappresentante_stype">
+        <xsd:restriction base="vperuorap:ruolo_rappresentante_voc"/>
+    </xsd:simpleType>
+
+    <xsd:complexType name="entita_pat_edilizia_rappresentante_ctype">
+        <xsd:sequence>
+            <xsd:element name="data_inizio" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="data_fine" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="estremi_atto" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ruolo" type="eperapp:entita_pat_edilizia_ruolo_rappresentante_stype" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="entita_pat_edilizia_rappresentante" type="eperapp:entita_pat_edilizia_rappresentante_ctype"/>
+</xsd:schema>

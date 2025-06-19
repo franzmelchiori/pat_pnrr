@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epecont="../02_entities/contatti"
+    targetNamespace="../02_entities/contatti"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="0.1.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+    
+    <xsd:complexType name="entita_pat_edilizia_contatti_ctype">
+        <xsd:sequence>
+            <xsd:element name="telefono_fisso" type="ctipi:telefono_fisso_stype" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="cellulare" type="ctipi:telefono_mobile_stype" minOccurs="0" maxOccurs="1"/>
+            <!-- <xsd:element name="fax" type="ctipi:fax_stype" minOccurs="0" maxOccurs="1"/> -->
+            <xsd:element name="domicilio_digitale" type="ctipi:email_stype" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="email" type="ctipi:email_stype" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>        
+    </xsd:complexType>      
+    
+    <xsd:element name="entita_pat_edilizia_contatti" type="epecont:entita_pat_edilizia_contatti_ctype"/>
+</xsd:schema>

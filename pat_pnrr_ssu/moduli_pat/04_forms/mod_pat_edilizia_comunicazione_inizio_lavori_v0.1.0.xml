@@ -6,12 +6,13 @@
     xmlns:cdichiara="../commons/dichiarazioni"
     xmlns:ctipi="../commons/tipi"
     xmlns:canncl="../commons/xsdAnnotations"
-    xmlns:vpepergen="../01_vocabularies/persona_genere"
     xmlns:epepers="../02_entities/persona"
     xmlns:epecitt="../02_entities/cittadinanza"
     xmlns:epedocu="../02_entities/documento"
     xmlns:epeindita="../02_entities/indirizzo_italiano"
     xmlns:epeindest="../02_entities/indirizzo_estero"
+    xmlns:epecont="../02_entities/contatti"
+    xmlns:eperapp="../02_entities/rappresentante"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
 
@@ -55,5 +56,17 @@
             <epeindest:localita_estero>Banks, OR</epeindest:localita_estero>
             <epeindest:stato_estero>USA</epeindest:stato_estero>
         </speschana:indirizzo_estero> -->
+        <speschana:contatti>
+            <epecont:telefono_fisso>0461123456</epecont:telefono_fisso>
+            <epecont:cellulare>3481234567</epecont:cellulare>
+            <epecont:domicilio_digitale>mario.rossi@pec.it</epecont:domicilio_digitale>
+            <epecont:email>mario.rossi@gmail.com</epecont:email>
+        </speschana:contatti>
+        <speschana:rappresentante>
+            <eperapp:data_inizio>2025-01-01+00:00</eperapp:data_inizio>
+            <eperapp:data_fine>2035-01-01+00:00</eperapp:data_fine>
+            <eperapp:estremi_atto>bla</eperapp:estremi_atto>
+            <eperapp:ruolo>Proprietario</eperapp:ruolo>
+        </speschana:rappresentante>
     </mpecil:sezione_pat_edilizia_scheda_anagrafica>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
