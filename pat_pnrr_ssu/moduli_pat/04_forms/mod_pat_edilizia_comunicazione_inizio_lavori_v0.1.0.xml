@@ -10,6 +10,8 @@
     xmlns:epepers="../02_entities/persona"
     xmlns:epecitt="../02_entities/cittadinanza"
     xmlns:epedocu="../02_entities/documento"
+    xmlns:epeindita="../02_entities/indirizzo_italiano"
+    xmlns:epeindest="../02_entities/indirizzo_estero"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
 
@@ -36,6 +38,22 @@
             <epedocu:ente_rilascio>QuesturaTrento</epedocu:ente_rilascio>
             <epedocu:data_rilascio>2025-01-01+00:00</epedocu:data_rilascio>
             <epedocu:data_scadenza>2035-01-01+00:00</epedocu:data_scadenza>
-        </speschana:documento>    
+        </speschana:documento>
+        <speschana:indirizzo_italiano>
+            <epeindita:comune>Trento</epeindita:comune>
+            <epeindita:provincia>Trento</epeindita:provincia>
+            <epeindita:stato>Italia</epeindita:stato>
+            <epeindita:dug>Via</epeindita:dug>
+            <epeindita:toponimo>Vannetti</epeindita:toponimo>
+            <epeindita:numero_civico>15</epeindita:numero_civico>
+            <epeindita:barrato></epeindita:barrato>
+            <epeindita:cap>38122</epeindita:cap>
+        </speschana:indirizzo_italiano>
+        <!-- <speschana:indirizzo_estero>
+            <epeindest:descrizione>101 NW Commerce St</epeindest:descrizione>
+            <epeindest:codice_postale>97106</epeindest:codice_postale>
+            <epeindest:localita_estero>Banks, OR</epeindest:localita_estero>
+            <epeindest:stato_estero>USA</epeindest:stato_estero>
+        </speschana:indirizzo_estero> -->
     </mpecil:sezione_pat_edilizia_scheda_anagrafica>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>

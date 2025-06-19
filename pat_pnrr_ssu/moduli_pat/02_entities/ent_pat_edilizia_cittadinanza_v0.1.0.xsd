@@ -17,7 +17,7 @@
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
     
-    <xsd:complexType name="cittadinanza_ctype">
+    <xsd:complexType name="entita_pat_edilizia_cittadinanza_ctype">
         <xsd:sequence>
             <xsd:element name="stato_cittadinanza" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1">
                 <xsd:annotation>
@@ -31,5 +31,5 @@
         </xsd:sequence>        
     </xsd:complexType>      
     
-    <xsd:element name="cittadinanza" type="epecitt:cittadinanza_ctype"/>
+    <xsd:element name="entita_pat_edilizia_cittadinanza" type="epecitt:entita_pat_edilizia_cittadinanza_ctype"/>
 </xsd:schema>

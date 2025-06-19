@@ -18,9 +18,9 @@
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
     
-    <xsd:complexType name="documento_ctype">
+    <xsd:complexType name="entita_pat_edilizia_documento_ctype">
         <xsd:sequence>
-            <xsd:element name="tipo" type="ccodelist:CodeType" minOccurs="0" maxOccurs="1">
+            <xsd:element name="tipo" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:appinfo>
                         <canncl:codeListReference>
@@ -36,5 +36,5 @@
         </xsd:sequence>
     </xsd:complexType>
     
-    <xsd:element name="documento" type="edocril:documento_ctype"/>
+    <xsd:element name="entita_pat_edilizia_documento" type="edocril:entita_pat_edilizia_documento_ctype"/>
 </xsd:schema>
