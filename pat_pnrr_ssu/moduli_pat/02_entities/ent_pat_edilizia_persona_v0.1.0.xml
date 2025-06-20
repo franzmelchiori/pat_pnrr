@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epepers:entita_pat_edilizia_persona
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="../02_entities/ent_pat_edilizia_persona_v0.1.0.xsd"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epepers="../02_entities/persona">
+    
+    <epepers:nome>Mario</epepers:nome>
+    <epepers:cognome>Rossi</epepers:cognome>
+    <epepers:codiceFiscale>RSSMRA80A01H294E</epepers:codiceFiscale>
+    <epepers:sesso>M</epepers:sesso>
+    <epepers:dataNascita>01/01/1980</epepers:dataNascita>
+    <epepers:comuneNascita>TN</epepers:comuneNascita>
+    <epepers:provinciaNascita>TN</epepers:provinciaNascita>
+    <epepers:statoNascita>IT</epepers:statoNascita>
+</epepers:entita_pat_edilizia_persona>
