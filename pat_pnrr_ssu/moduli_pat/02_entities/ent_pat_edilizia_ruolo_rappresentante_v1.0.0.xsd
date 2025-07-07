@@ -10,14 +10,14 @@
     targetNamespace="../02_entities/rappresentante"
     elementFormDefault="qualified"
     attributeFormDefault="qualified"
-    version="0.1.0"
+    version="1.0.0"
     xml:lang="it">
 
     <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
     <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
-    <xsd:import namespace="../01_vocabularies/ruolo_rappresentante" schemaLocation="../01_vocabularies/voc_pat_edilizia_ruolo_rappresentante_v0.1.0.xsd"/>
+    <xsd:import namespace="../01_vocabularies/ruolo_rappresentante" schemaLocation="../01_vocabularies/voc_pat_edilizia_ruolo_rappresentante_v1.0.0.xsd"/>
 
     <xsd:simpleType name="entita_pat_edilizia_ruolo_rappresentante_stype">
         <xsd:restriction base="vperuorap:ruolo_rappresentante_voc"/>

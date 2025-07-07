@@ -3,7 +3,7 @@
     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
     queryBinding="xslt2">
     
-    <sch:ns uri="../02_entities/ent_pat_edilizia_persona_v0.1.0.xsd" prefix="epepers"/>
+    <sch:ns uri="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd" prefix="epepers"/>
     
     <sch:pattern id="persona_ab" abstract="true">
         <sch:rule id="rule_persona"  context="$entita_pat_edilizia_persona">

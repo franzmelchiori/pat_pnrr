@@ -2,9 +2,9 @@ from pathlib import Path
 import xmlschema
 from pyschematron import validate_document
 
-XSD_FOR_VALIDATION = 'ent_pat_edilizia_persona_v0.1.0.xsd'
-SCH_FOR_VALIDATION = 'ent_pat_edilizia_persona_v0.1.0.sch'
-XML_TO_VALIDATE = 'ent_pat_edilizia_persona_v0.1.0.xml'
+XSD_FOR_VALIDATION = 'ent_pat_edilizia_persona_v1.0.0.xsd'
+SCH_FOR_VALIDATION = 'ent_pat_edilizia_persona_v1.0.0.sch'
+XML_TO_VALIDATE = 'ent_pat_edilizia_persona_v1.0.0.xml'
 
 
 # XSD validation

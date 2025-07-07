@@ -9,7 +9,7 @@
     targetNamespace="../02_entities/indirizzo_italiano"
     elementFormDefault="qualified"
     attributeFormDefault="qualified"
-    version="0.1.0"
+    version="1.0.0"
     xml:lang="it">
 
     <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>

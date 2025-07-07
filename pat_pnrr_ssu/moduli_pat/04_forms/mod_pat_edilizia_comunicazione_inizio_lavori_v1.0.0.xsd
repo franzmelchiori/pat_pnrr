@@ -10,14 +10,14 @@
     targetNamespace="../04_forms/comunicazione_inizio_lavori"
     elementFormDefault="qualified"
     attributeFormDefault="qualified"
-    version="0.1.0"
+    version="1.0.0"
     xml:lang="it">
 
     <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
     <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
-    <xsd:import namespace="../03_sections/scheda_anagrafica" schemaLocation="../03_sections/sec_pat_edilizia_scheda_anagrafica_v0.1.0.xsd"/>
+    <xsd:import namespace="../03_sections/scheda_anagrafica" schemaLocation="../03_sections/sec_pat_edilizia_scheda_anagrafica_v1.0.0.xsd"/>
 
     <xsd:complexType name="modulo_pat_edilizia_comunicazione_inizio_lavori_ctype">
         <xsd:annotation>

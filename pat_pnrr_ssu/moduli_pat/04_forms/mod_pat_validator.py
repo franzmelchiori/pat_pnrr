@@ -1,7 +1,7 @@
 import xmlschema
 
-XSD_FOR_VALIDATION = 'mod_pat_edilizia_comunicazione_inizio_lavori_v0.1.0.xsd'
-XML_TO_VALIDATE = 'mod_pat_edilizia_comunicazione_inizio_lavori_v0.1.0.xml'
+XSD_FOR_VALIDATION = 'mod_pat_edilizia_comunicazione_inizio_lavori_v1.0.0.xsd'
+XML_TO_VALIDATE = 'mod_pat_edilizia_comunicazione_inizio_lavori_v1.0.0.xml'
 
 
 schema_file = open(XSD_FOR_VALIDATION)
