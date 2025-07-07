@@ -27,6 +27,11 @@
         </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="sezione_pat_edilizia_scheda_anagrafica" type="speschana:sezione_pat_edilizia_scheda_anagrafica_ctype"/>
+            <xsd:annotation>
+                <xsd:documentation xml:lang="it">Oggetto della pratica</xsd:documentation>
+                <xsd:documentation xml:lang="it">Descrizione sintetica</xsd:documentation>
+            </xsd:annotation>
+            <xsd:element name="oggetto_pratica" type="ctipi:stringa_standard_stype"/>
         </xsd:sequence>
     </xsd:complexType>
     
