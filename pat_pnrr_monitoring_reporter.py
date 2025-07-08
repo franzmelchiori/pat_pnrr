@@ -1040,17 +1040,17 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     pdc_measure_labels = ['pdc_2021q3_4',
                           'pdc_2022q1_2', 'pdc_2022q3_4',
                           'pdc_2023q1_2', 'pdc_2023q3_4',
-                          'pdc_2024q1_2']
+                          'pdc_2024q1_2', 'pdc_2024q3_4']
     pds_measure_labels = ['pds_2021q3_4',
                           'pds_2022q1_2', 'pds_2022q3_4',
                           'pds_2023q1_2', 'pds_2023q3_4',
-                          'pds_2024q1_2']
+                          'pds_2024q1_2', 'pds_2024q3_4']
     pdc_net_measure_labels = ['pdc_performance_netta_2022q3_4',
                               'pdc_performance_netta_2023q1_2', 'pdc_performance_netta_2023q3_4',
-                              'pdc_performance_netta_2024q1_2']
+                              'pdc_performance_netta_2024q1_2', 'pdc_performance_netta_2024q3_4']
     pds_net_measure_labels = ['pds_performance_netta_2022q3_4',
                               'pds_performance_netta_2023q1_2', 'pds_performance_netta_2023q3_4',
-                              'pds_performance_netta_2024q1_2']
+                              'pds_performance_netta_2024q1_2', 'pds_performance_netta_2024q3_4']
     
     # comuni_excel_map = [['Ala', '', '', ''], ['Trento', '', '', '']]
     for comune in comuni_excel_map:
