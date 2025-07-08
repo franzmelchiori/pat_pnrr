@@ -18,8 +18,12 @@ from pat_pnrr_mpe.pat_pnrr_comuni_excel_mapping import comuni_excel_map
 
 
 PERIODO_MONITORAGGIO_PRECEDENTE = '2024q1_2'  # q3_4
+PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN = '2024q1-2'  # q3-4
 PERIODO_MONITORAGGIO_CORRENTE = '2024q3_4'  # q1_2
+PERIODO_MONITORAGGIO_CORRENTE_HYPHEN = '2024q3-4'  # q1-2
 PERIODI_MONITORAGGIO_ULTIMO_ANNO = '2024'  # q3-q2
+MPE_NUMBER_LABEL = '07'
+PERIODO_LABEL = '2024'
 
 
 def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
@@ -584,6 +588,55 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4',
             'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2']
         ore_tecnici_settimana_label = 'ore_tecnici_settimana_2024q1-2'
+    
+    elif mpe_number >= 7:
+        pdc_measure_labels = ['pdc_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                            'pdc_' + PERIODO_MONITORAGGIO_CORRENTE]
+        pds_measure_labels = ['pds_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                            'pds_' + PERIODO_MONITORAGGIO_CORRENTE]
+        pdc_net_measure_labels = ['pdc_performance_netta_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                                  'pdc_performance_netta_' + PERIODO_MONITORAGGIO_CORRENTE]
+        pds_net_measure_labels = ['pds_performance_netta_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                                  'pds_performance_netta_' + PERIODO_MONITORAGGIO_CORRENTE]
+        mpe_number_label = MPE_NUMBER_LABEL
+        periodo_label = PERIODO_LABEL
+        pdc_durata_labels = ['pdc_durata_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                             'pdc_durata_' + PERIODO_MONITORAGGIO_CORRENTE]
+        pdc_durata_netta_labels = ['pdc_durata_netta_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                                   'pdc_durata_netta_' + PERIODO_MONITORAGGIO_CORRENTE]
+        pdc_arretrato_labels = ['pdc_arretrato_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                                'pdc_arretrato_' + PERIODO_MONITORAGGIO_CORRENTE]
+        pdc_durata_measure_labels = [
+            'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_' + PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN,
+            'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_' + PERIODO_MONITORAGGIO_CORRENTE_HYPHEN]
+        pdc_durata_netta_measure_labels = [
+            'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_' + PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN,
+            'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_' + PERIODO_MONITORAGGIO_CORRENTE_HYPHEN]
+        pdc_avviato_measure_labels = [
+            'numero_permessi_costruire_avviati_' + PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN,
+            'numero_permessi_costruire_avviati_' + PERIODO_MONITORAGGIO_CORRENTE_HYPHEN]
+        pdc_arretrato_measure_labels = [
+            'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_' + PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN,
+            'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_' + PERIODO_MONITORAGGIO_CORRENTE_HYPHEN]
+        pds_durata_labels = ['pds_durata_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                             'pds_durata_' + PERIODO_MONITORAGGIO_CORRENTE]
+        pds_durata_netta_labels = ['pds_durata_netta_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                                   'pds_durata_netta_' + PERIODO_MONITORAGGIO_CORRENTE]
+        pds_arretrato_labels = ['pds_arretrato_' + PERIODO_MONITORAGGIO_PRECEDENTE,
+                                'pds_arretrato_' + PERIODO_MONITORAGGIO_CORRENTE]
+        pds_durata_measure_labels = [
+            'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_' + PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN,
+            'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_' + PERIODO_MONITORAGGIO_CORRENTE_HYPHEN]
+        pds_durata_netta_measure_labels = [
+            'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_' + PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN,
+            'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_' + PERIODO_MONITORAGGIO_CORRENTE_HYPHEN]
+        pds_avviato_measure_labels = [
+            'numero_sanatorie_avviate_' + PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN,
+            'numero_sanatorie_avviate_' + PERIODO_MONITORAGGIO_CORRENTE_HYPHEN]
+        pds_arretrato_measure_labels = [
+            'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_' + PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN,
+            'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_' + PERIODO_MONITORAGGIO_CORRENTE_HYPHEN]
+        ore_tecnici_settimana_label = 'ore_tecnici_settimana_' + PERIODO_MONITORAGGIO_CORRENTE_HYPHEN
     
     comuni_pdc_durata = comuni_durata_trends.loc[:, pdc_durata_labels].mean(axis=1)
     comuni_pdc_durata_netta = comuni_durata_netta_trends.loc[:, pdc_durata_netta_labels].mean(axis=1)
@@ -1333,6 +1386,12 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2024q1-2',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2',
         'numero_permessi_costruire_avviati_2024q1-2']
+    performance_measure_labels_pdc_2024q3_4 = [
+        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4',
+        'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2024q3-4',
+        'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4',
+        'numero_permessi_costruire_avviati_2024q3-4']
 
     performance_measure_labels_pdc_ov_2022q3_4 = [
         'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
@@ -1358,6 +1417,12 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2024q1-2',
         'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2',
         'numero_permessi_costruire_ov_avviati_2024q1-2']
+    performance_measure_labels_pdc_ov_2024q3_4 = [
+        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2024q3-4',
+        'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2024q3-4',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2024q3-4',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4',
+        'numero_permessi_costruire_ov_avviati_2024q3-4']
 
     performance_measure_labels_pds_2021q3_4 = [
         'giornate_durata_media_sanatorie_concluse_2021q3-4',
@@ -1395,6 +1460,12 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2024q1-2',
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2',
         'numero_sanatorie_avviate_2024q1-2']
+    performance_measure_labels_pds_2024q3_4 = [
+        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q3-4',
+        'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2024q3-4',
+        'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2024q3-4',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4',
+        'numero_sanatorie_avviate_2024q3-4']
 
     measure_labels = [
         ['PdC 2021Q3-4', performance_measure_labels_pdc_2021q3_4],
@@ -1403,16 +1474,19 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         ['PdC 2023Q1-2', performance_measure_labels_pdc_2023q1_2],
         ['PdC 2023Q3-4', performance_measure_labels_pdc_2023q3_4],
         ['PdC 2024Q1-2', performance_measure_labels_pdc_2024q1_2],
+        ['PdC 2024Q3-4', performance_measure_labels_pdc_2024q3_4],
         ['PdC-OV 2022Q3-4', performance_measure_labels_pdc_ov_2022q3_4],
         ['PdC-OV 2023Q1-2', performance_measure_labels_pdc_ov_2023q1_2],
         ['PdC-OV 2023Q3-4', performance_measure_labels_pdc_ov_2023q3_4],
         ['PdC-OV 2024Q1-2', performance_measure_labels_pdc_ov_2024q1_2],
+        ['PdC-OV 2024Q3-4', performance_measure_labels_pdc_ov_2024q3_4],
         ['PdS 2021Q3-4', performance_measure_labels_pds_2021q3_4],
         ['PdS 2022Q1-2', performance_measure_labels_pds_2022q1_2],
         ['PdS 2022Q3-4', performance_measure_labels_pds_2022q3_4],
         ['PdS 2023Q1-2', performance_measure_labels_pds_2023q1_2],
         ['PdS 2023Q3-4', performance_measure_labels_pds_2023q3_4],
-        ['PdS 2024Q1-2', performance_measure_labels_pds_2024q1_2]
+        ['PdS 2024Q1-2', performance_measure_labels_pds_2024q1_2],
+        ['PdS 2024Q3-4', performance_measure_labels_pds_2024q3_4]
     ]
 
     for comune in comuni_excel_map:
@@ -1480,8 +1554,8 @@ def print_comuni_performance_list(just_one=False, save_tables=True):
 
 
 def print_comuni_pressure_list(comuni_performance_trends):
-    pdc_measure_labels = ['pdc_2023q1_2', 'pdc_2023q3_4']
-    pds_measure_labels = ['pds_2023q1_2', 'pds_2023q3_4']
+    pdc_measure_labels = ['pdc_2024q1_2', 'pdc_2024q3_4']
+    pds_measure_labels = ['pds_2024q1_2', 'pds_2024q3_4']
     comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
         comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
 
@@ -1518,11 +1592,11 @@ if __name__ == '__main__':
     comuni_scores.to_csv('pat-pnrr_edilizia_pressione_' + \
                          PERIODI_MONITORAGGIO_ULTIMO_ANNO + '.csv')
     
-    pat_comuni_shelve = shelve.open('pat_comuni_scores_' + \
-        PERIODI_MONITORAGGIO_ULTIMO_ANNO)
-    pat_comuni_shelve['pat_comuni_scores_' + \
-        PERIODI_MONITORAGGIO_ULTIMO_ANNO] = comuni_scores
-    pat_comuni_shelve.close()
+    # pat_comuni_shelve = shelve.open('pat_comuni_scores_' + \
+    #     PERIODI_MONITORAGGIO_ULTIMO_ANNO)
+    # pat_comuni_shelve['pat_comuni_scores_' + \
+    #     PERIODI_MONITORAGGIO_ULTIMO_ANNO] = comuni_scores
+    # pat_comuni_shelve.close()
 
     pdc_measure_labels = ['pdc_performance_netta_' + PERIODO_MONITORAGGIO_PRECEDENTE, 
                           'pdc_performance_netta_' + PERIODO_MONITORAGGIO_CORRENTE]
@@ -1533,16 +1607,16 @@ if __name__ == '__main__':
     comuni_net_scores.to_csv('pat-pnrr_edilizia_pressione_netta_' + \
                              PERIODI_MONITORAGGIO_ULTIMO_ANNO + '.csv')
 
-    # for mpe_number in [3, 4, 5, 6]:
-    # for mpe_number in [6]:
-    #     print_comuni_performance_charts(pat_comuni_dataframe,
-    #                                     comuni_durata_trends, comuni_durata_netta_trends,
-    #                                     comuni_arretrato_trends,
-    #                                     comuni_performance_trends, comuni_performance_netta_trends,
-    #                                     mpe_number=mpe_number,
-    #                                     just_provincia=False, no_trento=False, just_one=False,
-    #                                     save_charts=True)
-    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    # for mpe_number in [3, 4, 5, 6, 7]:
+    for mpe_number in [7]:
+        print_comuni_performance_charts(pat_comuni_dataframe,
+                                        comuni_durata_trends, comuni_durata_netta_trends,
+                                        comuni_arretrato_trends,
+                                        comuni_performance_trends, comuni_performance_netta_trends,
+                                        mpe_number=mpe_number,
+                                        just_provincia=False, no_trento=False, just_one=False,
+                                        save_charts=True)
+    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
     # print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
 
