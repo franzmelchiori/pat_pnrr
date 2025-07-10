@@ -136,11 +136,6 @@
             <epedomdig:domicilio_inad_string>mario.rossi@gmail.com</epedomdig:domicilio_inad_string>
             <epedomdig:domicilio_ini_pec_check>true</epedomdig:domicilio_ini_pec_check>
             <epedomdig:domicilio_ini_pec_string>mario.rossi@pec.it</epedomdig:domicilio_ini_pec_string>
-            <epedomdig:elegge>true</epedomdig:elegge>
-            <epedomdig:domicilio_eletto>mario.rossi@pec.it</epedomdig:domicilio_eletto>
         </speschana:domicilio_digitale>
     </mpecil:sezione_pat_edilizia_scheda_anagrafica>
-    <mpecil:oggetto_pratica>
-        <ctipi:stringa_standard_stype>descrizione sintetica</ctipi:stringa_standard_stype>
-    </mpecil:oggetto_pratica>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
