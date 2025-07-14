@@ -5,6 +5,7 @@
     xmlns:cdichiara="../commons/dichiarazioni"
     xmlns:ctipi="../commons/tipi"
     xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epedomdig="../02_entities/domicilio_digitale"
     xmlns:spedomdig="../03_sections/domicilio_digitale"
     targetNamespace="../03_sections/domicilio_digitale"
     elementFormDefault="qualified"
@@ -16,13 +17,15 @@
     <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+    <xsd:import namespace="../02_entities/domicilio_digitale" schemaLocation="../02_entities/ent_pat_edilizia_domicilio_digitale_v1.0.0.xsd"/>
 
     <xsd:complexType name="sezione_pat_edilizia_domicilio_digitale_ctype">
         <xsd:annotation>
-            <!-- TODO -->
+            <xsd:documentation xml:lang="it">PAT Domicilio digitale</xsd:documentation>
+            <xsd:documentation xml:lang="it">PAT Domicilio elettronico</xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
-            <!-- TODO -->
+            <xsd:element name="domicilio_digitale" type="epedomdig:entita_pat_edilizia_domicilio_digitale_ctype"/>
         </xsd:sequence>
     </xsd:complexType>
 

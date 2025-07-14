@@ -19,6 +19,7 @@
     xmlns:speschana="../03_sections/scheda_anagrafica"
     xmlns:speoggpra="../03_sections/oggetto_pratica"
     xmlns:spedomdig="../03_sections/domicilio_digitale"
+    xmlns:spediccon="../03_sections/dichiarazione_consapevolezza"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
 
     <mpecil:sezione_pat_edilizia_scheda_anagrafica>
@@ -133,19 +134,19 @@
             <epecont:domicilio_digitale>mario.rossi@pec.it</epecont:domicilio_digitale>
             <epecont:email>mario.rossi@gmail.com</epecont:email>
         </speschana:contatti_procuratore>
-        <speschana:domicilio_digitale>
-            <epedomdig:domicilio_inad_check>true</epedomdig:domicilio_inad_check>
-            <epedomdig:domicilio_inad_string>mario.rossi@gmail.com</epedomdig:domicilio_inad_string>
-            <epedomdig:domicilio_ini_pec_check>true</epedomdig:domicilio_ini_pec_check>
-            <epedomdig:domicilio_ini_pec_string>mario.rossi@pec.it</epedomdig:domicilio_ini_pec_string>
-        </speschana:domicilio_digitale>
     </mpecil:sezione_pat_edilizia_scheda_anagrafica>
     <mpecil:sezione_pat_edilizia_oggetto_pratica>
         <speoggpra:oggetto_pratica>descrizione sintetica</speoggpra:oggetto_pratica>
     </mpecil:sezione_pat_edilizia_oggetto_pratica>
     <mpecil:sezione_pat_edilizia_domicilio_digitale>
         <spedomdig:domicilio_digitale>
-            <!-- TODO -->
+            <epedomdig:domicilio_inad_check>true</epedomdig:domicilio_inad_check>
+            <epedomdig:domicilio_inad_string>mario.rossi@gmail.com</epedomdig:domicilio_inad_string>
+            <epedomdig:domicilio_ini_pec_check>true</epedomdig:domicilio_ini_pec_check>
+            <epedomdig:domicilio_ini_pec_string>mario.rossi@pec.it</epedomdig:domicilio_ini_pec_string>
         </spedomdig:domicilio_digitale>
     </mpecil:sezione_pat_edilizia_domicilio_digitale>
+    <mpecil:sezione_pat_edilizia_dichiarazione_consapevolezza>
+        <spediccon:dichiarazione_consapevolezza>true</spediccon:dichiarazione_consapevolezza>
+    </mpecil:sezione_pat_edilizia_dichiarazione_consapevolezza>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
