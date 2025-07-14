@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:spedomdig="../03_sections/domicilio_digitale"
+    targetNamespace="../03_sections/domicilio_digitale"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="1.0.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+
+    <xsd:complexType name="sezione_pat_edilizia_domicilio_digitale_ctype">
+        <xsd:annotation>
+            <!-- TODO -->
+        </xsd:annotation>
+        <xsd:sequence>
+            <!-- TODO -->
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="sezione_pat_edilizia_domicilio_digitale" type="spedomdig:sezione_pat_edilizia_domicilio_digitale_ctype"/>
+</xsd:schema>

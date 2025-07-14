@@ -6,6 +6,8 @@
     xmlns:ctipi="../commons/tipi"
     xmlns:canncl="../commons/xsdAnnotations"
     xmlns:speschana="../03_sections/scheda_anagrafica"
+    xmlns:speoggpra="../03_sections/oggetto_pratica"
+    xmlns:spedomdig="../03_sections/domicilio_digitale"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori"
     targetNamespace="../04_forms/comunicazione_inizio_lavori"
     elementFormDefault="qualified"
@@ -18,6 +20,8 @@
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
     <xsd:import namespace="../03_sections/scheda_anagrafica" schemaLocation="../03_sections/sec_pat_edilizia_scheda_anagrafica_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/oggetto_pratica" schemaLocation="../03_sections/sec_pat_edilizia_oggetto_pratica_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/domicilio_digitale" schemaLocation="../03_sections/sec_pat_edilizia_domicilio_digitale_v1.0.0.xsd"/>
 
     <xsd:complexType name="modulo_pat_edilizia_comunicazione_inizio_lavori_ctype">
         <xsd:annotation>
@@ -27,6 +31,8 @@
         </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="sezione_pat_edilizia_scheda_anagrafica" type="speschana:sezione_pat_edilizia_scheda_anagrafica_ctype"/>
+            <xsd:element name="sezione_pat_edilizia_oggetto_pratica" type="speoggpra:sezione_pat_edilizia_oggetto_pratica_ctype"/>
+            <xsd:element name="sezione_pat_edilizia_domicilio_digitale" type="spedomdig:sezione_pat_edilizia_domicilio_digitale_ctype"/>
         </xsd:sequence>
     </xsd:complexType>
     

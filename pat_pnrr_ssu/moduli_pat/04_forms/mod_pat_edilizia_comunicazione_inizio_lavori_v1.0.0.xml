@@ -17,6 +17,8 @@
     xmlns:epeiscrea="../02_entities/iscrizione_rea"
     xmlns:epedomdig="../02_entities/domicilio_digitale"
     xmlns:speschana="../03_sections/scheda_anagrafica"
+    xmlns:speoggpra="../03_sections/oggetto_pratica"
+    xmlns:spedomdig="../03_sections/domicilio_digitale"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
 
     <mpecil:sezione_pat_edilizia_scheda_anagrafica>
@@ -138,4 +140,12 @@
             <epedomdig:domicilio_ini_pec_string>mario.rossi@pec.it</epedomdig:domicilio_ini_pec_string>
         </speschana:domicilio_digitale>
     </mpecil:sezione_pat_edilizia_scheda_anagrafica>
+    <mpecil:sezione_pat_edilizia_oggetto_pratica>
+        <speoggpra:oggetto_pratica>descrizione sintetica</speoggpra:oggetto_pratica>
+    </mpecil:sezione_pat_edilizia_oggetto_pratica>
+    <mpecil:sezione_pat_edilizia_domicilio_digitale>
+        <spedomdig:domicilio_digitale>
+            <!-- TODO -->
+        </spedomdig:domicilio_digitale>
+    </mpecil:sezione_pat_edilizia_domicilio_digitale>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
