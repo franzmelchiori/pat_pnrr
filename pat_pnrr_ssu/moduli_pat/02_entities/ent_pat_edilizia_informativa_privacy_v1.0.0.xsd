@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epeinfpri="../02_entities/informativa_privacy"
+    targetNamespace="../02_entities/informativa_privacy"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="1.0.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+    
+    <xsd:complexType name="entita_pat_edilizia_informativa_privacy_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">Il reg. UE n. 2016/679 del 27 aprile 2016 stabilisce norme relative alla protezione delle persone fisiche con riguardo al trattamento dei dati personali.</xsd:documentation>
+            <xsd:documentation xml:lang="it">Pertanto, come previsto dall'art. 13 del Regolamento, si forniscono le seguenti informazioni:</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="titolare_comune" type="ccodelist:CodeType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <canncl:codeListReference>
+                            <canncl:ShortName>IT:SUAP:CL:ComuniItaliani</canncl:ShortName>
+                        </canncl:codeListReference>
+                    </xsd:appinfo>
+                    <xsd:documentation xml:lang="it">Titolare del trattamento. Comune di:</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="titolare_pec" type="ctipi:email_stype"  minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">Indirizzo PEC:</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="richieste_comune" type="ccodelist:CodeType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <canncl:codeListReference>
+                            <canncl:ShortName>IT:SUAP:CL:ComuniItaliani</canncl:ShortName>
+                        </canncl:codeListReference>
+                    </xsd:appinfo>
+                    <xsd:documentation xml:lang="it">Finalità del trattamento. Il trattamento dei dati è necessario per l'esecuzione di un compito di interesse pubblico o connesso all'esercizio di pubblici poteri di cui è investito il titolare del trattamento. Pertanto i dati personali saranno utilizzati dal titolare del trattamento nell'ambito del procedimento per il quale la dichiarazione viene resa.</xsd:documentation>
+                    <xsd:documentation xml:lang="it">Modalità del trattamento. I dati saranno trattati da persone autorizzate, con strumenti cartacei e informatici.</xsd:documentation>
+                    <xsd:documentation xml:lang="it">Destinatari dei dati. I dati potranno essere comunicati a terzi nei casi previsti della Legge 7 agosto 1990, n. 241 (“Nuove norme in materia di procedimento amministrativo e di diritto di accesso ai documenti amministrativi”), ove applicabile, e in caso di controlli sulla veridicità delle dichiarazioni (art. 71 del D.P.R. 28 dicembre 2000 n. 445 (“Testo unico delle disposizioni legislative e regolamentari in materia di documentazione amministrativa”)). Responsabili del trattamento la Camera di Commercio competente per territorio, InfoCamere S.c.p.A. ed il Consorzio dei Comuni Trentini soc. coop. Oltre ai casi di comunicazione dei dati previsti dalle fonti normative, i dati potranno essere comunicati ai Responsabili esterni del trattamento incaricati dal Comune per la gestione degli applicativi informatici necessari alla gestione dell'iter procedimentale.</xsd:documentation>
+                    <xsd:documentation xml:lang="it">Diritti. L'interessato può in ogni momento esercitare i diritti di accesso e di rettifica dei dati personali nonché ha il diritto di presentare reclamo al Garante per la protezione dei dati personali. Ha inoltre il diritto alla cancellazione dei dati e alla limitazione al loro trattamento nei casi previsti dal Regolamento. Per esercitare tali diritti tutte le richieste devono essere rivolte al Comune di:</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="richieste_mail" type="ctipi:email_stype"  minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <canncl:codeListReference>
+                            <canncl:ShortName>IT:SUAP:CL:ComuniItaliani</canncl:ShortName>
+                        </canncl:codeListReference>
+                    </xsd:appinfo>
+                    <xsd:documentation xml:lang="it">Diritti. L'interessato può in ogni momento esercitare i diritti di accesso e di rettifica dei dati personali nonché ha il diritto di presentare reclamo al Garante per la protezione dei dati personali. Ha inoltre il diritto alla cancellazione dei dati e alla limitazione al loro trattamento nei casi previsti dal Regolamento. Per esercitare tali diritti tutte le richieste devono essere rivolte al Comune all'indirizzo mail:</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="responsabile_mail" type="ctipi:email_stype"  minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <canncl:codeListReference>
+                            <canncl:ShortName>IT:SUAP:CL:ComuniItaliani</canncl:ShortName>
+                        </canncl:codeListReference>
+                    </xsd:appinfo>
+                    <xsd:documentation xml:lang="it">Il responsabile della protezione dei dati è contattabile all'indirizzo mail:</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dichiarazione_lettura" type="xsd:boolean" default="false" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">L'interessato (Lei) ha il diritto di opporsi in qualsiasi momento, per motivi connessi alla sua situazione particolare, al trattamento dei dati personali che lo riguardano ai sensi dell'articolo 6, paragrafo 1, lettere e o f, compresa la profilazione sulla base di tali disposizioni. Il/la sottoscritto/a dichiara di aver letto l'informativa sul trattamento dei dati personali.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:element name="informativa_privacy" type="epeinfpri:entita_pat_edilizia_informativa_privacy_ctype"/>
+</xsd:schema>

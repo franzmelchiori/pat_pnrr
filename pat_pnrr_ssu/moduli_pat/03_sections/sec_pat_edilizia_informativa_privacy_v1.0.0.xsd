@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epeinfpri="../02_entities/informativa_privacy"
+    xmlns:speinfpri="../03_sections/informativa_privacy"
+    targetNamespace="../03_sections/informativa_privacy"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="1.0.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+    <xsd:import namespace="../02_entities/informativa_privacy" schemaLocation="../02_entities/ent_pat_edilizia_informativa_privacy_v1.0.0.xsd"/>
+
+    <xsd:complexType name="sezione_pat_edilizia_informativa_privacy_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">PAT Informativa privacy</xsd:documentation>
+            <xsd:documentation xml:lang="it">Art. 13 del Reg. UE n. 2016/679 del 27 aprile 2016</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="informativa_privacy" type="epeinfpri:entita_pat_edilizia_informativa_privacy_ctype"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="sezione_pat_edilizia_informativa_privacy" type="speinfpri:sezione_pat_edilizia_informativa_privacy_ctype"/>
+</xsd:schema>

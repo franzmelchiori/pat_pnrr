@@ -16,10 +16,12 @@
     xmlns:epeimpr="../02_entities/impresa"
     xmlns:epeiscrea="../02_entities/iscrizione_rea"
     xmlns:epedomdig="../02_entities/domicilio_digitale"
+    xmlns:epeinfpri="../02_entities/informativa_privacy"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     xmlns:speoggpra="../03_sections/oggetto_pratica"
     xmlns:spedomdig="../03_sections/domicilio_digitale"
     xmlns:spediccon="../03_sections/dichiarazione_consapevolezza"
+    xmlns:speinfpri="../03_sections/informativa_privacy"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
 
     <mpecil:sezione_pat_edilizia_scheda_anagrafica>
@@ -149,4 +151,14 @@
     <mpecil:sezione_pat_edilizia_dichiarazione_consapevolezza>
         <spediccon:dichiarazione_consapevolezza>true</spediccon:dichiarazione_consapevolezza>
     </mpecil:sezione_pat_edilizia_dichiarazione_consapevolezza>
+    <mpecil:sezione_pat_edilizia_informativa_privacy>
+        <speinfpri:informativa_privacy>
+            <epeinfpri:titolare_comune>Trento</epeinfpri:titolare_comune>
+            <epeinfpri:titolare_pec>trento@pec.it</epeinfpri:titolare_pec>
+            <epeinfpri:richieste_comune>Trento</epeinfpri:richieste_comune>
+            <epeinfpri:richieste_mail>trento@pec.it</epeinfpri:richieste_mail>
+            <epeinfpri:responsabile_mail>mario.rossi@pec.it</epeinfpri:responsabile_mail>
+            <epeinfpri:dichiarazione_lettura>true</epeinfpri:dichiarazione_lettura>
+        </speinfpri:informativa_privacy>
+    </mpecil:sezione_pat_edilizia_informativa_privacy>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>

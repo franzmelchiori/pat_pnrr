@@ -9,6 +9,7 @@
     xmlns:speoggpra="../03_sections/oggetto_pratica"
     xmlns:spedomdig="../03_sections/domicilio_digitale"
     xmlns:spediccon="../03_sections/dichiarazione_consapevolezza"
+    xmlns:speinfpri="../03_sections/informativa_privacy"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori"
     targetNamespace="../04_forms/comunicazione_inizio_lavori"
     elementFormDefault="qualified"
@@ -24,6 +25,7 @@
     <xsd:import namespace="../03_sections/oggetto_pratica" schemaLocation="../03_sections/sec_pat_edilizia_oggetto_pratica_v1.0.0.xsd"/>
     <xsd:import namespace="../03_sections/domicilio_digitale" schemaLocation="../03_sections/sec_pat_edilizia_domicilio_digitale_v1.0.0.xsd"/>
     <xsd:import namespace="../03_sections/dichiarazione_consapevolezza" schemaLocation="../03_sections/sec_pat_edilizia_dichiarazione_consapevolezza_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/informativa_privacy" schemaLocation="../03_sections/sec_pat_edilizia_informativa_privacy_v1.0.0.xsd"/>
 
     <xsd:complexType name="modulo_pat_edilizia_comunicazione_inizio_lavori_ctype">
         <xsd:annotation>
@@ -36,6 +38,7 @@
             <xsd:element name="sezione_pat_edilizia_oggetto_pratica" type="speoggpra:sezione_pat_edilizia_oggetto_pratica_ctype"/>
             <xsd:element name="sezione_pat_edilizia_domicilio_digitale" type="spedomdig:sezione_pat_edilizia_domicilio_digitale_ctype"/>
             <xsd:element name="sezione_pat_edilizia_dichiarazione_consapevolezza" type="spediccon:sezione_pat_edilizia_dichiarazione_consapevolezza_ctype"/>
+            <xsd:element name="sezione_pat_edilizia_informativa_privacy" type="speinfpri:sezione_pat_edilizia_informativa_privacy_ctype"/>
         </xsd:sequence>
     </xsd:complexType>
     
