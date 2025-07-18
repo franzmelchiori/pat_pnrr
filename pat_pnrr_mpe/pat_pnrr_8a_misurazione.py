@@ -135,7 +135,9 @@ class ComuneExcel:
                     'data_fine_pratica_silenzio-assenso',  # date dd/mm/yyyy | timestamp
                     'conferenza_servizi',  # string | object
                     'tipologia_massima_sospensione',  # string | object
-                    'giorni_sospensioni'  # integer | float
+                    'giorni_sospensioni',  # integer | float
+                    'data_inizio_pratica_definitiva',  # date dd/mm/yyyy
+                    'giorni_sospensioni_definitiva'  # integer | float
                 ],
                 'column_dtype': {
                     'tipologia_pratica': str,
@@ -146,10 +148,12 @@ class ComuneExcel:
                     'data_fine_pratica_silenzio-assenso': str,
                     'conferenza_servizi': str,
                     'tipologia_massima_sospensione': str,
-                    'giorni_sospensioni': str  # float
+                    'giorni_sospensioni': str,  # float
+                    'data_inizio_pratica_definitiva': str,
+                    'giorni_sospensioni_definitiva': str  # float
                 },
                 'column_indexes': [
-                    1, 2, 3, 4, 5, 6, 7, 8, 9
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
                 ],
                 'row_skips': 5,
                 'column_mandatory': [
@@ -164,7 +168,10 @@ class ComuneExcel:
                     'conclusione',
                     'silenzio',
                     'conferenza',
-                    'sospensioni'
+                    'sospensioni',
+                    '',
+                    'inizio definitiva',
+                    'sospensioni definitiva'
                 ],
                 'health_na_content_checks': [
                     'tipologia_pratica'  # ,
@@ -272,7 +279,7 @@ class ComuneExcel:
                                                skiprows, droprows, nrows, dtypecols)
 
             for (column_index, health_header_check) in enumerate(health_header_checks):
-                if not header_excel.iloc[0].values[column_index].casefold().find(
+                if not str(header_excel.iloc[0].values[column_index]).casefold().find(
                         health_header_check) >= 0:
                     print('[!] excel header health check')
                     print('    ' + 'in the file [' + self.path_file + ']')
@@ -2072,11 +2079,11 @@ if __name__ == '__main__':
     path_to_excel_files = FOLDER_COMUNI_EXCEL
     print('controllo il file excel del comune di {0}'.format(comune_name))
     comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
-    # comune.check_headers_excel()
-    # comune.check_dataframes_excel()
+    comune.check_headers_excel()
+    comune.check_dataframes_excel()
 
     # comuni_dataframe_org = comune.get_comune_dataframe('ORGANICO')
-    # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
+    comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
     # comune_dataframe_pds = comune.get_comune_dataframe('Prov di sanatoria')
     # comune_dataframe_cila = comune.get_comune_dataframe('Controllo CILA')
     
