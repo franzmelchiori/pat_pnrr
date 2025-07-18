@@ -22,6 +22,7 @@
     xmlns:spedomdig="../03_sections/domicilio_digitale"
     xmlns:spediccon="../03_sections/dichiarazione_consapevolezza"
     xmlns:speinfpri="../03_sections/informativa_privacy"
+    xmlns:specil="../03_sections/comunicazione_inizio_lavori"
     xmlns:mpecil="../04_forms/comunicazione_inizio_lavori">
 
     <mpecil:sezione_pat_edilizia_scheda_anagrafica>
@@ -161,4 +162,17 @@
             <epeinfpri:dichiarazione_lettura>true</epeinfpri:dichiarazione_lettura>
         </speinfpri:informativa_privacy>
     </mpecil:sezione_pat_edilizia_informativa_privacy>
+    <mpecil:sezione_pat_edilizia_comunicazione_inizio_lavori>
+        <specil:comune>Trento</specil:comune>
+        <specil:indirizzo_italiano>
+            <epeindita:comune>Trento</epeindita:comune>
+            <epeindita:provincia>Trento</epeindita:provincia>
+            <epeindita:stato>Italia</epeindita:stato>
+            <epeindita:dug>Via</epeindita:dug>
+            <epeindita:toponimo>Vannetti</epeindita:toponimo>
+            <epeindita:numero_civico>15</epeindita:numero_civico>
+            <epeindita:barrato></epeindita:barrato>
+            <epeindita:cap>38122</epeindita:cap>
+        </specil:indirizzo_italiano>
+    </mpecil:sezione_pat_edilizia_comunicazione_inizio_lavori>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
