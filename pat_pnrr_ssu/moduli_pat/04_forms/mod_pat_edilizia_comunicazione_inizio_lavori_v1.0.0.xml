@@ -17,6 +17,7 @@
     xmlns:epeiscrea="../02_entities/iscrizione_rea"
     xmlns:epedomdig="../02_entities/domicilio_digitale"
     xmlns:epeinfpri="../02_entities/informativa_privacy"
+    xmlns:epedatcat="../02_entities/dati_catastali"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     xmlns:speoggpra="../03_sections/oggetto_pratica"
     xmlns:spedomdig="../03_sections/domicilio_digitale"
@@ -174,5 +175,33 @@
             <epeindita:barrato></epeindita:barrato>
             <epeindita:cap>38122</epeindita:cap>
         </specil:indirizzo_italiano>
+        <specil:dati_catastali>
+            <epedatcat:particella_fondiaria>
+                <epedatcat:codice_particella_fondiaria>123</epedatcat:codice_particella_fondiaria>
+                <epedatcat:codice_comune_catastale>123</epedatcat:codice_comune_catastale>
+                <epedatcat:codice_porzione_materiale>123</epedatcat:codice_porzione_materiale>
+                <epedatcat:codice_subalterno>123</epedatcat:codice_subalterno>
+            </epedatcat:particella_fondiaria>
+            <epedatcat:particella_fondiaria>
+                <epedatcat:codice_particella_fondiaria>123</epedatcat:codice_particella_fondiaria>
+                <epedatcat:codice_comune_catastale>123</epedatcat:codice_comune_catastale>
+                <epedatcat:codice_porzione_materiale>123</epedatcat:codice_porzione_materiale>
+                <epedatcat:codice_subalterno>123</epedatcat:codice_subalterno>
+            </epedatcat:particella_fondiaria>
+        </specil:dati_catastali>
+        <specil:dati_catastali>
+            <epedatcat:particella_edificiale>
+                <epedatcat:codice_particella_edificiale>123</epedatcat:codice_particella_edificiale>
+                <epedatcat:codice_comune_catastale>123</epedatcat:codice_comune_catastale>
+                <epedatcat:codice_porzione_materiale>123</epedatcat:codice_porzione_materiale>
+                <epedatcat:codice_subalterno>123</epedatcat:codice_subalterno>
+            </epedatcat:particella_edificiale>
+            <epedatcat:particella_edificiale>
+                <epedatcat:codice_particella_edificiale>123</epedatcat:codice_particella_edificiale>
+                <epedatcat:codice_comune_catastale>123</epedatcat:codice_comune_catastale>
+                <epedatcat:codice_porzione_materiale>123</epedatcat:codice_porzione_materiale>
+                <epedatcat:codice_subalterno>123</epedatcat:codice_subalterno>
+            </epedatcat:particella_edificiale>
+        </specil:dati_catastali>
     </mpecil:sezione_pat_edilizia_comunicazione_inizio_lavori>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
