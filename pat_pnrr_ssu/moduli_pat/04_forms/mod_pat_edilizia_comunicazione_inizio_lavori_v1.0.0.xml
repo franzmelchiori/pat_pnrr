@@ -182,20 +182,18 @@
                 <epedatcat:codice_porzione_materiale>123</epedatcat:codice_porzione_materiale>
                 <epedatcat:codice_subalterno>123</epedatcat:codice_subalterno>
             </epedatcat:particella_fondiaria>
-            <epedatcat:particella_fondiaria>
-                <epedatcat:codice_particella_fondiaria>123</epedatcat:codice_particella_fondiaria>
-                <epedatcat:codice_comune_catastale>123</epedatcat:codice_comune_catastale>
-                <epedatcat:codice_porzione_materiale>123</epedatcat:codice_porzione_materiale>
-                <epedatcat:codice_subalterno>123</epedatcat:codice_subalterno>
-            </epedatcat:particella_fondiaria>
-        </specil:dati_catastali>
-        <specil:dati_catastali>
             <epedatcat:particella_edificiale>
                 <epedatcat:codice_particella_edificiale>123</epedatcat:codice_particella_edificiale>
                 <epedatcat:codice_comune_catastale>123</epedatcat:codice_comune_catastale>
                 <epedatcat:codice_porzione_materiale>123</epedatcat:codice_porzione_materiale>
                 <epedatcat:codice_subalterno>123</epedatcat:codice_subalterno>
             </epedatcat:particella_edificiale>
+            <epedatcat:particella_fondiaria>
+                <epedatcat:codice_particella_fondiaria>123</epedatcat:codice_particella_fondiaria>
+                <epedatcat:codice_comune_catastale>123</epedatcat:codice_comune_catastale>
+                <epedatcat:codice_porzione_materiale>123</epedatcat:codice_porzione_materiale>
+                <epedatcat:codice_subalterno>123</epedatcat:codice_subalterno>
+            </epedatcat:particella_fondiaria>
             <epedatcat:particella_edificiale>
                 <epedatcat:codice_particella_edificiale>123</epedatcat:codice_particella_edificiale>
                 <epedatcat:codice_comune_catastale>123</epedatcat:codice_comune_catastale>

@@ -36,7 +36,7 @@
     </xsd:complexType>
 
     <xsd:complexType name="entita_pat_edilizia_dati_catastali_ctype">
-        <xsd:choice>
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
             <xsd:element name="particella_fondiaria" type="epedatcat:particella_fondiaria_ctype" minOccurs="1" maxOccurs="unbounded"/>
             <xsd:element name="particella_edificiale" type="epedatcat:particella_edificiale_ctype" minOccurs="1" maxOccurs="unbounded"/>
         </xsd:choice>
