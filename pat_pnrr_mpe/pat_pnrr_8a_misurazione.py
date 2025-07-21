@@ -39,6 +39,9 @@ SOSPENSIONI_DA_ESCLUDERE_PDS = [
     # 'SOSPESA PER CONTROVERSIE LEGALI',
     # "SOSPESA PER MANCATA CONFORMITA' PRG IN REGIME DI SALVAGUARDIA"]
 
+DATA_INIZIO_PRATICA = 'data_inizio_pratica_definitiva'
+GIORNI_SOSPENSIONI = 'giorni_sospensioni_definitiva'
+
 
 def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, droprows,
                         nrows=None, dtype=None, parse_dates=False):
@@ -371,6 +374,9 @@ class ComuneExcel:
             comune_dataframe.dropna(axis=0, subset='id_pratica', inplace=True, ignore_index=True)
             comune_dataframe.dropna(axis=0, subset='data_inizio_pratica', inplace=True,
                                     ignore_index=True)
+        if sheet_name == 'Permessi di Costruire':
+            comune_dataframe.dropna(axis=0, subset='data_inizio_pratica_definitiva', inplace=True,
+                                    ignore_index=True)
 
         if sheet_name == 'Permessi di Costruire':
             comune_dataframe.loc[:, 'tipologia_pratica'] = \
@@ -383,6 +389,9 @@ class ComuneExcel:
                 comune_dataframe.loc[:, 'tipologia_massima_sospensione'].fillna('')
             comune_dataframe.loc[:, 'giorni_sospensioni'] = \
                 comune_dataframe.loc[:, 'giorni_sospensioni'].fillna(0)
+            
+            comune_dataframe.loc[:, 'giorni_sospensioni_definitiva'] = \
+                comune_dataframe.loc[:, 'giorni_sospensioni_definitiva'].fillna(0)
 
             if comune_dataframe.loc[:, 'data_inizio_pratica'].dtype.str[1] in ['O', 'M']:
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
@@ -408,6 +417,21 @@ class ComuneExcel:
                 print('data_inizio_pratica is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'data_inizio_pratica'])
             change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'] > \
+                          pd.Timestamp(DATA_FINE_MONITORAGGIO + ' 23:59:59.999')
+            comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+
+            if comune_dataframe.loc[:, 'data_inizio_pratica_definitiva'].dtype.str[1] in ['O', 'M']:
+                change_mask = comune_dataframe.loc[:, 'data_inizio_pratica_definitiva'].astype(
+                    'string').str.contains('21072025', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_inizio_pratica_definitiva'] = '21/07/2025'
+            try:
+                comune_dataframe['data_inizio_pratica_definitiva'] = pd.to_datetime(
+                    comune_dataframe['data_inizio_pratica_definitiva'],
+                    errors='raise', dayfirst=True)
+            except:
+                print('data_inizio_pratica_definitiva is UNKNOWN: ')
+                print(comune_dataframe.loc[:, 'data_inizio_pratica_definitiva'])
+            change_mask = comune_dataframe.loc[:, 'data_inizio_pratica_definitiva'] > \
                           pd.Timestamp(DATA_FINE_MONITORAGGIO + ' 23:59:59.999')
             comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
 
@@ -535,6 +559,17 @@ class ComuneExcel:
             except:
                 print('giorni_sospensioni is UNKNOWN: ')
                 print(comune_dataframe.loc[:, 'giorni_sospensioni'])
+
+            try:
+                comune_dataframe['giorni_sospensioni_definitiva'] = pd.to_numeric(
+                    comune_dataframe['giorni_sospensioni_definitiva'],
+                    errors='raise', downcast='integer')
+                comune_dataframe['giorni_sospensioni_definitiva'] = pd.to_timedelta(
+                    comune_dataframe['giorni_sospensioni_definitiva'],
+                    errors='coerce', unit='D')
+            except:
+                print('giorni_sospensioni_definitiva is UNKNOWN: ')
+                print(comune_dataframe.loc[:, 'giorni_sospensioni_definitiva'])
 
             for index in comune_dataframe.index:
                 tipologia_pratica_originale = comune_dataframe.loc[index, 'tipologia_pratica']
@@ -1043,31 +1078,52 @@ class ComuneExcel:
             filter_mask = filter_mask & filter_type
             numero_pratiche_concluse_con_provvedimento_espresso = \
                 comune_dataframe[filter_mask].__len__()
-            giornate_durata_pratiche_concluse_con_provvedimento_espresso = \
-                comune_dataframe.loc[filter_mask, 'data_fine_pratica'] - \
-                comune_dataframe.loc[filter_mask, 'data_inizio_pratica']
+            if sheet_name == 'Permessi di Costruire':
+                giornate_durata_pratiche_concluse_con_provvedimento_espresso = \
+                    comune_dataframe.loc[filter_mask, 'data_fine_pratica'] - \
+                    comune_dataframe.loc[filter_mask, DATA_INIZIO_PRATICA]
+            else:
+                giornate_durata_pratiche_concluse_con_provvedimento_espresso = \
+                    comune_dataframe.loc[filter_mask, 'data_fine_pratica'] - \
+                    comune_dataframe.loc[filter_mask, 'data_inizio_pratica']
             pratiche_concluse_con_provvedimento_espresso_meno_di_una_giornata = \
                 giornate_durata_pratiche_concluse_con_provvedimento_espresso < \
                 pd.Timedelta(1, unit='D')
             giornate_durata_pratiche_concluse_con_provvedimento_espresso.loc[
                 pratiche_concluse_con_provvedimento_espresso_meno_di_una_giornata] = \
                 pd.Timedelta(1, unit='D')
-            giornate_durata_media_pratiche_concluse_con_provvedimento_espresso = (
-                    comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
-                    comune_dataframe.loc[filter_mask, 'data_inizio_pratica']).mean().days
-            giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso = (
-                    comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
-                    comune_dataframe.loc[filter_mask, 'data_inizio_pratica'] -
-                    comune_dataframe.loc[filter_mask, 'giorni_sospensioni']).mean().days
+            if sheet_name == 'Permessi di Costruire':
+                giornate_durata_media_pratiche_concluse_con_provvedimento_espresso = (
+                        comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
+                        comune_dataframe.loc[filter_mask, DATA_INIZIO_PRATICA]).mean().days
+                giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso = (
+                        comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
+                        comune_dataframe.loc[filter_mask, DATA_INIZIO_PRATICA] -
+                        comune_dataframe.loc[filter_mask, GIORNI_SOSPENSIONI]).mean().days
+            else:
+                giornate_durata_media_pratiche_concluse_con_provvedimento_espresso = (
+                        comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
+                        comune_dataframe.loc[filter_mask, 'data_inizio_pratica']).mean().days
+                giornate_durata_media_netta_pratiche_concluse_con_provvedimento_espresso = (
+                        comune_dataframe.loc[filter_mask, 'data_fine_pratica'] -
+                        comune_dataframe.loc[filter_mask, 'data_inizio_pratica'] -
+                        comune_dataframe.loc[filter_mask, 'giorni_sospensioni']).mean().days
 
             filter_mask = comune_dataframe.loc[:, 'data_fine_pratica'].isna() == False
-            filter_mask = filter_mask & (comune_dataframe.loc[:, 'giorni_sospensioni'] >
-                                        pd.Timedelta(0, unit='D'))
+            if sheet_name == 'Permessi di Costruire':
+                filter_mask = filter_mask & (comune_dataframe.loc[:, GIORNI_SOSPENSIONI] >
+                                            pd.Timedelta(0, unit='D'))
+            else:
+                filter_mask = filter_mask & (comune_dataframe.loc[:, 'giorni_sospensioni'] >
+                                            pd.Timedelta(0, unit='D'))
             filter_mask = filter_mask & filter_type
             numero_pratiche_concluse_con_provvedimento_espresso_con_sospensioni = \
                 comune_dataframe[filter_mask].__len__()
-
-            filter_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].isna() == False
+            
+            if sheet_name == 'Permessi di Costruire':
+                filter_mask = comune_dataframe.loc[:, DATA_INIZIO_PRATICA].isna() == False
+            else:
+                filter_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].isna() == False
             filter_mask = filter_mask & filter_type
             numero_pratiche_avviate = \
                 comune_dataframe[filter_mask].__len__()
@@ -1080,11 +1136,18 @@ class ComuneExcel:
                     comune_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == 
                     False)
             filter_mask = filter_mask & filter_type
-            numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo = ((
-                measure_end_date -
-                comune_dataframe.loc[filter_mask, 'data_inizio_pratica'] -
-                comune_dataframe.loc[filter_mask, 'giorni_sospensioni']) >
-                comune_dataframe.loc[filter_mask, 'giorni_termine_normativo']).sum()
+            if sheet_name == 'Permessi di Costruire':
+                numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo = ((
+                    measure_end_date -
+                    comune_dataframe.loc[filter_mask, DATA_INIZIO_PRATICA] -
+                    comune_dataframe.loc[filter_mask, GIORNI_SOSPENSIONI]) >
+                    comune_dataframe.loc[filter_mask, 'giorni_termine_normativo']).sum()
+            else:
+                numero_pratiche_arretrate_non_concluse_scaduto_termine_massimo = ((
+                    measure_end_date -
+                    comune_dataframe.loc[filter_mask, 'data_inizio_pratica'] -
+                    comune_dataframe.loc[filter_mask, 'giorni_sospensioni']) >
+                    comune_dataframe.loc[filter_mask, 'giorni_termine_normativo']).sum()
 
             measure = [
                 numero_pratiche_concluse_con_silenzio_assenso,
@@ -1206,14 +1269,14 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                 comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
             filtro_pratiche_non_concluse = (\
                 measure_end_date - \
-                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica'] - \
-                comuni_dataframe.loc[filter_mask, 'giorni_sospensioni']) > \
+                comuni_dataframe.loc[filter_mask, DATA_INIZIO_PRATICA] - \
+                comuni_dataframe.loc[filter_mask, GIORNI_SOSPENSIONI]) > \
                     pd.to_timedelta(120, errors='coerce', unit='D')
             
             pratiche_non_concluse = comuni_dataframe[
                 filter_mask & filtro_pratiche_non_concluse]
             filtro_non_concluse_giorni_sospensioni_nulli = \
-                pratiche_non_concluse.loc[:, 'giorni_sospensioni'] == \
+                pratiche_non_concluse.loc[:, GIORNI_SOSPENSIONI] == \
                     pd.to_timedelta(0, errors='coerce', unit='D')
             
             numero_pratiche_non_concluse_giorni_sospensioni_nulli = \
@@ -1275,12 +1338,12 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             filter_mask = filter_mask & (
                 comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
             filter_mask = filter_mask & (
-                comuni_dataframe.loc[:, 'giorni_sospensioni'] == \
+                comuni_dataframe.loc[:, GIORNI_SOSPENSIONI] == \
                     pd.to_timedelta(0, errors='coerce', unit='D'))
             
             filtro_pratiche_non_concluse_sospensioni_nulle_fuori_norma = (\
                 measure_end_date - \
-                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica']) > \
+                comuni_dataframe.loc[filter_mask, DATA_INIZIO_PRATICA]) > \
                     comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
             comuni_dataframe.loc[
                 (filter_mask & \
@@ -1314,12 +1377,12 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             filter_mask = filter_type & (
                 comuni_dataframe.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False)
             filter_mask = filter_mask & (
-                comuni_dataframe.loc[:, 'giorni_sospensioni'] == \
+                comuni_dataframe.loc[:, GIORNI_SOSPENSIONI] == \
                     pd.to_timedelta(0, errors='coerce', unit='D'))
             
             filtro_pratiche_concluse_con_silenzio_assenso_sospensioni_nulle_fuori_norma = (\
                 comuni_dataframe.loc[filter_mask, 'data_fine_pratica_silenzio-assenso'] - \
-                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica']) > \
+                comuni_dataframe.loc[filter_mask, DATA_INIZIO_PRATICA]) > \
                     comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
             comuni_dataframe.loc[
                 (filter_mask & \
@@ -1353,12 +1416,12 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             filter_mask = filter_type & (
                 comuni_dataframe.loc[:, 'data_fine_pratica'].isna() == False)
             filter_mask = filter_mask & (
-                comuni_dataframe.loc[:, 'giorni_sospensioni'] == \
+                comuni_dataframe.loc[:, GIORNI_SOSPENSIONI] == \
                     pd.to_timedelta(0, errors='coerce', unit='D'))
             
             filtro_pratiche_concluse_con_espressione_sospensioni_nulle_fuori_norma = (\
                 comuni_dataframe.loc[filter_mask, 'data_fine_pratica'] - \
-                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica']) > \
+                comuni_dataframe.loc[filter_mask, DATA_INIZIO_PRATICA]) > \
                     comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
             comuni_dataframe.loc[
                 (filter_mask & \
@@ -1533,8 +1596,8 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                 comuni_dataframe.loc[:, 'data_fine_pratica'].isna())
             filtro_pratiche_non_concluse = (\
                 measure_end_date - \
-                comuni_dataframe.loc[filter_mask, 'data_inizio_pratica'] - \
-                comuni_dataframe.loc[filter_mask, 'giorni_sospensioni']) > \
+                comuni_dataframe.loc[filter_mask, DATA_INIZIO_PRATICA] - \
+                comuni_dataframe.loc[filter_mask, GIORNI_SOSPENSIONI]) > \
                 comuni_dataframe.loc[filter_mask, 'giorni_termine_normativo']
             
             pratiche_non_concluse_sospensioni_da_escludere = comuni_dataframe[
@@ -1640,7 +1703,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                 comuni_dataframe.loc[filter_mask_pdc_ov_concluse_espressione,
                     'data_fine_pratica'] - \
                 comuni_dataframe.loc[filter_mask_pdc_ov_concluse_espressione,
-                    'data_inizio_pratica']) > \
+                    DATA_INIZIO_PRATICA]) > \
                     pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
             
             filter_mask_pdc_ov_concluse_silenzio_assenso = filter_type & \
@@ -1649,7 +1712,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
                 comuni_dataframe.loc[filter_mask_pdc_ov_concluse_silenzio_assenso,
                     'data_fine_pratica_silenzio-assenso'] - \
                 comuni_dataframe.loc[filter_mask_pdc_ov_concluse_silenzio_assenso,
-                    'data_inizio_pratica']) > \
+                    DATA_INIZIO_PRATICA]) > \
                     pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
             
             filter_mask_pdc_ov_non_concluse = filter_type & \
@@ -1657,7 +1720,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             filter_mask_pdc_ov_non_concluse_sopra_soglia = (\
                 measure_end_date - \
                 comuni_dataframe.loc[filter_mask_pdc_ov_non_concluse,
-                    'data_inizio_pratica']) > \
+                    DATA_INIZIO_PRATICA]) > \
                     pd.to_timedelta(giorni_soglia_alta, errors='coerce', unit='D')
             
             pratiche_avviate_sopra_soglia = pd.concat(
@@ -2074,16 +2137,16 @@ if __name__ == '__main__':
     #     print(comune)
 
 
-    comune_name = 'Mori'
-    name_excel_file = '123_Mori_Edilizia_VIII.xlsx'
-    path_to_excel_files = FOLDER_COMUNI_EXCEL
-    print('controllo il file excel del comune di {0}'.format(comune_name))
-    comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
-    comune.check_headers_excel()
-    comune.check_dataframes_excel()
+    # comune_name = 'Mori'
+    # name_excel_file = '123_Mori_Edilizia_VIII.xlsx'
+    # path_to_excel_files = FOLDER_COMUNI_EXCEL
+    # print('controllo il file excel del comune di {0}'.format(comune_name))
+    # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
+    # comune.check_headers_excel()
+    # comune.check_dataframes_excel()
 
     # comuni_dataframe_org = comune.get_comune_dataframe('ORGANICO')
-    comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
+    # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
     # comune_dataframe_pds = comune.get_comune_dataframe('Prov di sanatoria')
     # comune_dataframe_cila = comune.get_comune_dataframe('Controllo CILA')
     
@@ -2171,9 +2234,9 @@ if __name__ == '__main__':
     # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)
     # get_comuni_measures(comuni_excel_map, tsf=False)
     
-    # get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
-    # get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
+    get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
+    get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
+    get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
 
 
     # load = True
