@@ -18,6 +18,7 @@
     xmlns:epedomdig="../02_entities/domicilio_digitale"
     xmlns:epeinfpri="../02_entities/informativa_privacy"
     xmlns:epedatcat="../02_entities/dati_catastali"
+    xmlns:eperifpdc="../02_entities/riferimenti_pdc"
     xmlns:speschana="../03_sections/scheda_anagrafica"
     xmlns:speoggpra="../03_sections/oggetto_pratica"
     xmlns:spedomdig="../03_sections/domicilio_digitale"
@@ -201,5 +202,10 @@
                 <epedatcat:codice_subalterno>123</epedatcat:codice_subalterno>
             </epedatcat:particella_edificiale>
         </specil:dati_catastali>
+        <specil:riferimenti_pdc>
+            <eperifpdc:protocollo_pdc>abc123</eperifpdc:protocollo_pdc>
+            <eperifpdc:data_rilascio_pdc>24/07/2025</eperifpdc:data_rilascio_pdc>
+            <eperifpdc:data_inizio_pdc>24/07/2025</eperifpdc:data_inizio_pdc>
+        </specil:riferimenti_pdc>
     </mpecil:sezione_pat_edilizia_comunicazione_inizio_lavori>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>
