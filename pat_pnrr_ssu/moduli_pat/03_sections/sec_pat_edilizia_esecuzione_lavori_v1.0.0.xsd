@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epeimpese="../02_entities/impresa_escutrice"
+    xmlns:epepers="../02_entities/persona"
+    xmlns:speeselav="../03_sections/esecuzione_lavori"
+    targetNamespace="../03_sections/esecuzione_lavori"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="1.0.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+    <xsd:import namespace="../02_entities/impresa_escutrice" schemaLocation="../02_entities/ent_pat_edilizia_impresa_escutrice_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
+
+    <xsd:complexType name="sezione_pat_edilizia_esecuzione_lavori_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">PAT Impresa esecutrice dei lavori</xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:element name="titolare" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">IN ECONOMIA (trattasi di lavori eseguiti direttamente dal titolare del provvedimento senza intervento di imprese esecutrici dei lavori o di lavoratori autonomi)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="impresa" type="epeimpese:entita_pat_impresa_escutrice_ctype" minOccurs="1" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">CON LE IMPRESE / LAVORATORI AUTONOMI di seguito elencati</xsd:documentation>
+                    <xsd:documentation xml:lang="it">Nel caso di subentro e/o integrazione di imprese/lavoratori autonomi nel cantiere sussiste l'obbligo di dare tempestiva comunicazione, ai sensi dell'art. 90 del D.Lgs. n. 81 del 2008</xsd:documentation>
+                    <xsd:documentation xml:lang="it">Allegare FAC SIMILE “IMPRESA” (da scaricare, compilare e firmare)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:element name="sezione_pat_edilizia_esecuzione_lavori" type="speeselav:sezione_pat_edilizia_esecuzione_lavori_ctype"/>
+</xsd:schema>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epeimpr="../02_entities/impresa"
+    xmlns:epepers="../02_entities/persona"
+    xmlns:epevercon="../02_entities/verifica_contributiva"
+    xmlns:epeimpese="../02_entities/impresa_escutrice"
+    targetNamespace="../02_entities/impresa_escutrice"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="1.0.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+    <xsd:import namespace="../02_entities/impresa" schemaLocation="../02_entities/ent_pat_edilizia_impresa_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/verifica_contributiva" schemaLocation="../02_entities/ent_pat_edilizia_verifica_contributiva_v1.0.0.xsd"/>
+
+    <xsd:complexType name="entita_pat_impresa_escutrice_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">IMPRESA ESECUTRICE</xsd:documentation>
+            <xsd:documentation xml:lang="it">compilare in caso di affidamento dei lavori ad una impresa</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="impresa" type="epeimpr:entita_pat_impresa_ctype" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="legale_rappresentante" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">il cui legale rappresentante è</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="verifica_contributiva" type="epevercon:ent_pat_edilizia_verifica_contributiva_ctype" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">dati per la verifica della regolarità contributiva</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:element name="impresa" type="epeimpese:entita_pat_impresa_escutrice_ctype"/>
+</xsd:schema>

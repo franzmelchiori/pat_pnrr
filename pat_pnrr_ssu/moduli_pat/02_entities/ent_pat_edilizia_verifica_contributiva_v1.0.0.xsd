@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:epevercon="../02_entities/verifica_contributiva"
+    targetNamespace="../02_entities/verifica_contributiva"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="1.0.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+
+    <xsd:complexType name="cassa_edile_ctype">
+        <xsd:sequence>
+            <xsd:element name="sede" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="codice_impresa" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="codice_cassa" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="inps_ctype">
+        <xsd:sequence>
+            <xsd:element name="sede" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="matricola_posizione" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="inail_ctype">
+        <xsd:sequence>
+            <xsd:element name="sede" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="codice_impresa" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="posizione_assicurativa" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ent_pat_edilizia_verifica_contributiva_ctype">
+        <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:sequence>
+                <xsd:element name="cassa_edile" type="epevercon:cassa_edile_ctype" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="inps" type="epevercon:inps_ctype" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="inail" type="epevercon:inail_ctype" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="inps" type="epevercon:inps_ctype" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="inail" type="epevercon:inail_ctype" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+            <xsd:element name="inail" type="epevercon:inail_ctype" minOccurs="1" maxOccurs="1"/>
+        </xsd:choice>
+    </xsd:complexType>
+    
+    <xsd:element name="verifica_contributiva" type="epevercon:ent_pat_edilizia_verifica_contributiva_ctype"/>
+</xsd:schema>
