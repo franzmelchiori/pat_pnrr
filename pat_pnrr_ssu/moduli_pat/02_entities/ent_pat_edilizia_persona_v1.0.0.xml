@@ -6,7 +6,7 @@
     xmlns:cdichiara="../commons/dichiarazioni"
     xmlns:ctipi="../commons/tipi"
     xmlns:canncl="../commons/xsdAnnotations"
-    xmlns:epepers="../02_entities/persona">
+    xmlns:epepers="../02_entities/pat_edilizia_persona">
     
     <epepers:nome>Mario</epepers:nome>
     <epepers:cognome>Rossi</epepers:cognome>

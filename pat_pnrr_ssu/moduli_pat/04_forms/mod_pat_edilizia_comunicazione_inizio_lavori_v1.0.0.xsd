@@ -5,15 +5,15 @@
     xmlns:cdichiara="../commons/dichiarazioni"
     xmlns:ctipi="../commons/tipi"
     xmlns:canncl="../commons/xsdAnnotations"
-    xmlns:speschana="../03_sections/scheda_anagrafica"
-    xmlns:speoggpra="../03_sections/oggetto_pratica"
-    xmlns:spedomdig="../03_sections/domicilio_digitale"
-    xmlns:spediccon="../03_sections/dichiarazione_consapevolezza"
-    xmlns:speinfpri="../03_sections/informativa_privacy"
-    xmlns:specil="../03_sections/comunicazione_inizio_lavori"
-    xmlns:speeselav="../03_sections/esecuzione_lavori"
-    xmlns:mpecil="../04_forms/comunicazione_inizio_lavori"
-    targetNamespace="../04_forms/comunicazione_inizio_lavori"
+    xmlns:speschana="../03_sections/pat_edilizia_scheda_anagrafica"
+    xmlns:speoggpra="../03_sections/pat_edilizia_oggetto_pratica"
+    xmlns:spedomdig="../03_sections/pat_edilizia_domicilio_digitale"
+    xmlns:spediccon="../03_sections/pat_edilizia_dichiarazione_consapevolezza"
+    xmlns:speinfpri="../03_sections/pat_edilizia_informativa_privacy"
+    xmlns:specil="../03_sections/pat_edilizia_comunicazione_inizio_lavori"
+    xmlns:speeselav="../03_sections/pat_edilizia_esecuzione_lavori"
+    xmlns:mpecil="../04_forms/pat_edilizia_comunicazione_inizio_lavori"
+    targetNamespace="../04_forms/pat_edilizia_comunicazione_inizio_lavori"
     elementFormDefault="qualified"
     attributeFormDefault="qualified"
     version="1.0.0"
@@ -23,13 +23,13 @@
     <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
-    <xsd:import namespace="../03_sections/scheda_anagrafica" schemaLocation="../03_sections/sec_pat_edilizia_scheda_anagrafica_v1.0.0.xsd"/>
-    <xsd:import namespace="../03_sections/oggetto_pratica" schemaLocation="../03_sections/sec_pat_edilizia_oggetto_pratica_v1.0.0.xsd"/>
-    <xsd:import namespace="../03_sections/domicilio_digitale" schemaLocation="../03_sections/sec_pat_edilizia_domicilio_digitale_v1.0.0.xsd"/>
-    <xsd:import namespace="../03_sections/dichiarazione_consapevolezza" schemaLocation="../03_sections/sec_pat_edilizia_dichiarazione_consapevolezza_v1.0.0.xsd"/>
-    <xsd:import namespace="../03_sections/informativa_privacy" schemaLocation="../03_sections/sec_pat_edilizia_informativa_privacy_v1.0.0.xsd"/>
-    <xsd:import namespace="../03_sections/comunicazione_inizio_lavori" schemaLocation="../03_sections/sec_pat_edilizia_comunicazione_inizio_lavori_v1.0.0.xsd"/>
-    <xsd:import namespace="../03_sections/esecuzione_lavori" schemaLocation="../03_sections/sec_pat_edilizia_esecuzione_lavori_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/pat_edilizia_scheda_anagrafica" schemaLocation="../03_sections/sec_pat_edilizia_scheda_anagrafica_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/pat_edilizia_oggetto_pratica" schemaLocation="../03_sections/sec_pat_edilizia_oggetto_pratica_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/pat_edilizia_domicilio_digitale" schemaLocation="../03_sections/sec_pat_edilizia_domicilio_digitale_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/pat_edilizia_dichiarazione_consapevolezza" schemaLocation="../03_sections/sec_pat_edilizia_dichiarazione_consapevolezza_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/pat_edilizia_informativa_privacy" schemaLocation="../03_sections/sec_pat_edilizia_informativa_privacy_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/pat_edilizia_comunicazione_inizio_lavori" schemaLocation="../03_sections/sec_pat_edilizia_comunicazione_inizio_lavori_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/pat_edilizia_esecuzione_lavori" schemaLocation="../03_sections/sec_pat_edilizia_esecuzione_lavori_v1.0.0.xsd"/>
 
     <xsd:complexType name="modulo_pat_edilizia_comunicazione_inizio_lavori_ctype">
         <xsd:annotation>

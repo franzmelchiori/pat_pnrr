@@ -5,9 +5,9 @@
     xmlns:cdichiara="../commons/dichiarazioni"
     xmlns:ctipi="../commons/tipi"
     xmlns:canncl="../commons/xsdAnnotations"
-    xmlns:vpepergen="../01_vocabularies/persona_genere"
-    xmlns:epepers="../02_entities/persona"
-    targetNamespace="../02_entities/persona"
+    xmlns:vpepergen="../01_vocabularies/pat_edilizia_persona_genere"
+    xmlns:epepers="../02_entities/pat_edilizia_persona"
+    targetNamespace="../02_entities/pat_edilizia_persona"
     elementFormDefault="qualified"
     attributeFormDefault="qualified"
     version="1.0.0"
@@ -17,7 +17,7 @@
     <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
-    <xsd:import namespace="../01_vocabularies/persona_genere" schemaLocation="../01_vocabularies/voc_pat_edilizia_persona_genere_v1.0.0.xsd"/>
+    <xsd:import namespace="../01_vocabularies/pat_edilizia_persona_genere" schemaLocation="../01_vocabularies/voc_pat_edilizia_persona_genere_v1.0.0.xsd"/>
 
     <xsd:complexType name="ent_pat_edilizia_persona_ctype">
         <xsd:sequence>

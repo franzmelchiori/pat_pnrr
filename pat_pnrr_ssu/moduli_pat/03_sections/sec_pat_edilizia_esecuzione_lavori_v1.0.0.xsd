@@ -5,10 +5,10 @@
     xmlns:cdichiara="../commons/dichiarazioni"
     xmlns:ctipi="../commons/tipi"
     xmlns:canncl="../commons/xsdAnnotations"
-    xmlns:epeimpese="../02_entities/impresa_escutrice"
-    xmlns:epepers="../02_entities/persona"
-    xmlns:speeselav="../03_sections/esecuzione_lavori"
-    targetNamespace="../03_sections/esecuzione_lavori"
+    xmlns:epeimpese="../02_entities/pat_edilizia_impresa_escutrice"
+    xmlns:epepers="../02_entities/pat_edilizia_persona"
+    xmlns:speeselav="../03_sections/pat_edilizia_esecuzione_lavori"
+    targetNamespace="../03_sections/pat_edilizia_esecuzione_lavori"
     elementFormDefault="qualified"
     attributeFormDefault="qualified"
     version="1.0.0"
@@ -18,8 +18,8 @@
     <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
-    <xsd:import namespace="../02_entities/impresa_escutrice" schemaLocation="../02_entities/ent_pat_edilizia_impresa_escutrice_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_impresa_escutrice" schemaLocation="../02_entities/ent_pat_edilizia_impresa_escutrice_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
 
     <xsd:complexType name="sezione_pat_edilizia_esecuzione_lavori_ctype">
         <xsd:annotation>

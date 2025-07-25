@@ -5,16 +5,16 @@
     xmlns:cdichiara="../commons/dichiarazioni"
     xmlns:ctipi="../commons/tipi"
     xmlns:canncl="../commons/xsdAnnotations"
-    xmlns:epepers="../02_entities/persona"
-    xmlns:epecitt="../02_entities/cittadinanza"
-    xmlns:epedocu="../02_entities/documento"
-    xmlns:epeindita="../02_entities/indirizzo_italiano"
-    xmlns:epeindest="../02_entities/indirizzo_estero"
-    xmlns:epecont="../02_entities/contatti"
-    xmlns:eperapp="../02_entities/rappresentante"
-    xmlns:epeimpr="../02_entities/impresa"
-    xmlns:speschana="../03_sections/scheda_anagrafica"
-    targetNamespace="../03_sections/scheda_anagrafica"
+    xmlns:epepers="../02_entities/pat_edilizia_persona"
+    xmlns:epecitt="../02_entities/pat_edilizia_cittadinanza"
+    xmlns:epedocu="../02_entities/pat_edilizia_documento"
+    xmlns:epeindita="../02_entities/pat_edilizia_indirizzo_italiano"
+    xmlns:epeindest="../02_entities/pat_edilizia_indirizzo_estero"
+    xmlns:epecont="../02_entities/pat_edilizia_contatti"
+    xmlns:eperapp="../02_entities/pat_edilizia_rappresentante"
+    xmlns:epeimpr="../02_entities/pat_edilizia_impresa"
+    xmlns:speschana="../03_sections/pat_edilizia_scheda_anagrafica"
+    targetNamespace="../03_sections/pat_edilizia_scheda_anagrafica"
     elementFormDefault="qualified"
     attributeFormDefault="qualified"
     version="1.0.0"
@@ -24,14 +24,14 @@
     <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
-    <xsd:import namespace="../02_entities/persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/cittadinanza" schemaLocation="../02_entities/ent_pat_edilizia_cittadinanza_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/documento" schemaLocation="../02_entities/ent_pat_edilizia_documento_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/indirizzo_italiano" schemaLocation="../02_entities/ent_pat_edilizia_indirizzo_italiano_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/indirizzo_estero" schemaLocation="../02_entities/ent_pat_edilizia_indirizzo_estero_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/contatti" schemaLocation="../02_entities/ent_pat_edilizia_contatti_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/rappresentante" schemaLocation="../02_entities/ent_pat_edilizia_ruolo_rappresentante_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/impresa" schemaLocation="../02_entities/ent_pat_edilizia_impresa_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_cittadinanza" schemaLocation="../02_entities/ent_pat_edilizia_cittadinanza_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_documento" schemaLocation="../02_entities/ent_pat_edilizia_documento_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_indirizzo_italiano" schemaLocation="../02_entities/ent_pat_edilizia_indirizzo_italiano_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_indirizzo_estero" schemaLocation="../02_entities/ent_pat_edilizia_indirizzo_estero_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_contatti" schemaLocation="../02_entities/ent_pat_edilizia_contatti_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_rappresentante" schemaLocation="../02_entities/ent_pat_edilizia_ruolo_rappresentante_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_impresa" schemaLocation="../02_entities/ent_pat_edilizia_impresa_v1.0.0.xsd"/>
 
     <xsd:complexType name="opzione_persona_ctype">
         <xsd:annotation>

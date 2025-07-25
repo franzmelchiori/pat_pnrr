@@ -5,11 +5,11 @@
     xmlns:cdichiara="../commons/dichiarazioni"
     xmlns:ctipi="../commons/tipi"
     xmlns:canncl="../commons/xsdAnnotations"
-    xmlns:epeimpr="../02_entities/impresa"
-    xmlns:epepers="../02_entities/persona"
-    xmlns:epevercon="../02_entities/verifica_contributiva"
-    xmlns:epeimpese="../02_entities/impresa_escutrice"
-    targetNamespace="../02_entities/impresa_escutrice"
+    xmlns:epeimpr="../02_entities/pat_edilizia_impresa"
+    xmlns:epepers="../02_entities/pat_edilizia_persona"
+    xmlns:epevercon="../02_entities/pat_edilizia_verifica_contributiva"
+    xmlns:epeimpese="../02_entities/pat_edilizia_impresa_escutrice"
+    targetNamespace="../02_entities/pat_edilizia_impresa_escutrice"
     elementFormDefault="qualified"
     attributeFormDefault="qualified"
     version="1.0.0"
@@ -19,9 +19,9 @@
     <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
     <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
     <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
-    <xsd:import namespace="../02_entities/impresa" schemaLocation="../02_entities/ent_pat_edilizia_impresa_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
-    <xsd:import namespace="../02_entities/verifica_contributiva" schemaLocation="../02_entities/ent_pat_edilizia_verifica_contributiva_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_impresa" schemaLocation="../02_entities/ent_pat_edilizia_impresa_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_verifica_contributiva" schemaLocation="../02_entities/ent_pat_edilizia_verifica_contributiva_v1.0.0.xsd"/>
 
     <xsd:complexType name="entita_pat_impresa_escutrice_ctype">
         <xsd:annotation>
