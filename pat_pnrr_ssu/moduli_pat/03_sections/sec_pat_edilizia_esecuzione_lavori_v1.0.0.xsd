@@ -21,7 +21,7 @@
     <xsd:import namespace="../02_entities/pat_edilizia_impresa_escutrice" schemaLocation="../02_entities/ent_pat_edilizia_impresa_escutrice_v1.0.0.xsd"/>
     <xsd:import namespace="../02_entities/pat_edilizia_persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
 
-    <xsd:complexType name="sezione_pat_edilizia_esecuzione_lavori_ctype">
+    <xsd:complexType name="impresa_esecutrice_ctype">
         <xsd:annotation>
             <xsd:documentation xml:lang="it">PAT Impresa esecutrice dei lavori</xsd:documentation>
         </xsd:annotation>
@@ -39,6 +39,33 @@
                 </xsd:annotation>
             </xsd:element>
         </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="direttore_lavori_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">PAT Direttore dei lavori</xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:element name="dichiarante_direttore" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">colui che presenta la pratica</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="altro_direttore" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+                <!-- TODO -->
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">non è colui che presenta la pratica</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="sezione_pat_edilizia_esecuzione_lavori_ctype">
+        <xsd:sequence>
+            <xsd:element name="impresa_esecutrice" type="speeselav:impresa_esecutrice_ctype" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="direttore_lavori" type="speeselav:direttore_lavori_ctype" minOccurs="1" maxOccurs="1"/>
+            <!-- TODO -->
+        </xsd:sequence>
     </xsd:complexType>
 
     <xsd:element name="sezione_pat_edilizia_esecuzione_lavori" type="speeselav:sezione_pat_edilizia_esecuzione_lavori_ctype"/>
