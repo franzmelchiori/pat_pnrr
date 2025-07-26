@@ -310,7 +310,19 @@
             </speeselav:impresa>
         </speeselav:impresa_esecutrice>
         <speeselav:direttore_lavori>
-            <speeselav:dichiarante_direttore>true</speeselav:dichiarante_direttore>
+            <!-- <speeselav:dichiarante_direttore>true</speeselav:dichiarante_direttore> -->
+            <speeselav:altro_direttore>
+                <epepers:nome>Mario</epepers:nome>
+                <epepers:cognome>Rossi</epepers:cognome>
+                <epepers:codiceFiscale>RSSMRA80A01H294E</epepers:codiceFiscale>
+                <epepers:sesso>M</epepers:sesso>
+                <epepers:dataNascita>01/01/1980</epepers:dataNascita>
+                <epepers:comuneNascita>TN</epepers:comuneNascita>
+                <epepers:provinciaNascita>TN</epepers:provinciaNascita>
+                <epepers:statoNascita>IT</epepers:statoNascita>
+            </speeselav:altro_direttore>
+            <speeselav:residenza>true</speeselav:residenza>
+            <speeselav:studio>true</speeselav:studio>
         </speeselav:direttore_lavori>
     </mpecil:sezione_pat_edilizia_esecuzione_lavori>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>

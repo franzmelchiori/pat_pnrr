@@ -51,12 +51,15 @@
                     <xsd:documentation xml:lang="it">colui che presenta la pratica</xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element name="altro_direttore" type="xsd:boolean" minOccurs="1" maxOccurs="1">
-                <!-- TODO -->
-                <xsd:annotation>
-                    <xsd:documentation xml:lang="it">non è colui che presenta la pratica</xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
+            <xsd:sequence>
+                <xsd:element name="altro_direttore" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="it">non è colui che presenta la pratica</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="residenza" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="studio" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
         </xsd:choice>
     </xsd:complexType>
 
