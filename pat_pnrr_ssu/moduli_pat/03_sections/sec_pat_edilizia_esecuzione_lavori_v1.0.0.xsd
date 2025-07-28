@@ -9,6 +9,7 @@
     xmlns:epepers="../02_entities/pat_edilizia_persona"
     xmlns:epeindita="../02_entities/pat_edilizia_indirizzo_italiano"
     xmlns:epeindest="../02_entities/pat_edilizia_indirizzo_estero"
+    xmlns:epecont="../02_entities/pat_edilizia_contatti"
     xmlns:speeselav="../03_sections/pat_edilizia_esecuzione_lavori"
     targetNamespace="../03_sections/pat_edilizia_esecuzione_lavori"
     elementFormDefault="qualified"
@@ -24,6 +25,7 @@
     <xsd:import namespace="../02_entities/pat_edilizia_persona" schemaLocation="../02_entities/ent_pat_edilizia_persona_v1.0.0.xsd"/>
     <xsd:import namespace="../02_entities/pat_edilizia_indirizzo_italiano" schemaLocation="../02_entities/ent_pat_edilizia_indirizzo_italiano_v1.0.0.xsd"/>
     <xsd:import namespace="../02_entities/pat_edilizia_indirizzo_estero" schemaLocation="../02_entities/ent_pat_edilizia_indirizzo_estero_v1.0.0.xsd"/>
+    <xsd:import namespace="../02_entities/pat_edilizia_contatti" schemaLocation="../02_entities/ent_pat_edilizia_contatti_v1.0.0.xsd"/>
 
     <xsd:complexType name="impresa_esecutrice_ctype">
         <xsd:annotation>
@@ -43,6 +45,29 @@
                 </xsd:annotation>
             </xsd:element>
         </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="iscrizione_ordine_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">PAT Iscritto all'ordine, collegio, albo</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="ordine_di" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">ordine di</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numero" type="ctipi:stringa_standard_stype" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">numero</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="contatti" type="epecont:entita_pat_edilizia_contatti_ctype" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">contatti</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="direttore_lavori_ctype">
@@ -85,6 +110,7 @@
                         </xsd:annotation>
                     </xsd:element>
                 </xsd:choice>
+                <!-- TODO -->
             </xsd:sequence>
         </xsd:choice>
     </xsd:complexType>
