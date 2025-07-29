@@ -74,45 +74,52 @@
         <xsd:annotation>
             <xsd:documentation xml:lang="it">PAT Direttore dei lavori</xsd:documentation>
         </xsd:annotation>
-        <xsd:choice minOccurs="1" maxOccurs="1">
-            <xsd:element name="dichiarante_direttore" type="xsd:boolean" minOccurs="1" maxOccurs="1">
-                <xsd:annotation>
-                    <xsd:documentation xml:lang="it">colui che presenta la pratica</xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:sequence>
-                <xsd:element name="altro_direttore" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1">
+        <xsd:sequence>
+            <xsd:choice minOccurs="1" maxOccurs="1">
+                <xsd:element name="dichiarante_direttore" type="xsd:boolean" minOccurs="1" maxOccurs="1">
                     <xsd:annotation>
-                        <xsd:documentation xml:lang="it">non è colui che presenta la pratica</xsd:documentation>
+                        <xsd:documentation xml:lang="it">colui che presenta la pratica</xsd:documentation>
                     </xsd:annotation>
                 </xsd:element>
-                <xsd:choice minOccurs="1" maxOccurs="1">
-                    <xsd:element name="residenza_italiana" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1">
+                <xsd:sequence>
+                    <xsd:element name="altro_direttore" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1">
                         <xsd:annotation>
-                            <xsd:documentation xml:lang="it">residenza italiana</xsd:documentation>
+                            <xsd:documentation xml:lang="it">non è colui che presenta la pratica</xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
-                    <xsd:element name="residenza_estera" type="epeindest:entita_pat_edilizia_indirizzo_estero_ctype" minOccurs="1" maxOccurs="1">
-                        <xsd:annotation>
-                            <xsd:documentation xml:lang="it">residenza estera</xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
-                </xsd:choice>
-                <xsd:choice minOccurs="1" maxOccurs="1">
-                    <xsd:element name="studio_italia" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1">
-                        <xsd:annotation>
-                            <xsd:documentation xml:lang="it">studio in Italia</xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
-                    <xsd:element name="studio_estero" type="epeindest:entita_pat_edilizia_indirizzo_estero_ctype" minOccurs="1" maxOccurs="1">
-                        <xsd:annotation>
-                            <xsd:documentation xml:lang="it">studio all'estero</xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
-                </xsd:choice>
-                <xsd:element name="iscrizione_ordine" type="speeselav:iscrizione_ordine_ctype" minOccurs="1" maxOccurs="1"/>
-            </xsd:sequence>
-        </xsd:choice>
+                    <xsd:choice minOccurs="1" maxOccurs="1">
+                        <xsd:element name="residenza_italiana" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation xml:lang="it">residenza italiana</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="residenza_estera" type="epeindest:entita_pat_edilizia_indirizzo_estero_ctype" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation xml:lang="it">residenza estera</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:choice>
+                    <xsd:choice minOccurs="1" maxOccurs="1">
+                        <xsd:element name="studio_italia" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation xml:lang="it">studio in Italia</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="studio_estero" type="epeindest:entita_pat_edilizia_indirizzo_estero_ctype" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation xml:lang="it">studio all'estero</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:choice>
+                    <xsd:element name="iscrizione_ordine" type="speeselav:iscrizione_ordine_ctype" minOccurs="1" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:choice>
+            <xsd:element name="visione_relazioni" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">Il direttore dei lavori ha preso conoscenza dei contenuti progettuali e della relazione geologica, geotecnica e idrogeologica eventualmente allegata al progetto nonché degli adempimenti relativi all'utilizzo delle terre e rocce da scavo. Nel caso di opere che comportano la realizzazione di manufatti soggetti a collaudo statico ed i relativi lavori comportano pregiudizio per la staticità del fabbricato devono essere osservati gli adempimenti ai sensi dell'art. 65 e dell'art. 93 del D.P.R. n. 380 di data 06/06/2001 e ai fini dell'art. 68 del regolamento di esecuzione della l.p. 15/2015. Il direttore dei lavori ha preso conoscenza dei contenuti progettuali e della relazione geologica, geotecnica e idrogeologica eventualmente allegata al progetto nonché degli adempimenti relativi all'utilizzo delle terre e rocce da scavo</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="progettista_lavori_ctype">

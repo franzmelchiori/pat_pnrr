@@ -28,6 +28,7 @@
     xmlns:speinfpri="../03_sections/pat_edilizia_informativa_privacy"
     xmlns:specil="../03_sections/pat_edilizia_comunicazione_inizio_lavori"
     xmlns:speeselav="../03_sections/pat_edilizia_esecuzione_lavori"
+    xmlns:spesalsic="../03_sections/pat_edilizia_salute_sicurezza"
     xmlns:mpecil="../04_forms/pat_edilizia_comunicazione_inizio_lavori">
 
     <mpecil:sezione_pat_edilizia_scheda_anagrafica>
@@ -210,6 +211,8 @@
             <eperifpdc:data_rilascio_pdc>24/07/2025</eperifpdc:data_rilascio_pdc>
             <eperifpdc:data_inizio_pdc>24/07/2025</eperifpdc:data_inizio_pdc>
         </specil:riferimenti_pdc>
+        <specil:silenzio_assenso>true</specil:silenzio_assenso>
+        <specil:efficacia_pdc>true</specil:efficacia_pdc>
     </mpecil:sezione_pat_edilizia_comunicazione_inizio_lavori>
     <mpecil:sezione_pat_edilizia_esecuzione_lavori>
         <speeselav:impresa_esecutrice>
@@ -363,6 +366,7 @@
                     <epecont:email>mario.rossi@gmail.com</epecont:email>
                 </speeselav:contatti>
             </speeselav:iscrizione_ordine>
+            <speeselav:visione_relazioni>true</speeselav:visione_relazioni>
         </speeselav:direttore_lavori>
         <speeselav:progettista_lavori>
             <speeselav:incaricato_della>sicurezza</speeselav:incaricato_della>
@@ -420,4 +424,10 @@
             </speeselav:iscrizione_ordine>
         </speeselav:progettista_lavori>
     </mpecil:sezione_pat_edilizia_esecuzione_lavori>
+    <mpecil:sezione_pat_edilizia_salute_sicurezza>
+        <spesalsic:norme_salute_sicurezza>true</spesalsic:norme_salute_sicurezza>
+        <spesalsic:invio_notifica>true</spesalsic:invio_notifica>
+        <spesalsic:data_trasmissione_notifica>28/07/2025</spesalsic:data_trasmissione_notifica>
+        <spesalsic:protocollo_notifica>123abc</spesalsic:protocollo_notifica>
+    </mpecil:sezione_pat_edilizia_salute_sicurezza>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>

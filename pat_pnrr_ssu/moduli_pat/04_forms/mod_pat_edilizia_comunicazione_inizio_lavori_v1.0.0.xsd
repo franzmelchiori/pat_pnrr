@@ -12,6 +12,7 @@
     xmlns:speinfpri="../03_sections/pat_edilizia_informativa_privacy"
     xmlns:specil="../03_sections/pat_edilizia_comunicazione_inizio_lavori"
     xmlns:speeselav="../03_sections/pat_edilizia_esecuzione_lavori"
+    xmlns:spesalsic="../03_sections/pat_edilizia_salute_sicurezza"
     xmlns:mpecil="../04_forms/pat_edilizia_comunicazione_inizio_lavori"
     targetNamespace="../04_forms/pat_edilizia_comunicazione_inizio_lavori"
     elementFormDefault="qualified"
@@ -30,6 +31,7 @@
     <xsd:import namespace="../03_sections/pat_edilizia_informativa_privacy" schemaLocation="../03_sections/sec_pat_edilizia_informativa_privacy_v1.0.0.xsd"/>
     <xsd:import namespace="../03_sections/pat_edilizia_comunicazione_inizio_lavori" schemaLocation="../03_sections/sec_pat_edilizia_comunicazione_inizio_lavori_v1.0.0.xsd"/>
     <xsd:import namespace="../03_sections/pat_edilizia_esecuzione_lavori" schemaLocation="../03_sections/sec_pat_edilizia_esecuzione_lavori_v1.0.0.xsd"/>
+    <xsd:import namespace="../03_sections/pat_edilizia_salute_sicurezza" schemaLocation="../03_sections/sec_pat_edilizia_salute_sicurezza_v1.0.0.xsd"/>
 
     <xsd:complexType name="modulo_pat_edilizia_comunicazione_inizio_lavori_ctype">
         <xsd:annotation>
@@ -45,6 +47,7 @@
             <xsd:element name="sezione_pat_edilizia_informativa_privacy" type="speinfpri:sezione_pat_edilizia_informativa_privacy_ctype"/>
             <xsd:element name="sezione_pat_edilizia_comunicazione_inizio_lavori" type="specil:sezione_pat_edilizia_comunicazione_inizio_lavori_ctype"/>
             <xsd:element name="sezione_pat_edilizia_esecuzione_lavori" type="speeselav:sezione_pat_edilizia_esecuzione_lavori_ctype"/>
+            <xsd:element name="sezione_pat_edilizia_salute_sicurezza" type="spesalsic:sezione_pat_edilizia_salute_sicurezza_ctype"/>
         </xsd:sequence>
     </xsd:complexType>
     

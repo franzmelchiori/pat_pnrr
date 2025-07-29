@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ccodelist="../commons/codelist"
+    xmlns:cdichiara="../commons/dichiarazioni"
+    xmlns:ctipi="../commons/tipi"
+    xmlns:canncl="../commons/xsdAnnotations"
+    xmlns:spesalsic="../03_sections/pat_edilizia_salute_sicurezza"
+    targetNamespace="../03_sections/pat_edilizia_salute_sicurezza"
+    elementFormDefault="qualified"
+    attributeFormDefault="qualified"
+    version="1.0.0"
+    xml:lang="it">
+
+    <xsd:import namespace="../commons/codelist" schemaLocation="../commons-codelist.xsd"/>
+    <xsd:import namespace="../commons/dichiarazioni" schemaLocation="../commons-dichiarazioni.xsd"/>
+    <xsd:import namespace="../commons/tipi" schemaLocation="../commons-tipi.xsd"/>
+    <xsd:import namespace="../commons/xsdAnnotations" schemaLocation="../commons-xsd-annotations.xsd"/>
+
+    <xsd:complexType name="sezione_pat_edilizia_salute_sicurezza_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">PAT Salute e sicurezza</xsd:documentation>
+            <xsd:documentation xml:lang="it">Rispetto degli obblighi in materia di salute e sicurezza nei luoghi di lavoro</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:choice minOccurs="1" maxOccurs="1">
+                <xsd:element name="no_norme_salute_sicurezza" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="it">l'intervento non ricade nell'ambito di applicazione delle norme in materia di salute e sicurezza nei luoghi di lavoro (d.lgs. n. 81/2008)</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="norme_salute_sicurezza" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="it">l'intervento ricade nell'ambito di applicazione delle norme in materia di salute e sicurezza nei luoghi di lavoro (d.lgs. n. 81/2008)</xsd:documentation>
+                        <xsd:documentation xml:lang="it">dichiara che l'entità presunta del cantiere è inferiore a 200 uomini-giorno ed i lavori non comportano i rischi particolari di cui all'allegato XI del d.lgs. n. 81/2008 e di aver verificato il certificato di iscrizione alla Camera di commercio, il documento unico di regolarità contributiva, corredato da autocertificazione in ordine al possesso degli altri requisiti previsti dall'allegato XVII del d.lgs. n. 81/2008, e l'autocertificazione relativa al contratto collettivo applicato</xsd:documentation>
+                        <xsd:documentation xml:lang="it">dichiara che l'entità presunta del cantiere è pari o superiore a 200 uomini-giorno o i lavori comportano i rischi particolari di cui all'allegato XI del d.lgs. n. 81/2008 e di aver verificato la documentazione di cui alle lettere a) e b) dell'art. 90 comma 9 prevista dal d.lgs. n. 81/2008 circa l'idoneità tecnico professionale della/e impresa/e esecutrice/i e dei lavoratori autonomi, l'organico medio annuo distinto per qualifica, gli estremi delle denunce dei lavoratori effettuate all'Istituto nazionale della previdenza sociale (INPS), all'Istituto nazionale assicurazione infortuni sul lavoro (INAIL) e alle casse edili, nonché il contratto collettivo applicato ai lavoratori dipendenti, della/e impresa/e esecutrice/i</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:choice>
+            <xsd:choice minOccurs="1" maxOccurs="1">
+                <xsd:element name="no_invio_notifica" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="it">dichiara che l'intervento non è soggetto all'invio della notifica</xsd:documentation>
+                        <xsd:documentation xml:lang="it">La documentazione prevista dal D.Lgs. 9 aprile 2008 n. 81 e s.m.i. NON È DOVUTA in caso di LAVORI SVOLTI IN ECONOMIA</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:sequence>
+                    <xsd:element name="invio_notifica" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="it">dichiara che l'intervento è soggetto all'invio della notifica</xsd:documentation>
+                            <xsd:documentation xml:lang="it">allega alla presente comunicazione la notifica, il cui contenuto sarà riprodotto su apposita tabella, esposta in cantiere per tutta la durata dei lavori, in luogo visibile dall'esterno</xsd:documentation>
+                            <xsd:documentation xml:lang="it">indica gli estremi della notifica, il cui contenuto sarà riprodotto su apposita tabella esposta in cantiere per tutta la durata dei lavori in luogo visibile dall'esterno</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="data_trasmissione_notifica" type="ctipi:ggmmaaaa_stype" minOccurs="1" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="it">già trasmessa in data</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="protocollo_notifica" type="ctipi:stringa_standard_stype" minOccurs="1" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="it">con prot./cod. n.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="sezione_pat_edilizia_salute_sicurezza" type="spesalsic:sezione_pat_edilizia_salute_sicurezza_ctype"/>
+</xsd:schema>

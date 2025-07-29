@@ -51,6 +51,16 @@
                     <xsd:documentation xml:lang="it">Riferimenti al permesso di costruire</xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
+            <xsd:element name="silenzio_assenso" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">Il permesso di costruire si è formato per silenzio assenso del Comune. In tal caso, si allega la ricevuta del pagamento del contributo di costruzione, salvo successivo conguaglio o riduzione sulla base delle determinazioni del Comune</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="efficacia_pdc" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">Si dichiara di essere a conoscenza che l'efficacia del Permesso di Costruire è sospesa qualora sia assente il piano di sicurezza e coordinamento di cui all'art. 100 d.lgs. n. 81/2008 o il fascicolo di cui all'art. 91, comma 1, lettera b), quando siano previsti, oppure in assenza di notifica di cui all'art. 99, quando prevista, oppure in assenza di documento unico di regolarità contributiva</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
         </xsd:sequence>
     </xsd:complexType>
 
