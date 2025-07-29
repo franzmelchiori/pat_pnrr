@@ -353,6 +353,16 @@
                 <epeindest:localita_estero>Banks, OR</epeindest:localita_estero>
                 <epeindest:stato_estero>USA</epeindest:stato_estero>
             </speeselav:studio_estero>
+            <speeselav:iscrizione_ordine>
+                <speeselav:ordine_di>Trento</speeselav:ordine_di>
+                <speeselav:numero>123</speeselav:numero>
+                <speeselav:contatti>
+                    <epecont:telefono_fisso>0461123456</epecont:telefono_fisso>
+                    <epecont:cellulare>3481234567</epecont:cellulare>
+                    <epecont:domicilio_digitale>mario.rossi@pec.it</epecont:domicilio_digitale>
+                    <epecont:email>mario.rossi@gmail.com</epecont:email>
+                </speeselav:contatti>
+            </speeselav:iscrizione_ordine>
         </speeselav:direttore_lavori>
     </mpecil:sezione_pat_edilizia_esecuzione_lavori>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>

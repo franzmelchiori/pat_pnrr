@@ -52,7 +52,7 @@
             <xsd:documentation xml:lang="it">PAT Iscritto all'ordine, collegio, albo</xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
-            <xsd:element name="ordine_di" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+            <xsd:element name="ordine_di" type="ctipi:stringa_standard_stype" minOccurs="1" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:documentation xml:lang="it">ordine di</xsd:documentation>
                 </xsd:annotation>
@@ -110,7 +110,7 @@
                         </xsd:annotation>
                     </xsd:element>
                 </xsd:choice>
-                <!-- TODO -->
+                <xsd:element name="iscrizione_ordine" type="speeselav:iscrizione_ordine_ctype" minOccurs="1" maxOccurs="1"/>
             </xsd:sequence>
         </xsd:choice>
     </xsd:complexType>
