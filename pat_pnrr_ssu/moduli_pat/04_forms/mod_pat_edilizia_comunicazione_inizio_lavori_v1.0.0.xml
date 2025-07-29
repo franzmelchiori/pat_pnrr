@@ -364,5 +364,60 @@
                 </speeselav:contatti>
             </speeselav:iscrizione_ordine>
         </speeselav:direttore_lavori>
+        <speeselav:progettista_lavori>
+            <speeselav:incaricato_della>sicurezza</speeselav:incaricato_della>
+            <speeselav:altro_progettista>
+                <epepers:nome>Mario</epepers:nome>
+                <epepers:cognome>Rossi</epepers:cognome>
+                <epepers:codiceFiscale>RSSMRA80A01H294E</epepers:codiceFiscale>
+                <epepers:sesso>M</epepers:sesso>
+                <epepers:dataNascita>01/01/1980</epepers:dataNascita>
+                <epepers:comuneNascita>TN</epepers:comuneNascita>
+                <epepers:provinciaNascita>TN</epepers:provinciaNascita>
+                <epepers:statoNascita>IT</epepers:statoNascita>
+            </speeselav:altro_progettista>
+            <!-- <speeselav:residenza_italiana>
+                <epeindita:comune>Trento</epeindita:comune>
+                <epeindita:provincia>Trento</epeindita:provincia>
+                <epeindita:stato>Italia</epeindita:stato>
+                <epeindita:dug>Via</epeindita:dug>
+                <epeindita:toponimo>Vannetti</epeindita:toponimo>
+                <epeindita:numero_civico>15</epeindita:numero_civico>
+                <epeindita:barrato></epeindita:barrato>
+                <epeindita:cap>38122</epeindita:cap>
+            </speeselav:residenza_italiana> -->
+            <speeselav:residenza_estera>
+                <epeindest:descrizione>101 NW Commerce St</epeindest:descrizione>
+                <epeindest:codice_postale>97106</epeindest:codice_postale>
+                <epeindest:localita_estero>Banks, OR</epeindest:localita_estero>
+                <epeindest:stato_estero>USA</epeindest:stato_estero>
+            </speeselav:residenza_estera>
+            <!-- <speeselav:studio_italia>
+                <epeindita:comune>Trento</epeindita:comune>
+                <epeindita:provincia>Trento</epeindita:provincia>
+                <epeindita:stato>Italia</epeindita:stato>
+                <epeindita:dug>Via</epeindita:dug>
+                <epeindita:toponimo>Vannetti</epeindita:toponimo>
+                <epeindita:numero_civico>15</epeindita:numero_civico>
+                <epeindita:barrato></epeindita:barrato>
+                <epeindita:cap>38122</epeindita:cap>
+            </speeselav:studio_italia> -->
+            <speeselav:studio_estero>
+                <epeindest:descrizione>101 NW Commerce St</epeindest:descrizione>
+                <epeindest:codice_postale>97106</epeindest:codice_postale>
+                <epeindest:localita_estero>Banks, OR</epeindest:localita_estero>
+                <epeindest:stato_estero>USA</epeindest:stato_estero>
+            </speeselav:studio_estero>
+            <speeselav:iscrizione_ordine>
+                <speeselav:ordine_di>Trento</speeselav:ordine_di>
+                <speeselav:numero>123</speeselav:numero>
+                <speeselav:contatti>
+                    <epecont:telefono_fisso>0461123456</epecont:telefono_fisso>
+                    <epecont:cellulare>3481234567</epecont:cellulare>
+                    <epecont:domicilio_digitale>mario.rossi@pec.it</epecont:domicilio_digitale>
+                    <epecont:email>mario.rossi@gmail.com</epecont:email>
+                </speeselav:contatti>
+            </speeselav:iscrizione_ordine>
+        </speeselav:progettista_lavori>
     </mpecil:sezione_pat_edilizia_esecuzione_lavori>
 </mpecil:modulo_pat_edilizia_comunicazione_inizio_lavori>

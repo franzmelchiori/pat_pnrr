@@ -115,11 +115,55 @@
         </xsd:choice>
     </xsd:complexType>
 
+    <xsd:complexType name="progettista_lavori_ctype">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="it">PAT Altro progettista dei lavori</xsd:documentation>
+            <xsd:documentation xml:lang="it">Ai sensi della D.G.P. n. 3110/2009 il proprietario dell'edificio o chi ne ha titolo, prima dell'inizio dei lavori, affida ad un soggetto certificatore, iscritto negli elenchi dei professionisti abilitati di cui all'art. 8 del D.P.P. 11-13/Leg. del 13 luglio 2009, recante "Disposizioni regolamentari in materia di edilizia sostenibile in attuazione del titolo IV della l.p. 1/2008", l'incarico di redigere l'Attestato di certificazione energetica.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="incaricato_della" type="ctipi:stringa_standard_stype" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">incaricato della</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="altro_progettista" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="it">altro tecnico incaricato</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:choice minOccurs="1" maxOccurs="1">
+                <xsd:element name="residenza_italiana" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="it">residenza italiana</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="residenza_estera" type="epeindest:entita_pat_edilizia_indirizzo_estero_ctype" minOccurs="1" maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="it">residenza estera</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:choice>
+            <xsd:choice minOccurs="1" maxOccurs="1">
+                <xsd:element name="studio_italia" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="it">studio in Italia</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="studio_estero" type="epeindest:entita_pat_edilizia_indirizzo_estero_ctype" minOccurs="1" maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="it">studio all'estero</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:choice>
+            <xsd:element name="iscrizione_ordine" type="speeselav:iscrizione_ordine_ctype" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="sezione_pat_edilizia_esecuzione_lavori_ctype">
         <xsd:sequence>
             <xsd:element name="impresa_esecutrice" type="speeselav:impresa_esecutrice_ctype" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="direttore_lavori" type="speeselav:direttore_lavori_ctype" minOccurs="1" maxOccurs="1"/>
-            <!-- TODO -->
+            <xsd:element name="progettista_lavori" type="speeselav:progettista_lavori_ctype" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 
