@@ -30,14 +30,9 @@
                             <canncl:ShortName>IT:SUAP:CL:ComuniItaliani</canncl:ShortName>
                         </canncl:codeListReference>
                     </xsd:appinfo>
-                    <xsd:documentation xml:lang="it">Titolare del trattamento. Comune di:</xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element name="titolare_pec" type="ctipi:email_stype"  minOccurs="0" maxOccurs="1">
-                <xsd:annotation>
-                    <xsd:documentation xml:lang="it">Indirizzo PEC:</xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
+            <xsd:element name="titolare_pec" type="ctipi:email_stype"  minOccurs="0" maxOccurs="1"/>
             <xsd:element name="richieste_comune" type="ccodelist:CodeType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:appinfo>

@@ -25,16 +25,12 @@
 
     <xsd:complexType name="entita_pat_impresa_escutrice_ctype">
         <xsd:annotation>
-            <xsd:documentation xml:lang="it">IMPRESA ESECUTRICE</xsd:documentation>
+            <xsd:documentation xml:lang="it">Impresa esecutrice</xsd:documentation>
             <xsd:documentation xml:lang="it">compilare in caso di affidamento dei lavori ad una impresa</xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="impresa" type="epeimpr:entita_pat_impresa_ctype" minOccurs="1" maxOccurs="1"/>
-            <xsd:element name="legale_rappresentante" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1">
-                <xsd:annotation>
-                    <xsd:documentation xml:lang="it">il cui legale rappresentante è</xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
+            <xsd:element name="legale_rappresentante" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="verifica_contributiva" type="epevercon:ent_pat_edilizia_verifica_contributiva_ctype" minOccurs="1" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:documentation xml:lang="it">dati per la verifica della regolarità contributiva</xsd:documentation>

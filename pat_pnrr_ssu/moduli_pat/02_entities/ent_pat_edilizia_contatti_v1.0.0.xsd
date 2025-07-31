@@ -21,7 +21,6 @@
         <xsd:sequence>
             <xsd:element name="telefono_fisso" type="ctipi:telefono_fisso_stype" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="cellulare" type="ctipi:telefono_mobile_stype" minOccurs="0" maxOccurs="1"/>
-            <!-- <xsd:element name="fax" type="ctipi:fax_stype" minOccurs="0" maxOccurs="1"/> -->
             <xsd:element name="domicilio_digitale" type="ctipi:email_stype" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="email" type="ctipi:email_stype" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>        
