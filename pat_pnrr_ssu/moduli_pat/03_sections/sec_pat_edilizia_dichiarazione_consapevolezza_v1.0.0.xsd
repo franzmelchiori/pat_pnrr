@@ -25,7 +25,7 @@
         <xsd:sequence>
             <xsd:element name="dichiarazione_consapevolezza" type="xsd:boolean" default="false" minOccurs="0" maxOccurs="1">
                 <xsd:annotation>
-                    <xsd:documentation xml:lang="it">Dichiara di essere consapevole che le dichiarazioni false, la falsità negli atti e l'uso di atti falsi comportano l'applicazione delle sanzioni penali previste dall'art. 76 del D.P.R. 445/2000 e la decadenza dai benefici eventualmente conseguenti al provvedimento emanato sulla base della dichiarazione non veritiera nonché il divieto di accesso a contributi, finanziamenti e agevolazioni per un periodo di 2 anni decorrenti da quando l'amministrazione ha adottato l'atto di decadenza, come previsto dall'art. 75 del D.P.R. 445/2000.</xsd:documentation>
+                    <xsd:documentation xml:lang="it">Dichiara di essere consapevole che le dichiarazioni false, la falsità negli atti e l'uso di atti falsi comportano l'applicazione delle sanzioni penali previste dall'art. 76 del D.P.R. 445/2000 e la decadenza dai benefici eventualmente conseguenti al provvedimento emanato sulla base della dichiarazione non veritiera nonché il divieto di accesso a contributi, finanziamenti e agevolazioni per un periodo di 2 anni decorrenti da quando l'amministrazione ha adottato l'atto di decadenza, come previsto dall'art. 75 del D.P.R. 445/2000</xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
         </xsd:sequence>

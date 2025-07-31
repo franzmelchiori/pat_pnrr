@@ -25,13 +25,13 @@
 
     <xsd:complexType name="sezione_pat_edilizia_comunicazione_inizio_lavori_ctype">
         <xsd:annotation>
-            <xsd:documentation xml:lang="it">PAT Comunicazione Inizio Lavori</xsd:documentation>
+            <xsd:documentation xml:lang="it">PAT Comunicazione inizio lavori</xsd:documentation>
             <xsd:documentation xml:lang="it">Art. 83, c. 3 della legge provinciale 4 agosto 2015, n. 15</xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="comune" type="ctipi:stringa_standard_stype" minOccurs="1" maxOccurs="1">
                 <xsd:annotation>
-                    <xsd:documentation xml:lang="it">Segnala all'ufficio tecnico del Comune di:</xsd:documentation>
+                    <xsd:documentation xml:lang="it">Segnala all'ufficio tecnico del Comune di</xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
             <xsd:element name="indirizzo_italiano" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1">

@@ -22,7 +22,6 @@
     <xsd:complexType name="sezione_pat_edilizia_domicilio_digitale_ctype">
         <xsd:annotation>
             <xsd:documentation xml:lang="it">PAT Domicilio digitale</xsd:documentation>
-            <xsd:documentation xml:lang="it">PAT Domicilio elettronico</xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="domicilio_digitale" type="epedomdig:entita_pat_edilizia_domicilio_digitale_ctype"/>

@@ -36,7 +36,7 @@
     <xsd:complexType name="modulo_pat_edilizia_comunicazione_inizio_lavori_ctype">
         <xsd:annotation>
             <xsd:documentation xml:lang="it">PAT Procedimenti Edilizi Digitali</xsd:documentation>
-            <xsd:documentation xml:lang="it">Comunicazione Inizio Lavori</xsd:documentation>
+            <xsd:documentation xml:lang="it">PAT Comunicazione Inizio Lavori</xsd:documentation>
             <xsd:documentation xml:lang="it">Articolo 83, c. 3 della legge provinciale 4 agosto 2015, n. 15</xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>

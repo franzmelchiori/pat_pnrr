@@ -77,11 +77,7 @@
             </xsd:choice>
             <xsd:element name="datiDichiarante" type="epepers:ent_pat_edilizia_persona_ctype" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="cittadinanza" type="epecitt:entita_pat_edilizia_cittadinanza_ctype" minOccurs="1" maxOccurs="1"/>
-            <xsd:element name="cittadino_non_ue" type="xsd:boolean" default="false" minOccurs="1" maxOccurs="1">
-                <xsd:annotation>
-                    <xsd:documentation xml:lang="it">Cittadino NON UE</xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
+            <xsd:element name="cittadino_non_ue" type="xsd:boolean" default="false" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="documento" type="epedocu:entita_pat_edilizia_documento_ctype" minOccurs="1" maxOccurs="1"/>
             <xsd:choice>
                 <xsd:element name="indirizzo_italiano" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1"/>
