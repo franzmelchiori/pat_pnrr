@@ -24,9 +24,10 @@
             <xsd:element name="nome" type="ctipi:stringa_standard_stype" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="cognome" type="ctipi:stringa_standard_stype" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="codiceFiscale" type="ctipi:codice_fiscale_stype" minOccurs="1" maxOccurs="1"/>
-            <xsd:element name="sesso" type="vpepergen:sesso_voc" minOccurs="0" maxOccurs="1"/>
-            <xsd:element name="dataNascita" type="ctipi:ggmmaaaa_stype"/>
-            <xsd:element name="comuneNascita" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1" >                
+            <!-- TODO: GR: codice fiscale nel caso di soggetto estero? -->
+            <xsd:element name="sesso" type="vpepergen:sesso_voc" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="dataNascita" type="ctipi:ggmmaaaa_stype" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="comuneNascita" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1" >
                 <xsd:annotation>
                     <xsd:appinfo>                        
                         <canncl:codeListReference>
@@ -35,7 +36,8 @@
                     </xsd:appinfo>                    
                 </xsd:annotation>                 
             </xsd:element>
-            <xsd:element name="provinciaNascita" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1" >                
+            <!-- TODO: GR: comune nel caso di soggetto estero? -->
+            <xsd:element name="provinciaNascita" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1" >
                 <xsd:annotation>
                     <xsd:appinfo>                        
                         <canncl:codeListReference>
@@ -44,7 +46,8 @@
                     </xsd:appinfo>                    
                 </xsd:annotation>                 
             </xsd:element>
-            <xsd:element name="statoNascita" type="ccodelist:CodeType" minOccurs="0" maxOccurs="1">
+            <!-- TODO: GR: provincia nel caso di soggetto estero? -->
+            <xsd:element name="statoNascita" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:appinfo>                        
                         <canncl:codeListReference>

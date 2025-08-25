@@ -28,7 +28,8 @@
                     </xsd:appinfo>
                 </xsd:annotation>                  
             </xsd:element>
-        </xsd:sequence>        
+        </xsd:sequence>
+        <!-- TODO: FM: SCH: controllo con il vocabolario degli stati -->
     </xsd:complexType>      
     
     <xsd:element name="entita_pat_edilizia_cittadinanza" type="epecitt:entita_pat_edilizia_cittadinanza_ctype"/>

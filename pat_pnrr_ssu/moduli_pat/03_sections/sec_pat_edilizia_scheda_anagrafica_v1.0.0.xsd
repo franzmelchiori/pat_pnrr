@@ -52,6 +52,7 @@
                 <xsd:element name="selezione_cciaa_iscritta" type="speschana:opzione_ditta_cciaa_ctype" minOccurs="1" maxOccurs="1"/>
                 <xsd:element name="selezione_cciaa_non_iscritta" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1"/>
                 <xsd:element name="selezione_cciaa_non_necessario" type="xsd:boolean" default="true" minOccurs="1" maxOccurs="1"/>
+                <!-- TODO: FM: indipendentemente dalla scelta occorre chiedere l'anagrafica della ditta -->
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
@@ -62,6 +63,8 @@
         </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="ditta_cciaa" type="epeimpr:entita_pat_impresa_ctype" minOccurs="1" maxOccurs="1"/>
+            <!-- TODO: FM: inserire codice d'iscrizione rea -->
+            <!-- TODO: FM: portare qui l'inserimento e il controllo rea da ent_pat_edilizia_impresa -->
         </xsd:sequence>
     </xsd:complexType>
 
