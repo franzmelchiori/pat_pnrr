@@ -32,7 +32,9 @@
                     </xsd:appinfo>                    
                 </xsd:annotation>                 
             </xsd:element>
+            <!-- TODO: FM: SCH: controllo sede cciaa -->
             <xsd:element name="numero_rea" type="epeiscrea:numero_rea_stype" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="data_iscrizione_rea" type="ctipi:ggmmaaaa_stype" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
     

@@ -28,8 +28,6 @@
         <xsd:sequence>
             <xsd:element name="rea" type="epeiscrea:entita_pat_iscrizione_rea_ctype" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <!-- TODO: FM: SCH: controllo sede cciaa -->
-        <!-- TODO: FM: inserire data iscrizione (non obbligatoria) -->
     </xsd:complexType>
 
     <xsd:complexType name="entita_pat_impresa_ctype">
@@ -47,17 +45,18 @@
             <!-- TODO: FM: SCH: esiste un vocabolario di forme giuridiche nazionali -->
             <xsd:element name="codice_fiscale" type="ctipi:codice_fiscale_stype" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="partita_iva" type="ctipi:partita_iva_stype" minOccurs="1" maxOccurs="1"/>
-            <!-- TODO: GR: campo partita iva obbligatorio? -->
             <!-- TODO: GR: codice fiscale e partita iva nel caso di soggetto estero? -->
+            <!-- TODO: GR: campo partita iva obbligatorio nel caso di codice fiscale? -->
             <!-- TODO: FM: campi codice fiscale e partita iva da scegliere? -->
             <xsd:element name="indirizzo_attivita" type="epeindita:entita_pat_edilizia_indirizzo_italiano_ctype" minOccurs="1" maxOccurs="1"/>
-            <!-- TODO: FM: occorre trattare anche ditte estere con indirizzi esteri -->
+            <!-- TODO: FM: occorre trattare anche ditte estere con indirizzi esteri? -->
             <xsd:element name="telefono_cellulare" type="ctipi:telefono_mobile_stype" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="email" type="ctipi:email_stype" minOccurs="0" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:documentation xml:lang="it">PEC/email</xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
+            <!-- TODO: GR: iscrizione rea per sole ditta cciaa? -->
             <!-- <xsd:choice>
                 <xsd:element name="selezione_rea_iscritto" type="epeimpr:opzione_ditta_rea_ctype" minOccurs="1" maxOccurs="1"/>
                 <xsd:element name="selezione_rea_non_iscritto" default="true" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
