@@ -116,7 +116,7 @@
         <speschana:cittadinanza>
             <epecitt:stato_cittadinanza>IT</epecitt:stato_cittadinanza>
         </speschana:cittadinanza>
-        <speschana:cittadino_non_ue>false</speschana:cittadino_non_ue>
+        <!-- <speschana:cittadino_non_ue>false</speschana:cittadino_non_ue> -->
         <speschana:documento>
             <epedocu:tipo>Passaporto</epedocu:tipo>
             <epedocu:numero>123456</epedocu:numero>
@@ -124,7 +124,7 @@
             <epedocu:data_rilascio>2025-01-01+00:00</epedocu:data_rilascio>
             <epedocu:data_scadenza>2035-01-01+00:00</epedocu:data_scadenza>
         </speschana:documento>
-        <speschana:indirizzo_italiano>
+        <speschana:residenza_dichiarante>
             <epeindita:comune>Trento</epeindita:comune>
             <epeindita:provincia>Trento</epeindita:provincia>
             <epeindita:stato>Italia</epeindita:stato>
@@ -133,7 +133,7 @@
             <epeindita:numero_civico>15</epeindita:numero_civico>
             <epeindita:barrato></epeindita:barrato>
             <epeindita:cap>38122</epeindita:cap>
-        </speschana:indirizzo_italiano>
+        </speschana:residenza_dichiarante>
         <!-- <speschana:indirizzo_estero>
             <epeindest:descrizione>101 NW Commerce St</epeindest:descrizione>
             <epeindest:codice_postale>97106</epeindest:codice_postale>

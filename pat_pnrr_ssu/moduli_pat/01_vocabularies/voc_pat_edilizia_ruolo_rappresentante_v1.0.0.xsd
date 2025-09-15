@@ -24,6 +24,8 @@
             <xsd:enumeration value="Amministratore di condominio"/>
             <xsd:enumeration value="Amministratore unico"/>
             <xsd:enumeration value="Procuratore"/>
+            <xsd:enumeration value="AFFITTUARIO"/>
+            <xsd:enumeration value="AFFITTUARIO O CONDUTTORE"/>
             <xsd:enumeration value="Altro"/>
         </xsd:restriction>
     </xsd:simpleType>

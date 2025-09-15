@@ -36,7 +36,6 @@
                     </xsd:appinfo>                    
                 </xsd:annotation>                 
             </xsd:element>
-            <!-- TODO: GR: comune nel caso di soggetto estero? -->
             <xsd:element name="provinciaNascita" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1" >
                 <xsd:annotation>
                     <xsd:appinfo>                        
@@ -46,7 +45,6 @@
                     </xsd:appinfo>                    
                 </xsd:annotation>                 
             </xsd:element>
-            <!-- TODO: GR: provincia nel caso di soggetto estero? -->
             <xsd:element name="statoNascita" type="ccodelist:CodeType" minOccurs="1" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:appinfo>                        

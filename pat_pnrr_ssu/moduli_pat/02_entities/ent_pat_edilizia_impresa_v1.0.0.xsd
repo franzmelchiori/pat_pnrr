@@ -56,12 +56,6 @@
                     <xsd:documentation xml:lang="it">PEC/email</xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <!-- TODO: GR: iscrizione rea per sole ditta cciaa? -->
-            <!-- <xsd:choice>
-                <xsd:element name="selezione_rea_iscritto" type="epeimpr:opzione_ditta_rea_ctype" minOccurs="1" maxOccurs="1"/>
-                <xsd:element name="selezione_rea_non_iscritto" default="true" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
-                <xsd:element name="selezione_rea_solo_ri" default="true" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
-            </xsd:choice> -->
         </xsd:sequence>
     </xsd:complexType>
     
