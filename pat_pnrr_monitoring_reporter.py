@@ -1607,8 +1607,8 @@ if __name__ == '__main__':
     comuni_net_scores.to_csv('pat-pnrr_edilizia_pressione_netta_' + \
                              PERIODI_MONITORAGGIO_ULTIMO_ANNO + '.csv')
 
-    # for mpe_number in [3, 4, 5, 6, 7]:
-    for mpe_number in [7]:
+    # for mpe_number in [3, 4, 5, 6, 7, 8]:
+    for mpe_number in [8]:
         print_comuni_performance_charts(pat_comuni_dataframe,
                                         comuni_durata_trends, comuni_durata_netta_trends,
                                         comuni_arretrato_trends,

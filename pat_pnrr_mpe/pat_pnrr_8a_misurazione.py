@@ -18,7 +18,7 @@ from .pat_pnrr_comuni_excel_mapping import *
 
 
 PATH_MPE = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
-FOLDER_COMUNI_EXCEL = 'pat_pnrr_8a_misurazione_tabelle_comunali\\'  # drive-download\\'
+FOLDER_COMUNI_EXCEL = 'pat_pnrr_8a_misurazione_tabelle_comunali\\'  # pat_pnrr_importazione_tabelle_comunali\\'
 DATA_INIZIO_MONITORAGGIO = '2025' + '-01-01'  # '-07-01'
 DATA_FINE_MONITORAGGIO = '2025' + '-06-30'  # '-12-31'
 PERIODO_MONITORAGGIO = '2025q1-2'
@@ -472,6 +472,9 @@ class ComuneExcel:
                     'string').str.contains('09/10/204', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '09/10/2024'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('15/042025', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '15/04/2025'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
@@ -494,6 +497,12 @@ class ComuneExcel:
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('decaduta', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('INEFFICACE', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('ritirata', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
@@ -624,6 +633,9 @@ class ComuneExcel:
                     'string').str.contains('26/05/23', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '26/05/2023'
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
+                    'string').str.contains('8/4/20285', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '08/04/2025'
+                change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
@@ -671,6 +683,9 @@ class ComuneExcel:
                     'string').str.contains('2/102024', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '02/10/2024'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('25/32025', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '25/03/2025'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
@@ -687,6 +702,9 @@ class ComuneExcel:
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ritirata 28/10/2024', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('INEFFICACE', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
@@ -850,6 +868,18 @@ class ComuneExcel:
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('RESPINTA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('ANOMALA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('Rifiutata', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('Ritirata', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('INEFFICACE', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
