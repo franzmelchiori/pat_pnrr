@@ -2264,9 +2264,11 @@ if __name__ == '__main__':
     # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)
     # get_comuni_measures(comuni_excel_map, tsf=False)
     
+    # get_comuni_dataframes(comuni_excel_map, load=False)  # 1 df di pratiche per 1 ped per tutti i comuni
+    # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)  # 1 df di misure per 1 ped per tutti i comuni
     # get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
     # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
-    get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
+    # get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
 
 
     # load = True
