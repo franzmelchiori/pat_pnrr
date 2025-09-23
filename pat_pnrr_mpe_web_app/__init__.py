@@ -769,7 +769,13 @@ chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = [{
     'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 1].iloc[:, 1:])],
     'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 2].iloc[:, 1:])],
     'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 3].iloc[:, 1:])],
-    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 4].iloc[:, 1:])]}]
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024[scatter_pressione_data_2024.cluster_comune == 4].iloc[:, 1:])]
+    },{
+    'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024q3_2025q2[scatter_pressione_data_2024q3_2025q2.cluster_comune == 0].iloc[:, 1:])],
+    'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024q3_2025q2[scatter_pressione_data_2024q3_2025q2.cluster_comune == 1].iloc[:, 1:])],
+    'comuni_medi':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024q3_2025q2[scatter_pressione_data_2024q3_2025q2.cluster_comune == 2].iloc[:, 1:])],
+    'rovereto':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024q3_2025q2[scatter_pressione_data_2024q3_2025q2.cluster_comune == 3].iloc[:, 1:])],
+    'trento':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_data_2024q3_2025q2[scatter_pressione_data_2024q3_2025q2.cluster_comune == 4].iloc[:, 1:])]}]
 chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = [{
     'comuni_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 0].iloc[:, 1:])],
     'comuni_medio_piccoli':[list([a[4], a[3], a[2], a[0], a[1], a[5]]) for a in np.array(scatter_pressione_netta_data_2023[scatter_pressione_netta_data_2023.cluster_comune == 1].iloc[:, 1:])],
