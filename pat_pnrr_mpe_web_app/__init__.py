@@ -298,9 +298,9 @@ comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
     comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
 comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
     comuni_performance_netta_trends, pdc_net_measure_labels, pds_net_measure_labels)
-ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2025q1_2']
+ore_tecnici_settimana = pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2025q1-2']
 ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = \
-    pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q3_4'].loc[ore_tecnici_settimana.isna()]
+    pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q3-4'].loc[ore_tecnici_settimana.isna()]
 ore_tecnici_settimana.loc[ore_tecnici_settimana.isna()] = 0
 scatter_pressione_data_2024q3_2025q2 = pd.concat([
     classificazione_comunale,

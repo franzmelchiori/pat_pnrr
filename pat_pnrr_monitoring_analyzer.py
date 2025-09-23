@@ -23,6 +23,7 @@ from pat_pnrr_mpe import pat_pnrr_4a_misurazione as pat_pnrr_4a
 from pat_pnrr_mpe import pat_pnrr_5a_misurazione as pat_pnrr_5a
 from pat_pnrr_mpe import pat_pnrr_6a_misurazione as pat_pnrr_6a
 from pat_pnrr_mpe import pat_pnrr_7a_misurazione as pat_pnrr_7a
+from pat_pnrr_mpe import pat_pnrr_8a_misurazione as pat_pnrr_8a
 
 
 def update_dataframe_subset(dataframe_to_update, dataframe_subset):
@@ -83,6 +84,9 @@ def get_pat_comuni_dataframe(load=True):
         pat_comuni_dataframe_excel_07 =\
             pat_pnrr_7a.get_comuni_measures_dataframe(
                 comuni_excel_map)
+        pat_comuni_dataframe_excel_08 =\
+            pat_pnrr_8a.get_comuni_measures_dataframe(
+                comuni_excel_map)
         pat_comuni_dataframe = pd.concat(
             [pat_comuni_dataframe_ispat,
              pat_comunita_valle_dataframe_ispat,
@@ -92,7 +96,8 @@ def get_pat_comuni_dataframe(load=True):
              pat_comuni_dataframe_excel_04,
              pat_comuni_dataframe_excel_05,
              pat_comuni_dataframe_excel_06,
-             pat_comuni_dataframe_excel_07],
+             pat_comuni_dataframe_excel_07,
+             pat_comuni_dataframe_excel_08],
             axis='columns', join='outer')
 
         pat_dataframe_raccolta_puntuale_trento =\
