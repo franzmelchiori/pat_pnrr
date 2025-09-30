@@ -98,49 +98,4 @@
         </div>
     </div>
 
-    {# chart | comuni | scatter | cluster pop | pressione (lorda/netta) [idx] pdc pds | mpe 1-last (timelapse)  #}
-    {% if durata_netta == 'True' %}
-        {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_timelapse.html' %}
-    {% else %}
-        {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_pdc_pds_timelapse.html' %}
-    {% endif %}
-    {# chart | comuni | box | cluster | pressione (lorda/netta) [idx] | mpe 1-last #}
-    {% if durata_netta == 'True' %}
-        {% include 'charts/chart_comuni_box_cluster_pressione_netta.html' %}
-    {% else %}
-        {% include 'charts/chart_comuni_box_cluster_pressione.html' %}
-    {% endif %}
-    {# chart | provincia | gauge | mean | pressione (lorda/netta) [idx] | mpe 1-last (timelapse)  #}
-    {% if durata_netta == 'True' %}
-        {% include 'charts/chart_provincia_gauge_pressione_netta_timelapse.html' %}
-    {% else %}
-        {% include 'charts/chart_provincia_gauge_pressione_timelapse.html' %}
-    {% endif %}
-    {# chart | comuni | pie | rank pop | pressione (lorda/netta) [idx] | mpe 1-last (timelapse)  #}
-    {% if durata_netta == 'True' %}
-        {% include 'charts/chart_comuni_pie_rank_pop_pressione_netta_timelapse.html' %}
-    {% else %}
-        {% include 'charts/chart_comuni_pie_rank_pop_pressione_timelapse.html' %}
-    {% endif %}
-    {# chart | comuni | rank | time | pressione (lorda/netta) [idx] | mpe 1-last (time)  #}
-    {% if durata_netta == 'True' %}
-        {% include 'charts/chart_comuni_rank_time_pressione_netta.html' %}
-    {% else %}
-        {% include 'charts/chart_comuni_rank_time_pressione.html' %}
-    {% endif %}
-    {# chart | comuni | scatter | cluster | pressione (lorda/netta) [idx]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
-    {% if durata_netta == 'True' %}
-        {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_timelapse.html' %}
-    {% else %}
-        {% include 'charts/chart_comuni_scatter_cluster_pop_pressione_elaborazione_timelapse.html' %}
-    {% endif %}
-    
-    {# TODO: chart | comuni | scatter | cluster | avviato [nr]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
-    {# TODO: chart | comuni | scatter | cluster | durata [gg]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
-    {# TODO: chart | comuni | scatter | cluster | arretrato [nr]-elaborazione [ore/sett] pdc_pds | mpe 5-last (timelapse)  #}
-
-    {# TODO: chart | provincia | map | .. | mpe 1-last (timelapse?)  #}
-
-    {# TODO: chart | pratiche | cal | presentato [nr] pdc_pds | mpe 1-last (time)  #}
-
 {% endblock %}

@@ -844,19 +844,7 @@ def index():
             chart_provincia_area_time_cluster_avviato_pdc_pds_series = chart_provincia_area_time_cluster_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
-            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
-            chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
-            chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
-            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
-            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
-            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
-            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
-            chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
-            chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
-            chart_comuni_pie_rank_pop_pressione_netta_timelapse_series = chart_comuni_pie_rank_pop_pressione_netta_timelapse_series)
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
     elif btnradio_mpe == 'btnradio_mpe_2024Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_7a_misurazione.get_comuni_measure(
             pat_pnrr_7a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -892,19 +880,7 @@ def index():
             chart_provincia_area_time_cluster_avviato_pdc_pds_series = chart_provincia_area_time_cluster_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
-            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
-            chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
-            chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
-            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
-            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
-            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
-            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
-            chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
-            chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
-            chart_comuni_pie_rank_pop_pressione_netta_timelapse_series = chart_comuni_pie_rank_pop_pressione_netta_timelapse_series)
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
     elif btnradio_mpe == 'btnradio_mpe_2024Q1_2':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_6a_misurazione.get_comuni_measure(
             pat_pnrr_6a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -932,19 +908,7 @@ def index():
             chart_provincia_area_time_cluster_avviato_pdc_pds_series = chart_provincia_area_time_cluster_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
-            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
-            chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
-            chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
-            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
-            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
-            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
-            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
-            chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
-            chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
-            chart_comuni_pie_rank_pop_pressione_netta_timelapse_series = chart_comuni_pie_rank_pop_pressione_netta_timelapse_series)
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_5a_misurazione.get_comuni_measure(
             pat_pnrr_5a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -972,19 +936,7 @@ def index():
             chart_provincia_area_time_cluster_avviato_pdc_pds_series = chart_provincia_area_time_cluster_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
-            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
-            chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
-            chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
-            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
-            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
-            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
-            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
-            chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
-            chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
-            chart_comuni_pie_rank_pop_pressione_netta_timelapse_series = chart_comuni_pie_rank_pop_pressione_netta_timelapse_series)
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q1_2':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_4a_misurazione.get_comuni_measure(
             pat_pnrr_4a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -1012,19 +964,7 @@ def index():
             chart_provincia_area_time_cluster_avviato_pdc_pds_series = chart_provincia_area_time_cluster_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
-            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
-            chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
-            chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
-            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
-            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
-            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
-            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
-            chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
-            chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
-            chart_comuni_pie_rank_pop_pressione_netta_timelapse_series = chart_comuni_pie_rank_pop_pressione_netta_timelapse_series)
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
     elif btnradio_mpe == 'btnradio_mpe_2022Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_3a_misurazione.get_comuni_measure(
             pat_pnrr_3a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -1052,19 +992,57 @@ def index():
             chart_provincia_area_time_cluster_avviato_pdc_pds_series = chart_provincia_area_time_cluster_avviato_pdc_pds_series,
             chart_provincia_line_time_durata_pdc_pds_series = chart_provincia_line_time_durata_pdc_pds_series,
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
-            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
-            chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
-            chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
-            chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
-            chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
-            chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
-            chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
-            chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
-            chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
-            chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
-            chart_comuni_pie_rank_pop_pressione_netta_timelapse_series = chart_comuni_pie_rank_pop_pressione_netta_timelapse_series)
+            chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series)
+
+@app.route('/analisi')
+def analisi():
+    btnradio_mpe = request.args.get('btnradio_mpe')
+    if not btnradio_mpe:
+        btnradio_mpe = 'btnradio_mpe_2025Q1_2'
+    durata_netta = request.args.get('durata_netta')
+    fts = request.args.get('fts')
+    comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_8a_misurazione.get_comuni_measure(
+        pat_pnrr_8a_misurazione.comuni_excel_map, 'Permessi di Costruire',
+        'pat_pnrr_8a_misurazione_tabelle_comunali\\')
+    comuni_pdc_ov_tsf_measure, comuni_monitored = pat_pnrr_8a_misurazione.get_comuni_measure(
+        pat_pnrr_8a_misurazione.comuni_excel_map, 'Permessi di Costruire',
+        'pat_pnrr_8a_misurazione_tabelle_comunali\\', tsf=True)
+    comuni_pds_measure, comuni_monitored = pat_pnrr_8a_misurazione.get_comuni_measure(
+        pat_pnrr_8a_misurazione.comuni_excel_map, 'Prov di sanatoria',
+        'pat_pnrr_8a_misurazione_tabelle_comunali\\')
+    comuni_pds_tsf_measure, comuni_monitored = pat_pnrr_8a_misurazione.get_comuni_measure(
+        pat_pnrr_8a_misurazione.comuni_excel_map, 'Prov di sanatoria',
+        'pat_pnrr_8a_misurazione_tabelle_comunali\\', tsf=True)
+    comuni_pdc_measure, comuni_monitored = pat_pnrr_8a_misurazione.get_comuni_measure(
+        pat_pnrr_8a_misurazione.comuni_excel_map, 'Permessi di Costruire',
+        'pat_pnrr_8a_misurazione_tabelle_comunali\\', type_pdc_ov=False)
+    comuni_cila_measure, comuni_monitored = pat_pnrr_8a_misurazione.get_comuni_measure(
+        pat_pnrr_8a_misurazione.comuni_excel_map, 'Controllo CILA',
+        'pat_pnrr_8a_misurazione_tabelle_comunali\\')
+    return render_template('analisi.html',
+        pdc_ov = np.ceil(comuni_pdc_ov_measure.values).astype(int),
+        pdc_ov_tsf = np.ceil(comuni_pdc_ov_tsf_measure.values).astype(int),
+        pds = np.ceil(comuni_pds_measure.values).astype(int),
+        pds_tsf = np.ceil(comuni_pds_tsf_measure.values).astype(int),
+        pdc = np.ceil(comuni_pdc_measure.values).astype(int),
+        cila = np.ceil(comuni_cila_measure.values).astype(int),
+        comuni = comuni_monitored,
+        target = target,
+        btnradio_mpe = btnradio_mpe,
+        durata_netta = durata_netta,
+        fts = 'True',
+        chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series,
+        chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series = chart_comuni_scatter_cluster_pop_pressione_netta_pdc_pds_series,
+        chart_comuni_box_cluster_pressione_series = chart_comuni_box_cluster_pressione_series,
+        chart_comuni_box_cluster_pressione_netta_series = chart_comuni_box_cluster_pressione_netta_series,
+        chart_provincia_gauge_pressione_timelapse_series = chart_provincia_gauge_pressione_timelapse_series,
+        chart_provincia_gauge_pressione_netta_timelapse_series = chart_provincia_gauge_pressione_netta_timelapse_series,
+        chart_comuni_scatter_cluster_pop_pressione_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_elaborazione_series,
+        chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series = chart_comuni_scatter_cluster_pop_pressione_netta_elaborazione_series,
+        chart_comuni_rank_time_pressione_series = chart_comuni_rank_time_pressione_series,
+        chart_comuni_rank_time_pressione_netta_series = chart_comuni_rank_time_pressione_netta_series,
+        chart_comuni_pie_rank_pop_pressione_timelapse_series = chart_comuni_pie_rank_pop_pressione_timelapse_series,
+        chart_comuni_pie_rank_pop_pressione_netta_timelapse_series = chart_comuni_pie_rank_pop_pressione_netta_timelapse_series)
 
 @app.route('/misure')
 def misure():
