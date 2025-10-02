@@ -2095,7 +2095,7 @@ def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False, tsf=Tr
         FOLDER_COMUNI_EXCEL)
 
     if save_tex:
-        measurement_07_pratiche_header = [
+        measurement_pratiche_header = [
             'Concluse con SA',
             'Concluse',
             'con sospensioni',
@@ -2104,29 +2104,29 @@ def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False, tsf=Tr
             'Termine [gg]',
             'Avviate',
             'Arretrate']
-        tex_file_header = measurement_07_pratiche_header
+        tex_file_header = measurement_pratiche_header
 
-        comuni_pdc_measure.index = measurement_07_pratiche_header
-        comuni_pdc_ov_measure.index = measurement_07_pratiche_header
-        comuni_pds_measure.index = measurement_07_pratiche_header
-        comuni_cila_measure.index = measurement_07_pratiche_header
+        comuni_pdc_measure.index = measurement_pratiche_header
+        comuni_pdc_ov_measure.index = measurement_pratiche_header
+        comuni_pds_measure.index = measurement_pratiche_header
+        comuni_cila_measure.index = measurement_pratiche_header
 
-        measurement_07_series = {
+        measurement_series = {
             'Permesso di Costruire OV': comuni_pdc_ov_measure.apply(np.rint).astype(int),
             'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int)}
-        measurement_07 = pd.DataFrame(measurement_07_series).T
+        measurement = pd.DataFrame(measurement_series).T
 
-        measurement_07b_series = {
+        measurementb_series = {
             'Permesso di Costruire': comuni_pdc_measure.apply(np.rint).astype(int),
             'Provvedimento di Sanatoria': comuni_pds_measure.apply(np.rint).astype(int),
             'Controllo della CILA': comuni_cila_measure.apply(np.rint).astype(int)}
-        measurement_07b = pd.DataFrame(measurement_07b_series).T
+        measurementb = pd.DataFrame(measurementb_series).T
 
         tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
                          'pat-pnrr_mpe_' + PERIODO_MONITORAGGIO + '.tex')
         with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
-            measurement_07.columns = tex_file_header
-            baseline_styler = measurement_07.style
+            measurement.columns = tex_file_header
+            baseline_styler = measurement.style
             baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
             caption = 'PAT-PNRR | Procedimenti Edilizi | Misurazione ' + PERIODO_MONITORAGGIO
             if temp_tex:
@@ -2139,8 +2139,8 @@ def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False, tsf=Tr
         tex_file_name = ('pat_pnrr_mpe/relazione_tecnica/pat-mpe_measures/'
                          'pat-pnrr_mpe_' + PERIODO_MONITORAGGIO + 'b.tex')
         with open(tex_file_name, 'w', encoding="utf-8") as table_tex_file:
-            measurement_07b.columns = tex_file_header
-            baseline_styler = measurement_07b.style
+            measurementb.columns = tex_file_header
+            baseline_styler = measurementb.style
             baseline_styler.applymap_index(lambda v: "rotatebox:{90}--rwrap", axis=1)
             caption='PAT-PNRR | Procedimenti Edilizi | Misurazione ' + PERIODO_MONITORAGGIO + 'b'
             if temp_tex:
@@ -2268,7 +2268,7 @@ if __name__ == '__main__':
     # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)  # 1 df di misure per 1 ped per tutti i comuni
     get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
     get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
-    get_comuni_measures(comuni_excel_map, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
+    get_comuni_measures(comuni_excel_map, save_tex=True, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
 
 
     # load = True

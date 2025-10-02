@@ -1108,17 +1108,21 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     pdc_measure_labels = ['pdc_2021q3_4',
                           'pdc_2022q1_2', 'pdc_2022q3_4',
                           'pdc_2023q1_2', 'pdc_2023q3_4',
-                          'pdc_2024q1_2', 'pdc_2024q3_4']
+                          'pdc_2024q1_2', 'pdc_2024q3_4',
+                          'pdc_2025q1_2']
     pds_measure_labels = ['pds_2021q3_4',
                           'pds_2022q1_2', 'pds_2022q3_4',
                           'pds_2023q1_2', 'pds_2023q3_4',
-                          'pds_2024q1_2', 'pds_2024q3_4']
+                          'pds_2024q1_2', 'pds_2024q3_4',
+                          'pdc_2025q1_2']
     pdc_net_measure_labels = ['pdc_performance_netta_2022q3_4',
                               'pdc_performance_netta_2023q1_2', 'pdc_performance_netta_2023q3_4',
-                              'pdc_performance_netta_2024q1_2', 'pdc_performance_netta_2024q3_4']
+                              'pdc_performance_netta_2024q1_2', 'pdc_performance_netta_2024q3_4',
+                              'pdc_performance_netta_2025q1_2']
     pds_net_measure_labels = ['pds_performance_netta_2022q3_4',
                               'pds_performance_netta_2023q1_2', 'pds_performance_netta_2023q3_4',
-                              'pds_performance_netta_2024q1_2', 'pds_performance_netta_2024q3_4']
+                              'pds_performance_netta_2024q1_2', 'pds_performance_netta_2024q3_4',
+                              'pds_performance_netta_2025q1_2']
     
     # comuni_excel_map = [['Ala', '', '', ''], ['Trento', '', '', '']]
     for comune in comuni_excel_map:
@@ -1153,7 +1157,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         ax[0].set_yticks(pdc_pds_score_ticks)
         ax[0].set_ylim(pdc_pds_score_range)
         ax[0].set_xticks(range(len(pdc_measure_labels)),
-                         labels=[label.lstrip('pdc_').replace('20', '').replace('q', 'Q').replace('_', '-')
+                         labels=[label.lstrip('pdc_').replace('20', '').replace('q', 'S').replace('1_2', '1').replace('3_4', '2')
                                  for label in pdc_measure_labels])
         ax[0].legend()
         ax[0].spines['top'].set_visible(False)
@@ -1460,6 +1464,12 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2024q3-4',
         'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4',
         'numero_permessi_costruire_avviati_2024q3-4']
+    performance_measure_labels_pdc_2025q1_2 = [
+        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2',
+        'giornate_durata_media_netta_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_avviati_2025q1-2',
+        'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2025q1-2',
+        'numero_permessi_costruire_avviati_2025q1-2']
 
     performance_measure_labels_pdc_ov_2022q3_4 = [
         'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2022q3-4',
@@ -1491,6 +1501,12 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2024q3-4',
         'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4',
         'numero_permessi_costruire_ov_avviati_2024q3-4']
+    performance_measure_labels_pdc_ov_2025q1_2 = [
+        'giornate_durata_media_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2025q1-2',
+        'giornate_durata_media_netta_permessi_costruire_ov_conclusi_con_provvedimento_espresso_2025q1-2',
+        'giornate_durata_mediana_termine_massimo_permessi_costruire_ov_avviati_2025q1-2',
+        'numero_permessi_costruire_ov_arretrati_non_conclusi_scaduto_termine_massimo_2025q1-2',
+        'numero_permessi_costruire_ov_avviati_2025q1-2']
 
     performance_measure_labels_pds_2021q3_4 = [
         'giornate_durata_media_sanatorie_concluse_2021q3-4',
@@ -1534,6 +1550,12 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2024q3-4',
         'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4',
         'numero_sanatorie_avviate_2024q3-4']
+    performance_measure_labels_pds_2025q1_2 = [
+        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q1-2',
+        'giornate_durata_media_netta_sanatorie_concluse_con_provvedimento_espresso_2025q1-2',
+        'giornate_durata_mediana_termine_massimo_sanatorie_avviate_2025q1-2',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2025q1-2',
+        'numero_sanatorie_avviate_2025q1-2']
 
     measure_labels = [
         ['PdC 2021Q3-4', performance_measure_labels_pdc_2021q3_4],
@@ -1543,18 +1565,21 @@ def print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_t
         ['PdC 2023Q3-4', performance_measure_labels_pdc_2023q3_4],
         ['PdC 2024Q1-2', performance_measure_labels_pdc_2024q1_2],
         ['PdC 2024Q3-4', performance_measure_labels_pdc_2024q3_4],
+        ['PdC 2025Q1-2', performance_measure_labels_pdc_2025q1_2],
         ['PdC-OV 2022Q3-4', performance_measure_labels_pdc_ov_2022q3_4],
         ['PdC-OV 2023Q1-2', performance_measure_labels_pdc_ov_2023q1_2],
         ['PdC-OV 2023Q3-4', performance_measure_labels_pdc_ov_2023q3_4],
         ['PdC-OV 2024Q1-2', performance_measure_labels_pdc_ov_2024q1_2],
         ['PdC-OV 2024Q3-4', performance_measure_labels_pdc_ov_2024q3_4],
+        ['PdC-OV 2025Q1-2', performance_measure_labels_pdc_ov_2025q1_2],
         ['PdS 2021Q3-4', performance_measure_labels_pds_2021q3_4],
         ['PdS 2022Q1-2', performance_measure_labels_pds_2022q1_2],
         ['PdS 2022Q3-4', performance_measure_labels_pds_2022q3_4],
         ['PdS 2023Q1-2', performance_measure_labels_pds_2023q1_2],
         ['PdS 2023Q3-4', performance_measure_labels_pds_2023q3_4],
         ['PdS 2024Q1-2', performance_measure_labels_pds_2024q1_2],
-        ['PdS 2024Q3-4', performance_measure_labels_pds_2024q3_4]
+        ['PdS 2024Q3-4', performance_measure_labels_pds_2024q3_4],
+        ['PdS 2025Q1-2', performance_measure_labels_pds_2025q1_2]
     ]
 
     for comune in comuni_excel_map:
