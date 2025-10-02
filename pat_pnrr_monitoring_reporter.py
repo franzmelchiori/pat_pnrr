@@ -17,6 +17,8 @@ from pat_pnrr_monitoring_analyzer import get_pat_comuni_dataframe
 from pat_pnrr_mpe.pat_pnrr_comuni_excel_mapping import comuni_excel_map
 
 
+PATH_MPE = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+CARTELLA_MONITORAGGIO_CORRENTE = 'pat_pnrr_8a_misurazione_tabelle_comunali\\'
 PERIODO_MONITORAGGIO_PRECEDENTE = '2024q3_4'  # 1_2 3_4
 PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN = '2024q3-4'  # 1-2 3-4
 PERIODO_MONITORAGGIO_CORRENTE = '2025q1_2'  # 1_2 3_4
@@ -1682,7 +1684,7 @@ if __name__ == '__main__':
                           'pds_' + PERIODO_MONITORAGGIO_CORRENTE]
     comuni_pdc_scores, comuni_pds_scores, comuni_scores = get_comuni_scores(
         comuni_performance_trends, pdc_measure_labels, pds_measure_labels)
-    comuni_scores.to_csv('pat-pnrr_edilizia_pressione_' + \
+    comuni_scores.to_csv(PATH_MPE + CARTELLA_MONITORAGGIO_CORRENTE + 'pat-pnrr_edilizia_pressione_' + \
                          PERIODI_MONITORAGGIO_ULTIMO_ANNO + '.csv')
     
     # pat_comuni_shelve = shelve.open('pat_comuni_scores_' + \
@@ -1697,7 +1699,7 @@ if __name__ == '__main__':
                           'pds_performance_netta_' + PERIODO_MONITORAGGIO_CORRENTE]
     comuni_pdc_net_scores, comuni_pds_net_scores, comuni_net_scores = get_comuni_scores(
         comuni_performance_netta_trends, pdc_measure_labels, pds_measure_labels)
-    comuni_net_scores.to_csv('pat-pnrr_edilizia_pressione_netta_' + \
+    comuni_net_scores.to_csv(PATH_MPE + CARTELLA_MONITORAGGIO_CORRENTE + 'pat-pnrr_edilizia_pressione_netta_' + \
                              PERIODI_MONITORAGGIO_ULTIMO_ANNO + '.csv')
 
     # for mpe_number in [3, 4, 5, 6, 7, 8]:
