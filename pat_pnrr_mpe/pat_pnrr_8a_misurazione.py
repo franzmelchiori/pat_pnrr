@@ -475,6 +475,9 @@ class ComuneExcel:
                     'string').str.contains('15/042025', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '15/04/2025'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('13/03/025', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '13/03/2025'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
@@ -2266,6 +2269,7 @@ if __name__ == '__main__':
     
     # get_comuni_dataframes(comuni_excel_map, load=False)  # 1 df di pratiche per 1 ped per tutti i comuni
     # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)  # 1 df di misure per 1 ped per tutti i comuni
+    
     get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
     get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
     get_comuni_measures(comuni_excel_map, save_tex=True, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
