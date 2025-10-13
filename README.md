@@ -28,7 +28,10 @@ Grafici attuali
 Prossimi sviluppi
 -----------------
 
-1. Grafici
+1. Sistema
+    1. Sviluppare il front end della web app con Vue.js
+    2. Sviluppare web API e front end per la ricezione del monitoraggio dei procedimenti edilizi, segnalando eventuali dati mancanti o errati
+2. Grafici
     1. Sviluppare e visualizzare nella web app i seguenti grafici e mappe:
         * grafico provinciale a linee con il numero di pratiche PdC arretrate per i vari cluster comunali nei vari monitoraggi
         * grafico provinciale a linee con il numero di pratiche PdS arretrate per i vari cluster comunali nei vari monitoraggi
@@ -37,11 +40,10 @@ Prossimi sviluppi
         * grafico comunale a nuvola animata di punti con il numero di pratiche PdC e PdS arretrate e le ore a settimana di elaborazione tecnica nei vari monitoraggi
         * mappa provinciale con l'indice di pressione (lorda e netta) nei vari monitoraggi
         * calendario provinciale con il numero di pratiche PdC e PdS avviate nei vari monitoraggi
-2. Analisi
-    1. Sviluppare un ottimizzatore per indicare dei percorsi verso i target finali
-    2. Sviluppare la dashboard analitica per ognuno dei 166 comuni trentini
-    3. Sviluppare nuove strategie di clustering dei comuni (oltre a quello ISPAT)
-    4. Sviluppare un sistema di previsione edilizia sul carico di lavoro comunale
+3. Analisi
+    1. Sviluppare la dashboard analitica per ognuno dei 166 comuni trentini
+    2. Sviluppare nuove strategie di clustering dei comuni (oltre a quello ISPAT)
+    3. Sviluppare un sistema di previsione edilizia sul carico di lavoro comunale
 
 
 Visione futura
@@ -50,8 +52,8 @@ Visione futura
 1. Pubblicazione della web app PAT MPE in Intranet PAT
     1. Integrare nella web app un modulo di autenticazione PAT
     2. Pubblicare la web app nella intranet PAT via Docker
+<!--
 2. Pubblicazione della web app PAT MPE in Internet
     1. Sviluppare le web API per l'accesso CRUD ai dati (pratiche e misure) su Postgres ed in particolare al tracciamento delle sospensioni: questo dovrebbe consentire e rendere opportuna l'integrazione delle web API nei gestionali trentini per l'edilizia
-    2. Sviluppare il front end della web app con Vue.js
-    3. Sviluppare un portale per lo scaricamento di un file Excel che predispone al monitoraggio dei procedimenti edilizi ed il caricamente dello stesso file Excel compilato per il recepimento del monitoraggio, segnalando eventuali dati mancanti o errati
-    4. Sviluppare un sistema di autenticazione ed autorizzazione per Internet e pubblicare la web app
+    2. Sviluppare un sistema di autenticazione ed autorizzazione per Internet e pubblicare la web app
+-->
