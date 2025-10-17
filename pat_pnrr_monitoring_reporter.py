@@ -17,7 +17,7 @@ from pat_pnrr_monitoring_analyzer import get_pat_comuni_dataframe
 from pat_pnrr_mpe.pat_pnrr_comuni_excel_mapping import comuni_excel_map
 
 
-PATH_MPE = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+PATH_MPE = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
 CARTELLA_MONITORAGGIO_CORRENTE = 'pat_pnrr_8a_misurazione_tabelle_comunali\\'
 PERIODO_MONITORAGGIO_PRECEDENTE = '2024q3_4'  # 1_2 3_4
 PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN = '2024q3-4'  # 1-2 3-4
@@ -1703,23 +1703,23 @@ if __name__ == '__main__':
                              PERIODI_MONITORAGGIO_ULTIMO_ANNO + '.csv')
 
     # for mpe_number in [3, 4, 5, 6, 7, 8]:
-    for mpe_number in [8]:
-        print_comuni_performance_charts(pat_comuni_dataframe,
-                                        comuni_durata_trends, comuni_durata_netta_trends,
-                                        comuni_arretrato_trends,
-                                        comuni_performance_trends, comuni_performance_netta_trends,
-                                        mpe_number=mpe_number,
-                                        just_provincia=False, no_trento=False,
-                                        just_one=False, save_charts=True)
-        print_comuni_performance_charts(pat_comuni_dataframe,
-                                        comuni_durata_trends, comuni_durata_netta_trends,
-                                        comuni_arretrato_trends,
-                                        comuni_performance_trends, comuni_performance_netta_trends,
-                                        mpe_number=mpe_number,
-                                        just_provincia=True, no_trento=True,
-                                        just_one=False, save_charts=True)
-    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    print_comuni_performance_list(just_one=False, save_tables=True)
+    # for mpe_number in [8]:
+    #     print_comuni_performance_charts(pat_comuni_dataframe,
+    #                                     comuni_durata_trends, comuni_durata_netta_trends,
+    #                                     comuni_arretrato_trends,
+    #                                     comuni_performance_trends, comuni_performance_netta_trends,
+    #                                     mpe_number=mpe_number,
+    #                                     just_provincia=False, no_trento=False,
+    #                                     just_one=False, save_charts=True)
+    #     print_comuni_performance_charts(pat_comuni_dataframe,
+    #                                     comuni_durata_trends, comuni_durata_netta_trends,
+    #                                     comuni_arretrato_trends,
+    #                                     comuni_performance_trends, comuni_performance_netta_trends,
+    #                                     mpe_number=mpe_number,
+    #                                     just_provincia=True, no_trento=True,
+    #                                     just_one=False, save_charts=True)
+    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    # print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
 
     # TODO: graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
