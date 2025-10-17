@@ -17,7 +17,7 @@ import warnings
 from .pat_pnrr_comuni_excel_mapping import *
 
 
-PATH_MPE = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+PATH_MPE = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
 FOLDER_COMUNI_EXCEL = 'pat_pnrr_8a_misurazione_tabelle_comunali\\'  # pat_pnrr_importazione_tabelle_comunali\\'
 DATA_INIZIO_MONITORAGGIO = '2025' + '-01-01'  # '-07-01'
 DATA_FINE_MONITORAGGIO = '2025' + '-06-30'  # '-12-31'

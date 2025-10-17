@@ -37,7 +37,7 @@ def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, d
 
 def get_list_excel(path_to_excel_files, path_to_mpe=None, missing=False):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
 
     list_xls = []
     for file in os.listdir(path_to_mpe + path_to_excel_files):
@@ -58,7 +58,7 @@ class ComuneExcel:
 
     def __init__(self, name_excel_file, path_to_excel_files, comune_name='Test', path_to_mpe=None):
         if not path_to_mpe:
-            path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'    
+            path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'    
         self.path_base = path_to_mpe + path_to_excel_files
         self.path_file = name_excel_file
         self.excel_path = self.path_base + self.path_file
@@ -710,7 +710,7 @@ class ComuneExcel:
     def get_comune_measure_series(self, sheet_name, type_name=False, type_pdc_ov=True,
                                   measure_period='2023q3-4', lpf=False):
         if lpf:
-            path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+            path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
             path_to_excel_files = 'pat_pnrr_5a_misurazione_tabelle_comunali\\'
             path_shelve = path_to_mpe + path_to_excel_files
 
@@ -911,7 +911,7 @@ class ComuneExcel:
 
 def check_comuni_excel(path_to_excel_files, path_to_mpe=None):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
     
     list_excel, list_xls = get_list_excel(path_to_excel_files, path_to_mpe)
     for name_excel_file, name_comune in list_excel:
@@ -926,7 +926,7 @@ def check_comuni_excel(path_to_excel_files, path_to_mpe=None):
 def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load=True,
                          path_to_mpe=None, pf=''):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
@@ -1253,7 +1253,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
 
 def check_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, path_to_mpe=None):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
@@ -1292,7 +1292,7 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
                                  type_name=False, type_pdc_ov=True, load=True, path_to_mpe=None,
                                  lpf=False):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
@@ -1409,7 +1409,7 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
                        type_pdc_ov=True, measure_period='2023q3-4', load=True, path_to_mpe=None,
                        lpf=False):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
 
     comuni_measure_dataframe = get_comuni_measure_dataframe(
         comuni_excel_map=comuni_excel_map, sheet_name=sheet_name,

@@ -33,7 +33,7 @@ def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, d
 
 def get_list_excel(path_base=None, missing=False, pat_pnrr_misurazione=3):
     if not path_base:
-        path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\'
+        path_base = 'C:\\franzmelchiori\\projects\\pat_pnrr\\'
 
     # list_excel = []
     # for file in os.listdir(path_base + 'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\'):
@@ -68,7 +68,7 @@ def check_comuni_excel():
 
 def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=False, lpf=False):
     if not path_base:
-        path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\'
+        path_base = 'C:\\franzmelchiori\\projects\\pat_pnrr\\'
     path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\'
 
     sheet_suffix = ''
@@ -174,7 +174,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=Fals
 def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, type_name=False, type_pdc_ov=True,
                                  load=True, path_base=False, lpf=False):
     if not path_base:
-        path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\'
+        path_base = 'C:\\franzmelchiori\\projects\\pat_pnrr\\'
     path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\'
 
     sheet_suffix = ''
@@ -413,7 +413,7 @@ class ComuneExcel:
 
     def __init__(self, path_file, comune_name='Test', path_base=''):
         if path_base == '':
-            self.path_base = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\' \
+            self.path_base = 'C:\\franzmelchiori\\projects\\pat_pnrr\\' \
                              'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\'
         else:
             self.path_base = path_base
@@ -999,7 +999,7 @@ class ComuneExcel:
     def get_comune_measure_series(self, sheet_name, type_name=False, type_pdc_ov=True,
                                   measure_period='2022q3-4', lpf=False):
         if lpf:
-            path_to_mpe = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+            path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
             path_to_excel_files = 'pat_pnrr_3a_misurazione_tabelle_comunali\\'
             path_shelve = path_to_mpe + path_to_excel_files
 
@@ -1265,7 +1265,7 @@ if __name__ == '__main__':
 
     # TEST 4a MISURAZIONE
 
-    # path = 'C:\\projects\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\doc\\'
+    # path = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\doc\\'
     # comune = ComuneExcel(path_file='pat_pnrr_4a_misurazione_20230929_test.xls',
     #                      comune_name='test', path_base=path)
     # comune_dataframe_pdc = comune.get_comune_dataframe('Permessi di Costruire')
