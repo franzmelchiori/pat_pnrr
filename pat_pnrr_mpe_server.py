@@ -9,7 +9,7 @@ from flask import Flask
 
 TEMPLATE_FOLDER = 'pat_pnrr_mpe_web_app/pages'
 STATIC_FOLDER = 'pat_pnrr_mpe_web_app/static'
-CERT_FOLDER = 'pat_pnrr_mpe_web_app/cert'
+CERT_FOLDER = 'pat_pnrr_mpe_web_app/certs'
 
 app = Flask(__name__, template_folder=TEMPLATE_FOLDER, static_folder=STATIC_FOLDER)
 from pat_pnrr_mpe_web_app import *
