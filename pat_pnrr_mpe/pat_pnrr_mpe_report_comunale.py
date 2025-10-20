@@ -69,6 +69,7 @@ def print_report_comunale(name_comune, version, version_to_remove=''):
                name_comune_file + '_' + version_file + '.tex'
     pdf_folder = PATH_MPE + 'report_comunale\\pdfs\\'
     subprocess.run(['pdflatex', '-output-directory', pdf_folder, tex_file])
+    subprocess.run(['pdflatex', '-output-directory', pdf_folder, tex_file])
     
     try:
         os.remove(PATH_MPE + 'report_comunale\\pdfs\\pat_pnrr_mpe_' + \
