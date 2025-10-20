@@ -10,6 +10,9 @@ import subprocess
 from .pat_pnrr_comuni_excel_mapping import *
 
 
+PATH_MPE = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+
+
 def print_report_comunale(name_comune, version, version_to_remove=''):
     name_comune = name_comune
     name_comune_file = name_comune
@@ -24,7 +27,7 @@ def print_report_comunale(name_comune, version, version_to_remove=''):
     version_file_to_remove = version_to_remove
     version_file_to_remove = version_file_to_remove.replace('.', '-')
 
-    with open('pat_pnrr_mpe\\report_comunale\\pat_pnrr_mpe_report_comunale.txt', \
+    with open(PATH_MPE + 'report_comunale\\pat_pnrr_mpe_report_comunale.txt', \
               mode='r', encoding='utf-8') as f1:
         tex_pat_pnrr_mpe_report_comunale = f1.read()
     f1.close()
@@ -48,51 +51,47 @@ def print_report_comunale(name_comune, version, version_to_remove=''):
                 '<NO_TRENTO>', '')
 
     try:                
-        os.remove('pat_pnrr_mpe\\report_comunale\\texes\\pat_pnrr_mpe_' + \
+        os.remove(PATH_MPE + 'report_comunale\\texes\\pat_pnrr_mpe_' + \
                 name_comune_file + '_' + version_file_to_remove + '.tex')
     except:
         pass
     try:
-        os.remove('pat_pnrr_mpe\\report_comunale\\texes\\pat_pnrr_mpe_' + \
+        os.remove(PATH_MPE + 'report_comunale\\texes\\pat_pnrr_mpe_' + \
                 name_comune_file + '_' + version_file + '.tex')
     except:
         pass
-    f2 = open('pat_pnrr_mpe\\report_comunale\\texes\\pat_pnrr_mpe_' +
+    f2 = open(PATH_MPE + 'report_comunale\\texes\\pat_pnrr_mpe_' +
         name_comune_file + '_' + version_file + '.tex', mode='w', encoding='utf-8')
     f2.write(tex_pat_pnrr_mpe_report_comunale)
     f2.close()
 
-    subprocess.call(['pdflatex', '-output-directory',
-                     'pat_pnrr_mpe\\report_comunale\\pdfs\\',
-                     'pat_pnrr_mpe\\report_comunale\\texes\\pat_pnrr_mpe_' + \
-                      name_comune_file + '_' + version_file + '.tex'])
-    subprocess.call(['pdflatex', '-output-directory',
-                     'pat_pnrr_mpe\\report_comunale\\pdfs\\',
-                     'pat_pnrr_mpe\\report_comunale\\texes\\pat_pnrr_mpe_' + \
-                      name_comune_file + '_' + version_file + '.tex'])
+    tex_file = PATH_MPE + 'report_comunale\\texes\\pat_pnrr_mpe_' + \
+               name_comune_file + '_' + version_file + '.tex'
+    pdf_folder = PATH_MPE + 'report_comunale\\pdfs\\'
+    subprocess.run(['pdflatex', '-output-directory', pdf_folder, tex_file])
     
     try:
-        os.remove('pat_pnrr_mpe\\report_comunale\\pdfs\\pat_pnrr_mpe_' + \
+        os.remove(PATH_MPE + 'report_comunale\\pdfs\\pat_pnrr_mpe_' + \
                 name_comune_file + '_' + version_file + '.aux')
     except:
         pass
     try:                
-        os.remove('pat_pnrr_mpe\\report_comunale\\pdfs\\pat_pnrr_mpe_' + \
+        os.remove(PATH_MPE + 'report_comunale\\pdfs\\pat_pnrr_mpe_' + \
                 name_comune_file + '_' + version_file + '.idx')
     except:
         pass
     try:                
-        os.remove('pat_pnrr_mpe\\report_comunale\\pdfs\\pat_pnrr_mpe_' + \
+        os.remove(PATH_MPE + 'report_comunale\\pdfs\\pat_pnrr_mpe_' + \
                 name_comune_file + '_' + version_file + '.log')
     except:
         pass
     try:                
-        os.remove('pat_pnrr_mpe\\report_comunale\\pdfs\\pat_pnrr_mpe_' + \
+        os.remove(PATH_MPE + 'report_comunale\\pdfs\\pat_pnrr_mpe_' + \
                 name_comune_file + '_' + version_file + '.toc')
     except:
         pass
     try:                
-        os.remove('pat_pnrr_mpe\\report_comunale\\pdfs\\pat_pnrr_mpe_' + \
+        os.remove(PATH_MPE + 'report_comunale\\pdfs\\pat_pnrr_mpe_' + \
                 name_comune_file + '_' + version_file_to_remove + '.pdf')
     except:
         pass
@@ -110,5 +109,5 @@ def print_report_comunali(version, version_to_remove, just_one = False):
 
 if __name__ == '__main__':
     # print_report_comunale(name_comune = 'Trento', version = 'v8.0.0', version_to_remove = 'v7.6.4')
-    # print_report_comunale(name_comune = 'Ala', version = 'v8.0.0', version_to_remove = 'v7.6.4')
-    print_report_comunali(version = 'v8.0.0', version_to_remove = 'v7.6.4')
+    # print_report_comunale(name_comune = 'Ala', version = 'v8.3.0', version_to_remove = 'v8.0.0')
+    print_report_comunali(version = 'v8.3.0', version_to_remove = 'v8.0.0')
