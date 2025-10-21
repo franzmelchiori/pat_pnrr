@@ -1722,4 +1722,5 @@ if __name__ == '__main__':
     print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
 
+    # TODO: nuova dashboard comunale .png con gli andamenti degli avviati, delle durate e degli arretrati di pdc e pds
     # TODO: graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
