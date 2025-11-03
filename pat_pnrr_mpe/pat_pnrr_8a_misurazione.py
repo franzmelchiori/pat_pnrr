@@ -510,6 +510,9 @@ class ComuneExcel:
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ritirata', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('SOSPESA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['data_fine_pratica'] = pd.to_datetime(
                     comune_dataframe['data_fine_pratica'],
@@ -2270,10 +2273,10 @@ if __name__ == '__main__':
     # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)
     # get_comuni_measures(comuni_excel_map, tsf=False)
     
-    # get_comuni_dataframes(comuni_excel_map, load=False)  # 1 df di pratiche per 1 ped per tutti i comuni
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)  # 1 df di misure per 1 ped per tutti i comuni
-    # get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
+    get_comuni_dataframes(comuni_excel_map, load=False)  # 1 df di pratiche per 1 ped per tutti i comuni
+    get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)  # 1 df di misure per 1 ped per tutti i comuni
+    get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
+    get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
     get_comuni_measures(comuni_excel_map, save_tex=True, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
 
 
