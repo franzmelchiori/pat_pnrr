@@ -2275,7 +2275,7 @@ if __name__ == '__main__':
 
 
     # LOAD DATAFRAME COMUNI
-    pat_comuni_dataframe = get_pat_comuni_dataframe(load=False)
+    pat_comuni_dataframe = get_pat_comuni_dataframe(load=True)
 
 
     # PRINT BASELINES
@@ -2606,3 +2606,86 @@ if __name__ == '__main__':
     #     (pat_comuni_dataframe_arretrati['pdc arretrato medio'] > 10)]\
     #         .sort_values(by='pdc arretrato medio', ascending=False)\
     #         .to_csv('pat-pnrr_edilizia_misure_pdc_pds_mpe3-7_arretrati_critici.csv')
+
+
+    # REQUEST 20251110_01a | 8o mpe, pdc, lista comuni, durata media (lorda) che non raggiunge il target
+    baseline = {
+        'pdc_ov_durata': 121,
+        'pds_durata': 144}
+    target_perc = {
+        'pdc_ov_durata': -0.05,
+        'pds_durata': -0.05}
+    target = {
+        'pdc_ov_durata': math.ceil(baseline['pdc_ov_durata'] * (1 + target_perc['pdc_ov_durata'])),
+        'pds_durata': math.ceil(baseline['pds_durata'] * (1 + target_perc['pds_durata']))}
+    # comuni_fuori_target_pdc_ov_durata_2025q1_2 = \
+    #     pat_comuni_dataframe['giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2'] > \
+    #         target['pdc_ov_durata']
+    # comuni_fuori_target_pdc_ov_durata_2025q1_2 = \
+    #     pat_comuni_dataframe[comuni_fuori_target_pdc_ov_durata_2025q1_2] \
+    #         ['giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2'] - \
+    #             target['pdc_ov_durata']
+    # comuni_fuori_target_pdc_ov_durata_2025q1_2.name = 'distanza target [gg]'
+    # comuni_fuori_target_pdc_ov_durata_2025q1_2.to_csv('pat-pnrr_edilizia_comuni_fuori_target_pdc_ov_durata_2025q1-2.csv')
+    # REQUEST 20251110_01b | 8o mpe, pds, lista comuni, durata media (lorda) che non raggiunge il target
+    # comuni_fuori_target_pds_durata_2025q1_2 = \
+    #     pat_comuni_dataframe['giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q1-2'] > \
+    #         target['pds_durata']
+    # comuni_fuori_target_pds_durata_2025q1_2 = \
+    #     pat_comuni_dataframe[comuni_fuori_target_pds_durata_2025q1_2] \
+    #         ['giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q1-2'] - \
+    #             target['pds_durata']
+    # comuni_fuori_target_pds_durata_2025q1_2.name = 'distanza target [gg]'
+    # comuni_fuori_target_pds_durata_2025q1_2.to_csv('pat-pnrr_edilizia_comuni_fuori_target_pds_durata_2025q1-2.csv')
+
+
+    # REQUEST 20251110_02a | 8o mpe, pdc, lista pratiche, concluse e non concluse, con sospensioni nulle
+    # pdc_2025q1_2 = pat_pnrr_8a.get_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire', pat_pnrr_8a.FOLDER_COMUNI_EXCEL, load=True, sf='t_01')
+    # pdc_ov_filter = (pdc_2025q1_2 .loc[:, 'tipologia_pratica'] == 'PdC ordinario') ^ \
+    #                 (pdc_2025q1_2 .loc[:, 'tipologia_pratica'] == 'PdC in variante')
+    # pdc_ov_2025q1_2 = pdc_2025q1_2[pdc_ov_filter]
+    # pdc_ov_senza_sospensioni_2025q1_2 = pdc_ov_2025q1_2[pdc_ov_2025q1_2['giorni_sospensioni'] == pd.Timedelta('0 days')]
+    # pdc_ov_senza_sospensioni_2025q1_2.to_csv('pat-pnrr_edilizia_pdc_ov_senza_sospensioni_2025q1-2.csv')
+    # REQUEST 20251110_02b | 8o mpe, pds, lista pratiche, concluse e non concluse, con sospensioni nulle
+    # pds_2025q1_2 = pat_pnrr_8a.get_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria', pat_pnrr_8a.FOLDER_COMUNI_EXCEL, load=True, sf='t_01')
+    # pds_senza_sospensioni_2025q1_2 = pds_2025q1_2[pds_2025q1_2['giorni_sospensioni'] == pd.Timedelta('0 days')]
+    # pds_senza_sospensioni_2025q1_2.to_csv('pat-pnrr_edilizia_pds_senza_sospensioni_2025q1-2.csv')
+
+
+    # REQUEST 20251110_03a | 8o mpe, pdc, lista pratiche, non concluse, durata (lorda, fino al 30 giugno) che supera il target
+    # pdc_2025q1_2 = pat_pnrr_8a.get_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire', pat_pnrr_8a.FOLDER_COMUNI_EXCEL, load=True, sf='t_01')
+    # pdc_ov_filter = (pdc_2025q1_2 .loc[:, 'tipologia_pratica'] == 'PdC ordinario') ^ (pdc_2025q1_2 .loc[:, 'tipologia_pratica'] == 'PdC in variante')
+    # pdc_non_concluse_filter = (pdc_2025q1_2.loc[:, 'data_fine_pratica_silenzio-assenso'].isna()) & (pdc_2025q1_2.loc[:, 'data_fine_pratica'].isna())
+    # pdc_ov_non_concluse_filter = pdc_ov_filter & pdc_non_concluse_filter
+    # pdc_sopra_target_filter = (pd.Timestamp('2025-06-30') - pdc_2025q1_2.loc[pdc_ov_non_concluse_filter, 'data_inizio_pratica_definitiva']) > \
+    #     pd.to_timedelta(target['pdc_ov_durata'], errors='coerce', unit='D')
+    # pdc_ov_non_concluse_sopra_target = pdc_2025q1_2[pdc_ov_non_concluse_filter & pdc_sopra_target_filter]
+    # pdc_ov_non_concluse_sopra_target.to_csv('pat-pnrr_edilizia_pdc_ov_non_concluse_sopra_target_2025q1-2.csv')
+    # REQUEST 20251110_03b | 8o mpe, pds, lista pratiche, non concluse, durata (lorda, fino al 30 giugno) che supera il target
+    # pds_2025q1_2 = pat_pnrr_8a.get_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria', pat_pnrr_8a.FOLDER_COMUNI_EXCEL, load=True, sf='t_01')
+    # pds_non_concluse_filter = pds_2025q1_2.loc[:, 'data_fine_pratica'].isna()
+    # pds_sopra_target_filter = (pd.Timestamp('2025-06-30') - pds_2025q1_2.loc[pds_non_concluse_filter, 'data_inizio_pratica']) > \
+    #     pd.to_timedelta(target['pds_durata'], errors='coerce', unit='D')
+    # pds_non_concluse_sopra_target = pds_2025q1_2[pds_non_concluse_filter & pds_sopra_target_filter]
+    # pds_non_concluse_sopra_target.to_csv('pat-pnrr_edilizia_pds_non_concluse_sopra_target_2025q1-2.csv')
+
+
+    # TODO: REQUEST 20251110_04  | 8o mpe, pdc, lista pratiche, data inizio diversa da quella definitiva, differenza della durata lorda
+
+
+    # TODO: REQUEST 20251110 | comuni ordinati decrescenti per popolazione e, sovrapposto, per avviato medio pdc e pds | mpe7-8
+    # numero_permessi_costruire_avviati = [
+    #     'numero_permessi_costruire_avviati_2024q3-4',
+    #     'numero_permessi_costruire_avviati_2025q1-2']
+    # numero_sanatorie_avviate = [
+    #     'numero_sanatorie_avviate_2024q3-4',
+    #     'numero_sanatorie_avviate_2025q1-2']
+    # pat_comuni_dataframe_popolazione_avviati = pd.concat([
+    #     pat_comuni_dataframe['pat_comuni_popolazione'],
+    #     pat_comuni_dataframe[numero_permessi_costruire_avviati].mean(axis=1).round(0),
+    #     pat_comuni_dataframe[numero_sanatorie_avviate].mean(axis=1).round(0)],
+    #     axis='columns', join='outer')
+    # pat_comuni_dataframe_popolazione_avviati.columns = [
+    #     'popolazione',
+    #     'pdc avviato medio',
+    #     'pds avviato medio']
