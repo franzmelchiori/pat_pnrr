@@ -2670,7 +2670,27 @@ if __name__ == '__main__':
     # pds_non_concluse_sopra_target.to_csv('pat-pnrr_edilizia_pds_non_concluse_sopra_target_2025q1-2.csv')
 
 
-    # TODO: REQUEST 20251110_04  | 8o mpe, pdc, lista pratiche, data inizio diversa da quella definitiva, differenza della durata lorda
+    # REQUEST 20251110_04  | 8o mpe, pdc, lista pratiche, concluse, con data inizio diversa da quella definitiva, differenza della durata lorda nei due casi
+    # pdc_2025q1_2 = pat_pnrr_8a.get_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire', pat_pnrr_8a.FOLDER_COMUNI_EXCEL, load=True, sf='t_01')
+    # pdc_ov_filter = (pdc_2025q1_2 .loc[:, 'tipologia_pratica'] == 'PdC ordinario') ^ (pdc_2025q1_2 .loc[:, 'tipologia_pratica'] == 'PdC in variante')
+    # pdc_conclusi_filter = pdc_2025q1_2.loc[:, 'data_fine_pratica'].isna() == False
+    # pdc_ov_conclusi_filter = pdc_ov_filter & pdc_conclusi_filter
+    # durata_senza_interruzioni_pdc_ov_conclusi = pdc_2025q1_2.loc[pdc_ov_conclusi_filter, 'data_fine_pratica'] - pdc_2025q1_2.loc[pdc_ov_conclusi_filter, 'data_inizio_pratica']
+    # durata_con_interruzioni_pdc_ov_conclusi = pdc_2025q1_2.loc[pdc_ov_conclusi_filter, 'data_fine_pratica'] - pdc_2025q1_2.loc[pdc_ov_conclusi_filter, 'data_inizio_pratica_definitiva']
+    # differenza_durata_senza_con_interruzioni_pdc_ov_conclusi = durata_senza_interruzioni_pdc_ov_conclusi - durata_con_interruzioni_pdc_ov_conclusi
+    # pdc_ov_conclusi_differenza_durata_senza_con_interruzioni_filter = differenza_durata_senza_con_interruzioni_pdc_ov_conclusi >= pd.to_timedelta(1, errors='coerce', unit='D')
+    # pdc_ov_conclusi_differenza_durata_senza_con_interruzioni = pdc_2025q1_2[pdc_ov_conclusi_filter & pdc_ov_conclusi_differenza_durata_senza_con_interruzioni_filter]
+    # pdc_ov_conclusi_differenza_durata_senza_con_interruzioni = pd.concat([
+    #     pdc_ov_conclusi_differenza_durata_senza_con_interruzioni,
+    #     differenza_durata_senza_con_interruzioni_pdc_ov_conclusi[pdc_ov_conclusi_filter & pdc_ov_conclusi_differenza_durata_senza_con_interruzioni_filter],
+    #     durata_senza_interruzioni_pdc_ov_conclusi[pdc_ov_conclusi_filter & pdc_ov_conclusi_differenza_durata_senza_con_interruzioni_filter],
+    #     durata_con_interruzioni_pdc_ov_conclusi[pdc_ov_conclusi_filter & pdc_ov_conclusi_differenza_durata_senza_con_interruzioni_filter]],
+    #     axis='columns', join='outer')
+    # pdc_ov_conclusi_differenza_durata_senza_con_interruzioni.reset_index(drop=True, inplace=True)
+    # pdc_ov_conclusi_differenza_durata_senza_con_interruzioni.columns.values[-3] = 'differenza_durata_senza_con_interruzioni_pdc_ov_conclusi'
+    # pdc_ov_conclusi_differenza_durata_senza_con_interruzioni.columns.values[-2] = 'durata_senza_interruzioni_pdc_ov_conclusi'
+    # pdc_ov_conclusi_differenza_durata_senza_con_interruzioni.columns.values[-1] = 'durata_con_interruzioni_pdc_ov_conclusi'
+    # pdc_ov_conclusi_differenza_durata_senza_con_interruzioni.to_csv('pat-pnrr_edilizia_pdc_ov_conclusi_differenza_durata_senza_con_interruzioni_2025q1-2.csv')
 
 
     # TODO: REQUEST 20251110 | comuni ordinati decrescenti per popolazione e, sovrapposto, per avviato medio pdc e pds | mpe7-8
