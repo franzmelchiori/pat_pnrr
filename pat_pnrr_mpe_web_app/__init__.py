@@ -88,6 +88,11 @@ comuni_turistici = {
 comuni_turistici = pd.Series(comuni_turistici)
 classificazione_comunale_turistica = comuni_turistici.map(classificazione_comunale_map)
 
+index_comuni_non_turistici_cluster_1 = pat_comuni_dataframe[classificazione_comunale == 0].index.difference(
+    classificazione_comunale_turistica[classificazione_comunale_turistica == 0].index)
+index_comuni_non_turistici_cluster_2 = pat_comuni_dataframe[classificazione_comunale == 1].index.difference(
+    classificazione_comunale_turistica[classificazione_comunale_turistica == 1].index)
+
 # TODO: modulare le ore e gli scores per misurazione (es. 2023q3-2024q2, 2023)
 comuni_durata_trends, comuni_durata_netta_trends, \
 comuni_arretrato_trends, \
@@ -419,6 +424,15 @@ chart_provincia_area_time_cluster_avviato_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_permessi_costruire_avviati_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_permessi_costruire_avviati_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_permessi_costruire_avviati_2025q1-2'].mean()).astype(int))],
+    'pdc_avviato_medio_cluster_1nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_avviati_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_avviati_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_avviati_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_avviati_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_avviati_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_avviati_2025q1-2'].mean()).astype(int))],
     'pdc_avviato_cluster_2': [
         str(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'numero_permessi_costruire_2021q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'numero_permessi_costruire_2022q1-2'].sum().astype(int)),
@@ -446,6 +460,15 @@ chart_provincia_area_time_cluster_avviato_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_permessi_costruire_avviati_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_permessi_costruire_avviati_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_permessi_costruire_avviati_2025q1-2'].mean()).astype(int))],
+    'pdc_avviato_medio_cluster_2nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_avviati_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_avviati_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_avviati_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_avviati_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_avviati_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_avviati_2025q1-2'].mean()).astype(int))],
     'pdc_avviato_cluster_3': [
         str(pat_comuni_dataframe[classificazione_comunale == 2].loc[:, 'numero_permessi_costruire_2021q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe[classificazione_comunale == 2].loc[:, 'numero_permessi_costruire_2022q1-2'].sum().astype(int)),
@@ -500,6 +523,15 @@ chart_provincia_area_time_cluster_avviato_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_sanatorie_avviate_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_sanatorie_avviate_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_sanatorie_avviate_2025q1-2'].mean()).astype(int))],
+    'pds_avviato_medio_cluster_1nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_avviate_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_avviate_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_avviate_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_avviate_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_avviate_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_avviate_2025q1-2'].mean()).astype(int))],
     'pds_avviato_cluster_2': [
         str(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'numero_sanatorie_2021q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'numero_sanatorie_2022q1-2'].sum().astype(int)),
@@ -527,6 +559,15 @@ chart_provincia_area_time_cluster_avviato_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_sanatorie_avviate_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_sanatorie_avviate_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_sanatorie_avviate_2025q1-2'].mean()).astype(int))],
+    'pds_avviato_medio_cluster_2nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_avviate_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_avviate_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_avviate_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_avviate_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_avviate_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_avviate_2025q1-2'].mean()).astype(int))],
     'pds_avviato_cluster_3': [
         str(pat_comuni_dataframe[classificazione_comunale == 2].loc[:, 'numero_sanatorie_2021q3-4'].sum().astype(int)),
         str(pat_comuni_dataframe[classificazione_comunale == 2].loc[:, 'numero_sanatorie_2022q1-2'].sum().astype(int)),
@@ -613,6 +654,15 @@ chart_provincia_line_time_cluster_durata_media_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2'].mean()).astype(int))],
+    'pdc_durata_media_cluster_1nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_permessi_costruire_conclusi_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_permessi_costruire_conclusi_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2'].mean()).astype(int))],
     'pdc_durata_media_cluster_2': [
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'giornate_durata_media_permessi_costruire_conclusi_2021q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'giornate_durata_media_permessi_costruire_conclusi_2022q1-2'].mean()).astype(int)),
@@ -631,6 +681,15 @@ chart_provincia_line_time_cluster_durata_media_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2'].mean()).astype(int))],
+    'pdc_durata_media_cluster_2nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_permessi_costruire_conclusi_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_permessi_costruire_conclusi_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2'].mean()).astype(int))],
     'pds_durata_media_cluster_1': [
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 0].loc[:, 'giornate_durata_media_sanatorie_concluse_2021q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 0].loc[:, 'giornate_durata_media_sanatorie_concluse_2022q1-2'].mean()).astype(int)),
@@ -649,6 +708,15 @@ chart_provincia_line_time_cluster_durata_media_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q1-2'].mean()).astype(int))],
+    'pds_durata_media_cluster_1nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_sanatorie_concluse_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_sanatorie_concluse_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q1-2'].mean()).astype(int))],
     'pds_durata_media_cluster_2': [
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'giornate_durata_media_sanatorie_concluse_2021q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'giornate_durata_media_sanatorie_concluse_2022q1-2'].mean()).astype(int)),
@@ -666,7 +734,16 @@ chart_provincia_line_time_cluster_durata_media_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q3-4'].mean()).astype(int)),
-        str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q1-2'].mean()).astype(int))]}
+        str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q1-2'].mean()).astype(int))],
+    'pds_durata_media_cluster_2nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_sanatorie_concluse_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_sanatorie_concluse_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q1-2'].mean()).astype(int))]}
 
 chart_provincia_area_time_arretrato_pdc_pds_series = {
     'pdc_arretrato': [
@@ -707,6 +784,15 @@ chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))],
+    'pdc_arretrato_medio_cluster_1nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_non_conclusi_scaduti_termini_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_non_conclusi_scaduti_termini_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))],
     'pdc_arretrato_medio_cluster_2': [
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'numero_permessi_costruire_non_conclusi_scaduti_termini_2021q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'numero_permessi_costruire_non_conclusi_scaduti_termini_2022q1-2'].mean()).astype(int)),
@@ -725,6 +811,15 @@ chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))],
+    'pdc_arretrato_medio_cluster_2nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_non_conclusi_scaduti_termini_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_non_conclusi_scaduti_termini_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))],
     'pds_arretrato_medio_cluster_1': [
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 0].loc[:, 'numero_sanatorie_non_concluse_scaduti_termini_2021q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 0].loc[:, 'numero_sanatorie_non_concluse_scaduti_termini_2022q1-2'].mean()).astype(int)),
@@ -743,6 +838,15 @@ chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 0].index, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))],
+    'pds_arretrato_medio_cluster_1nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_non_concluse_scaduti_termini_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_non_concluse_scaduti_termini_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_1, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))],
     'pds_arretrato_medio_cluster_2': [
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'numero_sanatorie_non_concluse_scaduti_termini_2021q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe[classificazione_comunale == 1].loc[:, 'numero_sanatorie_non_concluse_scaduti_termini_2022q1-2'].mean()).astype(int)),
@@ -760,7 +864,16 @@ chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4'].mean()).astype(int)),
-        str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))]}
+        str(np.ceil(pat_comuni_dataframe.loc[comuni_turistici[classificazione_comunale_turistica == 1].index, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))],
+    'pds_arretrato_medio_cluster_2nt': [
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_non_concluse_scaduti_termini_2021q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_non_concluse_scaduti_termini_2022q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))]}
 
 chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = [{
     'comuni_piccoli':[list(a) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 0].iloc[:, 1:])],

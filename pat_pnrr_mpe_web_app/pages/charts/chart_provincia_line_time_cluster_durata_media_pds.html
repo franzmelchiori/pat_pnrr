@@ -11,7 +11,7 @@
             title: {
                 text: 'Durata PdS'},
             legend: {
-                data: ['C130c', 'C130ct', 'C31c', 'C31ct']},
+                data: ['C130c', 'C130ct', 'C130cnt', 'C31c', 'C31ct', 'C31cnt']},
             xAxis: [{
                 type: 'category',
                 boundaryGap: false,
@@ -36,6 +36,15 @@
                     data: {{ chart_provincia_line_time_cluster_durata_media_pdc_pds_series.pds_durata_media_cluster_1t | safe}}
                 },
                 {
+                    name: 'C130cnt',
+                    type: 'line',
+                    lineStyle: {
+                        type: 'dotted'},
+                    symbol: 'emptyrect',
+                    smooth: true,
+                    data: {{ chart_provincia_line_time_cluster_durata_media_pdc_pds_series.pds_durata_media_cluster_1nt | safe}}
+                },
+                {
                     name: 'C31c',
                     type: 'line',
                     smooth: true,
@@ -49,8 +58,17 @@
                     symbol: 'emptyTriangle',
                     smooth: true,
                     data: {{ chart_provincia_line_time_cluster_durata_media_pdc_pds_series.pds_durata_media_cluster_2t | safe}}
+                },
+                {
+                    name: 'C31cnt',
+                    type: 'line',
+                    lineStyle: {
+                        type: 'dotted'},
+                    symbol: 'emptyrect',
+                    smooth: true,
+                    data: {{ chart_provincia_line_time_cluster_durata_media_pdc_pds_series.pds_durata_media_cluster_2nt | safe}}
                 }],
-            color: ['#80FFA5', '#80FFA5', '#00DDFF', '#00DDFF'],
+            color: ['#80FFA5', '#80FFA5', '#80FFA5', '#00DDFF', '#00DDFF', '#00DDFF'],
             grid: {
                 left: '3%',
                 right: '4%',
