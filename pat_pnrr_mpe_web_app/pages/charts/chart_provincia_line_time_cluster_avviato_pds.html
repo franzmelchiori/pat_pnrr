@@ -11,7 +11,8 @@
             title: {
                 text: 'Avviati PdS'},
             legend: {
-                data: ['Ctur', 'C130c', 'C31c', 'C3c', 'CR', 'CT']},
+                //data: ['Ctur', 'C130c', 'C31c', 'C3c', 'CR', 'CT']},
+                data: ['C130c', 'C31c', 'C3c', 'CR', 'CT']},
             xAxis: [{
                 type: 'category',
                 boundaryGap: false,
@@ -19,15 +20,15 @@
             yAxis: [{
                 type: 'value'}],
             series: [
-                {
-                    name: 'Ctur',
-                    type: 'line',
-                    lineStyle: {
-                        type: 'dashed'},
-                    symbol: 'emptyTriangle',
-                    smooth: true,
-                    data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_0 | safe}}
-                },
+                // {
+                //     name: 'Ctur',
+                //     type: 'line',
+                //     lineStyle: {
+                //         type: 'dashed'},
+                //     symbol: 'emptyTriangle',
+                //     smooth: true,
+                //     data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_0 | safe}}
+                // },
                 {
                     name: 'C130c',
                     type: 'line',
@@ -58,7 +59,8 @@
                     smooth: true,
                     data: {{ chart_provincia_area_time_cluster_avviato_pdc_pds_series.pds_avviato_cluster_5 | safe}}
                 }],
-            color: ['#808080', '#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+            // color: ['#808080', '#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+            color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
             grid: {
                 left: '3%',
                 right: '4%',
