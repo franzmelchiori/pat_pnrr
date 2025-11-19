@@ -160,4 +160,17 @@
         </div>
     </div>
 
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-6">
+                {# chart | provincia | area | time | elaborazione [ore cumulo / settimana] | mpe 1-last (time)  #}
+                {% include 'charts/chart_provincia_area_time_ore_settimana.html' %}
+            </div>
+            <div class="col-md-6">
+                {# chart | provincia | line | time | elaborazione [ore medie /settimana] | mpe 1-last (time)  #}
+                {% include 'charts/chart_provincia_line_time_ore_settimana.html' %}
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

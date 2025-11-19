@@ -875,6 +875,26 @@ chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = {
         str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4'].mean()).astype(int)),
         str(np.ceil(pat_comuni_dataframe.loc[index_comuni_non_turistici_cluster_2, 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2025q1-2'].mean()).astype(int))]}
 
+chart_provincia_line_time_ore_settimana_series = {
+    'tecnici_ore_cumulo_settimana': [
+        str(),
+        str(),
+        str(),
+        str(),
+        str(pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2023q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q1-2'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q3-4'].sum().astype(int)),
+        str(pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2025q1-2'].sum().astype(int))],
+    'tecnici_ore_medie_settimana': [
+        str(),
+        str(),
+        str(),
+        str(),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2023q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q1-2'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2024q3-4'].mean()).astype(int)),
+        str(np.ceil(pat_comuni_dataframe.loc[:, 'ore_tecnici_settimana_2025q1-2'].mean()).astype(int))]}
+
 chart_comuni_scatter_cluster_pop_pressione_pdc_pds_series = [{
     'comuni_piccoli':[list(a) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 0].iloc[:, 1:])],
     'comuni_medio_piccoli':[list(a) for a in np.array(scatter_pressione_data_2021q3_2022q2[scatter_pressione_data_2021q3_2022q2.cluster_comune == 1].iloc[:, 1:])],
@@ -1190,7 +1210,8 @@ def index():
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
             chart_provincia_line_time_cluster_durata_media_pdc_pds_series = chart_provincia_line_time_cluster_durata_media_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series)
+            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series,
+            chart_provincia_line_time_ore_settimana_series = chart_provincia_line_time_ore_settimana_series)
     elif btnradio_mpe == 'btnradio_mpe_2024Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_7a_misurazione.get_comuni_measure(
             pat_pnrr_7a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -1228,7 +1249,8 @@ def index():
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
             chart_provincia_line_time_cluster_durata_media_pdc_pds_series = chart_provincia_line_time_cluster_durata_media_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series)
+            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series,
+            chart_provincia_line_time_ore_settimana_series = chart_provincia_line_time_ore_settimana_series)
     elif btnradio_mpe == 'btnradio_mpe_2024Q1_2':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_6a_misurazione.get_comuni_measure(
             pat_pnrr_6a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -1258,7 +1280,8 @@ def index():
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
             chart_provincia_line_time_cluster_durata_media_pdc_pds_series = chart_provincia_line_time_cluster_durata_media_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series)
+            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series,
+            chart_provincia_line_time_ore_settimana_series = chart_provincia_line_time_ore_settimana_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_5a_misurazione.get_comuni_measure(
             pat_pnrr_5a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -1288,7 +1311,8 @@ def index():
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
             chart_provincia_line_time_cluster_durata_media_pdc_pds_series = chart_provincia_line_time_cluster_durata_media_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series)
+            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series,
+            chart_provincia_line_time_ore_settimana_series = chart_provincia_line_time_ore_settimana_series)
     elif btnradio_mpe == 'btnradio_mpe_2023Q1_2':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_4a_misurazione.get_comuni_measure(
             pat_pnrr_4a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -1318,7 +1342,8 @@ def index():
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
             chart_provincia_line_time_cluster_durata_media_pdc_pds_series = chart_provincia_line_time_cluster_durata_media_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series)
+            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series,
+            chart_provincia_line_time_ore_settimana_series = chart_provincia_line_time_ore_settimana_series)
     elif btnradio_mpe == 'btnradio_mpe_2022Q3_4':
         comuni_pdc_ov_measure, comuni_monitored = pat_pnrr_3a_misurazione.get_comuni_measure(
             pat_pnrr_3a_misurazione.comuni_excel_map, 'Permessi di Costruire',
@@ -1348,7 +1373,8 @@ def index():
             chart_provincia_line_time_durata_netta_pdc_pds_series = chart_provincia_line_time_durata_netta_pdc_pds_series,
             chart_provincia_line_time_cluster_durata_media_pdc_pds_series = chart_provincia_line_time_cluster_durata_media_pdc_pds_series,
             chart_provincia_area_time_arretrato_pdc_pds_series = chart_provincia_area_time_arretrato_pdc_pds_series,
-            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series)
+            chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series = chart_provincia_area_time_cluster_arretrato_medio_pdc_pds_series,
+            chart_provincia_line_time_ore_settimana_series = chart_provincia_line_time_ore_settimana_series)
 
 @app.route('/analisi')
 def analisi():

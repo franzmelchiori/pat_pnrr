@@ -1,0 +1,60 @@
+{# <div class="container"> #}
+    <div id="chart_provincia_area_time_ore_settimana" style="height:360px;"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById('chart_provincia_area_time_ore_settimana');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false});
+        var app = {};
+
+        var option = {
+            title: {
+                text: 'Elaborazione'},
+            legend: {
+                data: ['Tecnica']},
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                data: ['2021Q3-4', '2022Q1-2', '2022Q3-4', '2023Q1-2', '2023Q3-4', '2024Q1-2', '2024Q3-4', '2025Q1-2']}],
+            yAxis: [{
+                name: 'ore cumulo / settimana',
+                nameLocation: 'middle',
+                nameGap: 45,
+                type: 'value'}],
+            series: [
+                {
+                    name: 'Tecnica',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0},
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {offset: 0,color: 'rgb(255, 0, 135)'},
+                            {offset: 1,color: 'rgb(135, 0, 157)'}])},
+                    emphasis: {
+                        focus: 'series'},
+                    data: {{ chart_provincia_line_time_ore_settimana_series.tecnici_ore_cumulo_settimana | safe }}
+                }],
+            color: ['#FF0087'],
+            grid: {
+                left: '4%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true},
+            tooltip: {
+                trigger: 'axis'},
+            toolbox: {
+                feature: {
+                    restore: {},
+                    saveAsImage: {}}}
+        };
+
+        myChart.setOption(option);
+        window.addEventListener('resize', myChart.resize);
+    </script>
+{# </div> #}
+<br>
