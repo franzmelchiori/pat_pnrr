@@ -2609,15 +2609,15 @@ if __name__ == '__main__':
 
 
     # REQUEST 20251110_01a | 8o mpe, pdc, lista comuni, durata media (lorda) che non raggiunge il target
-    baseline = {
-        'pdc_ov_durata': 121,
-        'pds_durata': 144}
-    target_perc = {
-        'pdc_ov_durata': -0.05,
-        'pds_durata': -0.05}
-    target = {
-        'pdc_ov_durata': math.ceil(baseline['pdc_ov_durata'] * (1 + target_perc['pdc_ov_durata'])),
-        'pds_durata': math.ceil(baseline['pds_durata'] * (1 + target_perc['pds_durata']))}
+    # baseline = {
+    #     'pdc_ov_durata': 121,
+    #     'pds_durata': 144}
+    # target_perc = {
+    #     'pdc_ov_durata': -0.05,
+    #     'pds_durata': -0.05}
+    # target = {
+    #     'pdc_ov_durata': math.ceil(baseline['pdc_ov_durata'] * (1 + target_perc['pdc_ov_durata'])),
+    #     'pds_durata': math.ceil(baseline['pds_durata'] * (1 + target_perc['pds_durata']))}
     # comuni_fuori_target_pdc_ov_durata_2025q1_2 = \
     #     pat_comuni_dataframe['giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2'] > \
     #         target['pdc_ov_durata']
