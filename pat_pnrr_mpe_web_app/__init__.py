@@ -1,6 +1,6 @@
 """
     PAT MPE Web App
-    Francesco Melchiori, 2025
+    Francesco Melchiori, 2026
 """
 
 
@@ -20,6 +20,7 @@ from pat_pnrr.pat_pnrr_mpe import pat_pnrr_5a_misurazione
 from pat_pnrr.pat_pnrr_mpe import pat_pnrr_6a_misurazione
 from pat_pnrr.pat_pnrr_mpe import pat_pnrr_7a_misurazione
 from pat_pnrr.pat_pnrr_mpe import pat_pnrr_8a_misurazione
+from pat_pnrr.pat_pnrr_mpe import pat_pnrr_9a_misurazione
 
 
 pd.options.mode.copy_on_write = True

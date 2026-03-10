@@ -1,6 +1,6 @@
 """
     PAT-PNRR Monitoring Reporter
-    Francesco Melchiori, 2025
+    Francesco Melchiori, 2026
 """
 
 
@@ -18,14 +18,14 @@ from pat_pnrr_mpe.pat_pnrr_comuni_excel_mapping import comuni_excel_map
 
 
 PATH_MPE = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
-CARTELLA_MONITORAGGIO_CORRENTE = 'pat_pnrr_8a_misurazione_tabelle_comunali\\'
-PERIODO_MONITORAGGIO_PRECEDENTE = '2024q3_4'  # 1_2 3_4
-PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN = '2024q3-4'  # 1-2 3-4
-PERIODO_MONITORAGGIO_CORRENTE = '2025q1_2'  # 1_2 3_4
-PERIODO_MONITORAGGIO_CORRENTE_HYPHEN = '2025q1-2'  # 1-2 3-4
-PERIODI_MONITORAGGIO_ULTIMO_ANNO = '2024q3-2025q2'  # 2024 2024q3-2025q2
-MPE_NUMBER_LABEL = '08'
-PERIODO_LABEL = '2024q3-2025q2'  # 2024 2024q3-2025q2
+CARTELLA_MONITORAGGIO_CORRENTE = 'pat_pnrr_9a_misurazione_tabelle_comunali\\'
+PERIODO_MONITORAGGIO_PRECEDENTE = '2025q1_2'  # 1_2 3_4
+PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN = '2025q1-2'  # 1-2 3-4
+PERIODO_MONITORAGGIO_CORRENTE = '2025q3_4'  # 1_2 3_4
+PERIODO_MONITORAGGIO_CORRENTE_HYPHEN = '2025q3-4'  # 1-2 3-4
+PERIODI_MONITORAGGIO_ULTIMO_ANNO = '2025'  # 2024 2024q3-2025q2
+MPE_NUMBER_LABEL = '09'
+PERIODO_LABEL = '2025'  # 2024 2024q3-2025q2
 
 
 def get_comuni_performance_trends(pat_comuni_dataframe, time_limit=-1):
@@ -1702,8 +1702,8 @@ if __name__ == '__main__':
     comuni_net_scores.to_csv(PATH_MPE + CARTELLA_MONITORAGGIO_CORRENTE + 'pat-pnrr_edilizia_pressione_netta_' + \
                              PERIODI_MONITORAGGIO_ULTIMO_ANNO + '.csv')
 
-    # for mpe_number in [3, 4, 5, 6, 7, 8]:
-    for mpe_number in [8]:
+    # for mpe_number in [3, 4, 5, 6, 7, 8, 9]:
+    for mpe_number in [9]:
         print_comuni_performance_charts(pat_comuni_dataframe,
                                         comuni_durata_trends, comuni_durata_netta_trends,
                                         comuni_arretrato_trends,
