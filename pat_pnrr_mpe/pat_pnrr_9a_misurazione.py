@@ -826,6 +826,9 @@ class ComuneExcel:
                     'string').str.contains('19/072024', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '19/07/2024'
                 change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
+                    'string').str.contains('27/0/2025', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_inizio_pratica'] = '27/08/2025'
+                change_mask = comune_dataframe.loc[:, 'data_inizio_pratica'].astype(
                     'string').str.contains('INEFFICACE', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
@@ -944,6 +947,10 @@ class ComuneExcel:
                           pd.Timestamp('2022-09-01 00:00:00.000')
             comune_dataframe.loc[change_mask, 'giorni_termine_normativo'] = pd.NaT
 
+            if comune_dataframe.loc[:, 'giorni_sospensioni'].dtype == 'O':
+                change_mask = comune_dataframe.loc[:, 'giorni_sospensioni'].astype(
+                    'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
+                comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
             try:
                 comune_dataframe['giorni_sospensioni'] = pd.to_numeric(
                     comune_dataframe['giorni_sospensioni'],
