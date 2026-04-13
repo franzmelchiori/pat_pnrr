@@ -2186,8 +2186,7 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', None)
 
 
-    # list_excel, list_xls = get_list_excel(FOLDER_COMUNI_EXCEL,
-    #                                       missing=True)
+    # list_excel, list_xls = get_list_excel(FOLDER_COMUNI_EXCEL, missing=True)
     # for comune in list_excel:
     #     print(comune)
 
