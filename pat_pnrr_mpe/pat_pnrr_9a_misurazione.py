@@ -1,7 +1,7 @@
 """
     PAT-PNRR 9a misurazione (June 2026)
     Monitoraggio Procedimenti Edilizi v2.x
-    Francesco Melchiori, 2025
+    Francesco Melchiori, 2026
 """
 
 
@@ -2256,6 +2256,8 @@ if __name__ == '__main__':
 
 
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
+    #                    FOLDER_COMUNI_EXCEL)
+    # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
     #                    FOLDER_COMUNI_EXCEL,
     #                    type_name='PdC ordinario', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
@@ -2288,8 +2290,8 @@ if __name__ == '__main__':
     # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)
     # get_comuni_measures(comuni_excel_map, tsf=False)
     
-    # get_comuni_dataframes(comuni_excel_map, load=False)  # 1 df di pratiche per 1 ped per tutti i comuni
-    # get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)  # 1 df di misure per 1 ped per tutti i comuni
+    get_comuni_dataframes(comuni_excel_map, load=False)  # 1 df di pratiche per 1 ped per tutti i comuni
+    get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=False)  # 1 df di misure per 1 ped per tutti i comuni
     get_comuni_dataframes(comuni_excel_map, load=False, sf='t_01')  # 1 df di pratiche per 1 ped per tutti i comuni
     get_comuni_measures_dataframe(comuni_excel_map, load=False, tsf=True)  # 1 df di misure per 1 ped per tutti i comuni
     get_comuni_measures(comuni_excel_map, save_tex=True, tsf=True)  # stampa 8 misure per tutti i ped da tutti i comuni
