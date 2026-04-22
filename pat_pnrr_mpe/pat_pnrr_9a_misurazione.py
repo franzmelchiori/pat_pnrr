@@ -2303,3 +2303,7 @@ if __name__ == '__main__':
     #     FOLDER_COMUNI_EXCEL, load=load, lpf=lpf)
     # comuni_pds_measure, comuni_monitored = get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
     #     FOLDER_COMUNI_EXCEL, load=load, lpf=lpf)
+
+
+    # TODO: REQUEST 20260422 | nuova estrazione dai .xlsx con la lista di pratiche archiviate e anomale | mpe9
+    # TODO: REQUEST 20260422 | per le pratiche anomale estrarre anche la colonna q con la motivazione | mpe9
