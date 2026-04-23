@@ -111,4 +111,4 @@ def print_report_comunali(version, version_to_remove, just_one = False):
 if __name__ == '__main__':
     # print_report_comunale(name_comune = 'Trento', version = 'v8.0.0', version_to_remove = 'v7.6.4')
     # print_report_comunale(name_comune = 'Ala', version = 'v8.3.0', version_to_remove = 'v8.0.0')
-    print_report_comunali(version = 'v8.3.0', version_to_remove = 'v8.0.0')
+    print_report_comunali(version = 'v9.6.0', version_to_remove = 'v9.5.0')

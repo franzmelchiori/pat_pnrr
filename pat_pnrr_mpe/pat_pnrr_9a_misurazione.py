@@ -478,6 +478,9 @@ class ComuneExcel:
                     'string').str.contains('13/03/025', case=False, na=False, regex=False)
                 comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '13/03/2025'
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
+                    'string').str.contains('14/01/025', case=False, na=False, regex=False)
+                comune_dataframe.loc[change_mask, 'data_fine_pratica'] = '14/01/2025'
+                change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
                     'string').str.contains('ARCHIVIATA', case=False, na=False, regex=False)
                 comune_dataframe.drop(comune_dataframe[change_mask].index, inplace=True)
                 change_mask = comune_dataframe.loc[:, 'data_fine_pratica'].astype(
@@ -2191,8 +2194,8 @@ if __name__ == '__main__':
     #     print(comune)
 
 
-    # comune_name = 'Mori'
-    # name_excel_file = '123_Mori_Edilizia_VIII.xlsx'
+    # comune_name = 'Trento'
+    # name_excel_file = '205_Trento_Edilizia_IX.xlsx'
     # path_to_excel_files = FOLDER_COMUNI_EXCEL
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
