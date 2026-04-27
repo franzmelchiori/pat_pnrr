@@ -1867,17 +1867,25 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
             # REQUEST 20260422_01 | lista di pdc archiviati e anomali
             # - estrazione anche della colonna q con la motivazione
             CODICE_RICHIESTA = 'request_20260422_01'
+            #  'arichiviata', 'inefficace', '13/03/025', 'anomala', '14/01/025', 'archiviata ', 'archiviata'
         
         if sheet_name=='Prov di sanatoria':
             # REQUEST 20260422_02 | lista di pds archiviati e anomali
             # - estrazione anche della colonna q con la motivazione
             CODICE_RICHIESTA = 'request_20260422_02'
+            #  'inefficace', 'archiviata', 'anomala'
 
         filter_mask_archiviate = \
             (comuni_dataframe.data_fine_pratica.astype('string').str.contains(\
                 'archiviata', case=False, na=False, regex=False)) | \
             (comuni_dataframe.data_fine_pratica.astype('string').str.contains(\
-                'anomala', case=False, na=False, regex=False))
+                'anomala', case=False, na=False, regex=False)) | \
+            (comuni_dataframe.data_fine_pratica.astype('string').str.contains(\
+                'arichiviata', case=False, na=False, regex=False)) | \
+            (comuni_dataframe.data_fine_pratica.astype('string').str.contains(\
+                'inefficace', case=False, na=False, regex=False)) | \
+            (comuni_dataframe.data_fine_pratica.astype('string').str.contains(\
+                'archiviata ', case=False, na=False, regex=False))
         
         pratiche_archiviate = comuni_dataframe.loc[filter_mask_archiviate]
         pratiche_archiviate.to_csv(
