@@ -2285,10 +2285,10 @@ if __name__ == '__main__':
     #     load=load)
     # comuni_dataframe_pdc_09 = get_comuni_dataframe(
     #     comuni_excel_map, 'Permessi di Costruire', FOLDER_COMUNI_EXCEL,
-    #     load=False, pf='l_05')
+    #     load=True, pf='l_05')
     # comuni_dataframe_pdc_09 = get_comuni_dataframe(
     #     comuni_excel_map, 'Prov di sanatoria', FOLDER_COMUNI_EXCEL,
-    #     load=False, pf='l_05')
+    #     load=True, pf='l_05')
 
     # comuni_measure_dataframe_org = get_comuni_measure_dataframe(
     #     comuni_excel_map, 'ORGANICO', FOLDER_COMUNI_EXCEL,
