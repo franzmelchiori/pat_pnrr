@@ -1198,6 +1198,50 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     for comune in comuni_excel_map:
         print('produco le dashboard per il comune di ' + comune[0])
 
+        if False:
+            # TODO: nuova dashboard comunale .png con gli andamenti degli avviati, delle durate e degli arretrati di pdc e pds
+
+            fig, ax = plt.subplots(ncols=3, gridspec_kw=dict(width_ratios=[0.33, 0.33, 0.33]))
+            fig.set_size_inches(15, 5)
+
+            plot1 = ax[0].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
+                            comuni_durata_trends.loc[comune[0], pdc_measure_labels].values,
+                            label='Avviato PdC-OV', c='grey', linestyle='dotted', marker='o',
+                            linewidth=2, alpha=0.75)
+            plot2 = ax[0].plot(np.arange(0 + 2, pds_measure_labels.__len__() + 2, 1),
+                            comuni_durata_trends.loc[comune[0], pds_measure_labels].values,
+                            label='Avviato PdS', c='grey', linestyle='dashed', marker='x',
+                            linewidth=2, alpha=0.75)
+
+            plot3 = ax[1].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
+                            comuni_durata_trends.loc[comune[0], pdc_measure_labels].values,
+                            label='Durata PdC-OV', c='grey', linestyle='dotted', marker='o',
+                            linewidth=2, alpha=0.75)
+            plot4 = ax[1].plot(np.arange(0 + 2, pds_measure_labels.__len__() + 2, 1),
+                            comuni_durata_trends.loc[comune[0], pds_measure_labels].values,
+                            label='Durata PdS', c='grey', linestyle='dashed', marker='x',
+                            linewidth=2, alpha=0.75)
+
+            plot5 = ax[2].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
+                            comuni_arretrato_trends.loc[comune[0], pdc_measure_labels].values,
+                            label='Arretrato PdC-OV', c='grey', linestyle='dotted', marker='o',
+                            linewidth=2, alpha=0.75)
+            plot6 = ax[2].plot(np.arange(0 + 2, pds_measure_labels.__len__() + 2, 1),
+                            comuni_arretrato_trends.loc[comune[0], pds_measure_labels].values,
+                            label='Arretrato PdS', c='grey', linestyle='dashed', marker='x',
+                            linewidth=2, alpha=0.75)
+
+            if save_charts:
+                comune_edited_name = comune[0]
+                comune_edited_name = comune_edited_name.replace('à', 'a')
+                comune_edited_name = comune_edited_name.replace('è', 'e')
+                comune_edited_name = comune_edited_name.replace('é', 'e')
+                comune_edited_name = comune_edited_name.replace('ù', 'u')
+                fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\pat_pnrr_performance_charts\\'
+                            'pat_pnrr_performance_base_chart_' + comune_edited_name,
+                            dpi=300, bbox_inches='tight', pad_inches=0.25)
+            plt.close(fig)
+
         # dashboard comunale
         #   a. (+) comune nello scatter pdc durata/arretrato ultimi 12 mesi
         #   b. (+) comune nello scatter pds durata/arretrato ultimi 12 mesi
@@ -1799,17 +1843,16 @@ if __name__ == '__main__':
                                         comuni_performance_trends, comuni_performance_netta_trends,
                                         mpe_number=mpe_number,
                                         just_provincia=False, no_trento=False,
-                                        just_one=False, save_charts=True)
-        print_comuni_performance_charts(pat_comuni_dataframe,
-                                        comuni_durata_trends, comuni_durata_netta_trends,
-                                        comuni_arretrato_trends,
-                                        comuni_performance_trends, comuni_performance_netta_trends,
-                                        mpe_number=mpe_number,
-                                        just_provincia=True, no_trento=True,
-                                        just_one=False, save_charts=True)
-    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    print_comuni_performance_list(just_one=False, save_tables=True)
+                                        just_one=True, save_charts=True)
+        # print_comuni_performance_charts(pat_comuni_dataframe,
+        #                                 comuni_durata_trends, comuni_durata_netta_trends,
+        #                                 comuni_arretrato_trends,
+        #                                 comuni_performance_trends, comuni_performance_netta_trends,
+        #                                 mpe_number=mpe_number,
+        #                                 just_provincia=True, no_trento=True,
+        #                                 just_one=False, save_charts=True)
+    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    # print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
 
-    # TODO: nuova dashboard comunale .png con gli andamenti degli avviati, delle durate e degli arretrati di pdc e pds
     # TODO: graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
