@@ -1194,53 +1194,113 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                               'pds_performance_netta_2024q1_2', 'pds_performance_netta_2024q3_4',
                               'pds_performance_netta_2025q1_2', 'pds_performance_netta_2025q3_4']
     
+    pdc_avviato_measure_labels = [
+        'numero_permessi_costruire_2021q3-4',
+        'numero_permessi_costruire_2022q1-2', 'numero_permessi_costruire_avviati_2022q3-4',
+        'numero_permessi_costruire_avviati_2023q1-2', 'numero_permessi_costruire_avviati_2023q3-4',
+        'numero_permessi_costruire_avviati_2024q1-2', 'numero_permessi_costruire_avviati_2024q3-4',
+        'numero_permessi_costruire_avviati_2025q1-2', 'numero_permessi_costruire_avviati_2025q3-4']
+    pds_avviato_measure_labels = [
+        'numero_sanatorie_2021q3-4',
+        'numero_sanatorie_2022q1-2', 'numero_sanatorie_avviate_2022q3-4',
+        'numero_sanatorie_avviate_2023q1-2', 'numero_sanatorie_avviate_2023q3-4',
+        'numero_sanatorie_avviate_2024q1-2', 'numero_sanatorie_avviate_2024q3-4',
+        'numero_sanatorie_avviate_2025q1-2', 'numero_sanatorie_avviate_2025q3-4']
+    pdc_durata_measure_labels = [
+        'giornate_durata_media_permessi_costruire_conclusi_2021q3-4',
+        'giornate_durata_media_permessi_costruire_conclusi_2022q1-2', 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q1-2', 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q1-2', 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2024q3-4',
+        'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q1-2', 'giornate_durata_media_permessi_costruire_conclusi_con_provvedimento_espresso_2025q3-4']
+    pds_durata_measure_labels = [
+        'giornate_durata_media_sanatorie_concluse_2021q3-4',
+        'giornate_durata_media_sanatorie_concluse_2022q1-2', 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2022q3-4',
+        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q1-2', 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2023q3-4',
+        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q1-2', 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2024q3-4',
+        'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q1-2', 'giornate_durata_media_sanatorie_concluse_con_provvedimento_espresso_2025q3-4']
+    pdc_arretrato_measure_labels = [
+        'numero_permessi_costruire_non_conclusi_scaduti_termini_2021q3-4',
+        'numero_permessi_costruire_non_conclusi_scaduti_termini_2022q1-2', 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2022q3-4',
+        'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q1-2', 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2023q3-4',
+        'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q1-2', 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2024q3-4',
+        'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2025q1-2', 'numero_permessi_costruire_arretrati_non_conclusi_scaduto_termine_massimo_2025q3-4']
+    pds_arretrato_measure_labels = [
+        'numero_sanatorie_non_concluse_scaduti_termini_2021q3-4',
+        'numero_sanatorie_non_concluse_scaduti_termini_2022q1-2', 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2022q3-4',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q1-2', 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2023q3-4',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q1-2', 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2024q3-4',
+        'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2025q1-2', 'numero_sanatorie_arretrate_non_concluse_scaduto_termine_massimo_2025q3-4']
+    
     # comuni_excel_map = [['Ala', '', '', ''], ['Trento', '', '', '']]
     for comune in comuni_excel_map:
         print('produco le dashboard per il comune di ' + comune[0])
 
-        if False:
-            # TODO: nuova dashboard comunale .png con gli andamenti degli avviati, delle durate e degli arretrati di pdc e pds
+        # nuova dashboard comunale .png con gli andamenti degli avviati, delle durate e degli arretrati di pdc e pds
+        
+        fig, ax = plt.subplots(ncols=3, gridspec_kw=dict(width_ratios=[0.33, 0.33, 0.33]))
+        fig.set_size_inches(15, 5)
 
-            fig, ax = plt.subplots(ncols=3, gridspec_kw=dict(width_ratios=[0.33, 0.33, 0.33]))
-            fig.set_size_inches(15, 5)
-
-            plot1 = ax[0].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
-                            comuni_durata_trends.loc[comune[0], pdc_measure_labels].values,
-                            label='Avviato PdC-OV', c='grey', linestyle='dotted', marker='o',
+        plot1 = ax[0].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
+                            pat_comuni_dataframe.loc[comune[0], pdc_avviato_measure_labels].values,
+                            label='Avviato PdC', c='grey', linestyle='dotted', marker='o',
                             linewidth=2, alpha=0.75)
-            plot2 = ax[0].plot(np.arange(0 + 2, pds_measure_labels.__len__() + 2, 1),
-                            comuni_durata_trends.loc[comune[0], pds_measure_labels].values,
+        plot2 = ax[0].plot(np.arange(0, pds_measure_labels.__len__(), 1),
+                            pat_comuni_dataframe.loc[comune[0], pds_avviato_measure_labels].values,
                             label='Avviato PdS', c='grey', linestyle='dashed', marker='x',
                             linewidth=2, alpha=0.75)
+        ax[0].set_xticks(range(len(pdc_measure_labels)),
+                            labels=[label.lstrip('pdc_').replace('20', '').replace('q', 'S').replace('1_2', '1').replace('3_4', '2')
+                                    for label in pdc_measure_labels])
+        ax[0].legend()
+        ax[0].spines['top'].set_visible(False)
+        ax[0].spines['right'].set_visible(False)
+        ax[0].spines['bottom'].set_visible(False)
+        ax[0].spines['left'].set_visible(False)
 
-            plot3 = ax[1].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
-                            comuni_durata_trends.loc[comune[0], pdc_measure_labels].values,
-                            label='Durata PdC-OV', c='grey', linestyle='dotted', marker='o',
+        plot3 = ax[1].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
+                            pat_comuni_dataframe.loc[comune[0], pdc_durata_measure_labels].values,
+                            label='Durata PdC', c='grey', linestyle='dotted', marker='o',
                             linewidth=2, alpha=0.75)
-            plot4 = ax[1].plot(np.arange(0 + 2, pds_measure_labels.__len__() + 2, 1),
-                            comuni_durata_trends.loc[comune[0], pds_measure_labels].values,
+        plot4 = ax[1].plot(np.arange(0, pds_measure_labels.__len__(), 1),
+                            pat_comuni_dataframe.loc[comune[0], pds_durata_measure_labels].values,
                             label='Durata PdS', c='grey', linestyle='dashed', marker='x',
                             linewidth=2, alpha=0.75)
+        ax[1].set_xticks(range(len(pdc_measure_labels)),
+                            labels=[label.lstrip('pdc_').replace('20', '').replace('q', 'S').replace('1_2', '1').replace('3_4', '2')
+                                    for label in pdc_measure_labels])
+        ax[1].legend()
+        ax[1].spines['top'].set_visible(False)
+        ax[1].spines['right'].set_visible(False)
+        ax[1].spines['bottom'].set_visible(False)
+        ax[1].spines['left'].set_visible(False)
 
-            plot5 = ax[2].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
-                            comuni_arretrato_trends.loc[comune[0], pdc_measure_labels].values,
-                            label='Arretrato PdC-OV', c='grey', linestyle='dotted', marker='o',
+        plot5 = ax[2].plot(np.arange(0, pdc_measure_labels.__len__(), 1),
+                            pat_comuni_dataframe.loc[comune[0], pdc_arretrato_measure_labels].values,
+                            label='Arretrato PdC', c='grey', linestyle='dotted', marker='o',
                             linewidth=2, alpha=0.75)
-            plot6 = ax[2].plot(np.arange(0 + 2, pds_measure_labels.__len__() + 2, 1),
-                            comuni_arretrato_trends.loc[comune[0], pds_measure_labels].values,
+        plot6 = ax[2].plot(np.arange(0, pds_measure_labels.__len__(), 1),
+                            pat_comuni_dataframe.loc[comune[0], pds_arretrato_measure_labels].values,
                             label='Arretrato PdS', c='grey', linestyle='dashed', marker='x',
                             linewidth=2, alpha=0.75)
+        ax[2].set_xticks(range(len(pdc_measure_labels)),
+                            labels=[label.lstrip('pdc_').replace('20', '').replace('q', 'S').replace('1_2', '1').replace('3_4', '2')
+                                    for label in pdc_measure_labels])
+        ax[2].legend()
+        ax[2].spines['top'].set_visible(False)
+        ax[2].spines['right'].set_visible(False)
+        ax[2].spines['bottom'].set_visible(False)
+        ax[2].spines['left'].set_visible(False)
 
-            if save_charts:
-                comune_edited_name = comune[0]
-                comune_edited_name = comune_edited_name.replace('à', 'a')
-                comune_edited_name = comune_edited_name.replace('è', 'e')
-                comune_edited_name = comune_edited_name.replace('é', 'e')
-                comune_edited_name = comune_edited_name.replace('ù', 'u')
-                fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\pat_pnrr_performance_charts\\'
-                            'pat_pnrr_performance_base_chart_' + comune_edited_name,
-                            dpi=300, bbox_inches='tight', pad_inches=0.25)
-            plt.close(fig)
+        if save_charts:
+            comune_edited_name = comune[0]
+            comune_edited_name = comune_edited_name.replace('à', 'a')
+            comune_edited_name = comune_edited_name.replace('è', 'e')
+            comune_edited_name = comune_edited_name.replace('é', 'e')
+            comune_edited_name = comune_edited_name.replace('ù', 'u')
+            fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\pat_pnrr_performance_charts\\'
+                        'pat_pnrr_performance_base_chart_' + comune_edited_name,
+                        dpi=300, bbox_inches='tight', pad_inches=0.25)
+        plt.close(fig)
 
         # dashboard comunale
         #   a. (+) comune nello scatter pdc durata/arretrato ultimi 12 mesi
@@ -1762,6 +1822,11 @@ def print_comuni_performance_list(just_one=False, save_tables=True):
                     r'\begin{center}' + '\n' \
                     r'  \includegraphics[height=5cm]{' + \
                     r'pat_pnrr_performance_charts/' + \
+                    r'pat_pnrr_performance_base_chart_{0}.png}}'.format(comune_edited_name) + '\n' + \
+                    r'\end{center}' + '\n' + \
+                    r'\begin{center}' + '\n' \
+                    r'  \includegraphics[height=5cm]{' + \
+                    r'pat_pnrr_performance_charts/' + \
                     r'pat_pnrr_performance_chart_{0}.png}}'.format(comune_edited_name) + '\n' + \
                     r'\end{center}' + '\n' + \
                     r'\begin{center}' + '\n' \
@@ -1843,16 +1908,14 @@ if __name__ == '__main__':
                                         comuni_performance_trends, comuni_performance_netta_trends,
                                         mpe_number=mpe_number,
                                         just_provincia=False, no_trento=False,
-                                        just_one=True, save_charts=True)
-        # print_comuni_performance_charts(pat_comuni_dataframe,
-        #                                 comuni_durata_trends, comuni_durata_netta_trends,
-        #                                 comuni_arretrato_trends,
-        #                                 comuni_performance_trends, comuni_performance_netta_trends,
-        #                                 mpe_number=mpe_number,
-        #                                 just_provincia=True, no_trento=True,
-        #                                 just_one=False, save_charts=True)
-    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
-    # print_comuni_performance_list(just_one=False, save_tables=True)
+                                        just_one=False, save_charts=True)
+        print_comuni_performance_charts(pat_comuni_dataframe,
+                                        comuni_durata_trends, comuni_durata_netta_trends,
+                                        comuni_arretrato_trends,
+                                        comuni_performance_trends, comuni_performance_netta_trends,
+                                        mpe_number=mpe_number,
+                                        just_provincia=True, no_trento=True,
+                                        just_one=False, save_charts=True)
+    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
-
-    # TODO: graficare la distribuzione della pressione per una soluzione di misure comunali compatibili con i target
