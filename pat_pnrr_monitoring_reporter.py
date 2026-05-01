@@ -1824,6 +1824,7 @@ def print_comuni_performance_list(just_one=False, save_tables=True):
                     r'pat_pnrr_performance_charts/' + \
                     r'pat_pnrr_performance_base_chart_{0}.png}}'.format(comune_edited_name) + '\n' + \
                     r'\end{center}' + '\n' + \
+                    r'\clearpage' + '\n' \
                     r'\begin{center}' + '\n' \
                     r'  \includegraphics[height=5cm]{' + \
                     r'pat_pnrr_performance_charts/' + \
@@ -1901,21 +1902,21 @@ if __name__ == '__main__':
                              PERIODI_MONITORAGGIO_ULTIMO_ANNO + '.csv')
 
     # for mpe_number in [3, 4, 5, 6, 7, 8, 9]:
-    for mpe_number in [9]:
-        print_comuni_performance_charts(pat_comuni_dataframe,
-                                        comuni_durata_trends, comuni_durata_netta_trends,
-                                        comuni_arretrato_trends,
-                                        comuni_performance_trends, comuni_performance_netta_trends,
-                                        mpe_number=mpe_number,
-                                        just_provincia=False, no_trento=False,
-                                        just_one=False, save_charts=True)
-        print_comuni_performance_charts(pat_comuni_dataframe,
-                                        comuni_durata_trends, comuni_durata_netta_trends,
-                                        comuni_arretrato_trends,
-                                        comuni_performance_trends, comuni_performance_netta_trends,
-                                        mpe_number=mpe_number,
-                                        just_provincia=True, no_trento=True,
-                                        just_one=False, save_charts=True)
-    print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
+    # for mpe_number in [9]:
+    #     print_comuni_performance_charts(pat_comuni_dataframe,
+    #                                     comuni_durata_trends, comuni_durata_netta_trends,
+    #                                     comuni_arretrato_trends,
+    #                                     comuni_performance_trends, comuni_performance_netta_trends,
+    #                                     mpe_number=mpe_number,
+    #                                     just_provincia=False, no_trento=False,
+    #                                     just_one=False, save_charts=True)
+    #     print_comuni_performance_charts(pat_comuni_dataframe,
+    #                                     comuni_durata_trends, comuni_durata_netta_trends,
+    #                                     comuni_arretrato_trends,
+    #                                     comuni_performance_trends, comuni_performance_netta_trends,
+    #                                     mpe_number=mpe_number,
+    #                                     just_provincia=True, no_trento=True,
+    #                                     just_one=False, save_charts=True)
+    # print_comuni_performance_tables(pat_comuni_dataframe, just_one=False, save_tables=True)
     print_comuni_performance_list(just_one=False, save_tables=True)
     # print_comuni_pressure_list(comuni_performance_trends)
