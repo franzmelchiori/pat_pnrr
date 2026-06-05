@@ -35,11 +35,11 @@ def update_dataframe_subset(dataframe_to_update, dataframe_subset):
 
 def get_pat_comunita_valle():
     pat_comuni_toponimo = np.loadtxt(
-        'pat_pnrr_clustering\\ispat_statistiche_base_20220314.csv',
+        'pat_pnrr_clustering/ispat_statistiche_base_20220314.csv',
         dtype='U33', delimiter=',', skiprows=1, usecols=0, encoding='utf8')
 
     ispat_comunita_valle = np.loadtxt(
-        'pat_pnrr_questionario_edilizia_02\\doc\\ispat_comunita_valle.csv',
+        'pat_pnrr_questionario_edilizia_02/doc/ispat_comunita_valle.csv',
         dtype='U33', delimiter=',', usecols=2, encoding='utf8')
 
     pat_comunita_valle_dataframe_ispat = pd.DataFrame(
@@ -60,16 +60,16 @@ def get_pat_comuni_dataframe(load=True):
     else:
         pat_comuni_dataframe_ispat =\
             get_pat_comuni_dataframe_ispat(
-                'pat_pnrr_clustering\\',
+                'pat_pnrr_clustering/',
                 kmeans_clustering_original=True)
         pat_comunita_valle_dataframe_ispat = \
             get_pat_comunita_valle()
         pat_comuni_dataframe_idsurvey =\
             get_pat_comuni_dataframe_idsurvey(
-                'pat_pnrr_questionario_edilizia\\')
+                'pat_pnrr_questionario_edilizia/')
         pat_comuni_dataframe_idsurvey_02 =\
             get_pat_comuni_dataframe_idsurvey_02(
-                'pat_pnrr_questionario_edilizia_02\\')
+                'pat_pnrr_questionario_edilizia_02/')
         pat_comuni_dataframe_excel_03 =\
             pat_pnrr_3a.get_comuni_measures_dataframe(
                 comuni_excel_map)
@@ -107,12 +107,12 @@ def get_pat_comuni_dataframe(load=True):
 
         pat_dataframe_raccolta_puntuale_trento =\
             get_pat_comuni_dataframe_raccolta_puntuale_trento(
-                'pat_pnrr_questionario_edilizia\\')
+                'pat_pnrr_questionario_edilizia/')
         update_dataframe_subset(pat_comuni_dataframe, pat_dataframe_raccolta_puntuale_trento)
 
         pat_dataframe_raccolta_puntuale =\
             get_pat_dataframe_raccolta_puntuale(
-                'pat_pnrr_questionario_edilizia\\')
+                'pat_pnrr_questionario_edilizia/')
         update_dataframe_subset(pat_comuni_dataframe, pat_dataframe_raccolta_puntuale)
 
         clustering_label_map = {
@@ -1571,7 +1571,7 @@ def print_survey_report_images(pat_comuni_dataframe, images_load=True, tex_load=
                 survey_report_comune_edited_name = survey_report_comune_edited_name.replace(
                     'ù', 'u')
 
-                fig.savefig('pat_pnrr_survey_reports\\images\\pat-pnrr_survey_report_cluster_' +
+                fig.savefig('pat_pnrr_survey_reports/images/pat-pnrr_survey_report_cluster_' +
                             cluster_index + '_' + survey_report_comune_edited_name,
                             dpi=300, bbox_inches='tight', pad_inches=0.25)
                 plt.close(fig)
@@ -1595,7 +1595,7 @@ def print_survey_report_images(pat_comuni_dataframe, images_load=True, tex_load=
                 if cluster_n == 2:
                     cluster_index = '3-4-5'
 
-                with open('pat_pnrr_survey_reports\\pat-pnrr_survey_report_template.tex') as f1:
+                with open('pat_pnrr_survey_reports/pat-pnrr_survey_report_template.tex') as f1:
                     pat_pnrr_survey_report = f1.read()
                 f1.close()
 
@@ -1615,7 +1615,7 @@ def print_survey_report_images(pat_comuni_dataframe, images_load=True, tex_load=
                     cluster_index + '_' + survey_report_comune_edited_name
                 )
 
-                f2 = open('pat_pnrr_survey_reports\\texes\\pat-pnrr_survey_report_cluster_' +
+                f2 = open('pat_pnrr_survey_reports/texes/pat-pnrr_survey_report_cluster_' +
                          cluster_index + '_' + survey_report_comune_name + '.tex', 'a')
                 f2.write(pat_pnrr_survey_report)
                 f2.close()
@@ -1640,8 +1640,8 @@ def print_survey_report_images(pat_comuni_dataframe, images_load=True, tex_load=
                     cluster_index = '3-4-5'
 
                 subprocess.call(['pdflatex', '-output-directory',
-                                 'pat_pnrr_survey_reports\\pdfs\\',
-                                 'pat_pnrr_survey_reports\\texes\\pat-pnrr_survey_report_cluster_'
+                                 'pat_pnrr_survey_reports/pdfs/',
+                                 'pat_pnrr_survey_reports/texes/pat-pnrr_survey_report_cluster_'
                                  + cluster_index + '_' + survey_report_comune_name + '.tex'])
 
     return True
@@ -2128,7 +2128,7 @@ def cluster_tools(pat_comuni_dataframe):
 def show_survey_times():
 
     pat_comuni_dataframe_idsurvey_times = get_pat_comuni_dataframe_idsurvey_times(
-        'pat_pnrr_questionario_edilizia\\')
+        'pat_pnrr_questionario_edilizia/')
     pat_comuni_dataframe_idsurvey_times['data_inizio_compilazione'] = pd.to_datetime(
         pat_comuni_dataframe_idsurvey_times['data_inizio_compilazione'],
         format='%Y-%m-%d %H:%M:%S')
@@ -2174,9 +2174,9 @@ def check_transit_03_04_05():
     comuni_dataframe_pds_04 = pat_pnrr_4a.get_comuni_dataframe(
         comuni_excel_map, 'Prov di sanatoria')
     comuni_dataframe_pdc_05 = pat_pnrr_5a.get_comuni_dataframe(
-        comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+        comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali/')
     comuni_dataframe_pds_05 = pat_pnrr_5a.get_comuni_dataframe(
-        comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+        comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali/')
     
     list_excel_03 = pat_pnrr_3a.get_list_excel()
     list_excel_04 = pat_pnrr_4a.get_list_excel()
@@ -2342,13 +2342,13 @@ if __name__ == '__main__':
     #         - pratiche concluse nella 5a misurazione
     #             - con data di presentazione antecedente al 01/07/2022
     # comuni_dataframe_pdc_04 = pat_pnrr_4a.get_comuni_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_4a_misurazione_tabelle_comunali\\')
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_4a_misurazione_tabelle_comunali/')
     # comuni_dataframe_pds_04 = pat_pnrr_4a.get_comuni_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_4a_misurazione_tabelle_comunali\\')
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_4a_misurazione_tabelle_comunali/')
     # comuni_dataframe_pdc_05 = pat_pnrr_5a.get_comuni_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_5a_misurazione_tabelle_comunali/')
     # comuni_dataframe_pds_05 = pat_pnrr_5a.get_comuni_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\')
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali/')
     # 
     # filter_mask_pdc_04 = ((comuni_dataframe_pdc_04.loc[:, 'data_fine_pratica'].isna() == False) | \
     #     (comuni_dataframe_pdc_04.loc[:, 'data_fine_pratica_silenzio-assenso'].isna() == False)) & \
@@ -2414,19 +2414,19 @@ if __name__ == '__main__':
 
     # REQUEST 20250515 | trento | mpe3-7
     # print(pat_pnrr_3a.get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_mpe\\pat_pnrr_3a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_mpe/pat_pnrr_3a_misurazione_tabelle_comunali/',
     #     type_pdc_ov=True, load=True).loc['Trento', :])
     # print(pat_pnrr_4a.get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_mpe\\pat_pnrr_4a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_mpe/pat_pnrr_4a_misurazione_tabelle_comunali/',
     #     type_pdc_ov=True, load=True).loc['Trento', :])
     # print(pat_pnrr_5a.get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_5a_misurazione_tabelle_comunali/',
     #     type_pdc_ov=True, load=True).loc['Trento', :])
     # print(pat_pnrr_6a.get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     type_pdc_ov=True, load=True).loc['Trento', :])
     # print(pat_pnrr_7a.get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_7a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_7a_misurazione_tabelle_comunali/',
     #     type_pdc_ov=True, load=True).loc['Trento', :])
 
 
@@ -2466,10 +2466,10 @@ if __name__ == '__main__':
 
     # REQUEST 20250521 | durata media lorda e netta | pdc conclusi (no silenzio assenso) 2024
     # comuni_dataframe_pdc_06 = pat_pnrr_6a.get_comuni_dataframe(comuni_excel_map, 
-    #     'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     load=True)
     # comuni_dataframe_pdc_07 = pat_pnrr_7a.get_comuni_dataframe(comuni_excel_map, 
-    #     'Permessi di Costruire', 'pat_pnrr_7a_misurazione_tabelle_comunali\\',
+    #     'Permessi di Costruire', 'pat_pnrr_7a_misurazione_tabelle_comunali/',
     #     load=True)
     # trento_dataframe_pdc_06 = comuni_dataframe_pdc_06[comuni_dataframe_pdc_06.comune == 'Trento']
     # trento_dataframe_pdc_07 = comuni_dataframe_pdc_07[comuni_dataframe_pdc_07.comune == 'Trento']

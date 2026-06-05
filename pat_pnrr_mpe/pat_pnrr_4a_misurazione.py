@@ -34,10 +34,10 @@ def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, d
 
 def get_list_excel(path_base=None, missing=False):
     if not path_base:
-        path_base = 'C:\\franzmelchiori\\projects\\pat_pnrr\\'
+        path_base = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/'
 
     list_xls = []
-    for file in os.listdir(path_base + 'pat_pnrr_mpe\\pat_pnrr_4a_misurazione_tabelle_comunali\\'):
+    for file in os.listdir(path_base + 'pat_pnrr_mpe/pat_pnrr_4a_misurazione_tabelle_comunali/'):
         if file.find('xls') != -1:
             list_xls.append(file)
 
@@ -64,8 +64,8 @@ def check_comuni_excel():
 
 def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=False):
     if not path_base:
-        path_base = 'C:\\franzmelchiori\\projects\\pat_pnrr\\'
-    path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_4a_misurazione_tabelle_comunali\\'
+        path_base = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/'
+    path_shelve = path_base + 'pat_pnrr_mpe/pat_pnrr_4a_misurazione_tabelle_comunali/'
 
     sheet_suffix = ''
     if sheet_name == 'Permessi di Costruire':
@@ -100,8 +100,8 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, load=True, path_base=Fals
 
 def get_comuni_organico(comuni_excel_map, load=True, path_base=False):
     if not path_base:
-        path_base = 'C:\\franzmelchiori\\projects\\pat_pnrr\\'
-    path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_4a_misurazione_tabelle_comunali\\'
+        path_base = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/'
+    path_shelve = path_base + 'pat_pnrr_mpe/pat_pnrr_4a_misurazione_tabelle_comunali/'
 
     sheet_name = 'ISTRUZIONI'
     sheet_suffix = '_ist'
@@ -151,8 +151,8 @@ def get_comuni_organico(comuni_excel_map, load=True, path_base=False):
 def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, type_name=False, type_pdc_ov=True,
                                  load=True, path_base=False):
     if not path_base:
-        path_base = 'C:\\franzmelchiori\\projects\\pat_pnrr\\'
-    path_shelve = path_base + 'pat_pnrr_mpe\\pat_pnrr_4a_misurazione_tabelle_comunali\\'
+        path_base = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/'
+    path_shelve = path_base + 'pat_pnrr_mpe/pat_pnrr_4a_misurazione_tabelle_comunali/'
 
     sheet_suffix = ''
     if sheet_name == 'Permessi di Costruire':
@@ -388,8 +388,8 @@ class ComuneExcel:
 
     def __init__(self, path_file, comune_name='Test', path_base=''):
         if path_base == '':
-            self.path_base = 'C:\\franzmelchiori\\projects\\pat_pnrr\\' \
-                             'pat_pnrr_mpe\\pat_pnrr_4a_misurazione_tabelle_comunali\\'
+            self.path_base = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/' \
+                             'pat_pnrr_mpe/pat_pnrr_4a_misurazione_tabelle_comunali/'
         else:
             self.path_base = path_base
         self.path_file = path_file

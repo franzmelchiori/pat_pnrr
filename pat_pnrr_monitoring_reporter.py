@@ -17,8 +17,8 @@ from pat_pnrr_monitoring_analyzer import get_pat_comuni_dataframe
 from pat_pnrr_mpe.pat_pnrr_comuni_excel_mapping import comuni_excel_map
 
 
-PATH_MPE = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
-CARTELLA_MONITORAGGIO_CORRENTE = 'pat_pnrr_9a_misurazione_tabelle_comunali\\'
+PATH_MPE = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/pat_pnrr_mpe/'
+CARTELLA_MONITORAGGIO_CORRENTE = 'pat_pnrr_9a_misurazione_tabelle_comunali/'
 PERIODO_MONITORAGGIO_PRECEDENTE = '2025q1_2'  # 1_2 3_4
 PERIODO_MONITORAGGIO_PRECEDENTE_HYPHEN = '2025q1-2'  # 1-2 3-4
 PERIODO_MONITORAGGIO_CORRENTE = '2025q3_4'  # 1_2 3_4
@@ -893,7 +893,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
                prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
                fancybox=True, shadow=True, ncol=5)
-    fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
+    fig.savefig('pat_pnrr_mpe/relazione_tecnica/'
                 'pat_pnrr_performance_chart_provincia_' + mpe_number_label,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
@@ -959,7 +959,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
                prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
                fancybox=True, shadow=True, ncol=5)
-    fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
+    fig.savefig('pat_pnrr_mpe/relazione_tecnica/'
                 'pat_pnrr_performance_netta_chart_provincia_' + mpe_number_label,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
@@ -1050,7 +1050,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
     # fig.legend(title='Elaborazione', \
     #           handles=legend_elements_ore, \
     #           loc='upper right', fontsize=12)
-    fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
+    fig.savefig('pat_pnrr_mpe/relazione_tecnica/'
                 'pat_pnrr_performance_dimensionata_chart_provincia_' + mpe_number_label,
                 dpi=300, bbox_inches='tight', pad_inches=0.25)
     plt.close(fig)
@@ -1166,7 +1166,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
         fig.legend(plot1.legend_elements()[0], classificazione_comunale_labels,
                 prop={'size': 12}, loc='upper center', bbox_to_anchor=(0.5, -0.05),
                 fancybox=True, shadow=True, ncol=5)
-        fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\'
+        fig.savefig('pat_pnrr_mpe/relazione_tecnica/'
                     'pat_pnrr_performance_organico_chart_provincia_' + \
                     trento_label + mpe_number_label,
                     dpi=300, bbox_inches='tight', pad_inches=0.25)
@@ -1297,7 +1297,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             comune_edited_name = comune_edited_name.replace('è', 'e')
             comune_edited_name = comune_edited_name.replace('é', 'e')
             comune_edited_name = comune_edited_name.replace('ù', 'u')
-            fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\pat_pnrr_performance_charts\\'
+            fig.savefig('pat_pnrr_mpe/relazione_tecnica/pat_pnrr_performance_charts/'
                         'pat_pnrr_performance_base_chart_' + comune_edited_name,
                         dpi=300, bbox_inches='tight', pad_inches=0.25)
         plt.close(fig)
@@ -1405,7 +1405,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
             comune_edited_name = comune_edited_name.replace('è', 'e')
             comune_edited_name = comune_edited_name.replace('é', 'e')
             comune_edited_name = comune_edited_name.replace('ù', 'u')
-            fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\pat_pnrr_performance_charts\\'
+            fig.savefig('pat_pnrr_mpe/relazione_tecnica/pat_pnrr_performance_charts/'
                         'pat_pnrr_performance_chart_' + comune_edited_name,
                         dpi=300, bbox_inches='tight', pad_inches=0.25)
         plt.close(fig)
@@ -1551,7 +1551,7 @@ def print_comuni_performance_charts(pat_comuni_dataframe,
                 comune_edited_name = comune_edited_name.replace('è', 'e')
                 comune_edited_name = comune_edited_name.replace('é', 'e')
                 comune_edited_name = comune_edited_name.replace('ù', 'u')
-                fig.savefig('pat_pnrr_mpe\\relazione_tecnica\\pat_pnrr_performance_charts\\'
+                fig.savefig('pat_pnrr_mpe/relazione_tecnica/pat_pnrr_performance_charts/'
                             'pat_pnrr_performance_organico_chart_' + comune_edited_name,
                             dpi=300, bbox_inches='tight', pad_inches=0.25)
             plt.close(fig)

@@ -16,6 +16,7 @@ from pat_pnrr_mpe_web_app import *
 
 
 if __name__ == '__main__':
-    context = (CERT_FOLDER + '/' + 'localserver.crt',
-               CERT_FOLDER + '/' + 'localserver.key')
-    app.run(host='127.0.0.1', ssl_context=context)
+    # context = (CERT_FOLDER + '/' + 'localserver.crt',
+    #            CERT_FOLDER + '/' + 'localserver.key')
+    # app.run(host='127.0.0.1', ssl_context=context)
+    app.run(host='127.0.0.1')

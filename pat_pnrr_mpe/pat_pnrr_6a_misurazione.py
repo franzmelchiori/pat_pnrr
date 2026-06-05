@@ -41,7 +41,7 @@ def get_dataframe_excel(path_file_excel, sheet_name, names, usecols, skiprows, d
 
 def get_list_excel(path_to_excel_files, path_to_mpe=None, missing=False):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/pat_pnrr_mpe/'
 
     list_xls = []
     for file in os.listdir(path_to_mpe + path_to_excel_files):
@@ -62,7 +62,7 @@ class ComuneExcel:
 
     def __init__(self, name_excel_file, path_to_excel_files, comune_name='Test', path_to_mpe=None):
         if not path_to_mpe:
-            path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'    
+            path_to_mpe = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/pat_pnrr_mpe/'    
         self.path_base = path_to_mpe + path_to_excel_files
         self.path_file = name_excel_file
         self.excel_path = self.path_base + self.path_file
@@ -797,8 +797,8 @@ class ComuneExcel:
     def get_comune_measure_series(self, sheet_name, type_name=False, type_pdc_ov=True,
                                   measure_period='2024q1-2', lpf=False):
         if lpf:
-            path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
-            path_to_excel_files = 'pat_pnrr_6a_misurazione_tabelle_comunali\\'
+            path_to_mpe = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/pat_pnrr_mpe/'
+            path_to_excel_files = 'pat_pnrr_6a_misurazione_tabelle_comunali/'
             path_shelve = path_to_mpe + path_to_excel_files
 
             sheet_suffix = ''
@@ -998,7 +998,7 @@ class ComuneExcel:
 
 def check_comuni_excel(path_to_excel_files, path_to_mpe=None):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/pat_pnrr_mpe/'
     
     list_excel, list_xls = get_list_excel(path_to_excel_files, path_to_mpe)
     for name_excel_file, name_comune in list_excel:
@@ -1013,7 +1013,7 @@ def check_comuni_excel(path_to_excel_files, path_to_mpe=None):
 def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load=True,
                          path_to_mpe=None, pf=''):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/pat_pnrr_mpe/'
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
@@ -1340,7 +1340,7 @@ def get_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, load
 
 def check_comuni_dataframe(comuni_excel_map, sheet_name, path_to_excel_files, path_to_mpe=None):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/pat_pnrr_mpe/'
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
@@ -1379,7 +1379,7 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
                                  type_name=False, type_pdc_ov=True, load=True, path_to_mpe=None,
                                  lpf=False):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/pat_pnrr_mpe/'
     path_shelve = path_to_mpe + path_to_excel_files
 
     sheet_suffix = ''
@@ -1438,13 +1438,13 @@ def get_comuni_measure_dataframe(comuni_excel_map, sheet_name, path_to_excel_fil
 def get_comuni_dataframes(comuni_excel_map, load=True):
 
     get_comuni_dataframe(comuni_excel_map, 'ORGANICO',
-                         'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load)
+                         'pat_pnrr_6a_misurazione_tabelle_comunali/', load=load)
     get_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire',
-                         'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load)
+                         'pat_pnrr_6a_misurazione_tabelle_comunali/', load=load)
     get_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria',
-                         'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load)
+                         'pat_pnrr_6a_misurazione_tabelle_comunali/', load=load)
     get_comuni_dataframe(comuni_excel_map, 'Controllo CILA',
-                         'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load)
+                         'pat_pnrr_6a_misurazione_tabelle_comunali/', load=load)
 
     return True
 
@@ -1452,13 +1452,13 @@ def get_comuni_dataframes(comuni_excel_map, load=True):
 def check_comuni_dataframes(comuni_excel_map):
 
     check_comuni_dataframe(comuni_excel_map, 'ORGANICO',
-                           'pat_pnrr_6a_misurazione_tabelle_comunali\\')
+                           'pat_pnrr_6a_misurazione_tabelle_comunali/')
     check_comuni_dataframe(comuni_excel_map, 'Permessi di Costruire',
-                           'pat_pnrr_6a_misurazione_tabelle_comunali\\')
+                           'pat_pnrr_6a_misurazione_tabelle_comunali/')
     check_comuni_dataframe(comuni_excel_map, 'Prov di sanatoria',
-                           'pat_pnrr_6a_misurazione_tabelle_comunali\\')
+                           'pat_pnrr_6a_misurazione_tabelle_comunali/')
     check_comuni_dataframe(comuni_excel_map, 'Controllo CILA',
-                           'pat_pnrr_6a_misurazione_tabelle_comunali\\')
+                           'pat_pnrr_6a_misurazione_tabelle_comunali/')
 
     return True
 
@@ -1466,19 +1466,19 @@ def check_comuni_dataframes(comuni_excel_map):
 def get_comuni_measures_dataframe(comuni_excel_map, load=True):
 
     comuni_measure_dataframe_org = get_comuni_measure_dataframe(comuni_excel_map,
-        'ORGANICO', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+        'ORGANICO', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
         load=load)
     comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(comuni_excel_map,
-        'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+        'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
         type_pdc_ov=True, load=load)
     comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(comuni_excel_map,
-        'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+        'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
         type_pdc_ov=False, load=load)
     comuni_measure_dataframe_pds = get_comuni_measure_dataframe(comuni_excel_map,
-        'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+        'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
         load=load)
     comuni_measure_dataframe_cila = get_comuni_measure_dataframe(comuni_excel_map,
-        'Controllo CILA', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+        'Controllo CILA', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
         load=load)
 
     comuni_measures_dataframe = pd.concat(
@@ -1496,7 +1496,7 @@ def get_comuni_measure(comuni_excel_map, sheet_name, path_to_excel_files, type_n
                        type_pdc_ov=True, measure_period='2024q1-2', load=True, path_to_mpe=None,
                        lpf=False):
     if not path_to_mpe:
-        path_to_mpe = 'C:\\franzmelchiori\\projects\\pat_pnrr\\pat_pnrr_mpe\\'
+        path_to_mpe = '/home/franzmelchiori/ds220melchiori/franzmelchiori/projects/pat_pnrr/pat_pnrr_mpe/'
 
     comuni_measure_dataframe = get_comuni_measure_dataframe(
         comuni_excel_map=comuni_excel_map, sheet_name=sheet_name,
@@ -1587,16 +1587,16 @@ def get_comuni_measures(comuni_excel_map, save_tex=False, temp_tex=False):
 
     comuni_pdc_ov_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire',
-        'pat_pnrr_6a_misurazione_tabelle_comunali\\')
+        'pat_pnrr_6a_misurazione_tabelle_comunali/')
     comuni_pds_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Prov di sanatoria',
-        'pat_pnrr_6a_misurazione_tabelle_comunali\\')
+        'pat_pnrr_6a_misurazione_tabelle_comunali/')
     comuni_pdc_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Permessi di Costruire',
-        'pat_pnrr_6a_misurazione_tabelle_comunali\\', type_pdc_ov=False)
+        'pat_pnrr_6a_misurazione_tabelle_comunali/', type_pdc_ov=False)
     comuni_cila_measure, comuni_monitored = get_comuni_measure(
         comuni_excel_map, 'Controllo CILA',
-        'pat_pnrr_6a_misurazione_tabelle_comunali\\')
+        'pat_pnrr_6a_misurazione_tabelle_comunali/')
 
     if save_tex:
         measurement_05_pratiche_header = [
@@ -1665,7 +1665,7 @@ if __name__ == '__main__':
     pd.set_option('display.max_colwidth', None)
 
 
-    # list_excel, list_xls = get_list_excel('pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    # list_excel, list_xls = get_list_excel('pat_pnrr_6a_misurazione_tabelle_comunali/',
     #                                       missing=True)
     # for comune in list_excel:
     #     print(comune)
@@ -1673,7 +1673,7 @@ if __name__ == '__main__':
 
     # comune_name = 'Altavalle'
     # name_excel_file = '235_Altavalle_Edilizia_V.xlsx'
-    # path_to_excel_files = 'pat_pnrr_6a_misurazione_tabelle_comunali\\'
+    # path_to_excel_files = 'pat_pnrr_6a_misurazione_tabelle_comunali/'
     # print('controllo il file excel del comune di {0}'.format(comune_name))
     # comune = ComuneExcel(name_excel_file, path_to_excel_files, comune_name)
     # comune.check_headers_excel()
@@ -1691,63 +1691,63 @@ if __name__ == '__main__':
 
     # load = False
     # comuni_dataframe_org_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     load=load)
     # comuni_dataframe_pdc_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     load=load, pf='l_02')
     # comuni_dataframe_pds_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     load=load, pf='l_02')
     # comuni_dataframe_cila_05 = get_comuni_dataframe(
-    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     load=load)
 
     # comuni_measure_dataframe_org = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'ORGANICO', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     load=load)
     # comuni_measure_dataframe_pdc_ov = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     type_pdc_ov=True, load=load)
     # comuni_measure_dataframe_pdc = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Permessi di Costruire', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     type_pdc_ov=False, load=load)
     # comuni_measure_dataframe_pds = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Prov di sanatoria', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     load=load)
     # comuni_measure_dataframe_cila = get_comuni_measure_dataframe(
-    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #     comuni_excel_map, 'Controllo CILA', 'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #     load=load)
 
 
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #                    type_name='PdC ordinario', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #                    type_name='PdC in variante', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #                    type_name='PdC in deroga', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #                    type_name='PdC convenzionato', type_pdc_ov=False, load=False)
     # get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #                    type_name='PdC asseverato', type_pdc_ov=False, load=False)
     #
     # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
-    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #                    type_name='PdC in Sanatoria', load=False)
     # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
-    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #                    type_name='Provvedimenti in Sanatoria', load=False)
     # get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
-    #                    'pat_pnrr_6a_misurazione_tabelle_comunali\\',
+    #                    'pat_pnrr_6a_misurazione_tabelle_comunali/',
     #                    type_name='Regolarizzazione', load=False)
 
 
-    # check_comuni_excel('pat_pnrr_6a_misurazione_tabelle_comunali\\')
+    # check_comuni_excel('pat_pnrr_6a_misurazione_tabelle_comunali/')
     get_comuni_dataframes(comuni_excel_map, load=False)
     # check_comuni_dataframes(comuni_excel_map)
     # get_comuni_measures_dataframe(comuni_excel_map, load=False)
@@ -1756,6 +1756,6 @@ if __name__ == '__main__':
     # load = True
     # lpf = True
     # comuni_pdc_ov_measure, comuni_monitored = get_comuni_measure(comuni_excel_map, 'Permessi di Costruire',
-    #     'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
+    #     'pat_pnrr_6a_misurazione_tabelle_comunali/', load=load, lpf=lpf)
     # comuni_pds_measure, comuni_monitored = get_comuni_measure(comuni_excel_map, 'Prov di sanatoria',
-    #     'pat_pnrr_6a_misurazione_tabelle_comunali\\', load=load, lpf=lpf)
+    #     'pat_pnrr_6a_misurazione_tabelle_comunali/', load=load, lpf=lpf)
